@@ -13,8 +13,6 @@
     "requirements"
   ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json",
-  "apps": "./.app.json",
   "interface": {
     "displayName": "Project Architect",
     "shortDescription": "Scope, architecture, and implementation plans",
@@ -33,9 +31,9 @@
       "Turn this product idea into a buildable plan."
     ],
     "brandColor": "#B69559",
-    "composerIcon": "./assets/plugin-icon.png",
-    "logo": "./assets/plugin-icon.png",
-    "logoDark": "./assets/plugin-icon.png",
+    "composerIcon": "./assets/chatgpt-icon.png",
+    "logo": "./assets/chatgpt-icon.png",
+    "logoDark": "./assets/chatgpt-icon.png",
     "screenshots": []
   }
 }

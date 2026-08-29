@@ -13,8 +13,6 @@
     "traceability"
   ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json",
-  "apps": "./.app.json",
   "interface": {
     "displayName": "Project Docs",
     "shortDescription": "Durable project artifacts and handoffs",
@@ -33,9 +31,9 @@
       "Turn these decisions into implementation documents."
     ],
     "brandColor": "#AD7941",
-    "composerIcon": "./assets/plugin-icon.png",
-    "logo": "./assets/plugin-icon.png",
-    "logoDark": "./assets/plugin-icon.png",
+    "composerIcon": "./assets/chatgpt-icon.png",
+    "logo": "./assets/chatgpt-icon.png",
+    "logoDark": "./assets/chatgpt-icon.png",
     "screenshots": []
   }
 }

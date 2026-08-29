@@ -13,8 +13,6 @@
     "ecosystem"
   ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json",
-  "apps": "./.app.json",
   "interface": {
     "displayName": "Research Engineer",
     "shortDescription": "Current evidence for software decisions",
@@ -33,9 +31,9 @@
       "Research the current options for this software decision."
     ],
     "brandColor": "#416B8B",
-    "composerIcon": "./assets/plugin-icon.png",
-    "logo": "./assets/plugin-icon.png",
-    "logoDark": "./assets/plugin-icon.png",
+    "composerIcon": "./assets/chatgpt-icon.png",
+    "logo": "./assets/chatgpt-icon.png",
+    "logoDark": "./assets/chatgpt-icon.png",
     "screenshots": []
   }
 }

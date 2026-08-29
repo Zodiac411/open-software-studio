@@ -1,127 +1,85 @@
 # Install Open Software Studio in ChatGPT
 
-Open Software Studio now ships as seven official-format Codex plugins. Each
-plugin contains its portable Skills plus an MCP descriptor; the seven
-descriptors point at one small, open-source MCP service in `server/`.
+Open Software Studio's ChatGPT distribution is skills-only. The six
+ChatGPT-facing plugin bundles contain their `.codex-plugin/plugin.json`, all
+specialist Skills, a small upload wrapper, and the matching icon. They do not
+declare `mcpServers` or `apps`, and they do not need a tunnel, API key,
+localhost service, OAuth, or a hosted endpoint.
 
-The repository is the source package. A ChatGPT app connection is created in
-your account because ChatGPT assigns the technical app ID. The checked-in
-`.app.json` files intentionally contain an empty `apps` object until that
-connection exists; the repository never invents or commits an app ID.
+The six uploadable bundles are:
 
-## 1. Start the shared MCP service
+- Project Architect
+- Interface Studio
+- Engineering Guard
+- Research Engineer
+- Project Docs
+- Web App Builder
+
+Execution Guard stays Codex-first. It is installed with the repository
+marketplace and is not uploaded to ChatGPT as a ChatGPT-facing bundle.
+
+## Build the six plugin bundles
 
 From the repository root:
 
 ```powershell
-bun install
-bun run mcp -- --port 8791
-Invoke-RestMethod http://127.0.0.1:8791/readyz
+python scripts/package_chatgpt_plugins.py
 ```
 
-The aggregate endpoint is `http://127.0.0.1:8791/mcp`. Per-plugin endpoints
-are available at `/mcp/project-architect`, `/mcp/interface-studio`,
-`/mcp/engineering-guard`, `/mcp/research-engineer`, `/mcp/project-docs`,
-`/mcp/web-app-builder`, and `/mcp/execution-guard`.
+The ZIP files are written to `dist/chatgpt-plugins/`. Each ZIP contains the
+plugin manifest, its `skills/` directory, a root upload wrapper, and a
+`plugin-icon.png` referenced by `agents/openai.yaml`. The wrapper lets the
+same plugin package pass through ChatGPT's Skills uploader while preserving
+the full plugin layout for Codex and other Agent Skills clients.
 
-## 2. Expose it through your Software studio tunnel
+## Upload in ChatGPT web
 
-Keep the API key in your local environment only. Do not paste it into ChatGPT,
-commit it, or put it in a repository file. With the repository service running,
-start the tunnel client with your existing Software studio tunnel ID:
+1. Open **Plugins** in the ChatGPT sidebar.
+2. Open the **Skills** tab.
+3. Choose **Create → Upload from your computer**.
+4. Upload one ZIP from `dist/chatgpt-plugins/` at a time.
+5. Wait for ChatGPT's security scan and install each accepted bundle.
 
-```powershell
-$env:CONTROL_PLANE_API_KEY = "<your-runtime-key>"
-$env:CONTROL_PLANE_TUNNEL_ID = "<your-software-studio-tunnel-id>"
-tunnel-client run `
-  --control-plane.tunnel-id $env:CONTROL_PLANE_TUNNEL_ID `
-  --control-plane.api-key env:CONTROL_PLANE_API_KEY `
-  --mcp.server-url http://127.0.0.1:8791/mcp `
-  --health.listen-addr 127.0.0.1:8091
-```
+ChatGPT currently displays these uploads in the Skills library. The package
+itself remains a plugin bundle: Codex reads `.codex-plugin/plugin.json` and
+loads the nested `skills/` directory. ChatGPT's current custom-app flow is a
+separate MCP surface and is intentionally not used here.
 
-Then verify the tunnel client reports ready:
+## Icons
 
-```powershell
-Invoke-RestMethod http://127.0.0.1:8091/readyz
-```
+Every bundle has:
 
-The repository also includes `scripts/start-chatgpt-tunnel.ps1`, which starts
-the MCP service and tunnel together without writing the key to disk.
+- `assets/plugin-icon.png` for the plugin manifest;
+- `assets/plugin-icon.png` inside each nested Skill; and
+- `agents/openai.yaml` entries with `icon_small` and `icon_large`.
 
-## 3. Create the private ChatGPT app
-
-ChatGPT currently creates custom MCP apps from the web developer-mode flow:
-
-1. Open **Settings → Apps & Connectors → Advanced settings** and enable
-   **Developer mode** (the exact labels can vary by account rollout).
-2. Open **Apps**, choose **Create app**, and enter a display name such as
-   **Open Software Studio**.
-3. Choose the supplied PNG icon for the app (for the aggregate app,
-   `plugins/project-architect/assets/plugin-icon.png` is a safe suite marker),
-   then select **Tunnel**, choose **Software studio**, choose **No Auth** for
-   this local tunnel, acknowledge the unreviewed-server warning, and create
-   the private app.
-4. Copy the technical ID shown for the created app. It has the form
-   `plugin_asdk_app_...`.
-
-Wire the real ID into all seven package descriptors:
-
-```powershell
-python scripts/wire_chatgpt_apps.py --id plugin_asdk_app_<actual-id>
-python scripts/validate_suite.py
-```
-
-You can instead provide a JSON map to assign different app IDs:
-
-```json
-{
-  "project-architect": "plugin_asdk_app_...",
-  "interface-studio": "plugin_asdk_app_..."
-}
-```
-
-```powershell
-python scripts/wire_chatgpt_apps.py --map app-ids.json
-```
-
-After creation, the app appears under **Apps → Personal → Created by me**. The
-single shared connection exposes the seven narrowly scoped MCP tools; the
-portable Skills remain in each plugin folder for Codex and other supported
-surfaces.
-
-## iOS-compatible Skills
-
-Custom MCP app creation and management is a web developer-mode capability, so
-it should not be treated as an iOS installation path. To use the specialist
-workflows on ChatGPT mobile, package the Skills and upload them from ChatGPT
-web:
-
-```powershell
-python scripts/package_chatgpt_skills.py
-```
-
-The generated ZIPs are in `dist/chatgpt-skills/`. Upload one ZIP per Skill via
-**Plugins → Skills → Create → Upload from your computer**, wait for scanning,
-and install it. Each ZIP embeds its plugin's approved
-`assets/plugin-icon.png` (square PNG, below 10 KB), which prevents the blank
-icon fallback on mobile. Re-upload updated ZIPs after changing a Skill; Codex
-plugin metadata and ChatGPT Skill uploads are separate installation surfaces.
+The upload icon is a square true-color PNG below 10 KB. This avoids the blank
+icon fallback seen when a Skill has no `agents/openai.yaml` metadata or when a
+mobile client cannot decode the prior palette-only asset.
 
 ## Surface limits
 
-This is a private developer-mode app, not a public marketplace submission.
-ChatGPT web currently supports creating and managing these custom MCP apps;
-ChatGPT mobile can use only the capabilities that the current product rollout
-exposes and does not provide the same developer-mode installation controls.
-The first five plugins keep their core workflows usable without shell access,
-localhost, a filesystem, or a local MCP server. Web App Builder and Execution
-Guard remain Codex-first and require repository-capable Codex use for their
-implementation workflows.
+Personal Skills must be installed separately on ChatGPT web and mobile; they
+do not automatically sync from Codex. Mobile can use an installed Skill, but
+it does not provide the same plugin/app management controls as ChatGPT web.
+The six core workflows remain useful without shell access, localhost,
+filesystem assumptions, or a local MCP server. Web App Builder's repository
+implementation guidance is naturally most useful in Codex.
+
+## Codex installation
+
+Use the repository marketplace for the actual Codex plugins:
+
+```powershell
+codex plugin marketplace add .
+codex plugin install open-software-studio/project-architect
+```
+
+Repeat installation for the other six plugins as needed. Execution Guard is
+also installed here and supplies the global Codex discipline layer.
 
 ## Current OpenAI references
 
+- [Skills in ChatGPT](https://help.openai.com/en/articles/20001066)
 - [Plugins package guide](https://developers.openai.com/plugins/build/plugins)
-- [Connect and test a plugin](https://developers.openai.com/plugins/deploy/connect-chatgpt)
-- [Developer mode and full MCP connectors](https://help.openai.com/en/articles/12584461-developer-mode-apps-and-full-mcp-connectors-in-chatgpt-beta)
 - [OpenAI plugin examples](https://github.com/openai/plugins)

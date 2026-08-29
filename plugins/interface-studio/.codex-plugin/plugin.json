@@ -13,8 +13,6 @@
     "design-system"
   ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json",
-  "apps": "./.app.json",
   "interface": {
     "displayName": "Interface Studio",
     "shortDescription": "Flows, interaction specs, and visual systems",
@@ -33,9 +31,9 @@
       "Design the UX and UI plan for this feature."
     ],
     "brandColor": "#D59A75",
-    "composerIcon": "./assets/plugin-icon.png",
-    "logo": "./assets/plugin-icon.png",
-    "logoDark": "./assets/plugin-icon.png",
+    "composerIcon": "./assets/chatgpt-icon.png",
+    "logo": "./assets/chatgpt-icon.png",
+    "logoDark": "./assets/chatgpt-icon.png",
     "screenshots": []
   }
 }

@@ -14,8 +14,6 @@
     "verification"
   ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json",
-  "apps": "./.app.json",
   "interface": {
     "displayName": "Execution Guard",
     "shortDescription": "Make Codex smaller, safer, grounded, and provable",
@@ -34,9 +32,9 @@
       "Apply Execution Guard while completing this Codex task."
     ],
     "brandColor": "#678F86",
-    "composerIcon": "./assets/plugin-icon.png",
-    "logo": "./assets/plugin-icon.png",
-    "logoDark": "./assets/plugin-icon.png",
+    "composerIcon": "./assets/chatgpt-icon.png",
+    "logo": "./assets/chatgpt-icon.png",
+    "logoDark": "./assets/chatgpt-icon.png",
     "screenshots": []
   }
 }

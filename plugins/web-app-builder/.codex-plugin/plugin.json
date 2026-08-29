@@ -14,8 +14,6 @@
     "codex"
   ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json",
-  "apps": "./.app.json",
   "interface": {
     "displayName": "Web App Builder",
     "shortDescription": "Implement and verify approved web-app work",
@@ -34,9 +32,9 @@
       "Implement this approved web feature from its artifacts."
     ],
     "brandColor": "#46789A",
-    "composerIcon": "./assets/plugin-icon.png",
-    "logo": "./assets/plugin-icon.png",
-    "logoDark": "./assets/plugin-icon.png",
+    "composerIcon": "./assets/chatgpt-icon.png",
+    "logo": "./assets/chatgpt-icon.png",
+    "logoDark": "./assets/chatgpt-icon.png",
     "screenshots": []
   }
 }
