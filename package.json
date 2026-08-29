@@ -1,0 +1,16 @@
+{
+  "name": "open-software-studio",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Seven coordinated open-source ChatGPT and Codex plugins for software work.",
+  "type": "module",
+  "scripts": {
+    "mcp": "bun run server/index.ts",
+    "mcp:stdio": "bun run server/index.ts --stdio",
+    "mcp:check": "bun run server/smoke.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.30.0",
+    "zod": "4.1.5"
+  }
+}

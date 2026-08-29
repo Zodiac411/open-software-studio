@@ -35,7 +35,19 @@ def main() -> None:
         for asset_field in ('composerIcon', 'logo'):
             asset = plugin / manifest['interface'][asset_field].removeprefix('./')
             if not asset.is_file(): fail(f'{name}: missing {asset_field}')
-        if any(key in manifest for key in ('apps', 'mcpServers', 'hooks')): fail(f'{name}: unexpected integration surface')
+        if manifest.get('mcpServers') != './.mcp.json': fail(f'{name}: mcpServers path')
+        if manifest.get('apps') != './.app.json': fail(f'{name}: apps path')
+        app_path = plugin / '.app.json'
+        if not app_path.is_file(): fail(f'{name}: missing .app.json')
+        app_payload = json.loads(app_path.read_text(encoding='utf-8'))
+        if not isinstance(app_payload.get('apps'), dict): fail(f'{name}: invalid .app.json')
+        mcp_path = plugin / '.mcp.json'
+        if not mcp_path.is_file(): fail(f'{name}: missing .mcp.json')
+        mcp_payload = json.loads(mcp_path.read_text(encoding='utf-8'))
+        mcp_servers = mcp_payload.get('mcpServers')
+        if not isinstance(mcp_servers, dict) or len(mcp_servers) != 1: fail(f'{name}: invalid .mcp.json')
+        server = next(iter(mcp_servers.values()))
+        if server.get('type') != 'http' or not server.get('url', '').startswith('http://127.0.0.1:8791/mcp/'): fail(f'{name}: invalid MCP endpoint')
         skills = list((plugin / 'skills').glob('*/SKILL.md'))
         if not skills: fail(f'{name}: no skills')
         for skill in skills:

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "open-software-studio-execution-guard": {
+      "type": "http",
+      "url": "http://127.0.0.1:8791/mcp/execution-guard"
+    }
+  }
+}

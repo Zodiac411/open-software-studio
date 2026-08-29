@@ -14,11 +14,11 @@ Open Software Studio is a small, open-source suite of seven coordinated plugins 
 | Codex | Web App Builder | repository implementation |
 | Codex | Execution Guard | disciplined, evidence-backed execution |
 
-The first five contain skills only: they retain useful core workflows without shell, localhost, filesystem, or a connected app. The last two are Codex-gated because they require repository work.
+Every plugin contains portable Skills and an official `.codex-plugin/plugin.json` manifest. The package also includes a small shared MCP service so one private ChatGPT app connection can expose the seven specialist tools; see [ChatGPT setup](docs/install-chatgpt.md). The first five keep useful core workflows without shell, localhost, filesystem, or a connected app. The last two remain Codex-gated because they require repository work.
 
 ## Start here
 
-Read [Architecture](ARCHITECTURE.md), then the [coordination contract](docs/plugin-coordination.md). The canonical repository is [github.com/Zodiac411/open-software-studio](https://github.com/Zodiac411/open-software-studio). Import the repository marketplace from `.agents/plugins/marketplace.json` in a supported workspace, or use the Codex installation notes in [docs/install-codex.md](docs/install-codex.md).
+Read [Architecture](ARCHITECTURE.md), then the [coordination contract](docs/plugin-coordination.md). The canonical repository is [github.com/Zodiac411/open-software-studio](https://github.com/Zodiac411/open-software-studio). Import the repository marketplace from `.agents/plugins/marketplace.json` in a supported workspace, use the Codex installation notes in [docs/install-codex.md](docs/install-codex.md), or create the private ChatGPT app described in [docs/install-chatgpt.md](docs/install-chatgpt.md).
 
 No third-party service, API, or subscription is required by this repository.
 
