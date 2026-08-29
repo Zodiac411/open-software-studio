@@ -1,0 +1,15 @@
+# Local tooling and generated caches
+.venv/
+venv/
+node_modules/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.DS_Store
+Thumbs.db
+
+# Editor and OS metadata
+.idea/
+.vscode/
+*.swp

@@ -1,0 +1,13 @@
+{
+  "name": "open-software-studio",
+  "interface": { "displayName": "Open Software Studio" },
+  "plugins": [
+    { "name": "project-architect", "source": { "source": "local", "path": "./plugins/project-architect" }, "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" }, "category": "Productivity" },
+    { "name": "interface-studio", "source": { "source": "local", "path": "./plugins/interface-studio" }, "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" }, "category": "Creativity" },
+    { "name": "engineering-guard", "source": { "source": "local", "path": "./plugins/engineering-guard" }, "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" }, "category": "Developer Tools" },
+    { "name": "research-engineer", "source": { "source": "local", "path": "./plugins/research-engineer" }, "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" }, "category": "Education & Research" },
+    { "name": "project-docs", "source": { "source": "local", "path": "./plugins/project-docs" }, "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" }, "category": "Productivity" },
+    { "name": "web-app-builder", "source": { "source": "local", "path": "./plugins/web-app-builder" }, "policy": { "installation": "AVAILABLE", "authentication": "ON_USE", "products": ["CODEX"] }, "category": "Developer Tools" },
+    { "name": "execution-guard", "source": { "source": "local", "path": "./plugins/execution-guard" }, "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL", "products": ["CODEX"] }, "category": "Developer Tools" }
+  ]
+}

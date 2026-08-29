@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Open Software Studio artifact metadata",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string", "pattern": "^(REQ|ADR|UX|COMP|TASK|RISK|TEST)-[0-9]{3,}$" },
+    "type": { "type": "string" }, "status": { "type": "string" },
+    "owner": { "type": "string" }, "sources": { "type": "array", "items": { "type": "string" } },
+    "links": { "type": "object", "additionalProperties": { "type": "array", "items": { "type": "string" } } },
+    "verification": { "enum": ["verified", "partial", "unverified", "not-applicable"] },
+    "supersedes": { "type": "array", "items": { "type": "string" } },
+    "superseded_by": { "type": "array", "items": { "type": "string" } }
+  }, "required": ["id", "type", "status"]
+}

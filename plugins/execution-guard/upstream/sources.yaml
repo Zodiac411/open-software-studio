@@ -1,0 +1,13 @@
+sources:
+  - name: Seatbelt Codex Plugin Design Handoff
+    source: supplied attachment
+    adaptation: renamed to Execution Guard; behavioral model retained
+  - name: OpenAI Plugins
+    repo: https://github.com/openai/plugins
+    revision: 1e285826e604f66f7208f7ac4dba0fe8341d1f57
+    license: MIT
+    adaptation: manifest and marketplace compatibility only; no text copied
+  - name: Prove It
+    repo: https://github.com/Pablo-aps/prove-it
+    license: verify before reuse
+    adaptation: DEFINE-BREAK-VERIFY-VERDICT concept only

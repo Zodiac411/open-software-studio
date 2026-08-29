@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Focus Board</title>
+    <style>
+      :root { color: #182521; background: #f5f1e8; font-family: Georgia, serif; }
+      body { margin: 0; min-height: 100vh; display: grid; place-items: center; }
+      main { width: min(38rem, calc(100% - 3rem)); padding: 3rem 0; }
+      h1 { margin: 0 0 .35rem; font-size: clamp(2.25rem, 8vw, 4rem); letter-spacing: -.06em; }
+      h1::after { content: ""; display: block; width: 3rem; margin-top: .8rem; border-bottom: .22rem solid #c79f4a; }
+      form { display: grid; grid-template-columns: 1fr auto; gap: .65rem; margin-top: 2rem; }
+      label { grid-column: 1 / -1; font: 600 .75rem/1.2 ui-sans-serif, system-ui; letter-spacing: .09em; text-transform: uppercase; }
+      input, button { border: 1px solid #718078; border-radius: .2rem; padding: .7rem .85rem; font: inherit; }
+      button { cursor: pointer; background: #244c40; color: #fff; }
+      #empty { color: #65736c; margin-top: 1.5rem; }
+      ul { padding: 0; list-style: none; }
+      li { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid #cfc7b7; }
+      li button { background: transparent; color: #244c40; }
+    </style>
+  </head>
+  <body>
+    <main><h1>Focus Board</h1><form><label for="task-title">New task</label><input id="task-title" required><button>Add task</button></form><p id="empty">No tasks yet.</p><ul id="tasks" aria-live="polite"></ul></main>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
