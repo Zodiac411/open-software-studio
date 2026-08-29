@@ -33,8 +33,9 @@
       "Research the current options for this software decision."
     ],
     "brandColor": "#416B8B",
-    "composerIcon": "./assets/research-engineer.jpg",
-    "logo": "./assets/research-engineer.jpg",
+    "composerIcon": "./assets/plugin-icon.png",
+    "logo": "./assets/plugin-icon.png",
+    "logoDark": "./assets/plugin-icon.png",
     "screenshots": []
   }
 }

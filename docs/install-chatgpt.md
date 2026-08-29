@@ -88,6 +88,24 @@ single shared connection exposes the seven narrowly scoped MCP tools; the
 portable Skills remain in each plugin folder for Codex and other supported
 surfaces.
 
+## iOS-compatible Skills
+
+Custom MCP app creation and management is a web developer-mode capability, so
+it should not be treated as an iOS installation path. To use the specialist
+workflows on ChatGPT mobile, package the Skills and upload them from ChatGPT
+web:
+
+```powershell
+python scripts/package_chatgpt_skills.py
+```
+
+The generated ZIPs are in `dist/chatgpt-skills/`. Upload one ZIP per Skill via
+**Plugins → Skills → Create → Upload from your computer**, wait for scanning,
+and install it. Each ZIP embeds its plugin's approved
+`assets/plugin-icon.png` (square PNG, below 10 KB), which prevents the blank
+icon fallback on mobile. Re-upload updated ZIPs after changing a Skill; Codex
+plugin metadata and ChatGPT Skill uploads are separate installation surfaces.
+
 ## Surface limits
 
 This is a private developer-mode app, not a public marketplace submission.

@@ -33,8 +33,9 @@
       "Turn these decisions into implementation documents."
     ],
     "brandColor": "#AD7941",
-    "composerIcon": "./assets/project-docs.jpg",
-    "logo": "./assets/project-docs.jpg",
+    "composerIcon": "./assets/plugin-icon.png",
+    "logo": "./assets/plugin-icon.png",
+    "logoDark": "./assets/plugin-icon.png",
     "screenshots": []
   }
 }

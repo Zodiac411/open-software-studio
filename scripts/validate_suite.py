@@ -6,7 +6,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MARKETPLACE = ROOT / '.agents/plugins/marketplace.json'
+PNG_SIGNATURE = b'\x89PNG\r\n\x1a\n'
+MAX_ICON_BYTES = 10 * 1024
 REQUIRED_INTERFACE = {'displayName', 'shortDescription', 'longDescription', 'developerName', 'category', 'capabilities', 'websiteURL', 'privacyPolicyURL', 'termsOfServiceURL', 'defaultPrompt', 'brandColor', 'composerIcon', 'logo', 'screenshots'}
+OPTIONAL_INTERFACE = {'logoDark'}
 CODEX_ONLY = {'web-app-builder', 'execution-guard'}
 
 def fail(message: str) -> None:
@@ -31,10 +34,14 @@ def main() -> None:
         manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
         if manifest.get('name') != name or manifest.get('version') != '0.1.0': fail(f'{name}: identity')
         if manifest.get('skills') != './skills/': fail(f'{name}: skills path')
-        if set(manifest.get('interface', {})) != REQUIRED_INTERFACE: fail(f'{name}: interface fields')
-        for asset_field in ('composerIcon', 'logo'):
-            asset = plugin / manifest['interface'][asset_field].removeprefix('./')
+        interface = manifest.get('interface', {})
+        if not REQUIRED_INTERFACE.issubset(interface) or set(interface) - (REQUIRED_INTERFACE | OPTIONAL_INTERFACE): fail(f'{name}: interface fields')
+        for asset_field in ('composerIcon', 'logo', 'logoDark'):
+            if asset_field not in interface: continue
+            asset = plugin / interface[asset_field].removeprefix('./')
             if not asset.is_file(): fail(f'{name}: missing {asset_field}')
+            if asset.suffix.lower() != '.png' or asset.read_bytes()[:8] != PNG_SIGNATURE: fail(f'{name}: {asset_field} must be a PNG')
+            if asset.stat().st_size > MAX_ICON_BYTES: fail(f'{name}: {asset_field} exceeds 10 KB')
         if manifest.get('mcpServers') != './.mcp.json': fail(f'{name}: mcpServers path')
         if manifest.get('apps') != './.app.json': fail(f'{name}: apps path')
         app_path = plugin / '.app.json'

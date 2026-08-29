@@ -34,8 +34,9 @@
       "Implement this approved web feature from its artifacts."
     ],
     "brandColor": "#46789A",
-    "composerIcon": "./assets/web-app-builder.jpg",
-    "logo": "./assets/web-app-builder.jpg",
+    "composerIcon": "./assets/plugin-icon.png",
+    "logo": "./assets/plugin-icon.png",
+    "logoDark": "./assets/plugin-icon.png",
     "screenshots": []
   }
 }

@@ -33,8 +33,9 @@
       "Design the UX and UI plan for this feature."
     ],
     "brandColor": "#D59A75",
-    "composerIcon": "./assets/interface-studio.jpg",
-    "logo": "./assets/interface-studio.jpg",
+    "composerIcon": "./assets/plugin-icon.png",
+    "logo": "./assets/plugin-icon.png",
+    "logoDark": "./assets/plugin-icon.png",
     "screenshots": []
   }
 }

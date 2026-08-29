@@ -34,8 +34,9 @@
       "Apply Execution Guard while completing this Codex task."
     ],
     "brandColor": "#678F86",
-    "composerIcon": "./assets/execution-guard.jpg",
-    "logo": "./assets/execution-guard.jpg",
+    "composerIcon": "./assets/plugin-icon.png",
+    "logo": "./assets/plugin-icon.png",
+    "logoDark": "./assets/plugin-icon.png",
     "screenshots": []
   }
 }

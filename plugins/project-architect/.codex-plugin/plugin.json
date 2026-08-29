@@ -33,8 +33,9 @@
       "Turn this product idea into a buildable plan."
     ],
     "brandColor": "#B69559",
-    "composerIcon": "./assets/project-architect.jpg",
-    "logo": "./assets/project-architect.jpg",
+    "composerIcon": "./assets/plugin-icon.png",
+    "logo": "./assets/plugin-icon.png",
+    "logoDark": "./assets/plugin-icon.png",
     "screenshots": []
   }
 }

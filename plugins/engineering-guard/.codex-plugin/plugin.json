@@ -33,8 +33,9 @@
       "Review this plan for engineering risk."
     ],
     "brandColor": "#6BA69B",
-    "composerIcon": "./assets/engineering-guard.jpg",
-    "logo": "./assets/engineering-guard.jpg",
+    "composerIcon": "./assets/plugin-icon.png",
+    "logo": "./assets/plugin-icon.png",
+    "logoDark": "./assets/plugin-icon.png",
     "screenshots": []
   }
 }
