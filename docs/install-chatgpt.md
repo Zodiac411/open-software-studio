@@ -57,9 +57,11 @@ ChatGPT currently creates custom MCP apps from the web developer-mode flow:
    **Developer mode** (the exact labels can vary by account rollout).
 2. Open **Apps**, choose **Create app**, and enter a display name such as
    **Open Software Studio**.
-3. Select **Tunnel**, choose **Software studio**, choose **No Auth** for this
-   local tunnel, acknowledge the unreviewed-server warning, and create the
-   private app.
+3. Choose the supplied PNG icon for the app (for the aggregate app,
+   `plugins/project-architect/assets/plugin-icon.png` is a safe suite marker),
+   then select **Tunnel**, choose **Software studio**, choose **No Auth** for
+   this local tunnel, acknowledge the unreviewed-server warning, and create
+   the private app.
 4. Copy the technical ID shown for the created app. It has the form
    `plugin_asdk_app_...`.
 
