@@ -18,7 +18,7 @@ The first five contain skills only: they retain useful core workflows without sh
 
 ## Start here
 
-Read [Architecture](ARCHITECTURE.md), then the [coordination contract](docs/plugin-coordination.md). Import the repository marketplace from `.agents/plugins/marketplace.json` in a supported workspace, or use the Codex installation notes in [docs/install-codex.md](docs/install-codex.md).
+Read [Architecture](ARCHITECTURE.md), then the [coordination contract](docs/plugin-coordination.md). The canonical repository is [github.com/Zodiac411/open-software-studio](https://github.com/Zodiac411/open-software-studio). Import the repository marketplace from `.agents/plugins/marketplace.json` in a supported workspace, or use the Codex installation notes in [docs/install-codex.md](docs/install-codex.md).
 
 No third-party service, API, or subscription is required by this repository.
 
