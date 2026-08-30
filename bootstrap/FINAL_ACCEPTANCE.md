@@ -1,64 +1,47 @@
 # Studio V2 final acceptance
 
-Overall result: PASS_WITH_LIMITATIONS
+Overall result: `BLOCKED`
 
-Implementation source checkpoint: 468e231b55558052906aafc267e135608ddb94ff
+Local remediation code head: `f300908d5306085f72215ce09e95f5cf8f434033`
 
-Branch: studio-v2-bootstrap
+Branch: `studio-v2-bootstrap`
 
-The implementation checkpoint is immutable. The branch may contain later
-evidence-only commits generated from this checkpoint; those commits must not
-be treated as a new implementation revision.
+The prior `PASS_WITH_LIMITATIONS` conclusion is superseded. It referred to
+source checkpoint `468e231...` and a ChatGPT archive that predates the current
+control-plane, schema, evaluation, and package repairs.
 
-## Acceptance matrix
+## Current matrix
 
-| Requirement | Result | Evidence |
+| Requirement | Result | Current evidence |
 |---|---|---|
-| One canonical catalog | PASS | catalog/studio.yaml and generated manifests |
-| Deterministic umbrella and satellites | PASS | build digest comparison, clean-checkout reproducibility gate, and validate_studio.py |
-| Codex install and fresh-session proof | PASS_WITH_LIMITATIONS | CODEX_INSTALL_RECEIPT.md |
-| ChatGPT install and fresh-chat proof | PASS_WITH_LIMITATIONS | CHATGPT_INSTALL_RECEIPT.md; refreshed Skills upload visibly shows Studio v2.0.0, and fresh verification plus explicit @Studio routing chats pass |
-| GitHub read connection | PASS | CONNECTED_APPS_RECEIPT.md |
-| Google Drive read connection | PASS | CONNECTED_APPS_RECEIPT.md |
-| Write confirmation gating | PASS_WITH_LIMITATIONS | seeded gates and CLI track --apply failure pass; fresh ChatGPT Track probe displayed the exact mutation and stopped for approval; actual external write remains NOT_RUN |
-| Greenfield local pilot | PASS_WITH_LIMITATIONS | PILOT_A_RECEIPT.md; current SNAP-014, EVID-PILOT-A-012, REV-006, closed state, and HANDOFF-468E231B5555 |
-| Brownfield defect found and repaired | PASS | INDEPENDENT_REVIEW_001.md, REV-001, bounded repairs, REV-002, REV-003, current EVID-PILOT-B-012, REV-006, and closed state |
-| Cross-surface ChatGPT -> Codex -> fresh ChatGPT Review pilots | PASS_WITH_LIMITATIONS | Local ChatGPT and Codex legs pass; Review 010 accepted source 468e231 and the current evidence chain with only recorded external/host limitations |
-| Current-SHA independent review | PASS_WITH_LIMITATIONS | Fresh Review 010 accepted source 468e231 and remote tip 320ec6d with no local source, package, validator, receipt, or state defect |
-| Rollback dry-run | PASS | ROLLBACK.md |
-| iPhone/mobile availability | USER CHECK | personal device verification not performed |
+| One canonical catalog | `PASS_WITH_LIMITATIONS` | Catalog now owns prompts, recipes, app references, icon sources, schemas, templates, validation inputs, and source-manifest roots. Final independent review is pending. |
+| Deterministic umbrella and satellites | `PASS` | Canonical check and two clean-checkout builds pass. |
+| Strict review, close, and release gates | `PASS_WITH_LIMITATIONS` | Six focused regressions cover self-review, stale SHA, atomic release failure, idempotent close, generic plan/track, evidence, and malformed artifact compilation. Independent review is pending. |
+| Versioned schemas and artifact compiler | `PASS_WITH_LIMITATIONS` | Typed schemas reject unknown/malformed fields; compiler emits Markdown, JSON/YAML, GitHub, and Google Docs payloads. Host publishing is not exercised. |
+| Recovery coherence and live SHA | `PASS_WITH_LIMITATIONS` | CLI now maintains typed events/projections and blocks stale state. Existing historical pilot state must be refreshed before reuse. |
+| Behavioral evaluations and CI | `PASS_WITH_LIMITATIONS` | Executable regressions, Windows/Linux CI, security/archive checks, deterministic builds, and optional MCP smoke are versioned. Hosted CI has not run on the unpublished commits. |
+| Codex installation | `PASS_WITH_LIMITATIONS` | Previous 2.0.0 installation remains present; the repaired package has not yet been reinstalled and freshly re-proven. |
+| ChatGPT installation and fresh chat | `BLOCKED` | Installed archive predates the remediation. Re-upload and a fresh invocation are required. |
+| GitHub and Drive reads | `PASS` | Existing read probes remain valid. |
+| Write confirmation behavior | `PASS_WITH_LIMITATIONS` | Local tracking stays read-only and confirmation-gated; no approved external write was executed. |
+| Greenfield and brownfield local pilots | `PASS` | Both local pilot tests pass. |
+| Full cross-surface pilots at current SHA | `BLOCKED` | Must be replayed against the repaired package and current published SHA. |
+| Current-SHA independent Luna review | `UNPROVEN` | Requested after this handoff is committed. |
+| Current-SHA fresh ChatGPT Review | `UNPROVEN` | Requires current package upload and published SHA. |
+| Rollback documentation | `PASS_WITH_LIMITATIONS` | Existing rollback remains scoped; remediation commit rollback has not been destructively exercised. |
+| Mobile/iPhone | **USER CHECK** | Personal device verification remains required. |
 
-## Current limitations
+## Remaining approval-bound actions
 
-The user confirmed that the browser-visible ChatGPT account chris folorunso /
-Pro, with no visible workspace label, is the intended account. The personal
-Skills fallback accepted `dist/chatgpt/studio.zip`; Studio routing and a
-read-only GitHub/Drive verification chat passed. A fresh explicit `@Studio`
-routing chat returned `STUDIO_ROUTE_V2_OK studio-chatgpt-studio-delivery`, and a
-fresh Studio Track probe displayed the exact external mutation and stopped
-pending approval without writing. The refreshed Skills UI now visibly shows
-`Studio v2.0.0`. The previously blocked remote-source finding is repaired:
-`studio-v2-bootstrap` now publishes implementation checkpoint
-`468e231b55558052906aafc267e135608ddb94ff`, and a fresh clone from it passes the
-reproducibility gate. Fresh ChatGPT Review 006 then found that the committed
-outputs still differed on Linux because the archive repair had not been
-regenerated into the commit. The bounded ZIP_STORED repair and regenerated
-outputs are now published at `8f8e9fc2164a1ceeb503aecb36edbf8dc8c48dd6`; local
-clean-checkout reproducibility and the full validation suite pass there. Review
-007 accepted that source with one low portability note; the explicit UTF-8
-tie-breaker is now published at `17e9407569eb642e11d86def752c22ae6b638337`.
-Review 008 then found that the synthesized entries were appended outside the
-sorted list and that the validator did not assert complete entry ordering. The
-complete-entry repair and validator assertion are now published at
-`468e231b55558052906aafc267e135608ddb94ff`. Review 009 verified that source
-and the exact remote evidence tip, then found stale `blocking_findings` text in
-`SETUP_STATE.json`; `REPAIR-REV-009-001` records the evidence-only fix. Fresh
-Review 010 independently verified the repaired state and returned
-`PASS_WITH_LIMITATIONS` with no local defect.
-Canonical Drive still records the pre-V2 authoritative state and may only be
-updated after a separate explicit owner approval. Actual external write
-execution, branch protection, historical host replay, the disabled Chrome
-extension, and mobile verification remain open by policy or user check.
+- Push the remediation branch.
+- Reinstall the repaired package in Codex and prove it from a fresh session.
+- Upload the repaired `dist/chatgpt/studio.zip` and prove it from a fresh chat.
+- Replay both full cross-surface pilots and obtain fresh ChatGPT Review at the
+  published current SHA.
+- Reconcile changed Drive source revisions.
+- Execute any reversible GitHub or Drive write only after displaying the exact
+  mutation and receiving explicit approval.
+- Merge or release only after owner approval and no blocking finding.
 
-The authorized branch publication occurred; no issue, milestone, PR, Drive
-write, permission change, merge, or release was performed.
+No issue, milestone, PR, Drive document, permission, merge, or release was
+created or changed by the remediation run.

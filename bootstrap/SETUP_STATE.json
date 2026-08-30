@@ -1,16 +1,14 @@
 {
   "schema": "studio.bootstrap.state/v2",
   "project_id": "PRJ-SD-001",
-  "recorded_at": "2026-08-30T22:02:53.192Z",
+  "recorded_at": "2026-08-30T23:26:27Z",
   "source_repository": "https://github.com/Zodiac411/open-software-studio",
   "baseline": {
     "remote_default_branch": "master",
     "remote_head": "d697efc16d86835ff3941f54b05e560b91a4a125",
     "worktree_branch": "studio-v2-bootstrap",
     "worktree_path": "C:/Users/badcr/Documents/Codex/2026-08-30/you-are-the-implementation-and-setup/studio-v2-bootstrap",
-    "worktree_head": "d697efc16d86835ff3941f54b05e560b91a4a125",
-    "worktree_dirty": false,
-    "untracked": [],
+    "reviewed_pre_remediation_head": "ce04df0f682d84bdf7818ae8a204162ce9567c86",
     "clone_mode": "bare-source-plus-clean-worktree"
   },
   "host": {
@@ -21,118 +19,81 @@
     "node": "v24.14.0",
     "bun": "1.4.0",
     "codex": "codex-cli 0.144.5",
-    "codex_home": "C:/Users/badcr/.codex",
-    "browser_backends": ["iab"],
-    "chrome_extension": "BLOCKED: installed in Chrome Default but disabled (disableReasons [1])"
-  },
-  "codex": {
-    "plugin_cli_help_verified": true,
-    "marketplace_add_syntax": "codex plugin marketplace add <path-or-git-source>",
-    "plugin_install_syntax": "codex plugin add <plugin>@<marketplace>",
-    "existing_open_software_studio_plugins": [
-      "project-architect",
-      "interface-studio",
-      "engineering-guard",
-      "research-engineer",
-      "project-docs",
-      "web-app-builder",
-      "execution-guard"
-    ],
-    "existing_studio_config": "NOT_FOUND",
-    "global_instructions": "C:/Users/badcr/.codex/AGENTS.md",
-    "global_config_observations": {
-      "approval_policy": "never",
-      "sandbox_mode": "danger-full-access",
-      "model": "gpt-5.6-luna",
-      "reasoning_effort": "max"
-    }
+    "codex_home": "C:/Users/badcr/.codex"
   },
   "connections": {
     "github": {
-      "result": "PASS",
+      "result": "PASS_WITH_LIMITATIONS",
       "account_label": "Zodiac411",
-      "read_probe": "repository metadata and README read",
+      "read_probe": "PASS",
       "target": "Zodiac411/open-software-studio",
-      "published_branch": "studio-v2-bootstrap",
-      "published_checkpoint": "468e231b55558052906aafc267e135608ddb94ff"
+      "remote_branch_head": "ce04df0f682d84bdf7818ae8a204162ce9567c86",
+      "local_remediation_head": "f300908d5306085f72215ce09e95f5cf8f434033",
+      "limitation": "The remediation commits have not been pushed; no issue, milestone, PR, merge, or release write was authorized."
     },
     "google_drive": {
-      "result": "PASS",
+      "result": "PASS_WITH_LIMITATIONS",
       "account_label": "HellStar / badcrayfish11@gmail.com",
-      "read_probe": "canonical folder listing and governing document reads",
-      "target": "https://drive.google.com/drive/folders/1GDlSRW9aJVOvCH-fiZcWPQYsQcUNYGXe"
+      "read_probe": "PASS",
+      "target": "https://drive.google.com/drive/folders/1GDlSRW9aJVOvCH-fiZcWPQYsQcUNYGXe",
+      "limitation": "Current revisions for SD-DOC-013, SD-DOC-030, and SD-DOC-035 must be reconciled before release; no Drive write was authorized."
     },
     "chatgpt": {
-      "result": "PASS_WITH_LIMITATIONS",
+      "result": "BLOCKED",
       "visible_account": "chris folorunso / Pro",
-      "workspace_label": null,
       "route": "Plugins -> Skills -> Create -> Upload from your computer",
-      "install": "PASS",
-      "fresh_chat": "PASS",
-      "fresh_chat_url": "https://chatgpt.com/c/6a946dee-ef10-83ed-9c1b-3e86b9b6cc15",
-      "read_probe": "GitHub and Google Drive were visibly used read-only and both canonical locations resolved",
-      "explicit_mention": "PASS",
-      "explicit_mention_url": "https://chatgpt.com/c/6a9490be-6f08-83eb-9110-f95f56ee4226",
-      "explicit_mention_result": "STUDIO_ROUTE_V2_OK studio-chatgpt-studio-delivery",
-      "visible_version": "PASS: Skills Installed/Created by me entries and detail view show Studio v2.0.0",
-      "artifact_sha256": "08A62A947120249783B51C91B115962DD6644DCF5207D279AC4F74074A95DAD8",
-      "write_gate_probe": "PASS_WITH_LIMITATIONS",
-      "write_gate_probe_url": "https://chatgpt.com/c/6a947454-fac4-83eb-a3ed-3265561e8b76",
-      "write_gate_probe_result": "Read-only GitHub identity, exact proposed issue mutation, explicit approval stop, no write",
-      "reason": "Fresh Review 010 independently accepted source 468e231 and the evidence-only repair chain with no local source, package, validator, receipt, or state defect. Canonical Drive still requires separate owner approval for any authoritative update.",
-      "review_url": "https://chatgpt.com/c/6a94a55d-4cf0-83eb-9c4b-120be0406cae",
-      "review_result": "PASS_WITH_LIMITATIONS",
-      "review_evidence": "bootstrap/INDEPENDENT_CHATGPT_REVIEW_010.md; Review 009 and REPAIR-REV-009-001 are preserved as historical repair evidence."
+      "previous_install": "PASS_WITH_LIMITATIONS",
+      "current_package_install": "UNPROVEN",
+      "current_fresh_chat": "UNPROVEN",
+      "current_fresh_review": "UNPROVEN",
+      "reason": "The installed receipt and Review 010 predate the remediation and reference a different Studio archive and source SHA. The current dist/chatgpt/studio.zip must be uploaded and reviewed in a new chat before acceptance."
     }
   },
-  "baseline_validation": {
-    "validate_suite": "PASS",
-    "check_reproducibility": "PASS",
-    "run_evals": "PASS",
-    "evidence_level": "E2"
-  },
   "implementation": {
-    "phase": "accepted_with_limitations",
-    "active_work_package": "WP-SD-001",
+    "phase": "independent_review_pending",
     "result": "PASS_WITH_LIMITATIONS",
     "current_branch": "studio-v2-bootstrap",
-    "current_head": "468e231b55558052906aafc267e135608ddb94ff",
-    "source_checkpoint_sha": "468e231b55558052906aafc267e135608ddb94ff",
-    "evidence_basis": "Pilot state, SNAP-014, EVID-PILOT-*-012, and HANDOFF-468E231B5555 are generated from the immutable source checkpoint; later branch commits are evidence-only.",
-    "evidence": [
-      "python scripts/build_studio.py -> PASS (9 packages, 22 templates, deterministic archives)",
-      "python scripts/validate_suite.py -> PASS (catalog, packages, schemas, icons, archive, routing, seeded gates)",
-      "python scripts/run_evals.py -> PASS (71 routing cases, 10 execution scenarios, 6 Studio gates)",
-      "Plugin Creator validator -> PASS for all 9 generated packages",
-      "Opal Seed contact sheet and actual 24px/32px assets visually inspected -> PASS",
-      "greenfield pilot -> PASS at implementation checkpoint 468e231b55558052906aafc267e135608ddb94ff",
-      "brownfield planted-defect test -> first red, repaired, then PASS",
-      "Codex Studio package -> PASS_WITH_LIMITATIONS; installed and enabled at 2.0.0",
-      "fresh Codex Studio-directed session -> PASS_WITH_LIMITATIONS",
-      "fresh unrelated Codex task -> PASS",
-      "fresh ChatGPT Review 008 at branch tip 27a387b -> PASS_WITH_LIMITATIONS for source 17e9407; REV-008-011 complete-entry archive-order repair committed at 468e231; Review 009 then found stale state text and REPAIR-REV-009-001 records the fix; Review 010 accepted the repaired state",
-      "greenfield and brownfield REV-006 local independent review receipts -> PASS; guarded close commands -> PASS_WITH_LIMITATIONS; both machine-readable pilot states are CLOSED",
-      "ChatGPT Studio package install -> PASS_WITH_LIMITATIONS; personal Skills upload accepted and Studio is visibly installed",
-      "ChatGPT package metadata refresh -> PASS; Studio v2.0.0 is visible in the Skills UI and detail view",
-      "fresh @Studio routing probe -> PASS; STUDIO_ROUTE_V2_OK studio-chatgpt-studio-delivery",
-      "fresh ChatGPT write-confirmation probe -> PASS_WITH_LIMITATIONS; exact mutation shown and approval gate held",
-      "fresh ChatGPT read-only verification -> PASS; Studio routing and GitHub/Drive reads were visibly used",
-      "fresh independent ChatGPT Review 009 at source checkpoint 468e231 -> BLOCKED for REV-009-001 stale state text; REPAIR-REV-009-001 records the evidence-only fix",
-      "fresh independent ChatGPT Review 010 at source checkpoint 468e231 and remote evidence tip 320ec6d -> PASS_WITH_LIMITATIONS with no local defect; Drive remains on its pre-V2 authoritative state"
+    "code_head": "f300908d5306085f72215ce09e95f5cf8f434033",
+    "review_candidate": "live Git HEAD after the remediation handoff commit",
+    "commits": [
+      "8941070e383df2514ceaa0309035bceb2dd8615f",
+      "dcc6750943fd67d1915280fbd2aa97a6bd01686a",
+      "4ba6ddbc15a7dc1cc20c68edb3b3356031806a8f",
+      "417275c",
+      "f300908d5306085f72215ce09e95f5cf8f434033"
     ],
-    "blocking_findings": [],
-    "local_review_disposition": "ACCEPT",
-    "review_disposition": "PASS_WITH_LIMITATIONS",
+    "local_evidence": [
+      "python scripts/build_studio.py --check-only -> PASS",
+      "python scripts/validate_suite.py -> PASS including two clean-checkout deterministic builds",
+      "python scripts/run_evals.py -> PASS including six executable control-plane regressions",
+      "python scripts/security_checks.py -> PASS for 1365 tracked paths and packaged path traversal",
+      "Plugin Creator -> PASS for all nine generated packages under UTF-8",
+      "Skill Creator -> PASS for all 35 generated source skills under UTF-8",
+      "greenfield and brownfield local pilot tests -> PASS",
+      "two consecutive optional MCP cold-start probes -> PASS",
+      "git diff --check -> PASS",
+      "worktree clean after commits -> PASS"
+    ],
+    "blocking_findings": [
+      "Fresh independent Luna review of the final live SHA is pending.",
+      "Current Studio archive is not yet re-uploaded or verified in fresh ChatGPT.",
+      "Fresh ChatGPT Review has not accepted the remediation SHA.",
+      "Remediation commits are not published to the GitHub branch.",
+      "Drive revision drift is not reconciled.",
+      "External GitHub write/reconciliation execution remains NOT_RUN by approval policy."
+    ],
+    "local_review_disposition": "UNPROVEN",
+    "fresh_chatgpt_review_disposition": "UNPROVEN",
     "external_writes": "NOT_RUN"
   },
   "human_gates": {
     "account_confirmation": "PASS",
     "oauth_or_account_selection": "NOT_RUN",
-    "external_write_smoke": "PASS_WITH_LIMITATIONS",
     "external_write_execution": "NOT_RUN",
     "global_chatgpt_instruction_change": "NOT_RUN",
-    "merge_or_release": "NOT_RUN",
+    "push_merge_or_release": "NOT_RUN",
     "iphone_mobile_check": "USER CHECK"
   },
+  "overall_result": "BLOCKED",
   "secrets_policy": "No token, cookie, password, MFA code, recovery code, OAuth token, or API key is stored in this state file."
 }
