@@ -6,9 +6,13 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
+import shlex
 import subprocess
 import sys
+import tempfile
+from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -56,15 +60,66 @@ def read_json(path: Path) -> dict[str, Any]:
 
 
 def write_json(path: Path, value: Any) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, indent=2, sort_keys=True, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
+    atomic_write(path, json.dumps(value, indent=2, sort_keys=True, ensure_ascii=False) + "\n")
 
 
 def write_text(path: Path, value: str, overwrite: bool = True) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
     if path.exists() and not overwrite:
         return
-    path.write_text(value, encoding="utf-8", newline="\n")
+    atomic_write(path, value)
+
+
+def atomic_write(path: Path, value: str) -> None:
+    """Replace one file without exposing a partially-written document."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, temporary = tempfile.mkstemp(prefix=f".{path.name}.", suffix=".tmp", dir=path.parent)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as handle:
+            handle.write(value)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, path)
+    finally:
+        if os.path.exists(temporary):
+            os.unlink(temporary)
+
+
+def atomic_bundle(files: dict[Path, str]) -> None:
+    """Commit related recovery files together and restore old bytes on failure."""
+    originals = {path: path.read_bytes() if path.exists() else None for path in files}
+    temporary_paths: dict[Path, Path] = {}
+    try:
+        for path, value in files.items():
+            path.parent.mkdir(parents=True, exist_ok=True)
+            fd, temporary = tempfile.mkstemp(prefix=f".{path.name}.", suffix=".tmp", dir=path.parent)
+            temporary_path = Path(temporary)
+            temporary_paths[path] = temporary_path
+            with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as handle:
+                handle.write(value)
+                handle.flush()
+                os.fsync(handle.fileno())
+        for path, temporary in temporary_paths.items():
+            os.replace(temporary, path)
+    except Exception:
+        for path, original in originals.items():
+            if original is None:
+                path.unlink(missing_ok=True)
+            else:
+                fd, temporary = tempfile.mkstemp(prefix=f".{path.name}.restore.", suffix=".tmp", dir=path.parent)
+                try:
+                    with os.fdopen(fd, "wb") as handle:
+                        handle.write(original)
+                        handle.flush()
+                        os.fsync(handle.fileno())
+                    os.replace(temporary, path)
+                finally:
+                    if os.path.exists(temporary):
+                        os.unlink(temporary)
+        raise
+    finally:
+        for temporary in temporary_paths.values():
+            if temporary.exists():
+                temporary.unlink()
 
 
 def git(project: Path, *args: str) -> str | None:
@@ -82,10 +137,149 @@ def current_sha(project: Path) -> str | None:
 
 
 def source_sha(project: Path, state: dict[str, Any] | None = None) -> str | None:
+    """Return the immutable checkpoint, retained for compatibility."""
     declared = state.get("source_checkpoint_sha") if state else None
-    if declared:
-        return git(project, "rev-parse", f"{declared}^{{commit}}")
+    return declared or (state or {}).get("current_sha") or current_sha(project)
+
+
+def live_head(project: Path) -> str | None:
     return current_sha(project)
+
+
+def candidate_head(project: Path, state: dict[str, Any]) -> str | None:
+    return state.get("release_candidate_sha") or state.get("live_head_sha") or state.get("current_sha") or live_head(project)
+
+
+def sha_digest(values: Any) -> str:
+    return hashlib.sha256(json.dumps(values, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()
+
+
+def parse_timestamp(value: Any) -> float:
+    if not isinstance(value, str):
+        return 0.0
+    try:
+        return datetime.fromisoformat(value.replace("Z", "+00:00")).timestamp()
+    except ValueError:
+        return 0.0
+
+
+def record_sequence(root: Path) -> int:
+    highest = 0
+    if root.is_dir():
+        for path in root.glob("*.json"):
+            try:
+                sequence = read_json(path).get("sequence")
+            except ValueError:
+                continue
+            if isinstance(sequence, int) and not isinstance(sequence, bool):
+                highest = max(highest, sequence)
+    return highest
+
+
+def next_event_sequence(project: Path) -> int:
+    path = control_root(project) / "events.jsonl"
+    highest = 0
+    if path.is_file():
+        for line in path.read_text(encoding="utf-8").splitlines():
+            try:
+                sequence = json.loads(line).get("sequence")
+            except json.JSONDecodeError:
+                continue
+            if isinstance(sequence, int) and not isinstance(sequence, bool):
+                highest = max(highest, sequence)
+    return highest + 1
+
+
+def render_active_plan(project: Path, state: dict[str, Any]) -> str:
+    wp_id = state.get("active_wp") or "none"
+    wp_path = control_root(project) / "work-packages" / f"{wp_id}.json"
+    wp = read_json(wp_path) if wp_path.is_file() else {}
+    requirements = wp.get("requirements", [])
+    return "\n".join([
+        "# Active project plan",
+        "",
+        "<!-- STUDIO-RECOVERY: generated from state.json and the active work package. -->",
+        f"- Phase: {state.get('phase')}",
+        f"- Status: {state.get('status')}",
+        f"- Active work package: {wp_id}",
+        f"- Live HEAD: {state.get('live_head_sha') or state.get('current_sha')}",
+        f"- Source checkpoint: {state.get('source_checkpoint_sha')}",
+        f"- Next action: {state.get('next_action')}",
+        f"- Requirements: {', '.join(str(item) for item in requirements)}",
+        "",
+    ])
+
+
+def render_context(project: Path, state: dict[str, Any]) -> str:
+    wp_id = state.get("active_wp") or "WP-001"
+    wp_path = control_root(project) / "work-packages" / f"{wp_id}.json"
+    wp = read_json(wp_path) if wp_path.is_file() else {}
+    return "\n".join([
+        "# Project context capsule",
+        "",
+        f"- Project: `{state.get('project_id')}`",
+        f"- Phase: `{state.get('phase')}`",
+        f"- Work package: `{wp.get('wp_id', wp_id)}`",
+        f"- Snapshot: `{state.get('snapshot_id')}`",
+        f"- Live HEAD: `{state.get('live_head_sha') or state.get('current_sha')}`",
+        f"- Active goal: {wp.get('primary_outcome', state.get('next_action'))}",
+        f"- Requirements: {', '.join(str(item) for item in wp.get('requirements', []))}",
+        f"- Allowed paths: {', '.join(str(item) for item in wp.get('allowed_paths', []))}",
+        f"- Forbidden paths: {', '.join(str(item) for item in wp.get('forbidden_paths', []))}",
+        f"- Acceptance: {'; '.join(str(item) for item in wp.get('acceptance', []))}",
+        f"- Stop conditions: {'; '.join(str(item) for item in wp.get('stop_conditions', []))}",
+        "",
+        "Read `.project/session/findings.md` and `.project/session/progress.md` before acting. Do not merge or self-accept.",
+        "",
+    ])
+
+
+def transition(project: Path, state_path: Path, state: dict[str, Any], event_type: str, **updates: Any) -> tuple[dict[str, Any], bool]:
+    """Apply one idempotent state transition and refresh recovery projections."""
+    next_state = deepcopy(state)
+    next_state.update(updates)
+    live = live_head(project)
+    if live:
+        next_state["live_head_sha"] = live
+        next_state["current_sha"] = live
+        next_state["release_candidate_sha"] = live
+    next_state["updated_at"] = utc_now()
+    next_state.setdefault("source_checkpoint_sha", state.get("source_checkpoint_sha") or state.get("current_sha"))
+    target_phase = next_state.get("phase")
+    already_applied = state.get("phase") == target_phase and all(state.get(key) == value for key, value in updates.items())
+    if already_applied:
+        return state, False
+
+    sequence = next_event_sequence(project)
+    event = {
+        "schema": "studio.event/v2",
+        "event_id": f"EVT-{sequence:06d}",
+        "sequence": sequence,
+        "type": event_type,
+        "from_phase": state.get("phase"),
+        "to_phase": next_state.get("phase"),
+        "project_id": next_state.get("project_id"),
+        "live_head_sha": live,
+        "timestamp": next_state["updated_at"],
+    }
+    events_path = control_root(project) / "events.jsonl"
+    existing_events = events_path.read_text(encoding="utf-8") if events_path.is_file() else ""
+    progress_path = control_root(project) / "session" / "progress.md"
+    existing_progress = progress_path.read_text(encoding="utf-8") if progress_path.is_file() else "# Project progress\n"
+    progress_marker = f"<!-- STUDIO-EVENT: {event['event_id']} -->"
+    if progress_marker not in existing_progress:
+        existing_progress = existing_progress.rstrip() + f"\n\n{progress_marker}\n- State projection: phase={next_state.get('phase')} live_head={next_state.get('live_head_sha')}\n- {event_type}: {next_state.get('phase')} at {next_state.get('live_head_sha')}\n"
+    files = {
+        state_path: json.dumps(next_state, indent=2, sort_keys=True, ensure_ascii=False) + "\n",
+        control_root(project) / "session" / "active-plan.md": render_active_plan(project, next_state),
+        progress_path: existing_progress,
+        events_path: existing_events + json.dumps(event, sort_keys=True, ensure_ascii=False) + "\n",
+    }
+    context_path = control_root(project) / "session" / "context-capsule.md"
+    if context_path.is_file():
+        files[context_path] = render_context(project, next_state)
+    atomic_bundle(files)
+    return next_state, True
 
 
 def require_state(project: Path) -> tuple[Path, dict[str, Any]] | None:
@@ -99,12 +293,10 @@ def require_state(project: Path) -> tuple[Path, dict[str, Any]] | None:
 
 
 def save_state(path: Path, state: dict[str, Any], project: Path, **updates: Any) -> None:
-    state.update(updates)
-    state["updated_at"] = utc_now()
-    checkpoint = source_sha(project, state)
-    if checkpoint:
-        state["current_sha"] = checkpoint
-    write_json(path, state)
+    event_type = updates.pop("_event_type", "state.updated")
+    next_state, _ = transition(project, path, state, event_type, **updates)
+    state.clear()
+    state.update(next_state)
 
 
 def init_project(args: argparse.Namespace) -> int:
@@ -117,7 +309,7 @@ def init_project(args: argparse.Namespace) -> int:
             return fail(f"existing Studio state is incomplete; missing recovery files: {', '.join(missing)}")
         return emit("PASS_WITH_LIMITATIONS", "Studio project already initialized; existing state was preserved", project=str(project), changed=False, next_action="read .project/session/active-plan.md")
 
-    project_id = args.project_id.upper()
+    project_id = (args.project_id or f"PRJ-{re.sub(r'[^A-Za-z0-9]+', '-', project.name).strip('-')}").upper()
     if not ID_PATTERN.fullmatch(project_id):
         return fail("project id must be an uppercase stable identifier")
     profile = args.profile
@@ -131,7 +323,11 @@ def init_project(args: argparse.Namespace) -> int:
         "phase": "INTAKE",
         "status": "PASS",
         "active_wp": None,
+        "source_checkpoint_sha": sha,
+        "live_head_sha": sha,
+        "release_candidate_sha": sha,
         "current_sha": sha,
+        "session_id": f"SESSION-{sha[:12].upper() if sha else project_id}",
         "snapshot_id": None,
         "next_action": "shape the request and record non-goals before implementation",
         "blocking_items": [],
@@ -140,21 +336,24 @@ def init_project(args: argparse.Namespace) -> int:
         "updated_at": utc_now(),
     }
     control.mkdir(parents=True, exist_ok=True)
-    write_json(control / "project.yaml", {
+    project_metadata_path = control / "project.yaml"
+    metadata = read_json(project_metadata_path) if project_metadata_path.is_file() else {}
+    metadata.update({
         "schema": "studio.project/v2",
         "project_id": project_id,
         "profile": profile,
         "archetype": archetype,
         "authorities": {"repository": str(project), "machine_state": ".project", "human_task_view": "GitHub Issues/Milestones (confirmation-gated)"},
-        "non_goals": ["automatic merge", "automatic release", "unconfirmed external writes"],
+        "non_goals": metadata.get("non_goals", ["automatic merge", "automatic release", "unconfirmed external writes"]),
     })
+    write_json(project_metadata_path, metadata)
     write_json(state_path, state)
     for directory in ("session", "snapshots", "work-packages", "evidence", "handoffs", "reviews", "repairs", "artifacts", "tracking"):
         (control / directory).mkdir(parents=True, exist_ok=True)
-    write_text(control / "session" / "active-plan.md", "# Active Studio plan\n\n<!-- STUDIO-RECOVERY: initialized; replace with the approved plan. -->\n\n- Phase: INTAKE\n- Next action: shape the request and record non-goals.\n", overwrite=False)
-    write_text(control / "session" / "findings.md", "# Studio findings\n\n<!-- STUDIO-RECOVERY: append typed findings; do not use this file as acceptance. -->\n", overwrite=False)
-    write_text(control / "session" / "progress.md", "# Studio progress\n\n<!-- STUDIO-RECOVERY: append observed progress and evidence only. -->\n", overwrite=False)
-    write_text(control / "events.jsonl", "", overwrite=False)
+    write_text(control / "session" / "active-plan.md", render_active_plan(project, state), overwrite=False)
+    write_text(control / "session" / "findings.md", "# Project findings\n\n<!-- STUDIO-RECOVERY: append typed findings; do not use this file as acceptance. -->\n", overwrite=False)
+    write_text(control / "session" / "progress.md", f"# Project progress\n\n<!-- STUDIO-RECOVERY: append observed progress and evidence only. -->\n\n<!-- STUDIO-EVENT: EVT-000001 -->\n- State projection: phase=INTAKE live_head={sha}\n- project.initialized: INTAKE at {sha}\n", overwrite=False)
+    write_text(control / "events.jsonl", json.dumps({"schema": "studio.event/v2", "event_id": "EVT-000001", "sequence": 1, "type": "project.initialized", "from_phase": None, "to_phase": "INTAKE", "project_id": project_id, "live_head_sha": sha, "timestamp": state["created_at"]}, sort_keys=True) + "\n", overwrite=False)
     return emit("PASS", "Studio project initialized", project=str(project), project_id=project_id, current_sha=sha, next_action=state["next_action"])
 
 
@@ -163,6 +362,51 @@ def load_catalog() -> dict[str, Any]:
     if value.get("schema") != "studio.catalog/v2":
         raise ValueError("catalog schema is not studio.catalog/v2")
     return value
+
+
+def projection_errors(project: Path, state: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+    expected_phase = str(state.get("phase"))
+    expected_live = state.get("live_head_sha") or state.get("current_sha")
+    active_plan = control_root(project) / "session" / "active-plan.md"
+    if not active_plan.is_file():
+        errors.append("active plan is missing")
+    else:
+        text = active_plan.read_text(encoding="utf-8")
+        if f"- Phase: {expected_phase}" not in text:
+            errors.append("active plan phase disagrees with state")
+        if expected_live and f"- Live HEAD: {expected_live}" not in text:
+            errors.append("active plan live HEAD disagrees with state")
+    context = control_root(project) / "session" / "context-capsule.md"
+    if context.is_file():
+        context_text = context.read_text(encoding="utf-8")
+        if expected_live and f"- Live HEAD: `{expected_live}`" not in context_text:
+            errors.append("context capsule live HEAD disagrees with state")
+        if f"- Phase: `{expected_phase}`" not in context_text:
+            errors.append("context capsule phase disagrees with state")
+    progress = control_root(project) / "session" / "progress.md"
+    if not progress.is_file():
+        errors.append("progress projection is missing")
+    elif expected_live and f"- State projection: phase={expected_phase} live_head={expected_live}" not in progress.read_text(encoding="utf-8"):
+        errors.append("progress projection disagrees with state")
+    events = control_root(project) / "events.jsonl"
+    if not events.is_file():
+        errors.append("event log is missing")
+    else:
+        parsed = []
+        for line in events.read_text(encoding="utf-8").splitlines():
+            try:
+                item = json.loads(line)
+            except json.JSONDecodeError:
+                errors.append("event log contains invalid JSON")
+                continue
+            if isinstance(item, dict) and isinstance(item.get("sequence"), int):
+                parsed.append(item)
+        if not parsed:
+            errors.append("event log contains no typed events")
+        elif parsed[-1].get("to_phase") != state.get("phase") or parsed[-1].get("live_head_sha") != expected_live:
+            errors.append("latest event disagrees with state")
+    return errors
 
 
 def doctor(args: argparse.Namespace) -> int:
@@ -192,8 +436,12 @@ def doctor(args: argparse.Namespace) -> int:
         live = current_sha(project)
         checkpoint = source_sha(project, value)
         check("project-state", value.get("schema") == "studio.state/v2", ".project/state.json")
-        check("sha-freshness", not live or (checkpoint is not None and value.get("current_sha") == checkpoint), f"state={value.get('current_sha')} source={checkpoint} live={live}")
+        expected_live = value.get("live_head_sha") or value.get("current_sha")
+        check("sha-freshness", not live or expected_live == live, f"state={expected_live} source_checkpoint={checkpoint} live={live}")
+        check("release-candidate", not live or (value.get("release_candidate_sha") or expected_live) == live, f"candidate={value.get('release_candidate_sha')} live={live}")
         check("recovery-files", all((control_root(project) / "session" / name).is_file() for name in ("active-plan.md", "findings.md", "progress.md")), ".project/session")
+        errors = projection_errors(project, value)
+        check("recovery-coherence", not errors, "; ".join(errors) or "state, projections, and typed events agree")
     blocked = [item for item in checks if item["result"] == "BLOCKED"]
     return emit("BLOCKED" if blocked else "PASS", "Studio doctor completed", checks=checks, next_action="repair the named check" if blocked else "read the active project state before acting")
 
@@ -206,6 +454,29 @@ def plan_project(args: argparse.Namespace) -> int:
     state_path, state = pair
     if state.get("phase") not in ("INTAKE", "SHAPED", "PLANNED"):
         return fail(f"cannot plan from phase {state.get('phase')}; use the current next action")
+    metadata = read_json(control_root(project) / "project.yaml") if (control_root(project) / "project.yaml").is_file() else {}
+    context: dict[str, Any] = {"metadata": metadata, "artifacts": {}}
+    artifact_root = control_root(project) / "artifacts"
+    for artifact_path in sorted(artifact_root.glob("*.json")) if artifact_root.is_dir() else []:
+        try:
+            artifact = read_json(artifact_path)
+        except ValueError:
+            continue
+        context["artifacts"][artifact.get("artifact_type", artifact_path.stem)] = artifact.get("data", artifact)
+    brief = context["artifacts"].get("PROJECT_BRIEF", {})
+    product = context["artifacts"].get("PRODUCT_SPEC", {})
+    title = metadata.get("title") or brief.get("title") or project.name
+    outcome = metadata.get("primary_outcome") or brief.get("primary_outcome") or brief.get("desired_outcome") or f"Deliver the approved outcome for {title}."
+    requirements = metadata.get("requirements") or product.get("requirements") or brief.get("requirements") or ["REQ-001"]
+    if not isinstance(requirements, list):
+        requirements = [requirements]
+    requirements = [str(item) for item in requirements]
+    allowed_paths = metadata.get("allowed_paths") or (["src/", "tests/"] if (project / "src").is_dir() else ["."])
+    forbidden_paths = metadata.get("forbidden_paths") or [".git/", ".project/secrets/"]
+    verification = metadata.get("verification_commands") or product.get("verification") or []
+    if not isinstance(verification, list):
+        verification = [verification]
+    repository = metadata.get("repository") or metadata.get("repository_url") or git(project, "remote", "get-url", "origin") or str(project)
     wp_path = control_root(project) / "work-packages" / "WP-001.json"
     if not wp_path.exists():
         sha = current_sha(project)
@@ -217,19 +488,23 @@ def plan_project(args: argparse.Namespace) -> int:
             "status": "PLANNED",
             "snapshot_id": None,
             "base_sha": sha,
-            "primary_outcome": "Complete one bounded Studio proof slice.",
-            "requirements": ["REQ-CATALOG", "REQ-PROTOCOL"],
-            "allowed_paths": ["scripts/", "catalog/", "schemas/", "skills/", "templates/"],
-            "forbidden_paths": [".codex/", "secrets/", "credentials/"],
-            "scope_budget": {"primary_outcomes": 1, "subsystems": 3, "new_dependencies": 0},
-            "acceptance": ["named validators pass", "independent review is fresh and non-self-accepting"],
-            "verification": [{"level": "E2", "command": "python scripts/validate_studio.py"}],
-            "non_goals": ["merge", "release", "unapproved external writes"],
-            "stop_conditions": ["base SHA changes", "new dependency is required", "scope budget is exceeded"],
-            "rollback": "review bootstrap/ROLLBACK.md",
+            "title": title,
+            "repository": repository,
+            "primary_outcome": outcome,
+            "requirements": requirements,
+            "allowed_paths": allowed_paths,
+            "forbidden_paths": forbidden_paths,
+            "scope_budget": {"primary_outcomes": 1, "subsystems": 1, "new_dependencies": 0},
+            "acceptance": metadata.get("acceptance", ["the stated outcome is directly verified", "an independent current review accepts the result"]),
+            "verification": [{"level": "E2", "command": str(command)} for command in verification],
+            "non_goals": metadata.get("non_goals", ["merge", "release", "unconfirmed external writes"]),
+            "stop_conditions": metadata.get("stop_conditions", ["base SHA changes", "scope budget is exceeded"]),
+            "rollback": metadata.get("rollback", "restore the previous commit or project checkpoint"),
             "handoff_requirements": ["base SHA", "head SHA", "diff", "commands", "limitations", "reviewer action"],
+            "implementer_actor_id": metadata.get("implementer_actor_id", "project-executor"),
+            "implementer_session_id": state.get("session_id"),
         })
-    save_state(state_path, state, project, phase="PLANNED", status="PASS", active_wp="WP-001", next_action="review and freeze WP-001")
+    save_state(state_path, state, project, _event_type="plan.created", phase="PLANNED", status="PASS", active_wp="WP-001", next_action="review and freeze WP-001")
     return emit("PASS", "bounded work package is planned", work_package=str(wp_path), next_action="studio freeze --approved-by <owner>")
 
 
@@ -243,9 +518,11 @@ def freeze_project(args: argparse.Namespace) -> int:
     state_path, state = pair
     if state.get("phase") != "PLANNED":
         return fail(f"freeze requires PLANNED state, found {state.get('phase')}")
-    sha = source_sha(project, state)
+    sha = live_head(project)
     if not sha:
         return fail("freeze requires a Git repository HEAD")
+    if state.get("phase") == "FROZEN" and state.get("snapshot_id") == "SNAP-001":
+        return emit("PASS", "snapshot already frozen", snapshot_id="SNAP-001", base_sha=sha, changed=False, next_action="compile a fresh context capsule")
     snapshot = {"schema": "studio.snapshot/v2", "snapshot_id": "SNAP-001", "project_id": state["project_id"], "base_sha": sha, "status": "FROZEN", "approved_by": args.approved_by, "created_at": utc_now()}
     write_json(control_root(project) / "snapshots" / "SNAP-001.json", snapshot)
     wp_path = control_root(project) / "work-packages" / "WP-001.json"
@@ -253,7 +530,7 @@ def freeze_project(args: argparse.Namespace) -> int:
         wp = read_json(wp_path)
         wp.update({"status": "FROZEN", "snapshot_id": "SNAP-001", "base_sha": sha})
         write_json(wp_path, wp)
-    save_state(state_path, state, project, phase="FROZEN", status="PASS", snapshot_id="SNAP-001", next_action="compile a fresh context capsule")
+    save_state(state_path, state, project, _event_type="snapshot.frozen", phase="FROZEN", status="PASS", snapshot_id="SNAP-001", next_action="compile a fresh context capsule")
     return emit("PASS", "snapshot frozen", snapshot_id="SNAP-001", base_sha=sha, approved_by=args.approved_by, next_action="studio context")
 
 
@@ -269,25 +546,10 @@ def context_project(args: argparse.Namespace) -> int:
     if not wp_path.is_file():
         return fail("active work package is missing")
     wp = read_json(wp_path)
-    capsule = "\n".join([
-        "# Studio context capsule",
-        "",
-        f"- Project: `{state['project_id']}`",
-        f"- Work package: `{wp.get('wp_id')}`",
-        f"- Snapshot: `{state.get('snapshot_id')}`",
-        f"- Current SHA: `{current_sha(project)}`",
-        f"- Active goal: {wp.get('primary_outcome')}",
-        f"- Requirements: {', '.join(wp.get('requirements', []))}",
-        f"- Allowed paths: {', '.join(wp.get('allowed_paths', []))}",
-        f"- Forbidden paths: {', '.join(wp.get('forbidden_paths', []))}",
-        f"- Acceptance: {'; '.join(wp.get('acceptance', []))}",
-        f"- Stop conditions: {'; '.join(wp.get('stop_conditions', []))}",
-        "",
-        "Read `.project/session/findings.md` and `.project/session/progress.md` before acting. Do not merge or self-accept.",
-        "",
-    ])
-    write_text(control_root(project) / "session" / "context-capsule.md", capsule)
-    save_state(state_path, state, project, phase="IMPLEMENTING", status="PASS", next_action="implement only the active work package")
+    if state.get("phase") == "IMPLEMENTING" and (control_root(project) / "session" / "context-capsule.md").is_file():
+        return emit("PASS", "context capsule already current", path=str(control_root(project) / "session" / "context-capsule.md"), changed=False, next_action=state["next_action"])
+    save_state(state_path, state, project, _event_type="context.compiled", phase="IMPLEMENTING", status="PASS", next_action="implement only the active work package")
+    write_text(control_root(project) / "session" / "context-capsule.md", render_context(project, state))
     return emit("PASS", "fresh context capsule compiled", path=str(control_root(project) / "session" / "context-capsule.md"), next_action=state["next_action"])
 
 
@@ -320,7 +582,8 @@ def add_evidence(args: argparse.Namespace) -> int:
     evidence_id = args.evidence_id.upper()
     if not re.fullmatch(r"EVID-[A-Z0-9-]+", evidence_id):
         return fail("evidence id must match EVID-...")
-    value = {"schema": "studio.evidence/v2", "document_id": evidence_id, "evidence_id": evidence_id, "project_id": pair[1]["project_id"], "requirement": args.requirement, "level": args.level, "command_or_probe": args.command_or_probe, "observed": args.observed, "timestamp": utc_now(), "limitations": args.limitations}
+    head = live_head(project)
+    value = {"schema": "studio.evidence/v2", "document_id": evidence_id, "evidence_id": evidence_id, "project_id": pair[1]["project_id"], "requirement": args.requirement, "level": args.level, "command_or_probe": args.command_or_probe, "observed": args.observed, "timestamp": utc_now(), "limitations": args.limitations or "No additional limitations recorded.", "sequence": record_sequence(control_root(project) / "evidence") + 1, "head_sha": head, "exit_code": args.exit_code, "environment": args.environment, "observed_output_digest": sha_digest(args.observed)}
     path = control_root(project) / "evidence" / f"{evidence_id}.json"
     if path.exists() and not args.replace:
         return fail(f"evidence already exists; use --replace only for this named local receipt")
@@ -334,7 +597,7 @@ def validate_evidence(args: argparse.Namespace) -> int:
     files = sorted(root.glob("*.json")) if root.is_dir() else []
     if not files:
         return emit("NOT_RUN", "no project evidence receipts exist", next_action="record named evidence before claiming completion")
-    required = ["evidence_id", "requirement", "level", "command_or_probe", "observed", "timestamp", "limitations"]
+    required = ["evidence_id", "requirement", "level", "command_or_probe", "observed", "timestamp", "limitations", "sequence", "head_sha", "exit_code", "observed_output_digest"]
     errors: list[str] = []
     for path in files:
         try:
@@ -342,9 +605,16 @@ def validate_evidence(args: argparse.Namespace) -> int:
         except ValueError as exc:
             errors.append(str(exc))
             continue
-        errors.extend(f"{path.name}: missing {key}" for key in required if not value.get(key))
+        errors.extend(f"{path.name}: missing {key}" for key in required if key not in value or value[key] in (None, ""))
+        if not isinstance(value.get("sequence"), int) or isinstance(value.get("sequence"), bool):
+            errors.append(f"{path.name}: sequence must be an integer")
+        if not isinstance(value.get("exit_code"), int) or isinstance(value.get("exit_code"), bool):
+            errors.append(f"{path.name}: exit_code must be an integer")
         if value.get("level") not in {f"E{index}" for index in range(6)}:
             errors.append(f"{path.name}: evidence level must be E0 through E5")
+        live = live_head(project)
+        if live and value.get("head_sha") != live:
+            errors.append(f"{path.name}: evidence is stale for live HEAD {live}")
     if errors:
         return fail("; ".join(errors))
     return emit("PASS", "evidence receipts are mechanically valid", count=len(files), levels=sorted({read_json(path)["level"] for path in files}))
@@ -387,36 +657,119 @@ def compile_artifact(args: argparse.Namespace) -> int:
     return emit("PASS", "artifact compiled from the catalog template", markdown=str(output), sidecar=str(sidecar), artifact_type=artifact_type)
 
 
+def command_observation(project: Path, command: str) -> dict[str, Any]:
+    try:
+        argv = shlex.split(command, posix=False)
+        proc = subprocess.run(argv, cwd=project, capture_output=True, text=True, check=False, timeout=60)
+        output = (proc.stdout + proc.stderr).strip()
+        return {"command": command, "exit_code": proc.returncode, "observed": output[-2000:] or "(no output)", "output_digest": sha_digest(output)}
+    except (OSError, subprocess.TimeoutExpired, ValueError) as exc:
+        return {"command": command, "exit_code": None, "observed": f"not executed: {exc}", "output_digest": sha_digest(str(exc))}
+
+
 def handoff_project(args: argparse.Namespace) -> int:
     project = project_root(args.project)
     pair = require_state(project)
     if pair is None:
         return fail("run studio init before studio handoff")
     state_path, state = pair
-    sha = source_sha(project, state)
+    sha = live_head(project)
     if not sha:
         return fail("handoff requires a Git HEAD")
     wp_id = state.get("active_wp") or "WP-001"
     snapshot_path = control_root(project) / "snapshots" / f"{state.get('snapshot_id', 'SNAP-001')}.json"
     snapshot = read_json(snapshot_path) if snapshot_path.is_file() else {}
-    diff = git(project, "diff", "--stat") or "clean or unavailable"
     review_id = f"HANDOFF-{sha[:12].upper()}"
-    value = {"schema": "studio.handoff/v2", "document_id": review_id, "wp_id": wp_id, "base_sha": snapshot.get("base_sha"), "head_sha": sha, "branch": git(project, "branch", "--show-current"), "claimed_outcomes": ["current repository state is packaged for independent review"], "files": [line.strip() for line in diff.splitlines() if line.strip()], "commands": ["python scripts/build_studio.py", "python scripts/validate_studio.py", "python scripts/run_evals.py"], "evidence": [{"level": "E2", "observed": "handoff generated from live Git state"}], "scope_delta": {"status": "REVIEW_REQUIRED"}, "unproven": ["fresh ChatGPT installation and review", "mobile availability", "external write smoke test"], "next_action": "independent fresh-context review", "reviewer_action": "inspect requirements, current SHA, diff, CI/runtime evidence before this conclusion", "created_at": utc_now()}
+    existing_handoff = control_root(project) / "handoffs" / f"{review_id}.json"
+    if state.get("phase") == "IN_REVIEW" and existing_handoff.is_file():
+        return emit("PASS_WITH_LIMITATIONS", "implementation handoff is already current", path=str(existing_handoff), head_sha=sha, changed=False, next_action=state.get("next_action"))
+    base_sha = snapshot.get("base_sha") or state.get("source_checkpoint_sha")
+    committed_diff = git(project, "diff", "--stat", f"{base_sha}..{sha}") if base_sha else None
+    committed_files = git(project, "diff", "--name-only", f"{base_sha}..{sha}") if base_sha else None
+    dirty_diff = git(project, "diff", "--stat") or "clean"
+    wp_path = control_root(project) / "work-packages" / f"{wp_id}.json"
+    wp = read_json(wp_path) if wp_path.is_file() else {}
+    commands = [item.get("command") for item in wp.get("verification", []) if isinstance(item, dict) and item.get("command")]
+    observations = [command_observation(project, command) for command in commands]
+    value = {"schema": "studio.handoff/v2", "document_id": review_id, "wp_id": wp_id, "base_sha": base_sha, "head_sha": sha, "branch": git(project, "branch", "--show-current"), "claimed_outcomes": [str(wp.get("primary_outcome", "current repository state is packaged for independent review"))], "files": [line.strip() for line in (committed_files or "").splitlines() if line.strip()], "committed_diff_stat": committed_diff or "clean or unavailable", "dirty_diff_stat": dirty_diff, "commands": commands, "evidence": observations, "scope_delta": {"status": "REVIEW_REQUIRED", "base_sha": base_sha, "head_sha": sha}, "unproven": ["independent fresh-context review", "unconfirmed external writes"], "next_action": "independent fresh-context review", "reviewer_action": "inspect requirements, current SHA, committed diff, dirty state, and observed validation results before this conclusion", "created_at": utc_now(), "sequence": record_sequence(control_root(project) / "handoffs") + 1}
     path = control_root(project) / "handoffs" / f"{review_id}.json"
     write_json(path, value)
     write_text(path.with_suffix(".md"), "# Studio implementation handoff\n\n" + "\n".join(f"- {key}: `{json.dumps(value[key], ensure_ascii=False)}`" for key in ("wp_id", "head_sha", "branch", "next_action", "reviewer_action")) + "\n")
-    save_state(state_path, state, project, phase="IN_REVIEW", status="PASS_WITH_LIMITATIONS", next_action="independent fresh-context review")
+    save_state(state_path, state, project, _event_type="handoff.created", phase="IN_REVIEW", status="PASS_WITH_LIMITATIONS", release_candidate_sha=sha, next_action="independent fresh-context review")
     return emit("PASS_WITH_LIMITATIONS", "implementation handoff generated; acceptance remains independent", path=str(path), head_sha=sha, next_action=state["next_action"])
 
 
 def latest_json(root: Path, prefix: str) -> Path | None:
-    files = sorted(root.glob(f"{prefix}*.json")) if root.is_dir() else []
-    return files[-1] if files else None
+    candidates: list[tuple[tuple[int, float, str], Path]] = []
+    for path in root.glob(f"{prefix}*.json") if root.is_dir() else []:
+        try:
+            value = read_json(path)
+        except ValueError:
+            continue
+        sequence = value.get("sequence")
+        typed_sequence = sequence if isinstance(sequence, int) and not isinstance(sequence, bool) else -1
+        timestamp = parse_timestamp(value.get("created_at") or value.get("timestamp"))
+        candidates.append(((typed_sequence, timestamp, path.name), path))
+    return max(candidates, key=lambda item: item[0])[1] if candidates else None
 
 
 def transition_allowed(source: str, target: str) -> bool:
     transitions = read_json(TRANSITIONS).get("transitions", {})
     return target in transitions.get(source, [])
+
+
+def review_errors(project: Path, value: dict[str, Any], state: dict[str, Any] | None = None, require_accept: bool = False) -> list[str]:
+    required_strings = ["document_id", "review_id", "reviewer_role", "reviewer_context", "reviewer_actor_id", "reviewer_session_id", "implementer_actor_id", "implementer_session_id", "reviewed_base_sha", "reviewed_head_sha", "wp_id", "requirements_digest"]
+    required_lists = ["requirements", "independent_checks", "findings", "conditions", "artifact_ids"]
+    errors = [f"missing {key}" for key in required_strings if not isinstance(value.get(key), str) or not value[key].strip()]
+    errors.extend(f"{key} must be a list" for key in required_lists if not isinstance(value.get(key), list))
+    if value.get("schema") != "studio.review/v2":
+        errors.append("review schema must be studio.review/v2")
+    if value.get("disposition") not in {"ACCEPT", "REPAIR", "BLOCKED"}:
+        errors.append("review disposition must be ACCEPT, REPAIR, or BLOCKED")
+    if not value.get("requirements"):
+        errors.append("review must name requirements")
+    if not value.get("independent_checks"):
+        errors.append("review must name independent checks")
+    if not isinstance(value.get("scope_delta"), dict):
+        errors.append("scope_delta must be an object")
+    if value.get("reviewer_actor_id") == value.get("implementer_actor_id"):
+        errors.append("reviewer and implementer actor must differ")
+    if value.get("reviewer_session_id") == value.get("implementer_session_id"):
+        errors.append("reviewer and implementer session must differ")
+    role = value.get("reviewer_role", "").lower()
+    context = value.get("reviewer_context", "").lower()
+    if any(token in role for token in ("executor", "implementer")) or any(token in context for token in ("same session", "implementation session", "executor session")):
+        errors.append("reviewer provenance identifies the implementation actor or session")
+    live = live_head(project)
+    candidate = candidate_head(project, state or {}) if state else live
+    if live and value.get("reviewed_head_sha") != live:
+        errors.append(f"review is stale: reviewed {value.get('reviewed_head_sha')} but live HEAD is {live}")
+    if candidate and value.get("reviewed_head_sha") != candidate:
+        errors.append(f"review does not match release candidate {candidate}")
+    if state and state.get("active_wp") != value.get("wp_id"):
+        errors.append("review does not target the active work package")
+    wp = control_root(project) / "work-packages" / f"{value.get('wp_id', '')}.json"
+    if wp.is_file():
+        work_package = read_json(wp)
+        expected_digest = sha_digest(work_package.get("requirements", []))
+        if value.get("requirements_digest") != expected_digest:
+            errors.append("review requirements digest does not match the active work package")
+        if value.get("requirements") != work_package.get("requirements"):
+            errors.append("review requirements do not match the active work package")
+        base = work_package.get("base_sha")
+        if base and value.get("reviewed_base_sha") != base:
+            errors.append("review base SHA does not match the active work package")
+        expected_artifacts = value.get("artifact_ids")
+        if expected_artifacts is not None and not isinstance(expected_artifacts, list):
+            errors.append("artifact_ids must be a list")
+    if not value.get("artifact_ids"):
+        errors.append("review must name the artifact set that was reviewed")
+    if value.get("disposition") == "ACCEPT" and any(isinstance(finding, dict) and finding.get("severity") == "BLOCKING" for finding in value.get("findings", [])):
+        errors.append("review with a BLOCKING finding cannot ACCEPT")
+    if require_accept and value.get("disposition") != "ACCEPT":
+        errors.append("current independent review must ACCEPT")
+    return errors
 
 
 def validate_review(args: argparse.Namespace) -> int:
@@ -428,20 +781,9 @@ def validate_review(args: argparse.Namespace) -> int:
         value = read_json(path)
     except ValueError as exc:
         return fail(str(exc))
-    errors: list[str] = []
-    if value.get("reviewer_role", "").lower() == "executor" or value.get("reviewer_context", "").lower() in {"same session", "executor session"}:
-        errors.append("executor or same-session review cannot accept work")
-    live = current_sha(project)
     state_pair = require_state(project)
-    checkpoint = source_sha(project, state_pair[1] if state_pair else None)
-    if checkpoint and value.get("reviewed_head_sha") != checkpoint:
-        errors.append(f"review is stale: reviewed {value.get('reviewed_head_sha')} but source checkpoint is {checkpoint} (live evidence HEAD is {live})")
-    if not value.get("independent_checks"):
-        errors.append("review must name independent checks")
-    if value.get("disposition") not in {"ACCEPT", "REPAIR", "BLOCKED"}:
-        errors.append("review disposition must be ACCEPT, REPAIR, or BLOCKED")
-    if value.get("disposition") == "ACCEPT" and any(finding.get("severity") == "BLOCKING" for finding in value.get("findings", [])):
-        errors.append("review with a BLOCKING finding cannot ACCEPT")
+    state = state_pair[1] if state_pair else None
+    errors = review_errors(project, value, state)
     if errors:
         return fail("; ".join(errors))
     return emit("PASS", "independent review receipt is mechanically valid", path=str(path), disposition=value["disposition"])
@@ -475,11 +817,16 @@ def close_project(args: argparse.Namespace) -> int:
     review = latest_json(control_root(project) / "reviews", "REV-")
     if not review:
         return fail("close requires a current independent ACCEPT review")
-    value = read_json(review)
-    checkpoint = source_sha(project, state)
-    if value.get("disposition") != "ACCEPT" or value.get("reviewed_head_sha") != checkpoint:
-        return fail("close requires a current independent ACCEPT review")
+    try:
+        value = read_json(review)
+    except ValueError as exc:
+        return fail(str(exc))
+    errors = review_errors(project, value, state, require_accept=True)
+    if errors:
+        return fail("; ".join(errors))
     phase = state.get("phase")
+    if phase == "CLOSED":
+        return emit("PASS_WITH_LIMITATIONS", "session is already closed", changed=False, next_action=state.get("next_action"))
     if phase == "IN_REVIEW":
         if not transition_allowed("IN_REVIEW", "ACCEPTED") or not transition_allowed("ACCEPTED", "CLOSED"):
             return fail("state transition matrix does not permit review acceptance and close")
@@ -488,12 +835,7 @@ def close_project(args: argparse.Namespace) -> int:
         return fail(f"close requires ACCEPTED or CLOSED state, found {phase}")
     if phase == "ACCEPTED" and not transition_allowed("ACCEPTED", "CLOSED"):
         return fail("state transition matrix does not permit close")
-    progress = control_root(project) / "session" / "progress.md"
-    existing = progress.read_text(encoding="utf-8") if progress.is_file() else "# Studio progress\n"
-    marker = f"\n- Session close observed at {utc_now()}; next action remains independent acceptance or release approval.\n"
-    if marker not in existing:
-        write_text(progress, existing.rstrip() + marker)
-    save_state(state_path, state, project, phase="CLOSED", status="PASS_WITH_LIMITATIONS", next_action="validate independent review and obtain release approval")
+    save_state(state_path, state, project, _event_type="session.closed", phase="CLOSED", status="PASS_WITH_LIMITATIONS", next_action="validate independent review and obtain release approval")
     return emit("PASS_WITH_LIMITATIONS", "session closed with acceptance and release still gated", next_action=state["next_action"])
 
 
@@ -505,18 +847,23 @@ def release_project(args: argparse.Namespace) -> int:
     if not args.approved_by:
         return fail("release requires explicit owner approval")
     state = pair[1]
-    if state.get("phase") != "CLOSED":
-        return fail(f"release requires CLOSED state, found {state.get('phase')}")
     review = latest_json(control_root(project) / "reviews", "REV-")
     if not review:
         return fail("release requires an independent review")
-    value = read_json(review)
-    checkpoint = source_sha(project, state)
-    if value.get("disposition") != "ACCEPT" or value.get("reviewed_head_sha") != checkpoint:
-        return fail("release requires a current independent ACCEPT review")
+    try:
+        value = read_json(review)
+    except ValueError as exc:
+        return fail(str(exc))
+    errors = review_errors(project, value, state, require_accept=True)
+    if errors:
+        return fail("; ".join(errors))
+    if state.get("phase") == "RELEASED":
+        return emit("PASS", "release is already recorded; no publish or merge was performed", approved_by=args.approved_by, revision=live_head(project), changed=False)
+    if state.get("phase") != "CLOSED":
+        return fail(f"release requires CLOSED state, found {state.get('phase')}")
     state_path = pair[0]
-    save_state(state_path, state, project, phase="RELEASED", status="PASS", next_action="maintain the released revision")
-    return emit("PASS", "release gate validated; no publish or merge was performed", approved_by=args.approved_by, revision=live)
+    save_state(state_path, state, project, _event_type="release.completed", phase="RELEASED", status="PASS", next_action="maintain the released revision")
+    return emit("PASS", "release gate validated; no publish or merge was performed", approved_by=args.approved_by, revision=live_head(project), changed=True)
 
 
 def track_plan(args: argparse.Namespace) -> int:
@@ -529,11 +876,18 @@ def track_plan(args: argparse.Namespace) -> int:
     if not wp.is_file():
         return fail("tracking requires an active work package")
     value = read_json(wp)
-    plan = {"schema": "studio.github-projection/v2", "authority": ".project", "confirmation_required": True, "repository": "Zodiac411/open-software-studio", "milestone": {"title": f"Studio V2 / {state['project_id']}", "action": "create-or-reconcile only after explicit approval"}, "issues": [{"title": f"{value['wp_id']}: {value['primary_outcome']}", "labels": ["studio", "work-package"], "body": {"requirements": value["requirements"], "acceptance": value["acceptance"], "base_sha": value["base_sha"]}}], "writes_performed": False}
+    metadata_path = control_root(project) / "project.yaml"
+    metadata = read_json(metadata_path) if metadata_path.is_file() else {}
+    repository = metadata.get("repository") or metadata.get("repository_url") or value.get("repository") or git(project, "remote", "get-url", "origin") or str(project)
+    title = metadata.get("title") or value.get("title") or project.name
+    issue = {"title": f"{value['wp_id']}: {value['primary_outcome']}", "labels": [str(metadata.get("archetype", "project")), "work-package"], "body": {"project_id": state["project_id"], "requirements": value["requirements"], "acceptance": value["acceptance"], "base_sha": value["base_sha"], "allowed_paths": value["allowed_paths"]}}
     path = control_root(project) / "tracking" / "github-plan.json"
+    previous = read_json(path) if path.is_file() else None
+    action = "create" if previous is None else "no-op" if previous.get("repository") == repository and previous.get("issues") == [issue] else "update"
+    plan = {"schema": "studio.github-projection/v2", "authority": ".project", "confirmation_required": True, "adapter": None, "repository": repository, "milestone": {"title": title, "action": action}, "issues": [issue], "actions": [{"type": action, "target": "milestone-and-issue", "reason": "desired projection compared with the previous local plan"}], "writes_performed": False}
     write_json(path, plan)
     if args.apply:
-        return fail("external GitHub reconciliation is confirmation-gated; review .project/tracking/github-plan.json and approve the exact writes")
+        return fail("no supported GitHub adapter is configured; the confirmation-gated plan was saved but no external write was attempted")
     return emit("PASS_WITH_LIMITATIONS", "GitHub milestone and issue reconciliation plan generated; no external write performed", path=str(path), next_action="obtain explicit approval before applying the exact plan")
 
 
@@ -545,9 +899,16 @@ def status_project(args: argparse.Namespace) -> int:
     _, state = pair
     live = current_sha(project)
     checkpoint = source_sha(project, state)
-    if live and checkpoint is None or (checkpoint and state.get("current_sha") not in (None, checkpoint)):
-        return emit("BLOCKED", "project state is stale against the declared source checkpoint", state=state, source_checkpoint=checkpoint, live_evidence_head=live, next_action="refresh context and review the source SHA change")
-    return emit(state.get("status", "UNPROVEN"), "current Studio state", phase=state.get("phase"), active_wp=state.get("active_wp"), current_sha=checkpoint or live or state.get("current_sha"), live_evidence_head=live, next_action=state.get("next_action"), blocking_items=state.get("blocking_items", []))
+    expected_live = state.get("live_head_sha") or state.get("current_sha")
+    errors = []
+    if live and expected_live != live:
+        errors.append(f"state live HEAD {expected_live} does not match Git HEAD {live}")
+    if live and (state.get("release_candidate_sha") or expected_live) != live:
+        errors.append("release candidate is stale")
+    errors.extend(projection_errors(project, state))
+    if errors:
+        return emit("BLOCKED", "project state or recovery projections are stale", state=state, source_checkpoint=checkpoint, live_evidence_head=live, contradictions=errors, next_action="refresh state and review the current SHA change")
+    return emit(state.get("status", "UNPROVEN"), "current project state", phase=state.get("phase"), active_wp=state.get("active_wp"), current_sha=expected_live or live, source_checkpoint_sha=checkpoint, live_head_sha=live, release_candidate_sha=state.get("release_candidate_sha"), next_action=state.get("next_action"), blocking_items=state.get("blocking_items", []))
 
 
 def parser() -> argparse.ArgumentParser:
@@ -556,7 +917,7 @@ def parser() -> argparse.ArgumentParser:
     commands = root.add_subparsers(dest="command", required=True)
     commands.add_parser("doctor")
     init = commands.add_parser("init")
-    init.add_argument("--project-id", default="PRJ-STUDIO-LOCAL")
+    init.add_argument("--project-id")
     init.add_argument("--profile", choices=("lite", "standard", "full"), default="standard")
     init.add_argument("--archetype", default="auto")
     commands.add_parser("status")
@@ -578,6 +939,8 @@ def parser() -> argparse.ArgumentParser:
     add.add_argument("--command-or-probe", dest="command_or_probe", required=True)
     add.add_argument("--observed", required=True)
     add.add_argument("--limitations", default="")
+    add.add_argument("--exit-code", type=int, default=0)
+    add.add_argument("--environment", default="local")
     add.add_argument("--replace", action="store_true")
     artifact = commands.add_parser("artifact")
     artifact_sub = artifact.add_subparsers(dest="artifact_command", required=True)
