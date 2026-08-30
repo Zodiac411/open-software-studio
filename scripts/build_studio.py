@@ -370,6 +370,12 @@ def zip_entry(archive: zipfile.ZipFile, name: str, data: bytes) -> None:
     archive.writestr(info, data)
 
 
+def archive_sort_key(path: Path, source: Path) -> tuple[str, bytes]:
+    relative = path.relative_to(source).as_posix()
+    # The UTF-8 tie-breaker keeps casefold collisions byte-stable across hosts.
+    return relative.casefold(), relative.encode("utf-8")
+
+
 def zip_package(source: Path, package_id: str, output: Path, display_name: str) -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
     root_name = "studio" if package_id == "studio-delivery" else package_id
@@ -402,10 +408,7 @@ def zip_package(source: Path, package_id: str, output: Path, display_name: str) 
     with zipfile.ZipFile(output, "w", compression=zipfile.ZIP_STORED) as archive:
         for path in sorted(
             paths,
-            key=lambda item: (
-                item.relative_to(source).as_posix().casefold(),
-                item.relative_to(source).as_posix(),
-            ),
+            key=lambda item: archive_sort_key(item, source),
         ):
             relative = path.relative_to(source).as_posix()
             zip_entry(archive, f"{root_name}/{relative}", canonical_bytes(path, path.read_bytes()))
