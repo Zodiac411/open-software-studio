@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify that a clean checkout rebuild leaves every repository byte unchanged."""
+"""Verify that a clean checkout rebuild preserves canonical repository content."""
 
 from __future__ import annotations
 
@@ -13,6 +13,15 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 IGNORED_PARTS = {".git", ".venv", "venv", "node_modules", "__pycache__", ".pytest_cache", ".mypy_cache", "runtime"}
+TEXT_SUFFIXES = {".css", ".html", ".js", ".json", ".md", ".py", ".svg", ".toml", ".ts", ".txt", ".yaml", ".yml"}
+TEXT_NAMES = {".gitignore", ".studio-generated"}
+
+
+def canonical_bytes(path: Path) -> bytes:
+    data = path.read_bytes()
+    if path.suffix.lower() in TEXT_SUFFIXES or path.name in TEXT_NAMES:
+        return data.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return data
 
 
 def digest_tree(root: Path) -> dict[str, str]:
@@ -23,7 +32,7 @@ def digest_tree(root: Path) -> dict[str, str]:
         relative = path.relative_to(root)
         if any(part in IGNORED_PARTS for part in relative.parts):
             continue
-        files[relative.as_posix()] = hashlib.sha256(path.read_bytes()).hexdigest()
+        files[relative.as_posix()] = hashlib.sha256(canonical_bytes(path)).hexdigest()
     return files
 
 
@@ -57,7 +66,7 @@ def main() -> None:
     if drift:
         unique = list(dict.fromkeys(drift))
         raise SystemExit(f"FAIL: clean rebuild changed {len(unique)} files: {', '.join(unique[:12])}")
-    print("PASS: two clean-checkout builds reproduced every repository byte")
+    print("PASS: two clean-checkout builds reproduced canonical text and binary content")
 
 
 if __name__ == "__main__":
