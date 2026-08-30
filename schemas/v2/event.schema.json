@@ -1,0 +1,71 @@
+{
+  "$id": "studio://schemas/v2/event.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "actor": {
+      "type": "string"
+    },
+    "authority": {
+      "type": "string"
+    },
+    "document_id": {
+      "pattern": "^[A-Z][A-Z0-9-]+$",
+      "type": "string"
+    },
+    "event_id": {
+      "pattern": "^EV-[0-9]{3,}$",
+      "type": "string"
+    },
+    "event_type": {
+      "type": "string"
+    },
+    "occurred_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "project_id": {
+      "pattern": "^PRJ-[A-Z0-9-]+$",
+      "type": "string"
+    },
+    "sources": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "status": {
+      "type": "string"
+    },
+    "verification": {
+      "enum": [
+        "E0",
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "verified",
+        "partial",
+        "unverified",
+        "not-applicable"
+      ]
+    },
+    "version": {
+      "pattern": "^2\\.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "event_id",
+    "project_id",
+    "event_type",
+    "occurred_at",
+    "actor"
+  ],
+  "title": "Studio V2 state event",
+  "type": "object"
+}

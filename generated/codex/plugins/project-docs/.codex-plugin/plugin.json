@@ -1,0 +1,39 @@
+{
+  "author": {
+    "name": "Open Software Studio"
+  },
+  "description": "Compile durable, linked Studio documents and machine sidecars from approved structured state. Does not create competing authority.",
+  "interface": {
+    "brandColor": "#D9B36C",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "category": "Productivity",
+    "composerIcon": "./assets/plugin-icon.png",
+    "defaultPrompt": [
+      "Use Studio Docs for this bounded software task.",
+      "Read the current Studio state before acting."
+    ],
+    "developerName": "Open Software Studio",
+    "displayName": "Studio Docs",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png",
+    "longDescription": "Compile durable, linked Studio documents and machine sidecars from approved structured state. Does not create competing authority.",
+    "privacyPolicyURL": "https://github.com/Zodiac411/open-software-studio/blob/master/README.md",
+    "screenshots": [],
+    "shortDescription": "Compile durable, linked Studio documents and machine sidecars fr",
+    "termsOfServiceURL": "https://github.com/Zodiac411/open-software-studio/blob/master/LICENSE",
+    "websiteURL": "https://github.com/Zodiac411/open-software-studio"
+  },
+  "keywords": [
+    "studio",
+    "project-docs"
+  ],
+  "license": "MIT",
+  "name": "project-docs",
+  "repository": "https://github.com/Zodiac411/open-software-studio",
+  "skills": "./skills/",
+  "version": "2.0.0"
+}

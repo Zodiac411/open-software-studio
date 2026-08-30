@@ -1,0 +1,89 @@
+{
+  "$id": "studio://schemas/v2/project.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "active_wp": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "archetype": {
+      "enum": [
+        "auto",
+        "software",
+        "plugin",
+        "web",
+        "game",
+        "integration",
+        "mcp-app"
+      ]
+    },
+    "authorities": {
+      "type": "object"
+    },
+    "authority": {
+      "type": "string"
+    },
+    "document_id": {
+      "pattern": "^[A-Z][A-Z0-9-]+$",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "phase": {
+      "type": "string"
+    },
+    "profile": {
+      "enum": [
+        "lite",
+        "standard",
+        "full"
+      ]
+    },
+    "project_id": {
+      "pattern": "^PRJ-[A-Z0-9-]+$",
+      "type": "string"
+    },
+    "sources": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "status": {
+      "type": "string"
+    },
+    "verification": {
+      "enum": [
+        "E0",
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "verified",
+        "partial",
+        "unverified",
+        "not-applicable"
+      ]
+    },
+    "version": {
+      "pattern": "^2\\.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "project_id",
+    "profile",
+    "archetype",
+    "phase",
+    "status",
+    "active_wp",
+    "authorities"
+  ],
+  "title": "Studio V2 project control plane",
+  "type": "object"
+}

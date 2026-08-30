@@ -1,0 +1,64 @@
+{
+  "$id": "studio://schemas/v2/CONTEXT_CAPSULE.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "authority": {
+      "type": "string"
+    },
+    "document_id": {
+      "pattern": "^[A-Z][A-Z0-9-]+$",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "project_id": {
+      "pattern": "^PRJ-[A-Z0-9-]+$",
+      "type": "string"
+    },
+    "sources": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "status": {
+      "type": "string"
+    },
+    "verification": {
+      "enum": [
+        "E0",
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "verified",
+        "partial",
+        "unverified",
+        "not-applicable"
+      ]
+    },
+    "version": {
+      "pattern": "^2\\.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "document_id",
+    "wp_id",
+    "snapshot_id",
+    "active_goal",
+    "requirements",
+    "decisions",
+    "scope_budget",
+    "allowed_paths",
+    "forbidden_paths",
+    "acceptance",
+    "proof",
+    "stop_conditions"
+  ],
+  "title": "Studio V2 CONTEXT_CAPSULE artifact",
+  "type": "object"
+}

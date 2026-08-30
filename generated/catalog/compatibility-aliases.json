@@ -1,0 +1,77 @@
+{
+  "aliases": [
+    {
+      "aliases": [
+        "open-software-studio",
+        "studio"
+      ],
+      "display_name": "Studio",
+      "package": "studio-delivery"
+    },
+    {
+      "aliases": [
+        "Project Architect",
+        "project-architect"
+      ],
+      "display_name": "Studio Plan",
+      "package": "project-architect"
+    },
+    {
+      "aliases": [
+        "Interface Studio",
+        "interface-studio"
+      ],
+      "display_name": "Studio Design",
+      "package": "interface-studio"
+    },
+    {
+      "aliases": [
+        "Research Engineer",
+        "research-engineer"
+      ],
+      "display_name": "Studio Research",
+      "package": "research-engineer"
+    },
+    {
+      "aliases": [
+        "Project Docs",
+        "project-docs"
+      ],
+      "display_name": "Studio Docs",
+      "package": "project-docs"
+    },
+    {
+      "aliases": [
+        "Engineering Guard",
+        "engineering-guard"
+      ],
+      "display_name": "Studio Review",
+      "package": "engineering-guard"
+    },
+    {
+      "aliases": [
+        "Web App Builder",
+        "web-app-builder"
+      ],
+      "display_name": "Studio Build",
+      "package": "web-app-builder"
+    },
+    {
+      "aliases": [
+        "Execution Guard",
+        "execution-guard"
+      ],
+      "display_name": "Studio Verify",
+      "package": "execution-guard"
+    },
+    {
+      "aliases": [
+        "studio-track"
+      ],
+      "display_name": "Studio Track",
+      "package": "studio-track"
+    }
+  ],
+  "schema": "studio.compatibility/v2",
+  "version": "2.0.0"
+}

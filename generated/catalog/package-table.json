@@ -1,0 +1,282 @@
+{
+  "packages": {
+    "engineering-guard": {
+      "display_name": "Studio Review",
+      "legacy_aliases": [
+        "Engineering Guard",
+        "engineering-guard"
+      ],
+      "path": "generated/codex/plugins/engineering-guard",
+      "skills": [
+        "studio-review",
+        "studio-verify",
+        "studio-evidence",
+        "studio-repair",
+        "studio-doctor",
+        "studio-artifact-lint",
+        "studio-strategy-red-team",
+        "studio-premortem",
+        "engineering-guard-router",
+        "architecture-risk-review",
+        "implementation-readiness",
+        "implementation-review"
+      ],
+      "version": "2.0.0"
+    },
+    "execution-guard": {
+      "display_name": "Studio Verify",
+      "legacy_aliases": [
+        "Execution Guard",
+        "execution-guard"
+      ],
+      "path": "generated/codex/plugins/execution-guard",
+      "skills": [
+        "studio-work",
+        "studio-verify",
+        "studio-evidence",
+        "studio-doctor",
+        "studio-handoff",
+        "studio-close",
+        "studio-review",
+        "execution-guard",
+        "pragmatic-core",
+        "context-grounding",
+        "source-and-reuse",
+        "incremental-build",
+        "test-for-behavior",
+        "debug-root-cause",
+        "final-review",
+        "quality-contract",
+        "prove-it",
+        "handoff"
+      ],
+      "version": "2.0.0"
+    },
+    "interface-studio": {
+      "display_name": "Studio Design",
+      "legacy_aliases": [
+        "Interface Studio",
+        "interface-studio"
+      ],
+      "path": "generated/codex/plugins/interface-studio",
+      "skills": [
+        "studio-start",
+        "studio-shape",
+        "studio-design",
+        "studio-plan",
+        "studio-scope-guard",
+        "studio-acceptance-writer",
+        "studio-edge-case-audit",
+        "interface-studio-router",
+        "flow-and-interaction",
+        "design-system-planner",
+        "visual-qa"
+      ],
+      "version": "2.0.0"
+    },
+    "project-architect": {
+      "display_name": "Studio Plan",
+      "legacy_aliases": [
+        "Project Architect",
+        "project-architect"
+      ],
+      "path": "generated/codex/plugins/project-architect",
+      "skills": [
+        "studio-start",
+        "studio-shape",
+        "studio-plan",
+        "studio-status",
+        "studio-doctor",
+        "studio-scope-guard",
+        "studio-ambiguity-audit",
+        "studio-assumption-map",
+        "studio-constraint-audit",
+        "studio-requirement-quality",
+        "studio-acceptance-writer",
+        "studio-edge-case-audit",
+        "studio-premortem",
+        "studio-strategy-red-team",
+        "studio-option-tradeoff",
+        "studio-domain-model",
+        "studio-architecture-review",
+        "studio-issue-plan",
+        "studio-artifact-lint",
+        "project-architect-router",
+        "project-discovery",
+        "architecture-design",
+        "implementation-planning"
+      ],
+      "version": "2.0.0"
+    },
+    "project-docs": {
+      "display_name": "Studio Docs",
+      "legacy_aliases": [
+        "Project Docs",
+        "project-docs"
+      ],
+      "path": "generated/codex/plugins/project-docs",
+      "skills": [
+        "studio-start",
+        "studio-plan",
+        "studio-docs",
+        "studio-context",
+        "studio-handoff",
+        "studio-close",
+        "studio-artifact-lint",
+        "project-docs-router",
+        "artifact-selector",
+        "project-doc-pack",
+        "traceability-and-handoff"
+      ],
+      "version": "2.0.0"
+    },
+    "research-engineer": {
+      "display_name": "Studio Research",
+      "legacy_aliases": [
+        "Research Engineer",
+        "research-engineer"
+      ],
+      "path": "generated/codex/plugins/research-engineer",
+      "skills": [
+        "studio-start",
+        "studio-research",
+        "studio-plan",
+        "studio-status",
+        "studio-assumption-map",
+        "studio-constraint-audit",
+        "studio-option-tradeoff",
+        "research-router",
+        "research-brief",
+        "deep-web-research",
+        "github-deep-dive",
+        "extension-discovery"
+      ],
+      "version": "2.0.0"
+    },
+    "studio-delivery": {
+      "display_name": "Studio",
+      "legacy_aliases": [
+        "open-software-studio",
+        "studio"
+      ],
+      "path": "generated/codex/plugins/studio-delivery",
+      "skills": [
+        "studio-start",
+        "studio-shape",
+        "studio-plan",
+        "studio-design",
+        "studio-research",
+        "studio-docs",
+        "studio-work",
+        "studio-build",
+        "studio-verify",
+        "studio-review",
+        "studio-status",
+        "studio-track",
+        "studio-release",
+        "studio-improve",
+        "studio-doctor",
+        "studio-init",
+        "studio-context",
+        "studio-evidence",
+        "studio-handoff",
+        "studio-repair",
+        "studio-close",
+        "studio-scope-guard",
+        "studio-ambiguity-audit",
+        "studio-assumption-map",
+        "studio-constraint-audit",
+        "studio-requirement-quality",
+        "studio-acceptance-writer",
+        "studio-edge-case-audit",
+        "studio-premortem",
+        "studio-strategy-red-team",
+        "studio-option-tradeoff",
+        "studio-domain-model",
+        "studio-architecture-review",
+        "studio-issue-plan",
+        "studio-artifact-lint",
+        "project-architect-router",
+        "project-discovery",
+        "architecture-design",
+        "implementation-planning",
+        "interface-studio-router",
+        "flow-and-interaction",
+        "design-system-planner",
+        "visual-qa",
+        "engineering-guard-router",
+        "architecture-risk-review",
+        "implementation-readiness",
+        "implementation-review",
+        "research-router",
+        "research-brief",
+        "deep-web-research",
+        "github-deep-dive",
+        "extension-discovery",
+        "project-docs-router",
+        "artifact-selector",
+        "project-doc-pack",
+        "traceability-and-handoff",
+        "web-app-builder-router",
+        "repo-intake",
+        "implementation-and-integration",
+        "debugging-and-verification",
+        "execution-guard",
+        "pragmatic-core",
+        "context-grounding",
+        "source-and-reuse",
+        "incremental-build",
+        "test-for-behavior",
+        "debug-root-cause",
+        "final-review",
+        "quality-contract",
+        "prove-it",
+        "handoff"
+      ],
+      "version": "2.0.0"
+    },
+    "studio-track": {
+      "display_name": "Studio Track",
+      "legacy_aliases": [
+        "studio-track"
+      ],
+      "path": "generated/codex/plugins/studio-track",
+      "skills": [
+        "studio-start",
+        "studio-status",
+        "studio-track",
+        "studio-context",
+        "studio-evidence",
+        "studio-handoff",
+        "studio-issue-plan",
+        "studio-artifact-lint"
+      ],
+      "version": "2.0.0"
+    },
+    "web-app-builder": {
+      "display_name": "Studio Build",
+      "legacy_aliases": [
+        "Web App Builder",
+        "web-app-builder"
+      ],
+      "path": "generated/codex/plugins/web-app-builder",
+      "skills": [
+        "studio-work",
+        "studio-build",
+        "studio-context",
+        "studio-evidence",
+        "studio-handoff",
+        "studio-close",
+        "studio-repair",
+        "studio-scope-guard",
+        "web-app-builder-router",
+        "repo-intake",
+        "implementation-and-integration",
+        "debugging-and-verification"
+      ],
+      "version": "2.0.0"
+    }
+  },
+  "schema": "studio.package-table/v2",
+  "version": "2.0.0"
+}

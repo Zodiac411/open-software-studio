@@ -1,0 +1,46 @@
+{
+  "acceptance": [
+    "generator exits zero"
+  ],
+  "allowed_paths": [
+    "scripts/",
+    "catalog/"
+  ],
+  "base_sha": "d697efc16d86835ff3941f54b05e560b91a4a125",
+  "document_id": "WP-001",
+  "forbidden_paths": [
+    ".codex/",
+    "secrets/"
+  ],
+  "handoff_requirements": [
+    "head SHA",
+    "evidence"
+  ],
+  "non_goals": [
+    "merge",
+    "release"
+  ],
+  "primary_outcome": "Validate one bounded Studio package build.",
+  "project_id": "PRJ-SD-001",
+  "requirements": [
+    "REQ-001"
+  ],
+  "rollback": "revert branch",
+  "scope_budget": {
+    "new_dependencies": 0,
+    "primary_outcomes": 1,
+    "subsystems": 2
+  },
+  "snapshot_id": "SNAP-001",
+  "status": "FROZEN",
+  "stop_conditions": [
+    "base SHA changes"
+  ],
+  "verification": [
+    {
+      "command": "python scripts/build_studio.py",
+      "level": "E2"
+    }
+  ],
+  "wp_id": "WP-SD-001"
+}

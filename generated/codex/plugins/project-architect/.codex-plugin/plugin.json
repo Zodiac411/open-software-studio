@@ -1,0 +1,39 @@
+{
+  "author": {
+    "name": "Open Software Studio"
+  },
+  "description": "Shape requirements, architecture decisions, and implementation-ready work. Does not implement or accept code.",
+  "interface": {
+    "brandColor": "#C89D5B",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "category": "Productivity",
+    "composerIcon": "./assets/plugin-icon.png",
+    "defaultPrompt": [
+      "Use Studio Plan for this bounded software task.",
+      "Read the current Studio state before acting."
+    ],
+    "developerName": "Open Software Studio",
+    "displayName": "Studio Plan",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png",
+    "longDescription": "Shape requirements, architecture decisions, and implementation-ready work. Does not implement or accept code.",
+    "privacyPolicyURL": "https://github.com/Zodiac411/open-software-studio/blob/master/README.md",
+    "screenshots": [],
+    "shortDescription": "Shape requirements, architecture decisions, and implementation-r",
+    "termsOfServiceURL": "https://github.com/Zodiac411/open-software-studio/blob/master/LICENSE",
+    "websiteURL": "https://github.com/Zodiac411/open-software-studio"
+  },
+  "keywords": [
+    "studio",
+    "project-architect"
+  ],
+  "license": "MIT",
+  "name": "project-architect",
+  "repository": "https://github.com/Zodiac411/open-software-studio",
+  "skills": "./skills/",
+  "version": "2.0.0"
+}

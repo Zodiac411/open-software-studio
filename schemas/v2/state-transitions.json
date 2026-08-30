@@ -1,0 +1,62 @@
+{
+  "schema": "studio.state-transitions/v2",
+  "states": [
+    "INTAKE",
+    "SHAPED",
+    "PLANNED",
+    "FROZEN",
+    "IMPLEMENTING",
+    "PROVING",
+    "IN_REVIEW",
+    "REPAIR",
+    "ACCEPTED",
+    "CLOSED",
+    "RELEASED"
+  ],
+  "transitions": {
+    "ACCEPTED": [
+      "CLOSED",
+      "RELEASED"
+    ],
+    "CLOSED": [
+      "RELEASED"
+    ],
+    "FROZEN": [
+      "IMPLEMENTING",
+      "PLANNED"
+    ],
+    "IMPLEMENTING": [
+      "PROVING",
+      "REPAIR",
+      "FROZEN"
+    ],
+    "INTAKE": [
+      "SHAPED"
+    ],
+    "IN_REVIEW": [
+      "ACCEPTED",
+      "REPAIR",
+      "PLANNED",
+      "IMPLEMENTING"
+    ],
+    "PLANNED": [
+      "FROZEN",
+      "SHAPED"
+    ],
+    "PROVING": [
+      "IN_REVIEW",
+      "REPAIR",
+      "IMPLEMENTING"
+    ],
+    "RELEASED": [],
+    "REPAIR": [
+      "PROVING",
+      "IN_REVIEW",
+      "IMPLEMENTING"
+    ],
+    "SHAPED": [
+      "PLANNED",
+      "INTAKE"
+    ]
+  }
+}

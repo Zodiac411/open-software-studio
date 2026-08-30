@@ -1,0 +1,39 @@
+{
+  "author": {
+    "name": "Open Software Studio"
+  },
+  "description": "Verify grounded, bounded, evidence-backed execution and fail honestly when requested proof is missing.",
+  "interface": {
+    "brandColor": "#5E9F9C",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "category": "Developer Tools",
+    "composerIcon": "./assets/plugin-icon.png",
+    "defaultPrompt": [
+      "Use Studio Verify for this bounded software task.",
+      "Read the current Studio state before acting."
+    ],
+    "developerName": "Open Software Studio",
+    "displayName": "Studio Verify",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png",
+    "longDescription": "Verify grounded, bounded, evidence-backed execution and fail honestly when requested proof is missing.",
+    "privacyPolicyURL": "https://github.com/Zodiac411/open-software-studio/blob/master/README.md",
+    "screenshots": [],
+    "shortDescription": "Verify grounded, bounded, evidence-backed execution and fail hon",
+    "termsOfServiceURL": "https://github.com/Zodiac411/open-software-studio/blob/master/LICENSE",
+    "websiteURL": "https://github.com/Zodiac411/open-software-studio"
+  },
+  "keywords": [
+    "studio",
+    "execution-guard"
+  ],
+  "license": "MIT",
+  "name": "execution-guard",
+  "repository": "https://github.com/Zodiac411/open-software-studio",
+  "skills": "./skills/",
+  "version": "2.0.0"
+}

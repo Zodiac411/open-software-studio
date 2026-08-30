@@ -1,0 +1,7 @@
+{
+  "defect": "planted implementation defect",
+  "executor_may_accept": false,
+  "expected_finding": "FIND-001",
+  "required_repair": "observable output matches the frozen requirement",
+  "severity": "BLOCKING"
+}

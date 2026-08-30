@@ -1,0 +1,64 @@
+{
+  "$id": "studio://schemas/v2/INDEPENDENT_REVIEW.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "authority": {
+      "type": "string"
+    },
+    "document_id": {
+      "pattern": "^[A-Z][A-Z0-9-]+$",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "project_id": {
+      "pattern": "^PRJ-[A-Z0-9-]+$",
+      "type": "string"
+    },
+    "sources": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "status": {
+      "type": "string"
+    },
+    "verification": {
+      "enum": [
+        "E0",
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "verified",
+        "partial",
+        "unverified",
+        "not-applicable"
+      ]
+    },
+    "version": {
+      "pattern": "^2\\.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "document_id",
+    "review_id",
+    "reviewer_role",
+    "reviewer_context",
+    "reviewed_head_sha",
+    "wp_id",
+    "requirements",
+    "independent_checks",
+    "scope_delta",
+    "findings",
+    "disposition",
+    "conditions"
+  ],
+  "title": "Studio V2 INDEPENDENT_REVIEW artifact",
+  "type": "object"
+}

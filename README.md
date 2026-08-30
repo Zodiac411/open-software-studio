@@ -1,26 +1,45 @@
 # Open Software Studio
 
-Open Software Studio is a small, open-source suite of seven coordinated plugins for product design and implementation. It keeps decisions in portable Markdown, treats evidence as first-class, and keeps execution discipline separate from implementation capability.
+Open Software Studio is a small, open-source Studio V2 workflow for product
+design, research, documentation, implementation, verification, and review. It
+keeps decisions in portable Markdown, treats evidence as first-class, and
+keeps execution discipline separate from implementation capability.
 
 ## Plugins
 
-| Surface | Plugin | Owns |
+| Surface | Package | Owns |
 |---|---|---|
-| ChatGPT / Codex | Project Architect | scope, requirements, architecture, plans |
-| ChatGPT / Codex | Interface Studio | UX, interaction, visual system |
-| ChatGPT / Codex | Engineering Guard | independent engineering critique |
-| ChatGPT / Codex | Research Engineer | current external evidence |
-| ChatGPT / Codex | Project Docs | durable artifacts and traceability |
-| Codex | Web App Builder | repository implementation |
-| Codex | Execution Guard | disciplined, evidence-backed execution |
+| ChatGPT / Codex | Studio | complete bounded delivery loop |
+| ChatGPT / Codex | Studio Plan | scope, requirements, architecture, plans |
+| ChatGPT / Codex | Studio Design | UX, interaction, visual system |
+| ChatGPT / Codex | Studio Research | current external evidence |
+| ChatGPT / Codex | Studio Docs | durable artifacts and traceability |
+| ChatGPT / Codex | Studio Review | independent critique and repair gates |
+| ChatGPT / Codex | Studio Build | approved repository implementation |
+| ChatGPT / Codex | Studio Verify | evidence-backed execution verification |
+| ChatGPT / Codex | Studio Track | GitHub issue/milestone projection |
 
-Every plugin contains portable Skills and an official `.codex-plugin/plugin.json` manifest. The six ChatGPT-facing bundles are skills-only: they do not require a tunnel, localhost, MCP server, OAuth, or a connected app. Web App Builder remains repository-oriented even when distributed as a skills-only bundle; Execution Guard remains Codex-gated because it governs Codex execution.
+All generated packages are rendered from [`catalog/studio.yaml`](catalog/studio.yaml).
+The generated Codex packages contain portable Skills and an official
+`.codex-plugin/plugin.json` manifest. The default ChatGPT artifact is the
+single skills-first [`dist/chatgpt/studio.zip`](dist/chatgpt/studio.zip): it
+does not declare an MCP server or require localhost, a tunnel, an API key, or
+a connected app. The seven pre-V2 package directories remain untouched as
+compatibility sources until parity is accepted.
 
-For ChatGPT uploads, run `python scripts/package_chatgpt_plugins.py`; it creates one plugin bundle per ChatGPT-facing plugin with its manifest, Skills, and icon. The bundle also includes a small upload wrapper so the same ZIP is accepted by ChatGPT's Skills uploader. Every generated bundle includes a mobile-safe PNG icon and has no tunnel dependency.
+Run `python scripts/build_studio.py` to regenerate the package family,
+templates, schemas, Opal Seed icon family, routing cases, and deterministic
+archives. `python scripts/validate_suite.py` validates the generated outputs.
 
 ## Start here
 
-Read [Architecture](ARCHITECTURE.md), then the [coordination contract](docs/plugin-coordination.md). The canonical repository is [github.com/Zodiac411/open-software-studio](https://github.com/Zodiac411/open-software-studio). Import the repository marketplace from `.agents/plugins/marketplace.json` in a supported workspace, use the Codex installation notes in [docs/install-codex.md](docs/install-codex.md), or upload the private ChatGPT bundles described in [docs/install-chatgpt.md](docs/install-chatgpt.md).
+Read [Architecture](ARCHITECTURE.md), then the [coordination contract](docs/plugin-coordination.md).
+The canonical repository is [github.com/Zodiac411/open-software-studio](https://github.com/Zodiac411/open-software-studio).
+Import `.agents/plugins/marketplace.json` in Codex, use the V2 installation
+notes in [docs/install-codex.md](docs/install-codex.md), or upload the default
+skills-first archive described in [docs/install-chatgpt.md](docs/install-chatgpt.md).
+The executable control plane is [scripts/studio.py](scripts/studio.py), and
+the setup evidence is under [bootstrap](bootstrap/).
 
 No third-party service, API, or subscription is required by this repository.
 
@@ -31,7 +50,10 @@ python scripts/validate_suite.py
 python scripts/run_evals.py
 ```
 
-The scripts use only Python's standard library. See `evals/RESULTS.md` for the recorded baseline.
+The V2 validators use Python's standard library plus the already-installed
+Pillow renderer for icons. See [THIRD_PARTY_SOURCES.md](THIRD_PARTY_SOURCES.md)
+for pinned clean-room source references and [bootstrap/REQUIREMENTS.md](bootstrap/REQUIREMENTS.md)
+for the governing Drive documents.
 
 ## License
 

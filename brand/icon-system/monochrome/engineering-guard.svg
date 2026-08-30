@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="engineering-guard Opal Seed icon">
+  <rect x="18" y="18" width="476" height="476" rx="86" fill="#FFFFFF"/>
+  <rect x="48" y="48" width="416" height="416" rx="68" fill="#FFFFFF" stroke="#111111" stroke-opacity=".20" stroke-width="4"/>
+  <circle cx="256" cy="256" r="156" fill="none" stroke="#111111" stroke-opacity=".20" stroke-width="4"/>
+  <circle cx="256" cy="256" r="126" fill="#FFFFFF" stroke="#111111" stroke-opacity=".48" stroke-width="6"/>
+  <path d="M256 144C302 144 342 184 342 230C342 294 294 350 256 378C218 350 170 294 170 230C170 184 210 144 256 144Z" fill="#FFFFFF" stroke="#111111" stroke-width="8"/>
+  <path d="M218 178C240 160 275 163 296 182" fill="none" stroke="#FFFFFF" stroke-opacity=".84" stroke-width="10" stroke-linecap="round"/>
+  <path d="M256 122L292 214L382 170L334 260L424 296L328 310L348 408L256 348L164 408L184 310L88 296L178 260L130 170L220 214Z" fill="#111111" fill-opacity=".72" stroke="#111111" stroke-width="9" stroke-linejoin="round"/>
+  
+</svg>

@@ -1,0 +1,116 @@
+{
+  "interface": {
+    "displayName": "Studio V2"
+  },
+  "name": "studio-v2",
+  "plugins": [
+    {
+      "category": "Productivity",
+      "name": "studio-delivery",
+      "policy": {
+        "authentication": "ON_INSTALL",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/studio-delivery",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "project-architect",
+      "policy": {
+        "authentication": "ON_INSTALL",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/project-architect",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Creativity",
+      "name": "interface-studio",
+      "policy": {
+        "authentication": "ON_INSTALL",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/interface-studio",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Education & Research",
+      "name": "research-engineer",
+      "policy": {
+        "authentication": "ON_INSTALL",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/research-engineer",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "project-docs",
+      "policy": {
+        "authentication": "ON_INSTALL",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/project-docs",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "engineering-guard",
+      "policy": {
+        "authentication": "ON_INSTALL",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/engineering-guard",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "web-app-builder",
+      "policy": {
+        "authentication": "ON_INSTALL",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/web-app-builder",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "execution-guard",
+      "policy": {
+        "authentication": "ON_INSTALL",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/execution-guard",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "studio-track",
+      "policy": {
+        "authentication": "ON_INSTALL",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/studio-track",
+        "source": "local"
+      }
+    }
+  ]
+}

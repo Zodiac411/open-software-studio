@@ -1,0 +1,39 @@
+{
+  "author": {
+    "name": "Open Software Studio"
+  },
+  "description": "Orchestrate the complete ChatGPT to Codex delivery loop with one bounded, evidence-backed workflow.",
+  "interface": {
+    "brandColor": "#DDE8E4",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "category": "Productivity",
+    "composerIcon": "./assets/plugin-icon.png",
+    "defaultPrompt": [
+      "Use Studio for this bounded software task.",
+      "Read the current Studio state before acting."
+    ],
+    "developerName": "Open Software Studio",
+    "displayName": "Studio",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png",
+    "longDescription": "Orchestrate the complete ChatGPT to Codex delivery loop with one bounded, evidence-backed workflow.",
+    "privacyPolicyURL": "https://github.com/Zodiac411/open-software-studio/blob/master/README.md",
+    "screenshots": [],
+    "shortDescription": "Orchestrate the complete ChatGPT to Codex delivery loop with one",
+    "termsOfServiceURL": "https://github.com/Zodiac411/open-software-studio/blob/master/LICENSE",
+    "websiteURL": "https://github.com/Zodiac411/open-software-studio"
+  },
+  "keywords": [
+    "studio",
+    "studio-delivery"
+  ],
+  "license": "MIT",
+  "name": "studio-delivery",
+  "repository": "https://github.com/Zodiac411/open-software-studio",
+  "skills": "./skills/",
+  "version": "2.0.0"
+}

@@ -1,0 +1,39 @@
+{
+  "author": {
+    "name": "Open Software Studio"
+  },
+  "description": "Gather current decision-changing external evidence with source quality, freshness, license, and confidence. Does not invent proof.",
+  "interface": {
+    "brandColor": "#74B9C9",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "category": "Education & Research",
+    "composerIcon": "./assets/plugin-icon.png",
+    "defaultPrompt": [
+      "Use Studio Research for this bounded software task.",
+      "Read the current Studio state before acting."
+    ],
+    "developerName": "Open Software Studio",
+    "displayName": "Studio Research",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png",
+    "longDescription": "Gather current decision-changing external evidence with source quality, freshness, license, and confidence. Does not invent proof.",
+    "privacyPolicyURL": "https://github.com/Zodiac411/open-software-studio/blob/master/README.md",
+    "screenshots": [],
+    "shortDescription": "Gather current decision-changing external evidence with source q",
+    "termsOfServiceURL": "https://github.com/Zodiac411/open-software-studio/blob/master/LICENSE",
+    "websiteURL": "https://github.com/Zodiac411/open-software-studio"
+  },
+  "keywords": [
+    "studio",
+    "research-engineer"
+  ],
+  "license": "MIT",
+  "name": "research-engineer",
+  "repository": "https://github.com/Zodiac411/open-software-studio",
+  "skills": "./skills/",
+  "version": "2.0.0"
+}

@@ -1,0 +1,102 @@
+{
+  "schema": "studio.bootstrap.state/v2",
+  "project_id": "PRJ-SD-001",
+  "recorded_at": "2026-08-30T16:29:15.8053770Z",
+  "source_repository": "https://github.com/Zodiac411/open-software-studio",
+  "baseline": {
+    "remote_default_branch": "master",
+    "remote_head": "d697efc16d86835ff3941f54b05e560b91a4a125",
+    "worktree_branch": "studio-v2-bootstrap",
+    "worktree_path": "C:/Users/badcr/Documents/Codex/2026-08-30/you-are-the-implementation-and-setup/studio-v2-bootstrap",
+    "worktree_head": "d697efc16d86835ff3941f54b05e560b91a4a125",
+    "worktree_dirty": false,
+    "untracked": [],
+    "clone_mode": "bare-source-plus-clean-worktree"
+  },
+  "host": {
+    "operating_system": "Microsoft Windows 11 Pro 10.0.26200 (64-bit)",
+    "shell": "PowerShell 7.6.4 Core",
+    "git": "2.53.0.windows.1",
+    "python": "3.14.3",
+    "node": "v24.14.0",
+    "bun": "1.4.0",
+    "codex": "codex-cli 0.144.5",
+    "codex_home": "C:/Users/badcr/.codex",
+    "browser_backends": ["iab"],
+    "chrome_extension": "UNPROVEN"
+  },
+  "codex": {
+    "plugin_cli_help_verified": true,
+    "marketplace_add_syntax": "codex plugin marketplace add <path-or-git-source>",
+    "plugin_install_syntax": "codex plugin add <plugin>@<marketplace>",
+    "existing_open_software_studio_plugins": [
+      "project-architect",
+      "interface-studio",
+      "engineering-guard",
+      "research-engineer",
+      "project-docs",
+      "web-app-builder",
+      "execution-guard"
+    ],
+    "existing_studio_config": "NOT_FOUND",
+    "global_instructions": "C:/Users/badcr/.codex/AGENTS.md",
+    "global_config_observations": {
+      "approval_policy": "never",
+      "sandbox_mode": "danger-full-access",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max"
+    }
+  },
+  "connections": {
+    "github": {
+      "result": "PASS",
+      "account_label": "Zodiac411",
+      "read_probe": "repository metadata and README read",
+      "target": "Zodiac411/open-software-studio"
+    },
+    "google_drive": {
+      "result": "PASS",
+      "account_label": "HellStar / badcrayfish11@gmail.com",
+      "read_probe": "canonical folder listing and governing document reads",
+      "target": "https://drive.google.com/drive/folders/1GDlSRW9aJVOvCH-fiZcWPQYsQcUNYGXe"
+    },
+    "chatgpt": {
+      "result": "BLOCKED",
+      "visible_account": "chris folorunso / Pro",
+      "workspace_label": null,
+      "reason": "Intended account/workspace has not yet been confirmed before browser-side mutation."
+    }
+  },
+  "baseline_validation": {
+    "validate_suite": "PASS",
+    "run_evals": "PASS",
+    "evidence_level": "E2"
+  },
+  "implementation": {
+    "phase": "local_package_checkpoint",
+    "active_work_package": "WP-SD-001",
+    "result": "PASS_WITH_LIMITATIONS",
+    "current_branch": "studio-v2-bootstrap",
+    "current_head": "uncommitted checkpoint; baseline d697efc16d86835ff3941f54b05e560b91a4a125",
+    "evidence": [
+      "python scripts/build_studio.py -> PASS (9 packages, 22 templates, deterministic archives)",
+      "python scripts/validate_suite.py -> PASS (catalog, packages, schemas, icons, archive, routing, seeded gates)",
+      "python scripts/run_evals.py -> PASS (71 routing cases, 10 execution scenarios, 6 Studio gates)",
+      "Plugin Creator validator -> PASS for all 9 generated packages",
+      "Opal Seed contact sheet and actual 24px/32px assets visually inspected -> PASS",
+      "greenfield pilot -> PASS; brownfield planted-defect test -> intentionally red"
+    ],
+    "blocking_findings": [],
+    "review_disposition": "NOT_RUN",
+    "external_writes": "NOT_RUN"
+  },
+  "human_gates": {
+    "account_confirmation": "BLOCKED",
+    "oauth_or_account_selection": "NOT_RUN",
+    "external_write_smoke": "NOT_RUN",
+    "global_chatgpt_instruction_change": "NOT_RUN",
+    "merge_or_release": "NOT_RUN",
+    "iphone_mobile_check": "UNPROVEN"
+  },
+  "secrets_policy": "No token, cookie, password, MFA code, recovery code, OAuth token, or API key is stored in this state file."
+}

@@ -17,6 +17,10 @@ def fail(message: str) -> None:
     raise SystemExit(f'FAIL: {message}')
 
 def main() -> None:
+    if (ROOT / 'catalog/studio.yaml').is_file():
+        from validate_studio import main as validate_v2
+        validate_v2()
+        return
     marketplace = json.loads(MARKETPLACE.read_text(encoding='utf-8'))
     if marketplace.get('name') != 'open-software-studio': fail('marketplace name')
     entries = marketplace.get('plugins', [])

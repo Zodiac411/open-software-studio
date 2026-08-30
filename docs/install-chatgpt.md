@@ -1,85 +1,39 @@
-# Install Open Software Studio in ChatGPT
+# Install Studio V2 in ChatGPT
 
-Open Software Studio's ChatGPT distribution is skills-only. The six
-ChatGPT-facing plugin bundles contain their `.codex-plugin/plugin.json`, all
-specialist Skills, a small upload wrapper, and the matching icon. They do not
-declare `mcpServers` or `apps`, and they do not need a tunnel, API key,
-localhost service, OAuth, or a hosted endpoint.
+Studio's default ChatGPT distribution is one skills-first archive:
 
-The six uploadable bundles are:
-
-- Project Architect
-- Interface Studio
-- Engineering Guard
-- Research Engineer
-- Project Docs
-- Web App Builder
-
-Execution Guard stays Codex-first. It is installed with the repository
-marketplace and is not uploaded to ChatGPT as a ChatGPT-facing bundle.
-
-## Build the six plugin bundles
-
-From the repository root:
-
-```powershell
-python scripts/package_chatgpt_plugins.py
+```text
+dist/chatgpt/studio.zip
 ```
 
-The ZIP files are written to `dist/chatgpt-plugins/`. Each ZIP contains the
-plugin manifest, its `skills/` directory, a root upload wrapper, and a
-`plugin-icon.png` referenced by `agents/openai.yaml`. The wrapper lets the
-same plugin package pass through ChatGPT's Skills uploader while preserving
-the full plugin layout for Codex and other Agent Skills clients.
+Build it with `python scripts/build_studio.py`. The archive contains the
+portable Skills and OpenAI Skill metadata only. It does not declare an MCP
+server, require localhost, a tunnel, an API key, or a connected app. Satellite
+archives are diagnostic/optional outputs; the default install is the umbrella
+archive.
 
-## Upload in ChatGPT web
+## Supported account route
 
-1. Open **Plugins** in the ChatGPT sidebar.
-2. Open the **Skills** tab.
-3. Choose **Create → Upload from your computer**.
-4. Upload one ZIP from `dist/chatgpt-plugins/` at a time.
-5. Wait for ChatGPT's security scan and install each accepted bundle.
+1. Use Browser use with the owner's existing browser profile.
+2. Identify the visible ChatGPT account and workspace before changing anything.
+3. Prefer **Workspace settings → Plugins → Add → Import marketplace** when the
+   account exposes that route and the GitHub marketplace revision is available.
+4. Otherwise use **Plugins → Skills → Create → Upload** and upload
+   `dist/chatgpt/studio.zip`.
+5. Wait for scanning, inspect any review/block reason, and verify the actual
+   invocation surface in a new chat.
 
-ChatGPT currently displays these uploads in the Skills library. The package
-itself remains a plugin bundle: Codex reads `.codex-plugin/plugin.json` and
-loads the nested `skills/` directory. ChatGPT's current custom-app flow is a
-separate MCP surface and is intentionally not used here.
+Never enter or request a password, MFA/recovery code, cookie, OAuth token, or
+API key. OAuth/account selection, permission changes, external writes, and any
+custom-instruction change are human gates. Do not claim `@Studio` works unless
+the mention is visibly observed; if the personal Skills route exposes only an
+explicit Skill invocation, record that exact invocation instead.
 
-## Icons
+## Fresh-chat proof
 
-Every bundle has:
-
-- `assets/plugin-icon.png` for the plugin manifest;
-- `assets/plugin-icon.png` inside each nested Skill; and
-- `agents/openai.yaml` entries with `icon_small` and `icon_large`.
-
-The upload icon is a square true-color PNG below 10 KB. This avoids the blank
-icon fallback seen when a Skill has no `agents/openai.yaml` metadata or when a
-mobile client cannot decode the prior palette-only asset.
-
-## Surface limits
-
-Personal Skills must be installed separately on ChatGPT web and mobile; they
-do not automatically sync from Codex. Mobile can use an installed Skill, but
-it does not provide the same plugin/app management controls as ChatGPT web.
-The six core workflows remain useful without shell access, localhost,
-filesystem assumptions, or a local MCP server. Web App Builder's repository
-implementation guidance is naturally most useful in Codex.
-
-## Codex installation
-
-Use the repository marketplace for the actual Codex plugins:
-
-```powershell
-codex plugin marketplace add .
-codex plugin install open-software-studio/project-architect
-```
-
-Repeat installation for the other six plugins as needed. Execution Guard is
-also installed here and supplies the global Codex discipline layer.
-
-## Current OpenAI references
-
-- [Skills in ChatGPT](https://help.openai.com/en/articles/20001066)
-- [Plugins package guide](https://developers.openai.com/plugins/build/plugins)
-- [OpenAI plugin examples](https://github.com/openai/plugins)
+Use a completely new chat and ask Studio to identify the canonical repository
+and Drive workspace, perform read-only probes, and return a project brief with
+goals, non-goals, assumptions, requirements, proof levels, and one next action.
+Record the visible account, installed version, invocation surface, and result
+in `bootstrap/CHATGPT_INSTALL_RECEIPT.md`. Mark iPhone/mobile availability
+`USER CHECK` until personally verified.

@@ -1,0 +1,17 @@
+{
+  "conditions": [],
+  "disposition": "ACCEPT",
+  "document_id": "REV-001",
+  "findings": [],
+  "independent_checks": [],
+  "project_id": "PRJ-SD-001",
+  "requirements": [
+    "REQ-001"
+  ],
+  "review_id": "REV-001",
+  "reviewed_head_sha": "d697efc16d86835ff3941f54b05e560b91a4a125",
+  "reviewer_context": "same session",
+  "reviewer_role": "executor",
+  "scope_delta": {},
+  "wp_id": "WP-SD-001"
+}

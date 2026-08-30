@@ -1,0 +1,68 @@
+{
+  "$id": "studio://schemas/v2/snapshot.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "approved_by": {
+      "type": "string"
+    },
+    "authority": {
+      "type": "string"
+    },
+    "base_sha": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "document_id": {
+      "pattern": "^[A-Z][A-Z0-9-]+$",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "project_id": {
+      "pattern": "^PRJ-[A-Z0-9-]+$",
+      "type": "string"
+    },
+    "snapshot_id": {
+      "pattern": "^SNAP-[0-9]{3,}$",
+      "type": "string"
+    },
+    "sources": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "status": {
+      "type": "string"
+    },
+    "verification": {
+      "enum": [
+        "E0",
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "verified",
+        "partial",
+        "unverified",
+        "not-applicable"
+      ]
+    },
+    "version": {
+      "pattern": "^2\\.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "snapshot_id",
+    "project_id",
+    "base_sha",
+    "status",
+    "approved_by"
+  ],
+  "title": "Studio V2 frozen snapshot",
+  "type": "object"
+}

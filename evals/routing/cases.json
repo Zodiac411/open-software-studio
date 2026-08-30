@@ -1,38 +1,357 @@
 {
-  "project-architect-router":{"positive":"Turn this idea into a software plan","negative":"Implement the approved settings feature","ambiguous":"Which React state library should we use?"},
-  "project-discovery":{"positive":"Clarify goals and acceptance criteria for this product idea","negative":"Choose the page typography","ambiguous":"Plan a new onboarding flow"},
-  "architecture-design":{"positive":"Design module and API boundaries for this requirement","negative":"Find current ORM options","ambiguous":"Review our current architecture"},
-  "implementation-planning":{"positive":"Break this approved spec into executable tasks","negative":"Write the task implementation","ambiguous":"Which pieces can run in parallel?"},
-  "interface-studio-router":{"positive":"Design the UX for settings","negative":"Implement the settings route","ambiguous":"Review this UI plan"},
-  "flow-and-interaction":{"positive":"Specify empty and error states for checkout","negative":"Pick a color palette","ambiguous":"Map the settings screen"},
-  "design-system-planner":{"positive":"Create a component map and token plan","negative":"Debug a failed deploy","ambiguous":"Improve the look of this product"},
-  "visual-qa":{"positive":"Critique this design for generic AI dashboard patterns","negative":"Write a database migration","ambiguous":"Review our landing page"},
-  "engineering-guard-router":{"positive":"Independently review this implementation plan","negative":"Turn this idea into requirements","ambiguous":"Is this change safe?"},
-  "implementation-readiness":{"positive":"Are these docs sufficient to start coding?","negative":"Implement the feature now","ambiguous":"Review this specification"},
-  "architecture-risk-review":{"positive":"Review the database/API architecture for risks","negative":"Choose the exact UI spacing","ambiguous":"Is this system design risky?"},
-  "implementation-review":{"positive":"Review this diff and test evidence","negative":"Fix all lint failures","ambiguous":"Is this PR ready?"},
-  "research-router":{"positive":"Research current options for this engineering decision","negative":"Decide our architecture","ambiguous":"Which tool should we use?"},
-  "deep-web-research":{"positive":"Find current official evidence for web frameworks","negative":"Write a PRD","ambiguous":"Compare these libraries"},
-  "github-deep-dive":{"positive":"Assess this GitHub repo's maintenance and releases","negative":"Search Reddit sentiment only","ambiguous":"Is this project healthy?"},
-  "extension-discovery":{"positive":"Find open-source MCP servers for browser testing","negative":"Install the first result","ambiguous":"What agent skills exist for UX?"},
-  "research-brief":{"positive":"Turn these sources into a recommendation brief","negative":"Make the architecture decision","ambiguous":"Summarize this research"},
-  "project-docs-router":{"positive":"Turn these decisions into implementation docs","negative":"Make the product decision","ambiguous":"What docs do we need?"},
-  "artifact-selector":{"positive":"Choose the smallest doc set for this project","negative":"Generate every document type","ambiguous":"Do we need an ADR?"},
-  "project-doc-pack":{"positive":"Write the linked architecture and task docs","negative":"Implement the tasks","ambiguous":"Create a technical spec"},
-  "traceability-and-handoff":{"positive":"Create a resumable implementation handoff","negative":"Write a marketing summary","ambiguous":"Audit these docs"},
-  "web-app-builder-router":{"positive":"Implement this approved web feature","negative":"Research React libraries","ambiguous":"Add a settings page"},
-  "repo-intake":{"positive":"Inspect this repo before implementing the feature","negative":"Pick a product audience","ambiguous":"Start work on this issue"},
-  "implementation-and-integration":{"positive":"Build the approved API and UI slices","negative":"Redesign the information architecture","ambiguous":"Implement this feature"},
-  "debugging-and-verification":{"positive":"Run browser checks and hand off this implementation","negative":"Invent a test framework","ambiguous":"The page still fails"},
-  "execution-guard":{"positive":"Start a substantive repository task","negative":"Explain a one-line concept","ambiguous":"Fix this bug"},
-  "pragmatic-core":{"positive":"Make a bounded code change","negative":"Run a full methodology workshop","ambiguous":"Add a helper"},
-  "context-grounding":{"positive":"Resume this stale cross-module task","negative":"Change one known string","ambiguous":"Fix a bug in an unfamiliar repo"},
-  "source-and-reuse":{"positive":"Use the correct API for the installed framework version","negative":"Repeat behavior established in local code","ambiguous":"Add a utility"},
-  "incremental-build":{"positive":"Implement this risky multi-file feature","negative":"Fix a typo","ambiguous":"Add a small new endpoint"},
-  "test-for-behavior":{"positive":"Add a regression test for this observable bug","negative":"Test private helper layout","ambiguous":"Should this need a test?"},
-  "debug-root-cause":{"positive":"A test unexpectedly fails after the change","negative":"Keep trying speculative patches","ambiguous":"Why does this build fail?"},
-  "final-review":{"positive":"Review this completed substantive diff","negative":"Do a broad cleanup","ambiguous":"Is this ready to ship?"},
-  "prove-it":{"positive":"Before claiming this task complete","negative":"Declare success because lint passed","ambiguous":"Can we call this done?"},
-  "quality-contract":{"positive":"Set quality floors for a long autonomous task","negative":"Add policy to a one-line edit","ambiguous":"This work will run for days"},
-  "handoff":{"positive":"Prepare this interrupted task for another agent","negative":"Paste the entire conversation","ambiguous":"I need to resume later"}
+  "architecture-design": {
+    "ambiguous": "Review our current architecture",
+    "negative": "Find current ORM options",
+    "positive": "Design module and API boundaries for this requirement"
+  },
+  "architecture-risk-review": {
+    "ambiguous": "Is this system design risky?",
+    "negative": "Choose the exact UI spacing",
+    "positive": "Review the database/API architecture for risks"
+  },
+  "artifact-selector": {
+    "ambiguous": "Do we need an ADR?",
+    "negative": "Generate every document type",
+    "positive": "Choose the smallest doc set for this project"
+  },
+  "context-grounding": {
+    "ambiguous": "Fix a bug in an unfamiliar repo",
+    "negative": "Change one known string",
+    "positive": "Resume this stale cross-module task"
+  },
+  "debug-root-cause": {
+    "ambiguous": "Why does this build fail?",
+    "negative": "Keep trying speculative patches",
+    "positive": "A test unexpectedly fails after the change"
+  },
+  "debugging-and-verification": {
+    "ambiguous": "The page still fails",
+    "negative": "Invent a test framework",
+    "positive": "Run browser checks and hand off this implementation"
+  },
+  "deep-web-research": {
+    "ambiguous": "Compare these libraries",
+    "negative": "Write a PRD",
+    "positive": "Find current official evidence for web frameworks"
+  },
+  "design-system-planner": {
+    "ambiguous": "Improve the look of this product",
+    "negative": "Debug a failed deploy",
+    "positive": "Create a component map and token plan"
+  },
+  "engineering-guard-router": {
+    "ambiguous": "Is this change safe?",
+    "negative": "Turn this idea into requirements",
+    "positive": "Independently review this implementation plan"
+  },
+  "execution-guard": {
+    "ambiguous": "Fix this bug",
+    "negative": "Explain a one-line concept",
+    "positive": "Start a substantive repository task"
+  },
+  "extension-discovery": {
+    "ambiguous": "What agent skills exist for UX?",
+    "negative": "Install the first result",
+    "positive": "Find open-source MCP servers for browser testing"
+  },
+  "final-review": {
+    "ambiguous": "Is this ready to ship?",
+    "negative": "Do a broad cleanup",
+    "positive": "Review this completed substantive diff"
+  },
+  "flow-and-interaction": {
+    "ambiguous": "Map the settings screen",
+    "negative": "Pick a color palette",
+    "positive": "Specify empty and error states for checkout"
+  },
+  "github-deep-dive": {
+    "ambiguous": "Is this project healthy?",
+    "negative": "Search Reddit sentiment only",
+    "positive": "Assess this GitHub repo's maintenance and releases"
+  },
+  "handoff": {
+    "ambiguous": "I need to resume later",
+    "negative": "Paste the entire conversation",
+    "positive": "Prepare this interrupted task for another agent"
+  },
+  "implementation-and-integration": {
+    "ambiguous": "Implement this feature",
+    "negative": "Redesign the information architecture",
+    "positive": "Build the approved API and UI slices"
+  },
+  "implementation-planning": {
+    "ambiguous": "Which pieces can run in parallel?",
+    "negative": "Write the task implementation",
+    "positive": "Break this approved spec into executable tasks"
+  },
+  "implementation-readiness": {
+    "ambiguous": "Review this specification",
+    "negative": "Implement the feature now",
+    "positive": "Are these docs sufficient to start coding?"
+  },
+  "implementation-review": {
+    "ambiguous": "Is this PR ready?",
+    "negative": "Fix all lint failures",
+    "positive": "Review this diff and test evidence"
+  },
+  "incremental-build": {
+    "ambiguous": "Add a small new endpoint",
+    "negative": "Fix a typo",
+    "positive": "Implement this risky multi-file feature"
+  },
+  "interface-studio-router": {
+    "ambiguous": "Review this UI plan",
+    "negative": "Implement the settings route",
+    "positive": "Design the UX for settings"
+  },
+  "pragmatic-core": {
+    "ambiguous": "Add a helper",
+    "negative": "Run a full methodology workshop",
+    "positive": "Make a bounded code change"
+  },
+  "project-architect-router": {
+    "ambiguous": "Which React state library should we use?",
+    "negative": "Implement the approved settings feature",
+    "positive": "Turn this idea into a software plan"
+  },
+  "project-discovery": {
+    "ambiguous": "Plan a new onboarding flow",
+    "negative": "Choose the page typography",
+    "positive": "Clarify goals and acceptance criteria for this product idea"
+  },
+  "project-doc-pack": {
+    "ambiguous": "Create a technical spec",
+    "negative": "Implement the tasks",
+    "positive": "Write the linked architecture and task docs"
+  },
+  "project-docs-router": {
+    "ambiguous": "What docs do we need?",
+    "negative": "Make the product decision",
+    "positive": "Turn these decisions into implementation docs"
+  },
+  "prove-it": {
+    "ambiguous": "Can we call this done?",
+    "negative": "Declare success because lint passed",
+    "positive": "Before claiming this task complete"
+  },
+  "quality-contract": {
+    "ambiguous": "This work will run for days",
+    "negative": "Add policy to a one-line edit",
+    "positive": "Set quality floors for a long autonomous task"
+  },
+  "repo-intake": {
+    "ambiguous": "Start work on this issue",
+    "negative": "Pick a product audience",
+    "positive": "Inspect this repo before implementing the feature"
+  },
+  "research-brief": {
+    "ambiguous": "Summarize this research",
+    "negative": "Make the architecture decision",
+    "positive": "Turn these sources into a recommendation brief"
+  },
+  "research-router": {
+    "ambiguous": "Which tool should we use?",
+    "negative": "Decide our architecture",
+    "positive": "Research current options for this engineering decision"
+  },
+  "source-and-reuse": {
+    "ambiguous": "Add a utility",
+    "negative": "Repeat behavior established in local code",
+    "positive": "Use the correct API for the installed framework version"
+  },
+  "studio-acceptance-writer": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-acceptance-writer to observable acceptance and proof contract."
+  },
+  "studio-ambiguity-audit": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-ambiguity-audit to observable language, missing decisions, and clarify-or-stop questions."
+  },
+  "studio-architecture-review": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-architecture-review to evidence-led architecture fitness and risk."
+  },
+  "studio-artifact-lint": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-artifact-lint to deterministic artifact and template integrity."
+  },
+  "studio-assumption-map": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-assumption-map to load-bearing assumptions and validation order."
+  },
+  "studio-build": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-build to repository evidence, allowed paths, smallest safe change, tests, and handoff."
+  },
+  "studio-close": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-close to file-backed recovery, clean closeout, and no self-acceptance."
+  },
+  "studio-constraint-audit": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-constraint-audit to hard constraints, soft preferences, conflicts, and missing authority."
+  },
+  "studio-context": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-context to selective context, authority boundaries, and fresh-session recovery."
+  },
+  "studio-design": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-design to UX, interaction, accessibility, responsive composition, and visual evidence."
+  },
+  "studio-docs": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-docs to template selection, traceability, authority, supersession, and durable document output."
+  },
+  "studio-doctor": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-doctor to read-only health checks, actionable blockers, and fail-open behavior."
+  },
+  "studio-domain-model": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-domain-model to domain boundaries and durable vocabulary."
+  },
+  "studio-edge-case-audit": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-edge-case-audit to critical edge cases proportional to risk."
+  },
+  "studio-evidence": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-evidence to E0 through E5 evidence receipts, direct observations, and unproven boundaries."
+  },
+  "studio-handoff": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-handoff to handoff claim package and reviewer action."
+  },
+  "studio-improve": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-improve to retro evidence, friction, decisions, and separately scoped improvements."
+  },
+  "studio-init": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-init to safe project initialization and recovery files."
+  },
+  "studio-issue-plan": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-issue-plan to issue-ready scope, labels, dependencies, and drift detection."
+  },
+  "studio-option-tradeoff": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-option-tradeoff to decision trace and explicit trade-offs."
+  },
+  "studio-plan": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-plan to requirements, architecture, UX, verification, plan critique, and snapshot readiness."
+  },
+  "studio-premortem": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-premortem to early failure signals and recovery."
+  },
+  "studio-release": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-release to release gates, version alignment, migration, target-host evidence, and rollback."
+  },
+  "studio-repair": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-repair to accepted findings, allowed paths, regression proof, and stop conditions."
+  },
+  "studio-requirement-quality": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-requirement-quality to testable requirement wording and conflict/gap detection."
+  },
+  "studio-research": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-research to primary sources, repository health, current APIs, trade-offs, and refresh triggers."
+  },
+  "studio-review": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-review to independent findings, review disposition, repair acceptance, and stale-state detection."
+  },
+  "studio-scope-guard": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-scope-guard to scope budget, reuse ledger, overshoot audit, safety exemptions, and replan triggers."
+  },
+  "studio-shape": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-shape to problem framing, assumptions, constraints, solution ladder, scope budget, and disposition."
+  },
+  "studio-start": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-start to project intake, profile selection, repository and Drive identity, and next-action routing."
+  },
+  "studio-status": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-status to reconcile .project state, GitHub projections, Drive authorities, and current SHA."
+  },
+  "studio-strategy-red-team": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-strategy-red-team to adversarial plan and review critique."
+  },
+  "studio-track": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-track to idempotent issue and milestone projection, dependencies, stale reviews, and drift."
+  },
+  "studio-verify": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-verify to deterministic validators, evidence grading, seeded gates, and honest limitations."
+  },
+  "studio-work": {
+    "ambiguous": "I have a software idea; help me figure out the next step.",
+    "negative": "Rename an unrelated file and do not plan or review a software workflow.",
+    "positive": "Use $studio-work to active work package, context capsule, bounded execution, proof, and closeout."
+  },
+  "test-for-behavior": {
+    "ambiguous": "Should this need a test?",
+    "negative": "Test private helper layout",
+    "positive": "Add a regression test for this observable bug"
+  },
+  "traceability-and-handoff": {
+    "ambiguous": "Audit these docs",
+    "negative": "Write a marketing summary",
+    "positive": "Create a resumable implementation handoff"
+  },
+  "visual-qa": {
+    "ambiguous": "Review our landing page",
+    "negative": "Write a database migration",
+    "positive": "Critique this design for generic AI dashboard patterns"
+  },
+  "web-app-builder-router": {
+    "ambiguous": "Add a settings page",
+    "negative": "Research React libraries",
+    "positive": "Implement this approved web feature"
+  }
 }

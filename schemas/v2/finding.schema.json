@@ -1,0 +1,77 @@
+{
+  "$id": "studio://schemas/v2/finding.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "authority": {
+      "type": "string"
+    },
+    "document_id": {
+      "pattern": "^[A-Z][A-Z0-9-]+$",
+      "type": "string"
+    },
+    "evidence": {
+      "type": "string"
+    },
+    "finding_id": {
+      "pattern": "^FIND-[0-9]{3,}$",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "project_id": {
+      "pattern": "^PRJ-[A-Z0-9-]+$",
+      "type": "string"
+    },
+    "repair_acceptance": {
+      "type": "string"
+    },
+    "requirement": {
+      "type": "string"
+    },
+    "severity": {
+      "enum": [
+        "BLOCKING",
+        "IMPORTANT",
+        "OPTIONAL"
+      ]
+    },
+    "sources": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "status": {
+      "type": "string"
+    },
+    "verification": {
+      "enum": [
+        "E0",
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "verified",
+        "partial",
+        "unverified",
+        "not-applicable"
+      ]
+    },
+    "version": {
+      "pattern": "^2\\.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "finding_id",
+    "severity",
+    "requirement",
+    "evidence",
+    "repair_acceptance"
+  ],
+  "title": "Studio V2 review finding",
+  "type": "object"
+}
