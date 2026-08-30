@@ -15,7 +15,7 @@ Recorded: 2026-08-30
 - Permissions observed: admin/maintain/pull/push/triage.
 - Branch publication: PASS. The explicitly authorized
   `studio-v2-bootstrap` branch was pushed and read back at implementation
-  checkpoint `dee9454070ba15ecf1c87f110b3db6cef1c59820`.
+  checkpoint `988416c17a42117d80ac6425410890944a8fef39`.
 - Issue/milestone reconciliation: local confirmation-gated projection only;
   no issue, milestone, comment, or PR was created.
 

@@ -94,7 +94,7 @@ No credentials or secrets were requested, entered, or recorded.
   schemas/v2; skills/studio; templates/studio-v2; brand/icon-system;
   .agents/plugins/marketplace.json; the preserved server; and
   evals/studio plus evals/pilots.
-- Current implementation source checkpoint: dee9454070ba15ecf1c87f110b3db6cef1c59820 on
+- Current implementation source checkpoint: 988416c17a42117d80ac6425410890944a8fef39 on
   studio-v2-bootstrap.
 - The branch is published at this checkpoint. Later bootstrap commits are
   evidence-only refreshes generated from this immutable source checkpoint.
@@ -192,13 +192,13 @@ was performed.
   `USER CHECK`.
 - Historical ChatGPT Review 003 and 004 were blocked by a missing or stale
   remote checkpoint; that source-publication finding is repaired. The current
-  published checkpoint is `dee9454070ba15ecf1c87f110b3db6cef1c59820`, and a
+  published checkpoint is `988416c17a42117d80ac6425410890944a8fef39`, and a
   fresh review against it is still required. Canonical Drive remains on its
   pre-V2 authoritative state and needs separate owner approval before update.
 
 ## Repair pass: committed-HEAD reproducibility and lifecycle enforcement
 
-- Implementation checkpoint: `dee9454070ba15ecf1c87f110b3db6cef1c59820`.
+- Implementation checkpoint: `988416c17a42117d80ac6425410890944a8fef39`.
 - `scripts/check_reproducibility.py` now materializes `HEAD` with `git archive`
   before building, so untracked worktree files cannot affect the proof.
 - `scripts/studio.py close` now requires a current independent `ACCEPT` review

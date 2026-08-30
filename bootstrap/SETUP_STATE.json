@@ -54,7 +54,7 @@
       "read_probe": "repository metadata and README read",
       "target": "Zodiac411/open-software-studio",
       "published_branch": "studio-v2-bootstrap",
-      "published_checkpoint": "dee9454070ba15ecf1c87f110b3db6cef1c59820"
+      "published_checkpoint": "988416c17a42117d80ac6425410890944a8fef39"
     },
     "google_drive": {
       "result": "PASS",
@@ -96,8 +96,8 @@
     "active_work_package": "WP-SD-001",
     "result": "PASS_WITH_LIMITATIONS",
     "current_branch": "studio-v2-bootstrap",
-    "current_head": "dee9454070ba15ecf1c87f110b3db6cef1c59820",
-    "source_checkpoint_sha": "dee9454070ba15ecf1c87f110b3db6cef1c59820",
+    "current_head": "988416c17a42117d80ac6425410890944a8fef39",
+    "source_checkpoint_sha": "988416c17a42117d80ac6425410890944a8fef39",
     "evidence_basis": "Pilot state, SNAP-007, EVID-PILOT-*-005, and HANDOFF-DEE9454070BA are generated from the immutable source checkpoint; later branch commits are evidence-only.",
     "evidence": [
       "python scripts/build_studio.py -> PASS (9 packages, 22 templates, deterministic archives)",
@@ -105,7 +105,7 @@
       "python scripts/run_evals.py -> PASS (71 routing cases, 10 execution scenarios, 6 Studio gates)",
       "Plugin Creator validator -> PASS for all 9 generated packages",
       "Opal Seed contact sheet and actual 24px/32px assets visually inspected -> PASS",
-      "greenfield pilot -> PASS at implementation checkpoint dee9454070ba15ecf1c87f110b3db6cef1c59820",
+      "greenfield pilot -> PASS at implementation checkpoint 988416c17a42117d80ac6425410890944a8fef39",
       "brownfield planted-defect test -> first red, repaired, then PASS",
       "Codex Studio package -> PASS_WITH_LIMITATIONS; installed and enabled at 2.0.0",
       "fresh Codex Studio-directed session -> PASS_WITH_LIMITATIONS",
@@ -120,7 +120,7 @@
       "fresh independent ChatGPT review at the published checkpoint -> NOT_RUN; historical blocked reports remain preserved and Drive remains on its pre-V2 authoritative state"
     ],
     "blocking_findings": [
-      "Fresh ChatGPT Review at published checkpoint dee9454070ba15ecf1c87f110b3db6cef1c59820 is pending. Canonical Drive's authoritative state requires a separately approved update after publication."
+      "Fresh ChatGPT Review at published checkpoint 988416c17a42117d80ac6425410890944a8fef39 is pending. Canonical Drive's authoritative state requires a separately approved update after publication."
     ],
     "review_disposition": "NOT_RUN",
     "external_writes": "NOT_RUN"
