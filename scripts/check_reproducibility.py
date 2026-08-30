@@ -4,9 +4,10 @@
 from __future__ import annotations
 
 import hashlib
-import shutil
+import io
 import subprocess
 import sys
+import tarfile
 import tempfile
 from pathlib import Path
 
@@ -48,6 +49,19 @@ def run_build(root: Path) -> None:
         raise SystemExit(f"FAIL: clean build exited {completed.returncode}: {completed.stdout}{completed.stderr}")
 
 
+def materialize_head(checkout: Path) -> None:
+    archived = subprocess.run(
+        ["git", "-C", str(ROOT), "archive", "--format=tar", "HEAD"],
+        capture_output=True,
+        check=False,
+    )
+    if archived.returncode:
+        raise SystemExit(f"FAIL: git archive HEAD exited {archived.returncode}: {archived.stderr.decode(errors='replace')}")
+    checkout.mkdir(parents=True, exist_ok=True)
+    with tarfile.open(fileobj=io.BytesIO(archived.stdout), mode="r:") as bundle:
+        bundle.extractall(checkout, filter="data")
+
+
 def changed(before: dict[str, str], after: dict[str, str]) -> list[str]:
     names = sorted(set(before) | set(after))
     return [name for name in names if before.get(name) != after.get(name)]
@@ -56,7 +70,7 @@ def changed(before: dict[str, str], after: dict[str, str]) -> list[str]:
 def main() -> None:
     with tempfile.TemporaryDirectory(prefix="studio-repro-") as temporary:
         checkout = Path(temporary) / "checkout"
-        shutil.copytree(ROOT, checkout, ignore=shutil.ignore_patterns(*IGNORED_PARTS))
+        materialize_head(checkout)
         before = digest_tree(checkout)
         run_build(checkout)
         first = digest_tree(checkout)

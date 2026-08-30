@@ -15,6 +15,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = ROOT / "catalog" / "studio.yaml"
+TRANSITIONS = ROOT / "schemas" / "v2" / "state-transitions.json"
 RESULTS = ["PASS", "PASS_WITH_LIMITATIONS", "BLOCKED", "NOT_RUN", "UNPROVEN"]
 PHASES = ["INTAKE", "SHAPED", "PLANNED", "FROZEN", "IMPLEMENTING", "PROVING", "IN_REVIEW", "REPAIR", "ACCEPTED", "CLOSED", "RELEASED"]
 ID_PATTERN = re.compile(r"^[A-Z][A-Z0-9-]+$")
@@ -405,6 +406,11 @@ def latest_json(root: Path, prefix: str) -> Path | None:
     return files[-1] if files else None
 
 
+def transition_allowed(source: str, target: str) -> bool:
+    transitions = read_json(TRANSITIONS).get("transitions", {})
+    return target in transitions.get(source, [])
+
+
 def validate_review(args: argparse.Namespace) -> int:
     project = project_root(args.project)
     path = project_root(args.path) if args.path else latest_json(control_root(project) / "reviews", "REV-")
@@ -456,6 +462,22 @@ def close_project(args: argparse.Namespace) -> int:
     handoffs = sorted((control_root(project) / "handoffs").glob("*.json"))
     if not handoffs:
         return fail("close requires an implementation handoff")
+    phase = state.get("phase")
+    if phase == "IN_REVIEW":
+        review = latest_json(control_root(project) / "reviews", "REV-")
+        if not review:
+            return fail("close requires a current independent ACCEPT review")
+        value = read_json(review)
+        live = current_sha(project)
+        if value.get("disposition") != "ACCEPT" or value.get("reviewed_head_sha") != live:
+            return fail("close requires a current independent ACCEPT review")
+        if not transition_allowed("IN_REVIEW", "ACCEPTED") or not transition_allowed("ACCEPTED", "CLOSED"):
+            return fail("state transition matrix does not permit review acceptance and close")
+        phase = "ACCEPTED"
+    elif phase not in ("ACCEPTED", "CLOSED"):
+        return fail(f"close requires ACCEPTED or CLOSED state, found {phase}")
+    if phase == "ACCEPTED" and not transition_allowed("ACCEPTED", "CLOSED"):
+        return fail("state transition matrix does not permit close")
     progress = control_root(project) / "session" / "progress.md"
     existing = progress.read_text(encoding="utf-8") if progress.is_file() else "# Studio progress\n"
     marker = f"\n- Session close observed at {utc_now()}; next action remains independent acceptance or release approval.\n"
