@@ -54,10 +54,10 @@ NOT_RUN.
   chat at https://chatgpt.com/c/6a947454-fac4-83eb-a3ed-3265561e8b76 showed
   the exact proposed GitHub issue mutation and stopped for explicit approval;
   no external write was executed.
-- Fresh independent ChatGPT Review: Review 009 returned BLOCKED for a stale
-  machine-readable `SETUP_STATE.json` finding after verifying the source and
-  archive-order repair. `REPAIR-REV-009-001` records the evidence-only repair;
-  Review 010 is pending. Historical reviews are preserved in the bootstrap
+- Fresh independent ChatGPT Review: Review 010 returned
+  PASS_WITH_LIMITATIONS after verifying the exact remote tip, source lineage,
+  complete archive-order repair, and `REPAIR-REV-009-001` state repair. No
+  local defect remains. Historical reviews are preserved in the bootstrap
   directory; canonical Drive still records the pre-V2 baseline.
 - ChatGPT-side external writes: NOT_RUN. No issue, milestone, comment, file,
   folder, document, permission, or custom-instruction write was attempted.

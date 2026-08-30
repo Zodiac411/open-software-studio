@@ -1,6 +1,6 @@
 # Studio V2 final acceptance
 
-Overall result: BLOCKED
+Overall result: PASS_WITH_LIMITATIONS
 
 Implementation source checkpoint: 468e231b55558052906aafc267e135608ddb94ff
 
@@ -23,12 +23,12 @@ be treated as a new implementation revision.
 | Write confirmation gating | PASS_WITH_LIMITATIONS | seeded gates and CLI track --apply failure pass; fresh ChatGPT Track probe displayed the exact mutation and stopped for approval; actual external write remains NOT_RUN |
 | Greenfield local pilot | PASS_WITH_LIMITATIONS | PILOT_A_RECEIPT.md; current SNAP-014, EVID-PILOT-A-012, and HANDOFF-468E231B5555 |
 | Brownfield defect found and repaired | PASS | INDEPENDENT_REVIEW_001.md, REV-001, bounded repairs, REV-002, REV-003, and current EVID-PILOT-B-012 |
-| Cross-surface ChatGPT -> Codex -> fresh ChatGPT Review pilots | NOT_RUN | Local ChatGPT and Codex legs pass; Review 009 verified the source repair but blocked on stale SETUP_STATE review text; REPAIR-REV-009-001 is recorded and Review 010 is pending |
-| Current-SHA independent review | BLOCKED | Review 009 verified source 468e231 and the complete archive-order repair, then found stale machine-readable state text; the evidence-only repair is recorded and Review 010 is pending |
+| Cross-surface ChatGPT -> Codex -> fresh ChatGPT Review pilots | PASS_WITH_LIMITATIONS | Local ChatGPT and Codex legs pass; Review 010 accepted source 468e231 and the current evidence chain with only recorded external/host limitations |
+| Current-SHA independent review | PASS_WITH_LIMITATIONS | Fresh Review 010 accepted source 468e231 and remote tip 320ec6d with no local source, package, validator, receipt, or state defect |
 | Rollback dry-run | PASS | ROLLBACK.md |
 | iPhone/mobile availability | USER CHECK | personal device verification not performed |
 
-## Current blocker
+## Current limitations
 
 The user confirmed that the browser-visible ChatGPT account chris folorunso /
 Pro, with no visible workspace label, is the intended account. The personal
@@ -52,11 +52,13 @@ sorted list and that the validator did not assert complete entry ordering. The
 complete-entry repair and validator assertion are now published at
 `468e231b55558052906aafc267e135608ddb94ff`. Review 009 verified that source
 and the exact remote evidence tip, then found stale `blocking_findings` text in
-`SETUP_STATE.json`; `REPAIR-REV-009-001` records the evidence-only fix and a
-new fresh ChatGPT Review 010 is required against the refreshed evidence tip.
+`SETUP_STATE.json`; `REPAIR-REV-009-001` records the evidence-only fix. Fresh
+Review 010 independently verified the repaired state and returned
+`PASS_WITH_LIMITATIONS` with no local defect.
 Canonical Drive still records the pre-V2 authoritative state and may only be
 updated after a separate explicit owner approval. Actual external write
-execution, branch protection, and mobile verification remain open by policy.
+execution, branch protection, historical host replay, the disabled Chrome
+extension, and mobile verification remain open by policy or user check.
 
 The authorized branch publication occurred; no issue, milestone, PR, Drive
 write, permission change, merge, or release was performed.
