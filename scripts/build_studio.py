@@ -370,10 +370,13 @@ def zip_entry(archive: zipfile.ZipFile, name: str, data: bytes) -> None:
     archive.writestr(info, data)
 
 
-def archive_sort_key(path: Path, source: Path) -> tuple[str, bytes]:
-    relative = path.relative_to(source).as_posix()
+def archive_name_sort_key(name: str) -> tuple[str, bytes]:
     # The UTF-8 tie-breaker keeps casefold collisions byte-stable across hosts.
-    return relative.casefold(), relative.encode("utf-8")
+    return name.casefold(), name.encode("utf-8")
+
+
+def archive_sort_key(path: Path, source: Path) -> tuple[str, bytes]:
+    return archive_name_sort_key(path.relative_to(source).as_posix())
 
 
 def zip_package(source: Path, package_id: str, output: Path, display_name: str) -> None:
@@ -405,15 +408,20 @@ def zip_package(source: Path, package_id: str, output: Path, display_name: str) 
         f"  default_prompt: {json.dumps(f'Use {display_name} for this bounded software task.')}",
         "",
     ]).encode("utf-8")
+    entries = [
+        (
+            f"{root_name}/{path.relative_to(source).as_posix()}",
+            canonical_bytes(path, path.read_bytes()),
+        )
+        for path in paths
+    ]
+    entries.extend([
+        (f"{root_name}/SKILL.md", wrapper),
+        (f"{root_name}/agents/openai.yaml", openai_yaml),
+    ])
     with zipfile.ZipFile(output, "w", compression=zipfile.ZIP_STORED) as archive:
-        for path in sorted(
-            paths,
-            key=lambda item: archive_sort_key(item, source),
-        ):
-            relative = path.relative_to(source).as_posix()
-            zip_entry(archive, f"{root_name}/{relative}", canonical_bytes(path, path.read_bytes()))
-        zip_entry(archive, f"{root_name}/SKILL.md", wrapper)
-        zip_entry(archive, f"{root_name}/agents/openai.yaml", openai_yaml)
+        for name, data in sorted(entries, key=lambda item: archive_name_sort_key(item[0])):
+            zip_entry(archive, name, data)
 
 
 def package_chatgpt(catalog: dict[str, Any], package_info: dict[str, dict[str, Any]]) -> dict[str, str]:

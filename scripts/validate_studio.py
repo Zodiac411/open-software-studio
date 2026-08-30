@@ -76,6 +76,10 @@ def canonical_sha256(path: Path) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def archive_entry_sort_key(name: str) -> tuple[str, bytes]:
+    return name.casefold(), name.encode("utf-8")
+
+
 def main() -> None:
     catalog = read_json(ROOT / "catalog" / "studio.yaml")
     if catalog.get("schema") != "studio.catalog/v2":
@@ -141,6 +145,8 @@ def main() -> None:
         names = bundle.namelist()
         if "studio/SKILL.md" not in names or "studio/agents/openai.yaml" not in names:
             fail("ChatGPT archive is not skills-first")
+        if names != sorted(names, key=archive_entry_sort_key):
+            fail("ChatGPT archive entries are not POSIX/case-folded/UTF-8 ordered")
         skill_text = bundle.read("studio/SKILL.md").decode("utf-8")
         if "Studio v2.0.0:" not in skill_text:
             fail("ChatGPT archive does not expose its version")
