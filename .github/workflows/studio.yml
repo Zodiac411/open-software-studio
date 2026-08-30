@@ -1,0 +1,38 @@
+name: Studio V2
+
+on:
+  pull_request:
+  push:
+    branches: [master, studio-v2-bootstrap]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check generated outputs
+        run: python scripts/build_studio.py --check-only
+      - name: Validate package suite
+        run: python scripts/validate_suite.py
+      - name: Run behavioral evaluations
+        run: python scripts/run_evals.py
+      - name: Run focused Studio regressions
+        run: python -m unittest discover -s evals/studio -p "test_*.py"
+
+  optional-mcp-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.4.0"
+      - name: Install locked dependencies
+        run: bun install --frozen-lockfile
+      - name: Probe optional MCP server
+        run: bun run mcp:check

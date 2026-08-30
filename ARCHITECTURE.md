@@ -1,17 +1,35 @@
-# Architecture
+# Studio V2 architecture
 
-Open Software Studio separates decisions from execution:
+Studio V2 is one catalog-generated workflow exposed through an umbrella package
+and eight focused satellites. The packages share versioned artifacts and
+project-local state; they do not depend on hidden conversation history.
 
 ```text
-Research Engineer -> evidence
-Project Architect -> product and technical decisions
-Interface Studio -> experience decisions
-Project Docs -> portable linked artifacts
-Web App Builder -> repository implementation
-Engineering Guard -> independent critique
-Execution Guard -> how Codex works throughout
+Studio Plan     -> scope, requirements, architecture, bounded plans
+Studio Design   -> experience, interaction, accessibility, visual system
+Studio Research -> current external evidence and source quality
+Studio Docs     -> durable artifacts, IDs, traceability, and handoffs
+Studio Review   -> independent findings, acceptance, and repair gates
+Studio Build    -> approved repository implementation
+Studio Verify   -> execution discipline and direct proof
+Studio Track    -> confirmation-gated GitHub projections
+Studio          -> routing and the complete bounded delivery loop
 ```
 
-Each plugin has a light router and a few specialist skills. A router selects one specialist by default, two only when the request crosses a real boundary, and never loads its full methodology speculatively. `shared/` is the only cross-plugin contract: plugins communicate through Markdown artifacts and stable IDs, not hidden conversation state.
+`catalog/studio.yaml` owns package identity, routing inventory, artifact
+versions, profiles, archetypes, recipes, and source provenance. The build
+renders the Codex marketplace, ChatGPT skills-first archive, schemas,
+templates, icons, and evaluation fixtures deterministically.
 
-Execution Guard is deliberately not a planner or implementation framework. Its `pragmatic-core` and `prove-it` gate govern execution; Web App Builder owns the implementation workflow.
+`.project/` is the portable workflow authority. Requirements, snapshots, work
+packages, evidence, findings, reviews, repairs, and release receipts bind to
+explicit identifiers and Git revisions. GitHub and Google Drive are external
+projections or evidence sources; neither silently overrides local state.
+
+All external writes require confirmation. Review is independent of execution,
+release requires a current accepted review, and Studio never merges
+automatically.
+
+The seven pre-V2 package directories remain compatibility sources. Their
+specialist skills may be reused by V2 packages, but this document and
+`docs/studio-v2.md` define the current architecture.

@@ -1,13 +1,23 @@
-# Plugin coordination
+# Studio V2 coordination
 
-| Request | Owner | Explicitly not owner |
+| Request | Primary package | Boundary |
 |---|---|---|
-| Current tools, libraries, or ecosystem evidence | Research Engineer | Project Architect |
-| Product scope, requirements, or architecture | Project Architect | Interface Studio |
-| Experience, screen behavior, accessibility, visual direction | Interface Studio | Web App Builder |
-| Formal documents and linked handoffs | Project Docs | Project Architect |
-| Independent risk/quality critique | Engineering Guard | Execution Guard |
-| Repository implementation | Web App Builder | Execution Guard |
-| Grounding, restraint, debugging discipline, completion evidence | Execution Guard | Web App Builder |
+| Complete bounded delivery loop or ambiguous Studio request | Studio | Routes to focused packages; does not bypass their gates. |
+| Product scope, requirements, architecture, or work packages | Studio Plan | Does not implement unapproved repository changes. |
+| Experience, interaction, accessibility, or visual direction | Studio Design | Does not own repository delivery evidence. |
+| Current tools, libraries, or ecosystem evidence | Studio Research | Does not turn evidence into an unapproved architecture decision. |
+| Formal artifacts, stable IDs, traceability, or handoffs | Studio Docs | Does not invent missing decisions. |
+| Independent risk, quality, or acceptance review | Studio Review | Must not implement or accept its own repair. |
+| Approved repository implementation | Studio Build | Must not silently change frozen requirements or self-accept. |
+| Grounding, debugging, tests, and completion proof | Studio Verify | Governs execution quality; does not own product scope. |
+| GitHub issue and milestone projection | Studio Track | Plans read-only by default; writes require exact confirmation. |
 
-When an implementation discovers an architecture conflict, it creates an architecture-change request instead of silently changing the architecture. A Project Architect decision and Project Docs artifact unblock the builder.
+When implementation discovers a requirements or architecture conflict, it
+creates a typed change proposal rather than silently changing the frozen
+decision. Studio Plan decides the change, Studio Docs records it, Studio Build
+implements it, Studio Verify proves it, and a fresh Studio Review accepts or
+rejects it at the current SHA.
+
+The legacy Project Architect, Interface Studio, Research Engineer, Project
+Docs, Engineering Guard, Web App Builder, and Execution Guard package IDs are
+compatibility aliases for the corresponding V2 responsibilities.

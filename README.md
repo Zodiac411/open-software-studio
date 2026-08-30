@@ -38,7 +38,7 @@ gates.
 
 ## Start here
 
-Read [Architecture](ARCHITECTURE.md), then the [coordination contract](docs/plugin-coordination.md).
+Read the V2 [Architecture](ARCHITECTURE.md), then the [coordination contract](docs/plugin-coordination.md).
 The canonical repository is [github.com/Zodiac411/open-software-studio](https://github.com/Zodiac411/open-software-studio).
 Import `.agents/plugins/marketplace.json` in Codex, use the V2 installation
 notes in [docs/install-codex.md](docs/install-codex.md), or upload the default
@@ -53,6 +53,7 @@ No third-party service, API, or subscription is required by this repository.
 ```powershell
 python scripts/validate_suite.py
 python scripts/run_evals.py
+python -m unittest discover -s evals/studio -p "test_*.py"
 ```
 
 The V2 validators use Python's standard library plus the already-installed

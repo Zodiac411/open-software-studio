@@ -5,6 +5,10 @@ const child = spawn("bun", ["run", "server/index.ts", "--port", String(port)], {
   stdio: ["ignore", "pipe", "pipe"],
 });
 
+let childOutput = "";
+child.stdout.on("data", (chunk) => { childOutput += chunk.toString(); });
+child.stderr.on("data", (chunk) => { childOutput += chunk.toString(); });
+
 const stop = () => {
   if (child.killed || child.exitCode !== null) return;
   if (process.platform === "win32" && child.pid) {
@@ -16,8 +20,28 @@ const stop = () => {
 process.on("exit", stop);
 process.on("SIGINT", () => { stop(); process.exit(130); });
 
-await new Promise((resolve) => setTimeout(resolve, 700));
-const health = await fetch(`http://127.0.0.1:${port}/healthz`);
+const deadline = Date.now() + 10_000;
+let health: Response | undefined;
+let lastError = "server did not become ready";
+while (Date.now() < deadline) {
+  if (child.exitCode !== null) {
+    throw new Error(`server exited before readiness (${child.exitCode})\n${childOutput}`);
+  }
+  try {
+    const response = await fetch(`http://127.0.0.1:${port}/healthz`);
+    if (response.ok) {
+      health = response;
+      break;
+    }
+    lastError = `healthz returned ${response.status}`;
+  } catch (error) {
+    lastError = error instanceof Error ? error.message : String(error);
+  }
+  await new Promise((resolve) => setTimeout(resolve, 100));
+}
+if (!health) {
+  throw new Error(`server readiness timed out: ${lastError}\n${childOutput}`);
+}
 if (!health.ok) throw new Error(`healthz returned ${health.status}`);
 const healthBody = await health.json() as { plugins?: unknown[] };
 if (!Array.isArray(healthBody.plugins) || healthBody.plugins.length !== 7) {

@@ -1,8 +1,8 @@
 {
   "name": "open-software-studio",
   "private": true,
-  "version": "0.1.0",
-  "description": "Seven coordinated open-source ChatGPT and Codex plugins for software work.",
+  "version": "2.0.0",
+  "description": "Studio V2: a deterministic, evidence-gated ChatGPT and Codex software-delivery workflow.",
   "type": "module",
   "scripts": {
     "mcp": "bun run server/index.ts",
