@@ -399,7 +399,13 @@ def zip_package(source: Path, package_id: str, output: Path, display_name: str) 
         "",
     ]).encode("utf-8")
     with zipfile.ZipFile(output, "w", compression=zipfile.ZIP_DEFLATED) as archive:
-        for path in sorted(paths):
+        for path in sorted(
+            paths,
+            key=lambda item: (
+                item.relative_to(source).as_posix().casefold(),
+                item.relative_to(source).as_posix(),
+            ),
+        ):
             relative = path.relative_to(source).as_posix()
             zip_entry(archive, f"{root_name}/{relative}", canonical_bytes(path, path.read_bytes()))
         zip_entry(archive, f"{root_name}/SKILL.md", wrapper)
