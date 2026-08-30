@@ -1,7 +1,7 @@
 # Studio V2 version-metadata handoff
 
 - work_package: `WP-SD-VERSION-METADATA`
-- implementation_checkpoint_sha: `17e9407569eb642e11d86def752c22ae6b638337`
+- implementation_checkpoint_sha: `468e231b55558052906aafc267e135608ddb94ff`
 - branch: `studio-v2-bootstrap`
 - allowed_paths: `scripts/build_studio.py`, `scripts/validate_studio.py`, generated package outputs, ChatGPT package outputs, and setup receipts
 - change: expose the canonical suite version as `Studio v2.0.0` in generated package descriptions and enforce the label in validation

@@ -4,7 +4,7 @@ Result: PASS_WITH_LIMITATIONS
 
 Recorded: 2026-08-30
 
-Implementation source checkpoint: `17e9407569eb642e11d86def752c22ae6b638337` on
+Implementation source checkpoint: `468e231b55558052906aafc267e135608ddb94ff` on
 published branch `studio-v2-bootstrap`.
 
 The archive was rebuilt after the committed-HEAD reproducibility repair and
@@ -16,7 +16,7 @@ are evidence-only and do not change the implementation source checkpoint.
 - Build artifact: dist/chatgpt/studio.zip.
 - Artifact version: 2.0.0.
 - SHA-256 at this checkpoint:
-  38E3332CDF0F822F65C1C66C69DCB74C083BF899044578AEE519BF9F6E98D0C7B.
+  08A62A947120249783B51C91B115962DD6644DCF5207D279AC4F74074A95DAD8.
 - Size: 110,928 bytes.
 - Repository validator: PASS.
 - Plugin Creator validator: PASS.
@@ -65,13 +65,15 @@ are evidence-only and do not change the implementation source checkpoint.
   mutation, explicitly stated that no issue was created, and stopped pending
   approval. Actual external issue creation remains NOT_RUN because it is
   irreversible repository history and requires a separate explicit approval.
-- Historical independent Studio Reviews 003 through 007 are preserved
+- Historical independent Studio Reviews 003 through 008 are preserved
   verbatim. Review 006 correctly blocked the prior checkpoint after a fresh
   Linux rebuild found host-dependent archive bytes and uncommitted generated
   outputs. Review 007 accepted the repaired source with one low portability
-  note; the explicit UTF-8 tie-breaker is now published at source checkpoint
-  `17e9407`. A new fresh independent ChatGPT Review against that checkpoint
-  and its later evidence-only tip is pending.
+  note, and Review 008 accepted the complete archive-order repair with one
+  remaining contract finding. The complete-entry ordering and validator
+  assertion are now published at source checkpoint `468e231`; a new fresh
+  independent ChatGPT Review against that checkpoint and its later
+  evidence-only tip is pending.
 - No ChatGPT custom instruction, OAuth flow, account switch, permission
   change, or external write was performed. Passwords, MFA codes, recovery
   codes, cookies, OAuth tokens, and API keys were never requested or handled.

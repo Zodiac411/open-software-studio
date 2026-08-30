@@ -15,7 +15,7 @@ Recorded: 2026-08-30
 - Permissions observed: admin/maintain/pull/push/triage.
 - Branch publication: PASS. The explicitly authorized
   `studio-v2-bootstrap` branch was pushed and read back at implementation
-  checkpoint `17e9407569eb642e11d86def752c22ae6b638337`.
+  checkpoint `468e231b55558052906aafc267e135608ddb94ff`.
 - Issue/milestone reconciliation: local confirmation-gated projection only;
   no issue, milestone, comment, or PR was created.
 
@@ -54,9 +54,9 @@ NOT_RUN.
   chat at https://chatgpt.com/c/6a947454-fac4-83eb-a3ed-3265561e8b76 showed
   the exact proposed GitHub issue mutation and stopped for explicit approval;
   no external write was executed.
-- Fresh independent ChatGPT Review: Review 007 returned
-  PASS_WITH_LIMITATIONS for source `8f8e9fc`; its low portability finding is
-  repaired at `17e9407` and Review 008 is pending. Historical reviews are
+- Fresh independent ChatGPT Review: Review 008 returned
+  PASS_WITH_LIMITATIONS for source `17e9407`; its archive-order finding is
+  repaired at `468e231` and Review 009 is pending. Historical reviews are
   preserved in the bootstrap directory; canonical Drive still records the
   pre-V2 baseline.
 - ChatGPT-side external writes: NOT_RUN. No issue, milestone, comment, file,

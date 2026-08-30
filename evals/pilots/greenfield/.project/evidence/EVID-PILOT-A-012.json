@@ -1,0 +1,12 @@
+{
+  "command_or_probe": "python evals/pilots/greenfield/test_app.py; python scripts/validate_studio.py; python scripts/check_reproducibility.py; python scripts/validate_suite.py; complete ZIP ordering probe",
+  "document_id": "EVID-PILOT-A-012",
+  "evidence_id": "EVID-PILOT-A-012",
+  "level": "E2",
+  "limitations": "local pilot and repository-source proof; external writes remain confirmation-gated; final fresh ChatGPT review pending",
+  "observed": "greenfield assertion, complete synthesized-entry ZIP ordering, validator assertion, clean-checkout reproducibility, and full suite validation passed at implementation checkpoint 468e231",
+  "project_id": "PRJ-PILOT-A",
+  "requirement": "REQ-PILOT-A-001",
+  "schema": "studio.evidence/v2",
+  "timestamp": "2026-08-30T21:27:05Z"
+}

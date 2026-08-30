@@ -3,7 +3,7 @@
   "archetype": "auto",
   "blocking_items": [],
   "created_at": "2026-08-30T17:09:43Z",
-  "current_sha": "17e9407569eb642e11d86def752c22ae6b638337",
+  "current_sha": "468e231b55558052906aafc267e135608ddb94ff",
   "next_action": "independent fresh-context review",
   "phase": "IN_REVIEW",
   "profile": "standard",
@@ -15,8 +15,8 @@
     }
   ],
   "schema": "studio.state/v2",
-  "snapshot_id": "SNAP-013",
-  "source_checkpoint_sha": "17e9407569eb642e11d86def752c22ae6b638337",
+  "snapshot_id": "SNAP-014",
+  "source_checkpoint_sha": "468e231b55558052906aafc267e135608ddb94ff",
   "status": "PASS_WITH_LIMITATIONS",
-  "updated_at": "2026-08-30T21:13:47Z"
+  "updated_at": "2026-08-30T21:27:59Z"
 }
