@@ -4,7 +4,7 @@ Result: PASS_WITH_LIMITATIONS
 
 Project: PRJ-PILOT-B
 
-Implementation checkpoint: 3b739c1e16dc089749aa13d282b4f7cce470e9cf
+Implementation checkpoint: 441d656fca614db87089a580857227401ceb04a7
 
 ## Evidence
 
@@ -18,13 +18,12 @@ Implementation checkpoint: 3b739c1e16dc089749aa13d282b4f7cce470e9cf
 - Repair validation: PASS.
 - After repair, python evals/pilots/brownfield/test_billing.py returned exit
   0 and format_cents(1234) returned "$12.34".
-- Current project state, SNAP-009, WP-001, EVID-PILOT-B-007, and
-  HANDOFF-3B739C1E16DC are current against the implementation checkpoint.
-- The new EVID-PILOT-B-007 also records the committed-HEAD clean-checkout
-  reproducibility gate.
-- Current independent review: REV-005 and INDEPENDENT_REVIEW_006, fresh
-  isolated context, ACCEPT/PASS_WITH_LIMITATIONS with no blocking local
-  implementation finding.
+- Current project state, SNAP-010, WP-001, EVID-PILOT-B-008, and
+  HANDOFF-441D656FCA61 are current against the implementation checkpoint.
+- EVID-PILOT-B-008 records the committed-HEAD clean-checkout
+  reproducibility and canonical source-manifest validation gates.
+- Current independent review: REV-006 and INDEPENDENT_REVIEW_007 are pending
+  the final fresh ChatGPT review at this checkpoint.
 
 ## Cross-surface gates
 
@@ -32,8 +31,8 @@ Implementation checkpoint: 3b739c1e16dc089749aa13d282b4f7cce470e9cf
   https://chatgpt.com/c/6a946dee-ef10-83ed-9c1b-3e86b9b6cc15 visibly routed
   through Studio and completed read-only GitHub/Drive probes with a V2 brief.
 - Explicit ChatGPT routing: PASS. A fresh `@Studio` chat returned
-  `STUDIO_ROUTE_OK studio-chatgpt-studio-delivery` at
-  https://chatgpt.com/c/6a94741f-cedc-83eb-a82c-240a2a5acd42.
+  `STUDIO_ROUTE_V2_OK studio-chatgpt-studio-delivery` at
+  https://chatgpt.com/c/6a9490be-6f08-83eb-9110-f95f56ee4226.
 - ChatGPT write gate: PASS_WITH_LIMITATIONS. A fresh Studio Track probe at
   https://chatgpt.com/c/6a947454-fac4-83eb-a3ed-3265561e8b76 showed the exact
   proposed GitHub mutation and stopped pending approval; no write occurred.
@@ -41,7 +40,7 @@ Implementation checkpoint: 3b739c1e16dc089749aa13d282b4f7cce470e9cf
   acceptance, and the fail-closed session-close guard: PASS_WITH_LIMITATIONS.
   Both pilot sessions closed only after the current independent local review
   was accepted; the fresh ChatGPT review remains pending.
-- Fresh ChatGPT Review: NOT_RUN at the published repaired checkpoint. The
+- Fresh ChatGPT Review: NOT_RUN at published checkpoint `441d656`. The
   historical blocked reports remain in the bootstrap directory; Drive's
   authoritative update still requires separate approval.
 - External writes: NOT_RUN.

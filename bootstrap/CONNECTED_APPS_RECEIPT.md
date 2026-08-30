@@ -15,7 +15,7 @@ Recorded: 2026-08-30
 - Permissions observed: admin/maintain/pull/push/triage.
 - Branch publication: PASS. The explicitly authorized
   `studio-v2-bootstrap` branch was pushed and read back at implementation
-  checkpoint `3b739c1e16dc089749aa13d282b4f7cce470e9cf`.
+  checkpoint `441d656fca614db87089a580857227401ceb04a7`.
 - Issue/milestone reconciliation: local confirmation-gated projection only;
   no issue, milestone, comment, or PR was created.
 
@@ -48,14 +48,14 @@ NOT_RUN.
 - ChatGPT returned a read-only Studio V2 brief and reported no unavailable
   connector or permission for those probes.
 - ChatGPT Studio routing: PASS. A fresh `@Studio` chat returned
-  `STUDIO_ROUTE_OK studio-chatgpt-studio-delivery` at
-  https://chatgpt.com/c/6a94741f-cedc-83eb-a82c-240a2a5acd42.
+  `STUDIO_ROUTE_V2_OK studio-chatgpt-studio-delivery` at
+  https://chatgpt.com/c/6a9490be-6f08-83eb-9110-f95f56ee4226.
 - ChatGPT write-confirmation gate: PASS_WITH_LIMITATIONS. A fresh Studio Track
   chat at https://chatgpt.com/c/6a947454-fac4-83eb-a3ed-3265561e8b76 showed
   the exact proposed GitHub issue mutation and stopped for explicit approval;
   no external write was executed.
-- Fresh independent ChatGPT Review: NOT_RUN at the repaired published
-  checkpoint. Historical blocked reviews are preserved in
+- Fresh independent ChatGPT Review: NOT_RUN at published checkpoint
+  `441d656`. Historical blocked reviews are preserved in
   `bootstrap/INDEPENDENT_CHATGPT_REVIEW_003.md` and
   `bootstrap/INDEPENDENT_CHATGPT_REVIEW_004.md`; canonical Drive still records
   the pre-V2 baseline.

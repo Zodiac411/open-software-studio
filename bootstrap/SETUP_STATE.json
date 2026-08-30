@@ -1,7 +1,7 @@
 {
   "schema": "studio.bootstrap.state/v2",
   "project_id": "PRJ-SD-001",
-  "recorded_at": "2026-08-30T18:01:36.8321353Z",
+  "recorded_at": "2026-08-30T20:24:56.6024073Z",
   "source_repository": "https://github.com/Zodiac411/open-software-studio",
   "baseline": {
     "remote_default_branch": "master",
@@ -54,7 +54,7 @@
       "read_probe": "repository metadata and README read",
       "target": "Zodiac411/open-software-studio",
       "published_branch": "studio-v2-bootstrap",
-      "published_checkpoint": "3b739c1e16dc089749aa13d282b4f7cce470e9cf"
+      "published_checkpoint": "441d656fca614db87089a580857227401ceb04a7"
     },
     "google_drive": {
       "result": "PASS",
@@ -72,14 +72,14 @@
       "fresh_chat_url": "https://chatgpt.com/c/6a946dee-ef10-83ed-9c1b-3e86b9b6cc15",
       "read_probe": "GitHub and Google Drive were visibly used read-only and both canonical locations resolved",
       "explicit_mention": "PASS",
-      "explicit_mention_url": "https://chatgpt.com/c/6a94741f-cedc-83eb-a82c-240a2a5acd42",
-      "explicit_mention_result": "STUDIO_ROUTE_OK studio-chatgpt-studio-delivery",
+      "explicit_mention_url": "https://chatgpt.com/c/6a9490be-6f08-83eb-9110-f95f56ee4226",
+      "explicit_mention_result": "STUDIO_ROUTE_V2_OK studio-chatgpt-studio-delivery",
       "visible_version": "PASS: Skills Installed/Created by me entries and detail view show Studio v2.0.0",
-      "artifact_sha256": "7645DB0D9A99109BF37FA72A98E042C57B41448F2FB53E4EF693761EAD9FFF76",
+      "artifact_sha256": "96E79FD0EDF0C01164336AE6AF1532A0C4E851CBAA5AC477C57C7C10DFB030FA",
       "write_gate_probe": "PASS_WITH_LIMITATIONS",
       "write_gate_probe_url": "https://chatgpt.com/c/6a947454-fac4-83eb-a3ed-3265561e8b76",
       "write_gate_probe_result": "Read-only GitHub identity, exact proposed issue mutation, explicit approval stop, no write",
-      "reason": "The source-publication blocker is repaired and the published checkpoint is available. A new fresh independent review is pending; canonical Drive still requires separate owner approval for any authoritative update.",
+      "reason": "The source-publication and reproducibility blockers are repaired at 441d656. A new fresh independent review is pending; canonical Drive still requires separate owner approval for any authoritative update.",
       "review_url": null,
       "review_result": "NOT_RUN",
       "review_evidence": null
@@ -96,31 +96,31 @@
     "active_work_package": "WP-SD-001",
     "result": "PASS_WITH_LIMITATIONS",
     "current_branch": "studio-v2-bootstrap",
-    "current_head": "3b739c1e16dc089749aa13d282b4f7cce470e9cf",
-    "source_checkpoint_sha": "3b739c1e16dc089749aa13d282b4f7cce470e9cf",
-    "evidence_basis": "Pilot state, SNAP-009, EVID-PILOT-*-007, and HANDOFF-3B739C1E16DC are generated from the immutable source checkpoint; later branch commits are evidence-only.",
+    "current_head": "441d656fca614db87089a580857227401ceb04a7",
+    "source_checkpoint_sha": "441d656fca614db87089a580857227401ceb04a7",
+    "evidence_basis": "Pilot state, SNAP-010, EVID-PILOT-*-008, and HANDOFF-441D656FCA61 are generated from the immutable source checkpoint; later branch commits are evidence-only.",
     "evidence": [
       "python scripts/build_studio.py -> PASS (9 packages, 22 templates, deterministic archives)",
       "python scripts/validate_suite.py -> PASS (catalog, packages, schemas, icons, archive, routing, seeded gates)",
       "python scripts/run_evals.py -> PASS (71 routing cases, 10 execution scenarios, 6 Studio gates)",
       "Plugin Creator validator -> PASS for all 9 generated packages",
       "Opal Seed contact sheet and actual 24px/32px assets visually inspected -> PASS",
-      "greenfield pilot -> PASS at implementation checkpoint 3b739c1e16dc089749aa13d282b4f7cce470e9cf",
+      "greenfield pilot -> PASS at implementation checkpoint 441d656fca614db87089a580857227401ceb04a7",
       "brownfield planted-defect test -> first red, repaired, then PASS",
       "Codex Studio package -> PASS_WITH_LIMITATIONS; installed and enabled at 2.0.0",
       "fresh Codex Studio-directed session -> PASS_WITH_LIMITATIONS",
       "fresh unrelated Codex task -> PASS",
-      "current independent review REV-005 and INDEPENDENT_REVIEW_006 -> ACCEPT/PASS_WITH_LIMITATIONS with no blocking local implementation finding",
+      "current local review receipts will be regenerated after the fresh ChatGPT review at 441d656; historical REV-005 and INDEPENDENT_REVIEW_006 are preserved",
       "both pilot session close commands -> PASS_WITH_LIMITATIONS",
       "ChatGPT Studio package install -> PASS_WITH_LIMITATIONS; personal Skills upload accepted and Studio is visibly installed",
       "ChatGPT package metadata refresh -> PASS; Studio v2.0.0 is visible in the Skills UI and detail view",
-      "fresh @Studio routing probe -> PASS; STUDIO_ROUTE_OK studio-chatgpt-studio-delivery",
+      "fresh @Studio routing probe -> PASS; STUDIO_ROUTE_V2_OK studio-chatgpt-studio-delivery",
       "fresh ChatGPT write-confirmation probe -> PASS_WITH_LIMITATIONS; exact mutation shown and approval gate held",
       "fresh ChatGPT read-only verification -> PASS; Studio routing and GitHub/Drive reads were visibly used",
-      "fresh independent ChatGPT review at the published checkpoint -> NOT_RUN; historical blocked reports remain preserved and Drive remains on its pre-V2 authoritative state"
+      "fresh independent ChatGPT review at published checkpoint 441d656 -> NOT_RUN; historical blocked reports remain preserved and Drive remains on its pre-V2 authoritative state"
     ],
     "blocking_findings": [
-      "Fresh ChatGPT Review at published checkpoint 3b739c1e16dc089749aa13d282b4f7cce470e9cf is pending. Canonical Drive's authoritative state requires a separately approved update after publication."
+      "Fresh ChatGPT Review at published checkpoint 441d656 is pending. Canonical Drive's authoritative state requires a separately approved update after publication."
     ],
     "local_review_disposition": "ACCEPT",
     "review_disposition": "PASS_WITH_LIMITATIONS",

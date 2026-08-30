@@ -4,19 +4,20 @@ Result: PASS_WITH_LIMITATIONS
 
 Recorded: 2026-08-30
 
-Implementation source checkpoint: `3b739c1e16dc089749aa13d282b4f7cce470e9cf` on
+Implementation source checkpoint: `441d656fca614db87089a580857227401ceb04a7` on
 published branch `studio-v2-bootstrap`.
 
-The archive bytes are unchanged at this repaired checkpoint; subsequent
-receipt commits are evidence-only and do not change the installed artifact.
+The archive was rebuilt after the committed-HEAD reproducibility repair and
+uploaded to the confirmed Skills installation. Subsequent receipt commits
+are evidence-only and do not change the implementation source checkpoint.
 
 ## Artifact readiness
 
 - Build artifact: dist/chatgpt/studio.zip.
 - Artifact version: 2.0.0.
 - SHA-256 at this checkpoint:
-  7645DB0D9A99109BF37FA72A98E042C57B41448F2FB53E4EF693761EAD9FFF76.
-- Size: 78,536 bytes.
+  96E79FD0EDF0C01164336AE6AF1532A0C4E851CBAA5AC477C57C7C10DFB030FA.
+- Size: 78,310 bytes.
 - Repository validator: PASS.
 - Plugin Creator validator: PASS.
 - The archive is skills-first. It declares no MCP server, .mcp.json, app
@@ -49,10 +50,10 @@ receipt commits are evidence-only and do not change the installed artifact.
   Opal Seed assets, and the generated skill directories.
 - Invocation proof: PASS. Try in chat visibly added the Studio routing badge
   to a fresh chat, and a separate fresh chat accepted `@Studio` and returned
-  `STUDIO_ROUTE_OK studio-chatgpt-studio-delivery` at
-  https://chatgpt.com/c/6a94741f-cedc-83eb-a82c-240a2a5acd42.
+  `STUDIO_ROUTE_V2_OK studio-chatgpt-studio-delivery` at
+  https://chatgpt.com/c/6a9490be-6f08-83eb-9110-f95f56ee4226.
 - Version parity: PASS. The uploaded package metadata records version 2.0.0,
-  the matching artifact digest above, and the Skills Installed/Created by me
+  the current artifact digest above, and the Skills Installed/Created by me
   entries plus detail view visibly show `Studio v2.0.0`.
 - Fresh-chat verification: PASS. The completed read-only verification chat is
   https://chatgpt.com/c/6a946dee-ef10-83ed-9c1b-3e86b9b6cc15.
@@ -67,8 +68,8 @@ receipt commits are evidence-only and do not change the installed artifact.
 - Historical independent Studio Reviews 003 and 004 are BLOCKED reports for
   pre-publication/stale-evidence checkpoints and remain preserved verbatim.
   A new fresh independent ChatGPT Review at the published checkpoint is
-  pending; it must verify the source checkpoint and later evidence-only commits
-  independently.
+  pending; it must verify source checkpoint `441d656` and later evidence-only
+  commits independently.
 - No ChatGPT custom instruction, OAuth flow, account switch, permission
   change, or external write was performed. Passwords, MFA codes, recovery
   codes, cookies, OAuth tokens, and API keys were never requested or handled.

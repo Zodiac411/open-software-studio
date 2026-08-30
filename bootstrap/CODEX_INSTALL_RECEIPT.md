@@ -10,7 +10,7 @@ Recorded: 2026-08-30
 - Codex: `codex-cli 0.144.5`.
 - Source branch: `studio-v2-bootstrap`.
 - Source revision at initial installation: `a9454048456c9cef9d5eca0fa8be47b3ecc4ee4c`.
-- Current implementation source verification revision: `3b739c1e16dc089749aa13d282b4f7cce470e9cf`.
+- Current implementation source verification revision: `441d656fca614db87089a580857227401ceb04a7`.
 - The published `studio-v2-bootstrap` branch contains this immutable source
   checkpoint; later bootstrap commits are evidence-only refreshes.
 - CLI syntax was read from the installed executable before use:

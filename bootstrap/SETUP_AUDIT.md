@@ -94,7 +94,7 @@ No credentials or secrets were requested, entered, or recorded.
   schemas/v2; skills/studio; templates/studio-v2; brand/icon-system;
   .agents/plugins/marketplace.json; the preserved server; and
   evals/studio plus evals/pilots.
-- Current implementation source checkpoint: 3b739c1e16dc089749aa13d282b4f7cce470e9cf on
+- Current implementation source checkpoint: 441d656fca614db87089a580857227401ceb04a7 on
   studio-v2-bootstrap.
 - The branch is published at this checkpoint. Later bootstrap commits are
   evidence-only refreshes generated from this immutable source checkpoint.
@@ -106,9 +106,9 @@ No credentials or secrets were requested, entered, or recorded.
   separate fresh trivial task was not routed through Studio.
 - Brownfield review loop: PASS_WITH_LIMITATIONS. REV-001 found the seeded
   formatter defect, REPAIR-FINDING-001 repaired it, and the current source
-  checkpoint adds a committed-HEAD reproducibility gate and fail-closed close
-  transition. The fresh isolated local acceptance review is recorded in
-  `INDEPENDENT_REVIEW_006.md` and accepted the checkpoint.
+  checkpoint adds a committed-HEAD reproducibility gate, canonical source
+  manifest validation, and fail-closed close transition. Current pilot
+  evidence is regenerated at `441d656`; final fresh ChatGPT review is pending.
 - Current pilot project state, snapshots, work packages, evidence, and
   handoffs match the current source checkpoint.
 - GitHub and Drive read probes: PASS. No external write was performed.
@@ -175,13 +175,13 @@ was performed.
 - The generator now emits `Studio v2.0.0` in the package manifest description,
   Skill frontmatter, README, and ChatGPT `openai.yaml`; the validator enforces
   the manifest and archive labels. Two full rebuilds produced the identical
-  archive digest `7645DB0D9A99109BF37FA72A98E042C57B41448F2FB53E4EF693761EAD9FFF76`.
+  archive digest `96E79FD0EDF0C01164336AE6AF1532A0C4E851CBAA5AC477C57C7C10DFB030FA`.
 - The corrected archive replaced the existing personal Skill in the confirmed
   `chris folorunso / Pro` account. The live Skills page and detail view visibly
   show `Studio v2.0.0`.
 - Explicit `@Studio` routing is now proven by the fresh chat at
   https://chatgpt.com/c/6a94741f-cedc-83eb-a82c-240a2a5acd42, which returned
-  `STUDIO_ROUTE_OK studio-chatgpt-studio-delivery`.
+  `STUDIO_ROUTE_V2_OK studio-chatgpt-studio-delivery`.
 - The safe write-gate probe at
   https://chatgpt.com/c/6a947454-fac4-83eb-a3ed-3265561e8b76 performed only a
   GitHub identity read, displayed the exact proposed issue mutation, stopped
@@ -193,22 +193,23 @@ was performed.
   `USER CHECK`.
 - Historical ChatGPT Review 003 and 004 were blocked by a missing or stale
   remote checkpoint; that source-publication finding is repaired. The current
-  published checkpoint is `3b739c1e16dc089749aa13d282b4f7cce470e9cf`, and a
+  published checkpoint is `441d656fca614db87089a580857227401ceb04a7`, and a
   fresh review against it is still required. Canonical Drive remains on its
   pre-V2 authoritative state and needs separate owner approval before update.
 
 ## Repair pass: committed-HEAD reproducibility and lifecycle enforcement
 
-- Implementation checkpoint: `3b739c1e16dc089749aa13d282b4f7cce470e9cf`.
+- Implementation checkpoint: `441d656fca614db87089a580857227401ceb04a7`.
 - `scripts/check_reproducibility.py` now materializes `HEAD` with `git archive`
   before building, so untracked worktree files cannot affect the proof.
 - `scripts/studio.py close` now requires a current independent `ACCEPT` review
   and checks the declared `IN_REVIEW -> ACCEPTED -> CLOSED` transitions. The
   negative gate was directly exercised and returned `BLOCKED` before a current
   review existed.
-- Both pilots were refreshed to `SNAP-009`, `EVID-PILOT-*-007`, and
-  `HANDOFF-3B739C1E16DC`; their assertions, doctor/status, and evidence checks
+- Both pilots were refreshed to `SNAP-010`, `EVID-PILOT-*-008`, and
+  `HANDOFF-441D656FCA61`; their assertions, doctor/status, and evidence checks
   pass.
-- The new isolated local acceptance review is complete: `REV-005` and
-  `INDEPENDENT_REVIEW_006` accepted the checkpoint, and both guarded session
-  close commands passed. A fresh ChatGPT Review is pending.
+- Historical local acceptance records `REV-005` and `INDEPENDENT_REVIEW_006`
+  cover the prior source checkpoint. The current source-manifest and archive
+  repairs pass the repository validators; a fresh ChatGPT Review is pending
+  against `441d656` and the evidence-only branch tip.

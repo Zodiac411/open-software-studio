@@ -2,7 +2,7 @@
 
 Overall result: BLOCKED
 
-Implementation source checkpoint: 3b739c1e16dc089749aa13d282b4f7cce470e9cf
+Implementation source checkpoint: 441d656fca614db87089a580857227401ceb04a7
 
 Branch: studio-v2-bootstrap
 
@@ -21,10 +21,10 @@ be treated as a new implementation revision.
 | GitHub read connection | PASS | CONNECTED_APPS_RECEIPT.md |
 | Google Drive read connection | PASS | CONNECTED_APPS_RECEIPT.md |
 | Write confirmation gating | PASS_WITH_LIMITATIONS | seeded gates and CLI track --apply failure pass; fresh ChatGPT Track probe displayed the exact mutation and stopped for approval; actual external write remains NOT_RUN |
-| Greenfield local pilot | PASS_WITH_LIMITATIONS | PILOT_A_RECEIPT.md; current REV-005 and INDEPENDENT_REVIEW_006 |
-| Brownfield defect found and repaired | PASS | INDEPENDENT_REVIEW_001.md, REV-001, bounded repair, REV-002, REV-003, current REV-005 and INDEPENDENT_REVIEW_006 |
+| Greenfield local pilot | PASS_WITH_LIMITATIONS | PILOT_A_RECEIPT.md; current SNAP-010 and EVID-PILOT-A-008 |
+| Brownfield defect found and repaired | PASS | INDEPENDENT_REVIEW_001.md, REV-001, bounded repair, REV-002, REV-003, and current EVID-PILOT-B-008 |
 | Cross-surface ChatGPT -> Codex -> fresh ChatGPT Review pilots | NOT_RUN | Local ChatGPT and Codex legs pass; a new fresh ChatGPT Review is pending, and canonical Drive remains pre-V2 |
-| Current-SHA independent review | PASS_WITH_LIMITATIONS | Current local REV-005 and INDEPENDENT_REVIEW_006 accept the source checkpoint; fresh ChatGPT Review is pending |
+| Current-SHA independent review | NOT_RUN | Fresh ChatGPT Review against source checkpoint 441d656 and evidence-only branch tip is pending |
 | Rollback dry-run | PASS | ROLLBACK.md |
 | iPhone/mobile availability | USER CHECK | personal device verification not performed |
 
@@ -34,12 +34,12 @@ The user confirmed that the browser-visible ChatGPT account chris folorunso /
 Pro, with no visible workspace label, is the intended account. The personal
 Skills fallback accepted `dist/chatgpt/studio.zip`; Studio routing and a
 read-only GitHub/Drive verification chat passed. A fresh explicit `@Studio`
-routing chat returned `STUDIO_ROUTE_OK studio-chatgpt-studio-delivery`, and a
+routing chat returned `STUDIO_ROUTE_V2_OK studio-chatgpt-studio-delivery`, and a
 fresh Studio Track probe displayed the exact external mutation and stopped
 pending approval without writing. The refreshed Skills UI now visibly shows
 `Studio v2.0.0`. The previously blocked remote-source finding is repaired:
 `studio-v2-bootstrap` now publishes implementation checkpoint
-`3b739c1e16dc089749aa13d282b4f7cce470e9cf`, and a fresh clone from it passes the
+`441d656fca614db87089a580857227401ceb04a7`, and a fresh clone from it passes the
 reproducibility gate. The fresh isolated local review accepted that published
 source and the evidence-only refresh; a new fresh ChatGPT Review is still
 required to inspect it independently. Canonical Drive still
