@@ -40,7 +40,7 @@ ID_FIELDS = {
 ARRAY_STRING_FIELDS = {
     "requirements", "allowed_paths", "forbidden_paths", "non_goals", "stop_conditions", "handoff_requirements",
     "claimed_outcomes", "unproven", "conditions", "artifact_set", "artifact_ids", "proof_levels", "commands", "runtime_probes",
-    "work_packages", "dependencies", "next_actions", "outcomes", "friction", "decisions", "waivers",
+    "work_packages", "dependencies", "next_actions", "outcomes", "friction", "decisions", "waivers", "files",
     "goals", "constraints", "assumptions", "parked_ideas", "solution_ladder", "risks", "edge_cases", "acceptance",
     "success_measures", "unresolved_questions",
 }
@@ -394,6 +394,8 @@ def schema_for(name: str, required: list[str], title: str, properties: dict[str,
         "reviewed_state": {"type": "object", "additionalProperties": True},
         "title": {"type": "string", "minLength": 1},
         "repository": {"type": "string", "minLength": 1},
+        "committed_diff_stat": {"type": "string", "minLength": 1},
+        "dirty_diff_stat": {"type": "string", "minLength": 1},
         "owner": field_schema("owner"),
         "authority": field_schema("authority"),
         "sources": {"type": "array", "items": {"type": "string", "minLength": 1}},
@@ -428,10 +430,10 @@ def render_schemas(catalog: dict[str, Any]) -> None:
             "profile": {"type": "string", "enum": ["lite", "standard", "full"]}, "archetype": {"type": "string", "enum": catalog["archetypes"]}, "phase": {"type": "string", "enum": ["INTAKE", "SHAPED", "PLANNED", "FROZEN", "IMPLEMENTING", "PROVING", "IN_REVIEW", "REPAIR", "ACCEPTED", "CLOSED", "RELEASED"]}, "active_wp": {"type": ["string", "null"], "pattern": "^WP-[A-Z0-9-]+$"}, "authorities": {"type": "object", "additionalProperties": {"type": "string"}}
         }),
         "state": ("Studio V2 state projection", ["project_id", "phase", "status", "active_wp", "current_sha", "next_action"], {
-            "phase": {"type": "string", "enum": ["INTAKE", "SHAPED", "PLANNED", "FROZEN", "IMPLEMENTING", "PROVING", "IN_REVIEW", "REPAIR", "ACCEPTED", "CLOSED", "RELEASED"]}, "active_wp": {"type": ["string", "null"], "pattern": "^WP-[A-Z0-9-]+$"}, "current_sha": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"}, "next_action": {"type": "string", "minLength": 1}
+            "phase": {"type": "string", "enum": ["INTAKE", "SHAPED", "PLANNED", "FROZEN", "IMPLEMENTING", "PROVING", "IN_REVIEW", "REPAIR", "ACCEPTED", "CLOSED", "RELEASED"]}, "active_wp": {"type": ["string", "null"], "pattern": "^WP-[A-Z0-9-]+$"}, "current_sha": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"}, "next_action": {"type": "string", "minLength": 1}, "profile": {"type": "string", "enum": ["lite", "standard", "full"]}, "archetype": {"type": "string", "minLength": 1}, "snapshot_id": {"type": ["string", "null"], "pattern": "^SNAP-[A-Z0-9-]+$"}, "source_checkpoint_sha": {"type": ["string", "null"], "pattern": SHA_PATTERN}, "live_head_sha": {"type": ["string", "null"], "pattern": SHA_PATTERN}, "release_candidate_sha": {"type": ["string", "null"], "pattern": SHA_PATTERN}, "session_id": {"type": "string", "minLength": 1}, "updated_at": {"type": "string", "format": "date-time"}, "blocking_items": {"type": "array", "items": {"type": "string"}}, "proof": {"type": "array", "items": {"type": "object", "additionalProperties": True}}
         }),
-        "event": ("Studio V2 state event", ["event_id", "project_id", "event_type", "occurred_at", "actor"], {
-            "event_id": {"type": "string", "pattern": "^EV-[0-9]{3,}$"}, "event_type": {"type": "string", "minLength": 1}, "occurred_at": {"type": "string", "format": "date-time"}, "actor": {"type": "string", "minLength": 1}
+        "event": ("Studio V2 state event", ["event_id", "sequence", "type", "from_phase", "to_phase", "project_id", "live_head_sha", "timestamp"], {
+            "event_id": {"type": "string", "pattern": "^EVT-[0-9]{6,}$"}, "sequence": {"type": "integer", "minimum": 1}, "type": {"type": "string", "minLength": 1}, "from_phase": {"type": ["string", "null"]}, "to_phase": {"type": "string", "enum": ["INTAKE", "SHAPED", "PLANNED", "FROZEN", "IMPLEMENTING", "PROVING", "IN_REVIEW", "REPAIR", "ACCEPTED", "CLOSED", "RELEASED"]}, "live_head_sha": {"type": ["string", "null"], "pattern": SHA_PATTERN}, "timestamp": {"type": "string", "format": "date-time"}
         }),
         "snapshot": ("Studio V2 frozen snapshot", ["snapshot_id", "project_id", "base_sha", "status", "approved_by"], {
             "snapshot_id": {"type": "string", "pattern": "^SNAP-[A-Z0-9]+(?:-[A-Z0-9]+)*$"}, "base_sha": sha_fields, "approved_by": {"type": "string", "minLength": 1}

@@ -16,8 +16,16 @@
       "minLength": 1,
       "type": "string"
     },
+    "committed_diff_stat": {
+      "minLength": 1,
+      "type": "string"
+    },
     "created_at": {
       "format": "date-time",
+      "type": "string"
+    },
+    "dirty_diff_stat": {
+      "minLength": 1,
       "type": "string"
     },
     "document_id": {

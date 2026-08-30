@@ -15,6 +15,10 @@
       "minLength": 1,
       "type": "string"
     },
+    "committed_diff_stat": {
+      "minLength": 1,
+      "type": "string"
+    },
     "constraints": {
       "items": {
         "minLength": 1,
@@ -27,6 +31,10 @@
       "type": "string"
     },
     "desired_outcome": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "dirty_diff_stat": {
       "minLength": 1,
       "type": "string"
     },

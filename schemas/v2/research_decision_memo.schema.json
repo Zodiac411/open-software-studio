@@ -15,6 +15,10 @@
       },
       "type": "array"
     },
+    "committed_diff_stat": {
+      "minLength": 1,
+      "type": "string"
+    },
     "confidence": {
       "minLength": 1,
       "type": "string"
@@ -24,6 +28,10 @@
       "type": "string"
     },
     "decision": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "dirty_diff_stat": {
       "minLength": 1,
       "type": "string"
     },

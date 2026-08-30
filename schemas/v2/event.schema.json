@@ -4,16 +4,20 @@
   "additionalProperties": false,
   "description": "Versioned Studio V2 artifact contract; unknown top-level fields are rejected.",
   "properties": {
-    "actor": {
+    "authority": {
       "minLength": 1,
       "type": "string"
     },
-    "authority": {
+    "committed_diff_stat": {
       "minLength": 1,
       "type": "string"
     },
     "created_at": {
       "format": "date-time",
+      "type": "string"
+    },
+    "dirty_diff_stat": {
+      "minLength": 1,
       "type": "string"
     },
     "document_id": {
@@ -22,16 +26,21 @@
       "type": "string"
     },
     "event_id": {
-      "pattern": "^EV-[0-9]{3,}$",
+      "pattern": "^EVT-[0-9]{6,}$",
       "type": "string"
     },
-    "event_type": {
-      "minLength": 1,
-      "type": "string"
+    "from_phase": {
+      "type": [
+        "string",
+        "null"
+      ]
     },
-    "occurred_at": {
-      "format": "date-time",
-      "type": "string"
+    "live_head_sha": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "owner": {
       "minLength": 1,
@@ -86,7 +95,31 @@
       ],
       "type": "string"
     },
+    "timestamp": {
+      "format": "date-time",
+      "type": "string"
+    },
     "title": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "to_phase": {
+      "enum": [
+        "INTAKE",
+        "SHAPED",
+        "PLANNED",
+        "FROZEN",
+        "IMPLEMENTING",
+        "PROVING",
+        "IN_REVIEW",
+        "REPAIR",
+        "ACCEPTED",
+        "CLOSED",
+        "RELEASED"
+      ],
+      "type": "string"
+    },
+    "type": {
       "minLength": 1,
       "type": "string"
     },
@@ -104,10 +137,13 @@
   },
   "required": [
     "event_id",
+    "sequence",
+    "type",
+    "from_phase",
+    "to_phase",
     "project_id",
-    "event_type",
-    "occurred_at",
-    "actor"
+    "live_head_sha",
+    "timestamp"
   ],
   "title": "Studio V2 state event",
   "type": "object",

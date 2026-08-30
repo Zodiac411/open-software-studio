@@ -30,7 +30,7 @@ Never invent missing facts; use `TBD` or `UNPROVEN` with an owner and next actio
 | `head_sha` | `string` | `^[0-9a-f]{40}$` |
 | `branch` | `string` | `required` |
 | `claimed_outcomes` | `array[string]` | `required` |
-| `files` | `string` | `required` |
+| `files` | `array[string]` | `required` |
 | `commands` | `array[string]` | `required` |
 | `evidence` | `array[object]` | `required` |
 | `scope_delta` | `object` | `required` |

@@ -104,6 +104,8 @@ class StudioV2RegressionTests(unittest.TestCase):
         return path
 
     def test_happy_transition_and_idempotent_close(self) -> None:
+        _, doctor = self.cli("doctor")
+        self.assertEqual(doctor["result"], "PASS")
         handoff, head = self.prepare_handoff()
         snapshot = json.loads((self.project / ".project" / "snapshots" / "SNAP-001.json").read_text())
         self.assertEqual(handoff["base_sha"], snapshot["base_sha"])
@@ -118,9 +120,12 @@ class StudioV2RegressionTests(unittest.TestCase):
         _, second = self.cli("close")
         self.assertFalse(second["changed"])
         self.assertEqual(before, (state_path.read_bytes(), progress_path.read_bytes(), events_path.read_bytes()))
-        self.cli("release", "--approved-by", "owner")
+        _, release = self.cli("release", "--approved-by", "owner")
         released = json.loads(state_path.read_text(encoding="utf-8"))
         self.assertEqual((released["phase"], released["status"], released["live_head_sha"]), ("RELEASED", "PASS", head))
+        receipt = Path(str(release["receipt"]))
+        self.assertTrue(receipt.is_file())
+        self.assertEqual(json.loads(receipt.read_text(encoding="utf-8"))["revision"], head)
 
     def test_self_review_rejection(self) -> None:
         self.prepare_handoff()

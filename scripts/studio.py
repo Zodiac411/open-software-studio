@@ -314,7 +314,7 @@ def render_context(project: Path, state: dict[str, Any]) -> str:
     ])
 
 
-def transition(project: Path, state_path: Path, state: dict[str, Any], event_type: str, **updates: Any) -> tuple[dict[str, Any], bool]:
+def transition(project: Path, state_path: Path, state: dict[str, Any], event_type: str, extra_files: dict[Path, str] | None = None, **updates: Any) -> tuple[dict[str, Any], bool]:
     """Apply one idempotent state transition and refresh recovery projections."""
     next_state = deepcopy(state)
     next_state.update(updates)
@@ -358,6 +358,8 @@ def transition(project: Path, state_path: Path, state: dict[str, Any], event_typ
     context_path = control_root(project) / "session" / "context-capsule.md"
     if context_path.is_file():
         files[context_path] = render_context(project, next_state)
+    if extra_files:
+        files.update(extra_files)
     atomic_bundle(files)
     return next_state, True
 
@@ -374,7 +376,8 @@ def require_state(project: Path) -> tuple[Path, dict[str, Any]] | None:
 
 def save_state(path: Path, state: dict[str, Any], project: Path, **updates: Any) -> None:
     event_type = updates.pop("_event_type", "state.updated")
-    next_state, _ = transition(project, path, state, event_type, **updates)
+    extra_files = updates.pop("_extra_files", None)
+    next_state, _ = transition(project, path, state, event_type, extra_files=extra_files, **updates)
     state.clear()
     state.update(next_state)
 
@@ -445,7 +448,7 @@ def load_catalog() -> dict[str, Any]:
 
 
 def projection_errors(project: Path, state: dict[str, Any]) -> list[str]:
-    errors: list[str] = []
+    errors = [f"state schema: {issue}" for issue in document_schema_errors(state, "state")]
     expected_phase = str(state.get("phase"))
     expected_live = state.get("live_head_sha") or state.get("current_sha")
     active_plan = control_root(project) / "session" / "active-plan.md"
@@ -480,6 +483,10 @@ def projection_errors(project: Path, state: dict[str, Any]) -> list[str]:
             except json.JSONDecodeError:
                 errors.append("event log contains invalid JSON")
                 continue
+            if isinstance(item, dict):
+                errors.extend(f"event schema: {issue}" for issue in document_schema_errors(item, "event"))
+            else:
+                errors.append("event log entries must be objects")
             if isinstance(item, dict) and isinstance(item.get("sequence"), int):
                 parsed.append(item)
         if not parsed:
@@ -515,7 +522,8 @@ def doctor(args: argparse.Namespace) -> int:
         _, value = state
         live = current_sha(project)
         checkpoint = source_sha(project, value)
-        check("project-state", value.get("schema") == "studio.state/v2", ".project/state.json")
+        state_schema_issues = document_schema_errors(value, "state")
+        check("project-state", not state_schema_issues, "; ".join(state_schema_issues) or ".project/state.json conforms to schemas/v2/state.schema.json")
         expected_live = value.get("live_head_sha") or value.get("current_sha")
         check("sha-freshness", not live or expected_live == live, f"state={expected_live} source_checkpoint={checkpoint} live={live}")
         check("release-candidate", not live or (value.get("release_candidate_sha") or expected_live) == live, f"candidate={value.get('release_candidate_sha')} live={live}")
@@ -787,6 +795,9 @@ def handoff_project(args: argparse.Namespace) -> int:
     commands = [item.get("command") for item in wp.get("verification", []) if isinstance(item, dict) and item.get("command")]
     observations = [command_observation(project, command) for command in commands]
     value = {"schema": "studio.handoff/v2", "document_id": review_id, "wp_id": wp_id, "base_sha": base_sha, "head_sha": sha, "branch": git(project, "branch", "--show-current"), "claimed_outcomes": [str(wp.get("primary_outcome", "current repository state is packaged for independent review"))], "files": [line.strip() for line in (committed_files or "").splitlines() if line.strip()], "committed_diff_stat": committed_diff or "clean or unavailable", "dirty_diff_stat": dirty_diff, "commands": commands, "evidence": observations, "scope_delta": {"status": "REVIEW_REQUIRED", "base_sha": base_sha, "head_sha": sha}, "unproven": ["independent fresh-context review", "unconfirmed external writes"], "next_action": "independent fresh-context review", "reviewer_action": "inspect requirements, current SHA, committed diff, dirty state, and observed validation results before this conclusion", "created_at": utc_now(), "sequence": record_sequence(control_root(project) / "handoffs") + 1}
+    schema_issues = document_schema_errors(value, "implementation_handoff")
+    if schema_issues:
+        return fail("handoff schema validation failed: " + "; ".join(schema_issues))
     path = control_root(project) / "handoffs" / f"{review_id}.json"
     write_json(path, value)
     write_text(path.with_suffix(".md"), "# Studio implementation handoff\n\n" + "\n".join(f"- {key}: `{json.dumps(value[key], ensure_ascii=False)}`" for key in ("wp_id", "head_sha", "branch", "next_action", "reviewer_action")) + "\n")
@@ -958,8 +969,42 @@ def release_project(args: argparse.Namespace) -> int:
     if state.get("phase") != "CLOSED":
         return fail(f"release requires CLOSED state, found {state.get('phase')}")
     state_path = pair[0]
-    save_state(state_path, state, project, _event_type="release.completed", phase="RELEASED", status="PASS", next_action="maintain the released revision")
-    return emit("PASS", "release gate validated; no publish or merge was performed", approved_by=args.approved_by, revision=live_head(project), changed=True)
+    revision = live_head(project)
+    if not revision:
+        return fail("release requires a live Git HEAD")
+    release_id = f"RELEASE-{revision[:12].upper()}"
+    release_receipt = {
+        "schema": "studio.release/v2",
+        "document_id": release_id,
+        "version": "2.0.0",
+        "status": "RELEASED",
+        "revision": revision,
+        "review_id": value["review_id"],
+        "requirement_digest": value["requirements_digest"],
+        "package_digests": {"repository_tree": sha_digest(git(project, "ls-tree", "-r", "HEAD") or revision)},
+        "environment": {"platform": sys.platform, "python": sys.version.split()[0]},
+        "evidence": value.get("artifact_ids", []) or [value["review_id"]],
+        "limitations": ["This local gate did not publish, merge, or change an external service."],
+        "waivers": [],
+        "rollback": "Restore the prior .project state and revert the release commit if publication occurs separately.",
+        "owner_approval": args.approved_by,
+        "created_at": utc_now(),
+    }
+    receipt_issues = document_schema_errors(release_receipt, "release_receipt")
+    if receipt_issues:
+        return fail("release receipt schema validation failed: " + "; ".join(receipt_issues))
+    receipt_path = control_root(project) / "artifacts" / f"{release_id}.json"
+    save_state(
+        state_path,
+        state,
+        project,
+        _event_type="release.completed",
+        _extra_files={receipt_path: json.dumps(release_receipt, indent=2, sort_keys=True, ensure_ascii=False) + "\n"},
+        phase="RELEASED",
+        status="PASS",
+        next_action="maintain the released revision",
+    )
+    return emit("PASS", "release gate validated; no publish or merge was performed", approved_by=args.approved_by, revision=revision, receipt=str(receipt_path), changed=True)
 
 
 def track_plan(args: argparse.Namespace) -> int:
