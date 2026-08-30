@@ -1,0 +1,16 @@
+{
+  "archetype": "auto",
+  "authorities": {
+    "human_task_view": "GitHub Issues/Milestones (confirmation-gated)",
+    "machine_state": ".project",
+    "repository": "C:\\Users\\badcr\\Documents\\Codex\\2026-08-30\\you-are-the-implementation-and-setup\\studio-v2-bootstrap\\evals\\pilots\\greenfield"
+  },
+  "non_goals": [
+    "automatic merge",
+    "automatic release",
+    "unconfirmed external writes"
+  ],
+  "profile": "standard",
+  "project_id": "PRJ-PILOT-A",
+  "schema": "studio.project/v2"
+}

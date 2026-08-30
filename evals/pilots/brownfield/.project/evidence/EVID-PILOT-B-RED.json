@@ -1,0 +1,12 @@
+{
+  "command_or_probe": "python test_billing.py",
+  "document_id": "EVID-PILOT-B-RED",
+  "evidence_id": "EVID-PILOT-B-RED",
+  "level": "E2",
+  "limitations": "independent review and repair pending",
+  "observed": "expected red: planted defect rounds cents",
+  "project_id": "PRJ-PILOT-B",
+  "requirement": "REQ-PILOT-B-001",
+  "schema": "studio.evidence/v2",
+  "timestamp": "2026-08-30T17:10:17Z"
+}

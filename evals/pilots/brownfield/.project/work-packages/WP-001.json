@@ -1,0 +1,60 @@
+{
+  "acceptance": [
+    "named validators pass",
+    "independent review is fresh and non-self-accepting"
+  ],
+  "allowed_paths": [
+    "scripts/",
+    "catalog/",
+    "schemas/",
+    "skills/",
+    "templates/"
+  ],
+  "base_sha": "c2d9bcfeefe9819413a7262edd676332ef73613d",
+  "document_id": "WP-001",
+  "forbidden_paths": [
+    ".codex/",
+    "secrets/",
+    "credentials/"
+  ],
+  "handoff_requirements": [
+    "base SHA",
+    "head SHA",
+    "diff",
+    "commands",
+    "limitations",
+    "reviewer action"
+  ],
+  "non_goals": [
+    "merge",
+    "release",
+    "unapproved external writes"
+  ],
+  "primary_outcome": "Complete one bounded Studio proof slice.",
+  "project_id": "PRJ-PILOT-B",
+  "requirements": [
+    "REQ-CATALOG",
+    "REQ-PROTOCOL"
+  ],
+  "rollback": "review bootstrap/ROLLBACK.md",
+  "schema": "studio.artifact/v2",
+  "scope_budget": {
+    "new_dependencies": 0,
+    "primary_outcomes": 1,
+    "subsystems": 3
+  },
+  "snapshot_id": "SNAP-001",
+  "status": "FROZEN",
+  "stop_conditions": [
+    "base SHA changes",
+    "new dependency is required",
+    "scope budget is exceeded"
+  ],
+  "verification": [
+    {
+      "command": "python scripts/validate_studio.py",
+      "level": "E2"
+    }
+  ],
+  "wp_id": "WP-001"
+}

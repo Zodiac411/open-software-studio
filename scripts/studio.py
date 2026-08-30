@@ -311,7 +311,7 @@ def add_evidence(args: argparse.Namespace) -> int:
     evidence_id = args.evidence_id.upper()
     if not re.fullmatch(r"EVID-[A-Z0-9-]+", evidence_id):
         return fail("evidence id must match EVID-...")
-    value = {"schema": "studio.evidence/v2", "document_id": evidence_id, "evidence_id": evidence_id, "project_id": pair[1]["project_id"], "requirement": args.requirement, "level": args.level, "command_or_probe": args.command, "observed": args.observed, "timestamp": utc_now(), "limitations": args.limitations}
+    value = {"schema": "studio.evidence/v2", "document_id": evidence_id, "evidence_id": evidence_id, "project_id": pair[1]["project_id"], "requirement": args.requirement, "level": args.level, "command_or_probe": args.command_or_probe, "observed": args.observed, "timestamp": utc_now(), "limitations": args.limitations}
     path = control_root(project) / "evidence" / f"{evidence_id}.json"
     if path.exists() and not args.replace:
         return fail(f"evidence already exists; use --replace only for this named local receipt")
@@ -542,7 +542,7 @@ def parser() -> argparse.ArgumentParser:
     add.add_argument("--evidence-id", required=True)
     add.add_argument("--requirement", required=True)
     add.add_argument("--level", required=True, choices=tuple(f"E{index}" for index in range(6)))
-    add.add_argument("--command", required=True)
+    add.add_argument("--command-or-probe", dest="command_or_probe", required=True)
     add.add_argument("--observed", required=True)
     add.add_argument("--limitations", default="")
     add.add_argument("--replace", action="store_true")

@@ -1,0 +1,31 @@
+{
+  "authority": ".project",
+  "confirmation_required": true,
+  "issues": [
+    {
+      "body": {
+        "acceptance": [
+          "named validators pass",
+          "independent review is fresh and non-self-accepting"
+        ],
+        "base_sha": "c2d9bcfeefe9819413a7262edd676332ef73613d",
+        "requirements": [
+          "REQ-CATALOG",
+          "REQ-PROTOCOL"
+        ]
+      },
+      "labels": [
+        "studio",
+        "work-package"
+      ],
+      "title": "WP-001: Complete one bounded Studio proof slice."
+    }
+  ],
+  "milestone": {
+    "action": "create-or-reconcile only after explicit approval",
+    "title": "Studio V2 / PRJ-PILOT-A"
+  },
+  "repository": "Zodiac411/open-software-studio",
+  "schema": "studio.github-projection/v2",
+  "writes_performed": false
+}
