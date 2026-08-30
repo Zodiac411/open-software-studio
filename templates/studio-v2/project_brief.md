@@ -96,4 +96,3 @@ Record the smallest adequate solution using the fields above; link IDs and direc
 ### Decision
 
 Record the decision using the fields above; link IDs and direct proof where available.
-

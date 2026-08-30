@@ -94,4 +94,3 @@ Record the fallbacks using the fields above; link IDs and direct proof where ava
 ### Visual QA
 
 Record the visual qa using the fields above; link IDs and direct proof where available.
-

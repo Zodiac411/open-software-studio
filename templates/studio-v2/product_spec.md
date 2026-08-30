@@ -76,4 +76,3 @@ Record the proof plan using the fields above; link IDs and direct proof where av
 ### Non-goals
 
 Record the non-goals using the fields above; link IDs and direct proof where available.
-

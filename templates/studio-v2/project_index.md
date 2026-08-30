@@ -77,4 +77,3 @@ Record the immediate next action using the fields above; link IDs and direct pro
 ### Recovery path
 
 Record the recovery path using the fields above; link IDs and direct proof where available.
-

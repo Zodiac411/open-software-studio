@@ -85,4 +85,3 @@ Record the proof using the fields above; link IDs and direct proof where availab
 ### Stop conditions
 
 Record the stop conditions using the fields above; link IDs and direct proof where available.
-

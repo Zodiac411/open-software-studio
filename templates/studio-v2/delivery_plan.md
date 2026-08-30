@@ -63,4 +63,3 @@ Record the scope budget using the fields above; link IDs and direct proof where 
 ### Review gate
 
 Record the review gate using the fields above; link IDs and direct proof where available.
-

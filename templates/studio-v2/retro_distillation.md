@@ -67,4 +67,3 @@ Record the decisions using the fields above; link IDs and direct proof where ava
 ### Next actions
 
 Record the next actions using the fields above; link IDs and direct proof where available.
-

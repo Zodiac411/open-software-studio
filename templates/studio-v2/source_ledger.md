@@ -69,4 +69,3 @@ Record the license and attribution using the fields above; link IDs and direct p
 ### Decision links
 
 Record the decision links using the fields above; link IDs and direct proof where available.
-

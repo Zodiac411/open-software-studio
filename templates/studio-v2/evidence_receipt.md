@@ -74,4 +74,3 @@ Record the observed result using the fields above; link IDs and direct proof whe
 ### Limitations
 
 Record the limitations using the fields above; link IDs and direct proof where available.
-

@@ -68,4 +68,3 @@ Record the failure policy using the fields above; link IDs and direct proof wher
 ### Rollback
 
 Record the rollback using the fields above; link IDs and direct proof where available.
-

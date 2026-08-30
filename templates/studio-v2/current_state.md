@@ -80,4 +80,3 @@ Record the recovery files using the fields above; link IDs and direct proof wher
 ### Next action
 
 Record the next action using the fields above; link IDs and direct proof where available.
-

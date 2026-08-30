@@ -129,13 +129,29 @@ class StudioV2RegressionTests(unittest.TestCase):
 
     def test_self_review_rejection(self) -> None:
         self.prepare_handoff()
-        self.review(actor="project-executor", session="same implementation session")
+        path = self.review(actor="project-executor", session="same implementation session")
         _, result = self.cli("review", "validate", check=False)
         self.assertEqual(result["result"], "BLOCKED")
         self.assertIn("reviewer and implementer actor must differ", str(result["message"]))
+        malformed = json.loads(path.read_text(encoding="utf-8"))
+        malformed["reviewer_role"] = []
+        path.write_text(json.dumps(malformed, indent=2) + "\n", encoding="utf-8")
+        malformed_result, typed = self.cli("review", "validate", check=False)
+        self.assertEqual(malformed_result.returncode, 2)
+        self.assertEqual(typed["result"], "BLOCKED")
+        self.assertIn("expected string", str(typed["message"]))
 
     def test_stale_sha_rejection(self) -> None:
-        self.prepare_handoff()
+        self.cli("plan")
+        self.cli("freeze", "--approved-by", "owner")
+        self.cli("context")
+        (self.project / "feature.py").write_text("VALUE = 'lantern'\n", encoding="utf-8")
+        self.git("add", "feature.py")
+        self.git("commit", "-m", "move head before context refresh")
+        _, stale_context = self.cli("context", check=False)
+        self.assertEqual(stale_context["result"], "BLOCKED")
+        self.assertIn("context capsule is stale", str(stale_context["message"]))
+        self.cli("handoff")
         self.review()
         (self.project / "later.txt").write_text("later\n", encoding="utf-8")
         self.git("add", "later.txt")
@@ -157,6 +173,14 @@ class StudioV2RegressionTests(unittest.TestCase):
         state = json.loads(state_path.read_text(encoding="utf-8"))
         self.assertEqual(state["phase"], "CLOSED")
         self.assertNotEqual(state["status"], "PASS")
+        valid_review = self.review()
+        self.assertTrue(valid_review.is_file())
+        untracked = self.project / "unreviewed.txt"
+        untracked.write_text("not reviewed\n", encoding="utf-8")
+        _, dirty_result = self.cli("release", "--approved-by", "owner", check=False)
+        self.assertEqual(dirty_result["result"], "BLOCKED")
+        self.assertIn("uncommitted or untracked", str(dirty_result["message"]))
+        self.assertEqual(before, state_path.read_bytes())
 
     def test_generic_plan_track_and_evidence_round_trip(self) -> None:
         self.cli("plan")

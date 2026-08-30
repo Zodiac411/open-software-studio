@@ -81,4 +81,3 @@ Record the rollback using the fields above; link IDs and direct proof where avai
 ### Owner approval
 
 Record the owner approval using the fields above; link IDs and direct proof where available.
-

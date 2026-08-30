@@ -68,4 +68,3 @@ Record the remaining risk using the fields above; link IDs and direct proof wher
 ### Owner approval
 
 Record the owner approval using the fields above; link IDs and direct proof where available.
-

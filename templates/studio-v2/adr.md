@@ -73,4 +73,3 @@ Record the evidence using the fields above; link IDs and direct proof where avai
 ### Revisit trigger
 
 Record the revisit trigger using the fields above; link IDs and direct proof where available.
-

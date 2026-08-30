@@ -94,4 +94,3 @@ Record the rollback using the fields above; link IDs and direct proof where avai
 ### Requested reviewer action
 
 Record the requested reviewer action using the fields above; link IDs and direct proof where available.
-

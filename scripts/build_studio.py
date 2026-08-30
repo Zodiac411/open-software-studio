@@ -338,7 +338,7 @@ def template_text(name: str, spec: dict[str, Any]) -> str:
     ])
     for section in spec["sections"]:
         lines.extend([f"### {section}", "", f"Record the {section.lower()} using the fields above; link IDs and direct proof where available.", ""])
-    return "\n".join(lines) + "\n"
+    return "\n".join(lines).rstrip() + "\n"
 
 
 def render_templates(catalog: dict[str, Any]) -> None:

@@ -100,4 +100,3 @@ Record the adr index using the fields above; link IDs and direct proof where ava
 ### Revisit triggers
 
 Record the revisit triggers using the fields above; link IDs and direct proof where available.
-

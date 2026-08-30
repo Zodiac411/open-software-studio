@@ -73,4 +73,3 @@ Record the approval using the fields above; link IDs and direct proof where avai
 ### Rollback
 
 Record the rollback using the fields above; link IDs and direct proof where available.
-

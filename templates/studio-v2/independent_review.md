@@ -89,4 +89,3 @@ Record the disposition using the fields above; link IDs and direct proof where a
 ### Acceptance conditions
 
 Record the acceptance conditions using the fields above; link IDs and direct proof where available.
-

@@ -75,4 +75,3 @@ Record the confidence using the fields above; link IDs and direct proof where av
 ### Refresh trigger
 
 Record the refresh trigger using the fields above; link IDs and direct proof where available.
-

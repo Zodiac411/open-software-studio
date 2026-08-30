@@ -116,4 +116,3 @@ Record the rollback using the fields above; link IDs and direct proof where avai
 ### Handoff
 
 Record the handoff using the fields above; link IDs and direct proof where available.
-

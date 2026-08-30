@@ -67,4 +67,3 @@ Record the ownership using the fields above; link IDs and direct proof where ava
 ### Unknowns
 
 Record the unknowns using the fields above; link IDs and direct proof where available.
-

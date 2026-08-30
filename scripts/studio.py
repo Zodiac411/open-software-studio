@@ -216,6 +216,19 @@ def current_sha(project: Path) -> str | None:
     return git(project, "rev-parse", "HEAD")
 
 
+def dirty_paths(project: Path) -> list[str]:
+    status = git(project, "status", "--porcelain=v1", "--untracked-files=all")
+    dirty: list[str] = []
+    for line in (status or "").splitlines():
+        path = line[3:].replace("\\", "/") if len(line) > 3 else line
+        paths = [item.strip(' "') for item in path.split(" -> ")]
+        if paths and all(item == ".project" or item.startswith(".project/") for item in paths):
+            continue
+        if line.strip():
+            dirty.append(line)
+    return dirty
+
+
 def source_sha(project: Path, state: dict[str, Any] | None = None) -> str | None:
     """Return the immutable checkpoint, retained for compatibility."""
     declared = state.get("source_checkpoint_sha") if state else None
@@ -636,6 +649,13 @@ def context_project(args: argparse.Namespace) -> int:
         return fail("active work package is missing")
     wp = read_json(wp_path)
     if state.get("phase") == "IMPLEMENTING" and (control_root(project) / "session" / "context-capsule.md").is_file():
+        live = live_head(project)
+        expected = state.get("live_head_sha") or state.get("current_sha")
+        contradictions = projection_errors(project, state)
+        if live and live != expected:
+            contradictions.append(f"state live HEAD {expected} does not match Git HEAD {live}")
+        if contradictions:
+            return fail("context capsule is stale: " + "; ".join(contradictions))
         return emit("PASS", "context capsule already current", path=str(control_root(project) / "session" / "context-capsule.md"), changed=False, next_action=state["next_action"])
     save_state(state_path, state, project, _event_type="context.compiled", phase="IMPLEMENTING", status="PASS", next_action="implement only the active work package")
     write_text(control_root(project) / "session" / "context-capsule.md", render_context(project, state))
@@ -844,8 +864,10 @@ def review_errors(project: Path, value: dict[str, Any], state: dict[str, Any] | 
         errors.append("reviewer and implementer actor must differ")
     if value.get("reviewer_session_id") == value.get("implementer_session_id"):
         errors.append("reviewer and implementer session must differ")
-    role = value.get("reviewer_role", "").lower()
-    context = value.get("reviewer_context", "").lower()
+    raw_role = value.get("reviewer_role")
+    raw_context = value.get("reviewer_context")
+    role = raw_role.lower() if isinstance(raw_role, str) else ""
+    context = raw_context.lower() if isinstance(raw_context, str) else ""
     if any(token in role for token in ("executor", "implementer")) or any(token in context for token in ("same session", "implementation session", "executor session")):
         errors.append("reviewer provenance identifies the implementation actor or session")
     live = live_head(project)
@@ -874,6 +896,9 @@ def review_errors(project: Path, value: dict[str, Any], state: dict[str, Any] | 
         errors.append("review must name the artifact set that was reviewed")
     if value.get("disposition") == "ACCEPT" and any(isinstance(finding, dict) and finding.get("severity") == "BLOCKING" for finding in value.get("findings", [])):
         errors.append("review with a BLOCKING finding cannot ACCEPT")
+    dirty = dirty_paths(project)
+    if dirty:
+        errors.append("review/release candidate has uncommitted or untracked paths: " + ", ".join(dirty[:10]))
     if require_accept and value.get("disposition") != "ACCEPT":
         errors.append("current independent review must ACCEPT")
     return errors
