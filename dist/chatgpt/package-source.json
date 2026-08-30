@@ -2,15 +2,15 @@
   "default": "dist/chatgpt/studio.zip",
   "mcp_declared": false,
   "packages": {
-    "dist/chatgpt/satellites/engineering-guard.zip": "c75eaae580f8ded63877de119e8674753e91edd4416367a050c55568ea9d831b",
-    "dist/chatgpt/satellites/execution-guard.zip": "195f7bfa56856fac72ca5df7691b521f338b215763607ad3c8eeb0fab04a7af5",
-    "dist/chatgpt/satellites/interface-studio.zip": "0b92ea8dad4f8c5f8917ba9c9eb282c12193c20ede73e90e4eb97ee1b11e8726",
-    "dist/chatgpt/satellites/project-architect.zip": "822c5d3528473874487a37dcfbf65b185bfbbdd8784fe4e2cea845cdd742c97a",
-    "dist/chatgpt/satellites/project-docs.zip": "0deafb9ad837fa85a19ec1430a4a571bb248f469e4773c156f77601070bd5e73",
-    "dist/chatgpt/satellites/research-engineer.zip": "c2640912243e0cbd0e24792b55cc1d91cd215b6e81045588097f413f8eb73a7e",
-    "dist/chatgpt/satellites/studio-track.zip": "91a0a098a8d09056210ba564195fc0c49879977c1dbf72778e4f56c459f9102d",
-    "dist/chatgpt/satellites/web-app-builder.zip": "cd3d5cfa6bb146c20ca31e1549c83318ead6a1d2208dead4ac3fbb2801110fe9",
-    "dist/chatgpt/studio.zip": "96e79fd0edf0c01164336ae6af1532a0c4e851cbaa5ac477c57c7c10dfb030fa"
+    "dist/chatgpt/satellites/engineering-guard.zip": "2fe6165735dc01660f3bbafe54251271d846d55e37c28fba5d74661cbb39c8d2",
+    "dist/chatgpt/satellites/execution-guard.zip": "676327c5e737fcf6b0849f670637278d3d92a5902caa2fe960ba7ac12aa894a3",
+    "dist/chatgpt/satellites/interface-studio.zip": "d2fde7669308a42ece3bcd4b9f4a2fab63c14a21c85bbc8b8985b28162f9753c",
+    "dist/chatgpt/satellites/project-architect.zip": "06edbc868a55a06d57f75f584843bb7daaf0db4999dd80c9ebcf42534a885ef8",
+    "dist/chatgpt/satellites/project-docs.zip": "fda6f6b41b03d512cc627380d62b819c87a553c2d34ac165e3f83729fc01894d",
+    "dist/chatgpt/satellites/research-engineer.zip": "2da890fe268c88a90c4c2ec85a8c68ad50854efd61a4eddcf73d5015b405b220",
+    "dist/chatgpt/satellites/studio-track.zip": "310e4413da376daf3cbb72cb809bc3d36d85887eed96013ab9f7b516fc009aa2",
+    "dist/chatgpt/satellites/web-app-builder.zip": "8a54e3f6dbd82dff1a140718daf02a32f5498ed4ac49361ad4ac4b24312eaca8",
+    "dist/chatgpt/studio.zip": "38e3332cdf0f822f65c1c66c69dcb74c083bf899044578aee519b9f6e98d0c7b"
   },
   "schema": "studio.chatgpt-packages/v2",
   "version": "2.0.0"

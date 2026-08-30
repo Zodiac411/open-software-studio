@@ -363,7 +363,8 @@ def write_marketplaces(catalog: dict[str, Any]) -> None:
 
 def zip_entry(archive: zipfile.ZipFile, name: str, data: bytes) -> None:
     info = zipfile.ZipInfo(name, date_time=(1980, 1, 1, 0, 0, 0))
-    info.compress_type = zipfile.ZIP_DEFLATED
+    # Stored entries avoid host/zlib-version differences in archive bytes.
+    info.compress_type = zipfile.ZIP_STORED
     info.create_system = 0
     info.external_attr = 0o100644 << 16
     archive.writestr(info, data)
@@ -398,7 +399,7 @@ def zip_package(source: Path, package_id: str, output: Path, display_name: str) 
         f"  default_prompt: {json.dumps(f'Use {display_name} for this bounded software task.')}",
         "",
     ]).encode("utf-8")
-    with zipfile.ZipFile(output, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+    with zipfile.ZipFile(output, "w", compression=zipfile.ZIP_STORED) as archive:
         for path in sorted(
             paths,
             key=lambda item: (
