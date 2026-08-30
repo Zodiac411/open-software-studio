@@ -1,0 +1,44 @@
+{
+  "schema": "studio.review/v2",
+  "review_id": "REV-001",
+  "reviewer_role": "independent reviewer",
+  "reviewer_context": "fresh context",
+  "reviewed_head_sha": "a9454048456c9cef9d5eca0fa8be47b3ecc4ee4c",
+  "disposition": "REPAIR",
+  "independent_checks": [
+    "python scripts/validate_studio.py",
+    "python scripts/run_evals.py",
+    "python evals/pilots/greenfield/test_app.py",
+    "python evals/pilots/brownfield/test_billing.py",
+    "package manifest and archive inspection",
+    "current SHA, diff, and receipt inspection"
+  ],
+  "findings": [
+    {
+      "id": "FINDING-001",
+      "severity": "BLOCKING",
+      "status": "BLOCKED",
+      "evidence": "evals/pilots/brownfield/billing.py; test_billing.py returned the expected assertion failure",
+      "remediation": "repair the cents formatter and rerun the direct pilot"
+    },
+    {
+      "id": "FINDING-002",
+      "severity": "HIGH",
+      "status": "BLOCKED",
+      "evidence": "pilot state and handoffs recorded c2d9bcf while reviewed HEAD was a945404",
+      "remediation": "refresh state, handoffs, and setup receipts against the final SHA"
+    },
+    {
+      "id": "FINDING-003",
+      "severity": "MEDIUM",
+      "status": "NOT_RUN",
+      "evidence": "pytest collected zero tests in the greenfield fixture",
+      "remediation": "retain the direct acceptance command or configure discovery and rerun"
+    }
+  ],
+  "known_limitations": [
+    "deterministic build was not rerun by this read-only reviewer",
+    "fresh ChatGPT installation and review are not run"
+  ],
+  "created_at": "2026-08-30T17:20:00Z"
+}

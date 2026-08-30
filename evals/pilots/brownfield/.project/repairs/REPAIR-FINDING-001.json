@@ -1,0 +1,42 @@
+{
+  "schema": "studio.repair/v2",
+  "repair_id": "REPAIR-FINDING-001",
+  "status": "IN_PROGRESS",
+  "base_sha": "a9454048456c9cef9d5eca0fa8be47b3ecc4ee4c",
+  "accepted_findings": [
+    "FINDING-001"
+  ],
+  "allowed_paths": [
+    "billing.py"
+  ],
+  "forbidden_paths": [
+    "secrets/",
+    "credentials/",
+    ".codex/"
+  ],
+  "required_behavior": "format_cents(1234) returns $12.34 without discarding cents",
+  "regression_proof": [
+    "python test_billing.py"
+  ],
+  "evidence": [
+    {
+      "level": "E2",
+      "observed": "independent reviewer identified the formatter defect"
+    }
+  ],
+  "non_goals": [
+    "unrelated refactoring",
+    "new dependencies",
+    "merge or release"
+  ],
+  "repair_budget": {
+    "files": 1,
+    "primary_outcomes": 1,
+    "new_dependencies": 0
+  },
+  "stop_conditions": [
+    "requested behavior needs more than one file",
+    "a new dependency is required",
+    "the acceptance assertion remains red"
+  ]
+}

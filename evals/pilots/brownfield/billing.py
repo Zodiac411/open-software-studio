@@ -1,6 +1,6 @@
-"""Brownfield pilot with one intentionally planted defect."""
+"""Brownfield pilot after the independent-review repair."""
 
 
 def format_cents(cents: int) -> str:
-    # Planted defect for the independent-review gate: cents are discarded.
-    return f"${cents / 100:.0f}"
+    # Preserve the cents required by the pilot acceptance contract.
+    return f"${cents / 100:.2f}"
