@@ -14,6 +14,8 @@ from typing import Any, Iterable
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = ROOT / "catalog" / "studio.yaml"
+TEXT_SUFFIXES = {".css", ".html", ".js", ".json", ".md", ".py", ".svg", ".toml", ".ts", ".txt", ".yaml", ".yml"}
+TEXT_NAMES = {".gitignore", ".studio-generated"}
 
 
 ID_PATTERN = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
@@ -39,7 +41,10 @@ def write_json(path: Path, value: Any) -> None:
 
 def sha256(path: Path) -> str:
     digest = hashlib.sha256()
-    digest.update(path.read_bytes())
+    data = path.read_bytes()
+    if path.suffix.lower() in TEXT_SUFFIXES or path.name in TEXT_NAMES:
+        data = data.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    digest.update(data)
     return digest.hexdigest()
 
 
