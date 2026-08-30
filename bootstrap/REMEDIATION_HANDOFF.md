@@ -12,7 +12,7 @@ Reject stale SHA evidence and do not merge or release.
 ## Scope
 
 - Review baseline: `ce04df0f682d84bdf7818ae8a204162ce9567c86`
-- Local remediation code head: `f300908d5306085f72215ce09e95f5cf8f434033`
+- Local remediation code head: `7daff96cab5bb50a948196f0ba299131ada732cb`
 - Final review candidate: resolve live Git HEAD after this handoff commit
 - Branch: `studio-v2-bootstrap`
 - External writes: `NOT_RUN`
@@ -26,6 +26,8 @@ Reject stale SHA evidence and do not merge or release.
 | `4ba6ddb` | Luna WP-B | Catalog-owned recipes/prompts/provenance, typed schemas, useful templates, distinct lens contracts, and regenerated packages. |
 | `417275c` | Review repair | Windows/Linux CI, security/archive gate, and explicit optional compatibility-server identity. |
 | `f300908` | Integration repair | Runtime/schema alignment, malformed artifact rejection, portable compiler targets, executable evaluation gates, and canonical source coverage. |
+| `2030f20` | State alignment repair | Runtime state, event, and release receipt projections aligned to the versioned schemas. |
+| `7daff96` | Review-candidate repair | Dirty candidate rejection, stale-context blocking, malformed reviewer provenance handling, and clean generated template endings. |
 
 ## Direct local evidence
 

@@ -2,7 +2,7 @@
 
 Overall result: `BLOCKED`
 
-Local remediation code head: `f300908d5306085f72215ce09e95f5cf8f434033`
+Local remediation code head: `7daff96cab5bb50a948196f0ba299131ada732cb`
 
 Branch: `studio-v2-bootstrap`
 

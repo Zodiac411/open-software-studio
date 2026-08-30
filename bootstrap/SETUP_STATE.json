@@ -28,7 +28,7 @@
       "read_probe": "PASS",
       "target": "Zodiac411/open-software-studio",
       "remote_branch_head": "ce04df0f682d84bdf7818ae8a204162ce9567c86",
-      "local_remediation_head": "f300908d5306085f72215ce09e95f5cf8f434033",
+      "local_remediation_head": "7daff96cab5bb50a948196f0ba299131ada732cb",
       "limitation": "The remediation commits have not been pushed; no issue, milestone, PR, merge, or release write was authorized."
     },
     "google_drive": {
@@ -53,14 +53,16 @@
     "phase": "independent_review_pending",
     "result": "PASS_WITH_LIMITATIONS",
     "current_branch": "studio-v2-bootstrap",
-    "code_head": "f300908d5306085f72215ce09e95f5cf8f434033",
+    "code_head": "7daff96cab5bb50a948196f0ba299131ada732cb",
     "review_candidate": "live Git HEAD after the remediation handoff commit",
     "commits": [
       "8941070e383df2514ceaa0309035bceb2dd8615f",
       "dcc6750943fd67d1915280fbd2aa97a6bd01686a",
       "4ba6ddbc15a7dc1cc20c68edb3b3356031806a8f",
       "417275c",
-      "f300908d5306085f72215ce09e95f5cf8f434033"
+      "f300908d5306085f72215ce09e95f5cf8f434033",
+      "2030f202bbeae5ee11bb68e7f6eadd6b52dd5910",
+      "7daff96cab5bb50a948196f0ba299131ada732cb"
     ],
     "local_evidence": [
       "python scripts/build_studio.py --check-only -> PASS",
