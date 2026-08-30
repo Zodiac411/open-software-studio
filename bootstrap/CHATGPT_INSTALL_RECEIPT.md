@@ -4,7 +4,7 @@ Result: PASS_WITH_LIMITATIONS
 
 Recorded: 2026-08-30
 
-Implementation source checkpoint: `4afaa3d17be234187fe77aece05a9e2024cac556` on
+Implementation source checkpoint: `8f8e9fc2164a1ceeb503aecb36edbf8dc8c48dd6` on
 published branch `studio-v2-bootstrap`.
 
 The archive was rebuilt after the committed-HEAD reproducibility repair and
@@ -16,8 +16,8 @@ are evidence-only and do not change the implementation source checkpoint.
 - Build artifact: dist/chatgpt/studio.zip.
 - Artifact version: 2.0.0.
 - SHA-256 at this checkpoint:
-  96E79FD0EDF0C01164336AE6AF1532A0C4E851CBAA5AC477C57C7C10DFB030FA.
-- Size: 78,310 bytes.
+  38E3332CDF0F822F65C1C66C69DCB74C083BF899044578AEE519BF9F6E98D0C7B.
+- Size: 110,928 bytes.
 - Repository validator: PASS.
 - Plugin Creator validator: PASS.
 - The archive is skills-first. It declares no MCP server, .mcp.json, app
@@ -65,11 +65,12 @@ are evidence-only and do not change the implementation source checkpoint.
   mutation, explicitly stated that no issue was created, and stopped pending
   approval. Actual external issue creation remains NOT_RUN because it is
   irreversible repository history and requires a separate explicit approval.
-- Historical independent Studio Reviews 003 and 004 are BLOCKED reports for
-  pre-publication/stale-evidence checkpoints and remain preserved verbatim.
-  A new fresh independent ChatGPT Review at the published checkpoint is
-  pending; it must verify source checkpoint `4afaa3d` and later evidence-only
-  commits independently.
+- Historical independent Studio Reviews 003 through 006 are preserved
+  verbatim. Review 006 correctly blocked the prior checkpoint after a fresh
+  Linux rebuild found host-dependent archive bytes and uncommitted generated
+  outputs. The bounded ZIP_STORED repair and regenerated outputs are now
+  published at source checkpoint `8f8e9fc`; a new fresh independent ChatGPT
+  Review against that checkpoint and its later evidence-only tip is pending.
 - No ChatGPT custom instruction, OAuth flow, account switch, permission
   change, or external write was performed. Passwords, MFA codes, recovery
   codes, cookies, OAuth tokens, and API keys were never requested or handled.

@@ -4,7 +4,7 @@ Result: PASS_WITH_LIMITATIONS
 
 Project: PRJ-PILOT-A
 
-Implementation checkpoint: 4afaa3d17be234187fe77aece05a9e2024cac556
+Implementation checkpoint: 8f8e9fc2164a1ceeb503aecb36edbf8dc8c48dd6
 
 ## Evidence
 
@@ -19,13 +19,14 @@ Implementation checkpoint: 4afaa3d17be234187fe77aece05a9e2024cac556
   next action independent fresh-context review. It did not edit or merge.
 - Unrelated fresh Codex task: PASS. A separate process answered 2+2=4 without
   inspecting files or invoking Studio.
-- Current project state, SNAP-011, WP-001, EVID-PILOT-A-009, and
-  HANDOFF-4AFAA3D17BE2 are current against the implementation checkpoint.
-- EVID-PILOT-A-009 records the committed-HEAD clean-checkout
-  reproducibility, archive-order, and canonical source-manifest validation
+- Current project state, SNAP-012, WP-001, EVID-PILOT-A-010, and
+  HANDOFF-8F8E9FC2164A are current against the implementation checkpoint.
+- EVID-PILOT-A-010 records the repaired committed-HEAD clean-checkout
+  reproducibility, archive-byte, and canonical source-manifest validation
   gates.
-- Current independent review: a new fresh ChatGPT review is pending after the
-  prior review found the archive-order defect.
+- Current independent review: Review 006 blocked the prior checkpoint because
+  generated archive outputs were not committed; the ZIP_STORED repair is now
+  at `8f8e9fc`, and a new fresh ChatGPT review is pending.
 
 ## Cross-surface gates
 
@@ -39,9 +40,9 @@ Implementation checkpoint: 4afaa3d17be234187fe77aece05a9e2024cac556
   https://chatgpt.com/c/6a947454-fac4-83eb-a3ed-3265561e8b76 showed the exact
   proposed GitHub mutation and stopped pending approval; no write occurred.
 - Codex handoff and local execution: PASS_WITH_LIMITATIONS.
-- Fresh ChatGPT Review: NOT_RUN at published checkpoint `4afaa3d`. The
-  historical blocked reports remain in the bootstrap directory; Drive's
-  authoritative update still requires separate approval.
+- Fresh ChatGPT Review: BLOCKED at prior published checkpoint `4afaa3d` in
+  Review 006; the repaired checkpoint `8f8e9fc` is published and Review 007 is
+  pending. Drive's authoritative update still requires separate approval.
 - GitHub and Drive reads: PASS in both the connected Codex environment and the
   ChatGPT verification chat.
 - External writes: NOT_RUN.

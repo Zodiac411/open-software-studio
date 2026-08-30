@@ -94,7 +94,7 @@ No credentials or secrets were requested, entered, or recorded.
   schemas/v2; skills/studio; templates/studio-v2; brand/icon-system;
   .agents/plugins/marketplace.json; the preserved server; and
   evals/studio plus evals/pilots.
-- Current implementation source checkpoint: 4afaa3d17be234187fe77aece05a9e2024cac556 on
+- Current implementation source checkpoint: 8f8e9fc2164a1ceeb503aecb36edbf8dc8c48dd6 on
   studio-v2-bootstrap.
 - The branch is published at this checkpoint. Later bootstrap commits are
   evidence-only refreshes generated from this immutable source checkpoint.
@@ -108,7 +108,7 @@ No credentials or secrets were requested, entered, or recorded.
   formatter defect, REPAIR-FINDING-001 repaired it, and the current source
   checkpoint adds a committed-HEAD reproducibility gate, canonical source
   manifest validation, and fail-closed close transition. Current pilot
-  evidence is regenerated at `4afaa3d`; final fresh ChatGPT review is pending.
+  evidence is regenerated at `8f8e9fc`; final fresh ChatGPT review is pending.
 - Current pilot project state, snapshots, work packages, evidence, and
   handoffs match the current source checkpoint.
 - GitHub and Drive read probes: PASS. No external write was performed.
@@ -141,8 +141,8 @@ independent reviews recorded below.
 
 The current evidence refresh may leave this worktree dirty while it is being
 committed; the implementation branch is separate from `master`. The source
-checkpoint changed repository code only in the bounded reproducibility and
-close-gate repair. No Drive, issue, milestone, PR, merge, or permission write
+checkpoint changed repository code only in the bounded reproducibility,
+close-gate, and archive-byte repairs. No Drive, issue, milestone, PR, merge, or permission write
 was performed.
 
 ## Historical pre-publication ChatGPT and fresh review evidence
@@ -226,3 +226,19 @@ was performed.
   `4afaa3d17be234187fe77aece05a9e2024cac556`. Local validation, evaluation,
   both pilots, and source-manifest checks pass at that checkpoint. A new fresh
   ChatGPT Review is required before acceptance can close.
+
+## Current archive-byte repair
+
+- Fresh Review 006 is preserved in `INDEPENDENT_CHATGPT_REVIEW_006.md` and
+  remains BLOCKED for the prior checkpoint because Linux rebuilt different
+  compressed archive bytes and the generated outputs were not committed.
+- The bounded repair changes `scripts/build_studio.py` to use stored ZIP
+  entries, regenerates every ChatGPT archive and dependent hash manifest, and
+  is published at `8f8e9fc2164a1ceeb503aecb36edbf8dc8c48dd6`.
+- `python scripts/check_reproducibility.py` and `python scripts/validate_suite.py`
+  pass from the repaired source. Both pilots now use `SNAP-012`,
+  `EVID-PILOT-*-010`, and `HANDOFF-8F8E9FC2164A`.
+- Review 007 is the next required fresh ChatGPT review. It must inspect the
+  current branch tip, source checkpoint, active receipts, package hashes,
+  pilot evidence, Codex installation, ChatGPT installation, connector reads,
+  permissions, and rollback evidence before reading any conclusion.

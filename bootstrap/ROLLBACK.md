@@ -46,7 +46,7 @@ Generated packages, icons, templates, fixtures, and receipts are owned by the St
 
 ## Dry-run status
 
-Dry-run result at the 4afaa3d17be234187fe77aece05a9e2024cac556 implementation
+Dry-run result at the 8f8e9fc2164a1ceeb503aecb36edbf8dc8c48dd6 implementation
 checkpoint:
 PASS. The baseline resolves, the implementation branch is separate, the
 Codex backup exists with its recorded SHA-256, exactly one Studio marker block
@@ -56,6 +56,7 @@ rollback actions remain NOT_RUN unless explicitly approved.
 
 The rollback paths are structurally documented. The non-destructive dry-run
 verified path ownership, baseline resolution, published branch resolution, and
-the clean-checkout reproducibility repair at the recorded checkpoint.
+the clean-checkout reproducibility and archive-byte repair at the recorded
+checkpoint.
 External disconnect/delete and merge/release actions remain `NOT_RUN` unless
 explicitly approved.

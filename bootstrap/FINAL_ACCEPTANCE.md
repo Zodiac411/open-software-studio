@@ -2,7 +2,7 @@
 
 Overall result: BLOCKED
 
-Implementation source checkpoint: 4afaa3d17be234187fe77aece05a9e2024cac556
+Implementation source checkpoint: 8f8e9fc2164a1ceeb503aecb36edbf8dc8c48dd6
 
 Branch: studio-v2-bootstrap
 
@@ -21,10 +21,10 @@ be treated as a new implementation revision.
 | GitHub read connection | PASS | CONNECTED_APPS_RECEIPT.md |
 | Google Drive read connection | PASS | CONNECTED_APPS_RECEIPT.md |
 | Write confirmation gating | PASS_WITH_LIMITATIONS | seeded gates and CLI track --apply failure pass; fresh ChatGPT Track probe displayed the exact mutation and stopped for approval; actual external write remains NOT_RUN |
-| Greenfield local pilot | PASS_WITH_LIMITATIONS | PILOT_A_RECEIPT.md; current SNAP-011 and EVID-PILOT-A-009 |
-| Brownfield defect found and repaired | PASS | INDEPENDENT_REVIEW_001.md, REV-001, bounded repair, REV-002, REV-003, and current EVID-PILOT-B-009 |
-| Cross-surface ChatGPT -> Codex -> fresh ChatGPT Review pilots | NOT_RUN | Local ChatGPT and Codex legs pass; a new fresh ChatGPT Review is pending, and canonical Drive remains pre-V2 |
-| Current-SHA independent review | BLOCKED | INDEPENDENT_CHATGPT_REVIEW_005.md found host-dependent archive ordering at the prior checkpoint; repair is now at 4afaa3d and a new fresh review is pending |
+| Greenfield local pilot | PASS_WITH_LIMITATIONS | PILOT_A_RECEIPT.md; current SNAP-012, EVID-PILOT-A-010, and HANDOFF-8F8E9FC2164A |
+| Brownfield defect found and repaired | PASS | INDEPENDENT_REVIEW_001.md, REV-001, bounded repairs, REV-002, REV-003, and current EVID-PILOT-B-010 |
+| Cross-surface ChatGPT -> Codex -> fresh ChatGPT Review pilots | NOT_RUN | Local ChatGPT and Codex legs pass; fresh Review 006 blocked the prior checkpoint and Review 007 is pending against the repaired source |
+| Current-SHA independent review | BLOCKED | INDEPENDENT_CHATGPT_REVIEW_006.md found uncommitted host-dependent archive outputs at the prior checkpoint; ZIP_STORED repair is published at 8f8e9fc and a new fresh review is pending |
 | Rollback dry-run | PASS | ROLLBACK.md |
 | iPhone/mobile availability | USER CHECK | personal device verification not performed |
 
@@ -40,13 +40,15 @@ pending approval without writing. The refreshed Skills UI now visibly shows
 `Studio v2.0.0`. The previously blocked remote-source finding is repaired:
 `studio-v2-bootstrap` now publishes implementation checkpoint
 `4afaa3d17be234187fe77aece05a9e2024cac556`, and a fresh clone from it passes the
-reproducibility gate. The fresh isolated local review accepted that published
-source and the evidence-only refresh. Fresh ChatGPT Review 005 then found a
-host-dependent archive-order defect; the minimal repair is now published at
-`4afaa3d`, and a new fresh ChatGPT Review is required. Canonical Drive still
-records the pre-V2 authoritative state and may only be updated after a
-separate explicit owner approval. Actual external write execution, branch
-protection, and mobile verification remain open by policy.
+reproducibility gate. Fresh ChatGPT Review 006 then found that the committed
+outputs still differed on Linux because the archive repair had not been
+regenerated into the commit. The bounded ZIP_STORED repair and regenerated
+outputs are now published at `8f8e9fc2164a1ceeb503aecb36edbf8dc8c48dd6`; local
+clean-checkout reproducibility and the full validation suite pass there. A new
+fresh ChatGPT Review is required against that source and current evidence tip.
+Canonical Drive still records the pre-V2 authoritative state and may only be
+updated after a separate explicit owner approval. Actual external write
+execution, branch protection, and mobile verification remain open by policy.
 
 The authorized branch publication occurred; no issue, milestone, PR, Drive
 write, permission change, merge, or release was performed.

@@ -1,0 +1,14 @@
+{
+  "schema": "studio.repair/v2",
+  "repair_id": "REPAIR-ARCHIVE-BYTES",
+  "accepted_findings": ["REV-001", "REV-002", "REV-003"],
+  "allowed_paths": ["scripts/build_studio.py", "dist/chatgpt/", "generated/catalog/"],
+  "forbidden_paths": [".codex/", "secrets/", "credentials/"],
+  "required_behavior": "A clean checkout on a different host reproduces the same ChatGPT archive and manifest bytes.",
+  "regression_proof": ["python scripts/check_reproducibility.py", "python scripts/validate_suite.py"],
+  "evidence": ["fresh Linux review identified host-dependent ZIP compression bytes", "ZIP entries now use fixed metadata and ZIP_STORED", "generated archives and archive-hashes.json were regenerated at 8f8e9fc2164a1ceeb503aecb36edbf8dc8c48dd6"],
+  "non_goals": ["change ChatGPT skill behavior", "merge or release", "external writes"],
+  "repair_budget": {"primary_outcomes": 1, "subsystems": 2, "new_dependencies": 0},
+  "stop_conditions": ["reproducibility still differs after regeneration", "source scope expands beyond allowed paths"],
+  "source_checkpoint_sha": "8f8e9fc2164a1ceeb503aecb36edbf8dc8c48dd6"
+}
