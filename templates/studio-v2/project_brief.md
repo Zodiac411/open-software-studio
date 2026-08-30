@@ -29,11 +29,11 @@ Never invent missing facts; use `TBD` or `UNPROVEN` with an owner and next actio
 | `primary_outcome` | `string` | `required` |
 | `target_actor` | `string` | `required` |
 | `desired_outcome` | `string` | `required` |
-| `constraints` | `string` | `required` |
+| `constraints` | `array[string]` | `required` |
 | `non_goals` | `array[string]` | `required` |
-| `assumptions` | `string` | `required` |
-| `parked_ideas` | `string` | `required` |
-| `solution_ladder` | `string` | `required` |
+| `assumptions` | `array[string]` | `required` |
+| `parked_ideas` | `array[string]` | `required` |
+| `solution_ladder` | `array[string]` | `required` |
 | `disposition` | `string` | `required` |
 
 ## Proof

@@ -8,6 +8,10 @@
       "minLength": 1,
       "type": "string"
     },
+    "created_at": {
+      "format": "date-time",
+      "type": "string"
+    },
     "dependencies": {
       "items": {
         "minLength": 1,
@@ -30,6 +34,10 @@
       "type": "string",
       "x-studio-reference": "project.project_id"
     },
+    "repository": {
+      "minLength": 1,
+      "type": "string"
+    },
     "requirements": {
       "items": {
         "minLength": 1,
@@ -42,9 +50,21 @@
       "minLength": 1,
       "type": "string"
     },
+    "reviewed_state": {
+      "additionalProperties": true,
+      "type": "object"
+    },
+    "schema": {
+      "minLength": 1,
+      "type": "string"
+    },
     "scope_budget": {
       "additionalProperties": true,
       "type": "object"
+    },
+    "sequence": {
+      "minimum": 1,
+      "type": "integer"
     },
     "sources": {
       "items": {
@@ -71,6 +91,10 @@
         "NOT_RUN",
         "UNPROVEN"
       ],
+      "type": "string"
+    },
+    "title": {
+      "minLength": 1,
       "type": "string"
     },
     "verification": {

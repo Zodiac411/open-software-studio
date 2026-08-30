@@ -34,13 +34,13 @@ Never invent missing facts; use `TBD` or `UNPROVEN` with an owner and next actio
 | `allowed_paths` | `array[string]` | `required` |
 | `forbidden_paths` | `array[string]` | `required` |
 | `scope_budget` | `object` | `required` |
-| `acceptance` | `string` | `required` |
+| `acceptance` | `array[string]` | `required` |
 | `verification` | `array[object]` | `required` |
 | `non_goals` | `array[string]` | `required` |
 | `stop_conditions` | `array[string]` | `required` |
 | `rollback` | `string` | `required` |
 | `handoff_requirements` | `array[string]` | `required` |
-| `implementer_id` | `string` | `required` |
+| `implementer_actor_id` | `string` | `required` |
 | `implementer_session_id` | `string` | `required` |
 | `requirement_digest` | `string` | `^[0-9a-f]{64}$` |
 

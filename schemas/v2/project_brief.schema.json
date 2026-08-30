@@ -5,15 +5,25 @@
   "description": "Versioned Studio V2 artifact contract; unknown top-level fields are rejected.",
   "properties": {
     "assumptions": {
-      "minLength": 1,
-      "type": "string"
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
     },
     "authority": {
       "minLength": 1,
       "type": "string"
     },
     "constraints": {
-      "minLength": 1,
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "created_at": {
+      "format": "date-time",
       "type": "string"
     },
     "desired_outcome": {
@@ -47,8 +57,11 @@
       "type": "string"
     },
     "parked_ideas": {
-      "minLength": 1,
-      "type": "string"
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
     },
     "primary_outcome": {
       "minLength": 1,
@@ -60,9 +73,28 @@
       "type": "string",
       "x-studio-reference": "project.project_id"
     },
-    "solution_ladder": {
+    "repository": {
       "minLength": 1,
       "type": "string"
+    },
+    "reviewed_state": {
+      "additionalProperties": true,
+      "type": "object"
+    },
+    "schema": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "sequence": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "solution_ladder": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
     },
     "sources": {
       "items": {
@@ -92,6 +124,10 @@
       "type": "string"
     },
     "target_actor": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "title": {
       "minLength": 1,
       "type": "string"
     },

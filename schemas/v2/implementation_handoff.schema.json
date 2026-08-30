@@ -30,6 +30,10 @@
       },
       "type": "array"
     },
+    "created_at": {
+      "format": "date-time",
+      "type": "string"
+    },
     "document_id": {
       "minLength": 1,
       "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*$",
@@ -64,13 +68,29 @@
       "type": "string",
       "x-studio-reference": "project.project_id"
     },
+    "repository": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "reviewed_state": {
+      "additionalProperties": true,
+      "type": "object"
+    },
     "reviewer_action": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema": {
       "minLength": 1,
       "type": "string"
     },
     "scope_delta": {
       "additionalProperties": true,
       "type": "object"
+    },
+    "sequence": {
+      "minimum": 1,
+      "type": "integer"
     },
     "sources": {
       "items": {
@@ -97,6 +117,10 @@
         "NOT_RUN",
         "UNPROVEN"
       ],
+      "type": "string"
+    },
+    "title": {
+      "minLength": 1,
       "type": "string"
     },
     "unproven": {

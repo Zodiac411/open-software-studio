@@ -59,6 +59,86 @@ def read_json(path: Path) -> dict[str, Any]:
     return value
 
 
+def schema_type_matches(value: Any, expected: str) -> bool:
+    if expected == "null":
+        return value is None
+    if expected == "object":
+        return isinstance(value, dict)
+    if expected == "array":
+        return isinstance(value, list)
+    if expected == "string":
+        return isinstance(value, str)
+    if expected == "integer":
+        return isinstance(value, int) and not isinstance(value, bool)
+    if expected == "number":
+        return isinstance(value, (int, float)) and not isinstance(value, bool)
+    if expected == "boolean":
+        return isinstance(value, bool)
+    return True
+
+
+def schema_errors(value: Any, schema: dict[str, Any], location: str = "$") -> list[str]:
+    """Validate the JSON Schema subset emitted by build_studio.py."""
+    errors: list[str] = []
+    expected = schema.get("type")
+    expected_types = expected if isinstance(expected, list) else [expected] if isinstance(expected, str) else []
+    if expected_types and not any(schema_type_matches(value, item) for item in expected_types):
+        return [f"{location}: expected {' or '.join(expected_types)}"]
+    if "const" in schema and value != schema["const"]:
+        errors.append(f"{location}: expected constant {schema['const']!r}")
+    if isinstance(schema.get("enum"), list) and value not in schema["enum"]:
+        errors.append(f"{location}: value is not in the allowed enum")
+    if isinstance(value, str):
+        if isinstance(schema.get("minLength"), int) and len(value) < schema["minLength"]:
+            errors.append(f"{location}: string is too short")
+        if isinstance(schema.get("pattern"), str) and not re.search(schema["pattern"], value):
+            errors.append(f"{location}: value does not match {schema['pattern']}")
+        if schema.get("format") == "date-time" and parse_timestamp(value) == 0.0:
+            errors.append(f"{location}: expected an ISO date-time")
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        if isinstance(schema.get("minimum"), (int, float)) and value < schema["minimum"]:
+            errors.append(f"{location}: value is below minimum {schema['minimum']}")
+    if isinstance(value, list):
+        if isinstance(schema.get("minItems"), int) and len(value) < schema["minItems"]:
+            errors.append(f"{location}: array has fewer than {schema['minItems']} items")
+        item_schema = schema.get("items")
+        if isinstance(item_schema, dict):
+            for index, item in enumerate(value):
+                errors.extend(schema_errors(item, item_schema, f"{location}[{index}]"))
+    if isinstance(value, dict):
+        properties = schema.get("properties") if isinstance(schema.get("properties"), dict) else {}
+        required = schema.get("required") if isinstance(schema.get("required"), list) else []
+        errors.extend(f"{location}.{key}: required field is missing" for key in required if key not in value)
+        for key, item in value.items():
+            child_schema = properties.get(key)
+            if isinstance(child_schema, dict):
+                errors.extend(schema_errors(item, child_schema, f"{location}.{key}"))
+            elif schema.get("additionalProperties") is False:
+                errors.append(f"{location}.{key}: unknown field")
+            elif isinstance(schema.get("additionalProperties"), dict):
+                errors.extend(schema_errors(item, schema["additionalProperties"], f"{location}.{key}"))
+    prohibited = schema.get("not")
+    if isinstance(prohibited, dict):
+        alternatives = prohibited.get("anyOf") if isinstance(prohibited.get("anyOf"), list) else [prohibited]
+        if any(not schema_errors(value, item, location) for item in alternatives if isinstance(item, dict)):
+            errors.append(f"{location}: value matches a prohibited shape")
+    alternatives = schema.get("anyOf")
+    if isinstance(alternatives, list) and alternatives and not any(not schema_errors(value, item, location) for item in alternatives if isinstance(item, dict)):
+        errors.append(f"{location}: value does not match any allowed shape")
+    return errors
+
+
+def document_schema_errors(value: dict[str, Any], schema_name: str) -> list[str]:
+    path = ROOT / "schemas" / "v2" / f"{schema_name}.schema.json"
+    if not path.is_file():
+        return [f"schema is missing: {path}"]
+    try:
+        schema = read_json(path)
+    except ValueError as exc:
+        return [str(exc)]
+    return schema_errors(value, schema)
+
+
 def write_json(path: Path, value: Any) -> None:
     atomic_write(path, json.dumps(value, indent=2, sort_keys=True, ensure_ascii=False) + "\n")
 
@@ -473,7 +553,7 @@ def plan_project(args: argparse.Namespace) -> int:
     requirements = [str(item) for item in requirements]
     allowed_paths = metadata.get("allowed_paths") or (["src/", "tests/"] if (project / "src").is_dir() else ["."])
     forbidden_paths = metadata.get("forbidden_paths") or [".git/", ".project/secrets/"]
-    verification = metadata.get("verification_commands") or product.get("verification") or []
+    verification = metadata.get("verification_commands") or product.get("verification") or ["git status --short"]
     if not isinstance(verification, list):
         verification = [verification]
     repository = metadata.get("repository") or metadata.get("repository_url") or git(project, "remote", "get-url", "origin") or str(project)
@@ -503,6 +583,7 @@ def plan_project(args: argparse.Namespace) -> int:
             "handoff_requirements": ["base SHA", "head SHA", "diff", "commands", "limitations", "reviewer action"],
             "implementer_actor_id": metadata.get("implementer_actor_id", "project-executor"),
             "implementer_session_id": state.get("session_id"),
+            "requirement_digest": sha_digest(requirements),
         })
     save_state(state_path, state, project, _event_type="plan.created", phase="PLANNED", status="PASS", active_wp="WP-001", next_action="review and freeze WP-001")
     return emit("PASS", "bounded work package is planned", work_package=str(wp_path), next_action="studio freeze --approved-by <owner>")
@@ -562,6 +643,9 @@ def validate_work_package(args: argparse.Namespace) -> int:
         value = read_json(path)
     except ValueError as exc:
         return fail(str(exc))
+    schema_issues = document_schema_errors(value, "work_package")
+    if schema_issues:
+        return fail("; ".join(schema_issues))
     required = ["document_id", "project_id", "wp_id", "status", "base_sha", "primary_outcome", "requirements", "allowed_paths", "forbidden_paths", "scope_budget", "acceptance", "verification", "non_goals", "stop_conditions", "rollback", "handoff_requirements"]
     missing = [key for key in required if key not in value]
     if missing:
@@ -605,6 +689,7 @@ def validate_evidence(args: argparse.Namespace) -> int:
         except ValueError as exc:
             errors.append(str(exc))
             continue
+        errors.extend(f"{path.name}: {issue}" for issue in document_schema_errors(value, "evidence_receipt"))
         errors.extend(f"{path.name}: missing {key}" for key in required if key not in value or value[key] in (None, ""))
         if not isinstance(value.get("sequence"), int) or isinstance(value.get("sequence"), bool):
             errors.append(f"{path.name}: sequence must be an integer")
@@ -640,6 +725,9 @@ def compile_artifact(args: argparse.Namespace) -> int:
     missing = [key for key in required if key not in data]
     if missing:
         return fail(f"artifact data missing fields: {', '.join(missing)}")
+    schema_issues = document_schema_errors(data, artifact_type.lower())
+    if schema_issues:
+        return fail("artifact schema validation failed: " + "; ".join(schema_issues))
     template = ROOT / "templates" / "studio-v2" / f"{artifact_type.lower()}.md"
     if not template.is_file():
         return fail(f"generated template missing: {template}")
@@ -653,8 +741,15 @@ def compile_artifact(args: argparse.Namespace) -> int:
     lines.extend(["", "## Template guidance", "", template.read_text(encoding="utf-8")])
     write_text(output, "\n".join(lines).rstrip() + "\n")
     sidecar = output.with_suffix(".json")
-    write_json(sidecar, {"schema": "studio.artifact-instance/v2", "artifact_type": artifact_type, "version": "2.0", "data": data})
-    return emit("PASS", "artifact compiled from the catalog template", markdown=str(output), sidecar=str(sidecar), artifact_type=artifact_type)
+    sidecar_value = {"schema": "studio.artifact-instance/v2", "artifact_type": artifact_type, "version": "2.0", "data": data}
+    write_json(sidecar, sidecar_value)
+    yaml_sidecar = output.with_suffix(".yaml")
+    write_text(yaml_sidecar, json.dumps(sidecar_value, indent=2, sort_keys=True, ensure_ascii=False) + "\n")
+    github_body = output.with_name(f"{output.stem}.github.md")
+    write_text(github_body, "# " + artifact_type + "\n\n" + "\n".join(f"- **{key}**: {json.dumps(data[key], ensure_ascii=False, sort_keys=True)}" for key in required) + "\n")
+    google_docs = output.with_name(f"{output.stem}.google-docs.json")
+    write_json(google_docs, {"schema": "studio.google-docs-payload/v2", "title": artifact_type, "body_markdown": output.read_text(encoding="utf-8"), "source_artifact": str(sidecar.name)})
+    return emit("PASS", "artifact compiled from the catalog template", markdown=str(output), sidecar=str(sidecar), yaml=str(yaml_sidecar), github_body=str(github_body), google_docs_payload=str(google_docs), artifact_type=artifact_type)
 
 
 def command_observation(project: Path, command: str) -> dict[str, Any]:
@@ -721,7 +816,8 @@ def transition_allowed(source: str, target: str) -> bool:
 def review_errors(project: Path, value: dict[str, Any], state: dict[str, Any] | None = None, require_accept: bool = False) -> list[str]:
     required_strings = ["document_id", "review_id", "reviewer_role", "reviewer_context", "reviewer_actor_id", "reviewer_session_id", "implementer_actor_id", "implementer_session_id", "reviewed_base_sha", "reviewed_head_sha", "wp_id", "requirements_digest"]
     required_lists = ["requirements", "independent_checks", "findings", "conditions", "artifact_ids"]
-    errors = [f"missing {key}" for key in required_strings if not isinstance(value.get(key), str) or not value[key].strip()]
+    errors = document_schema_errors(value, "independent_review")
+    errors.extend(f"missing {key}" for key in required_strings if not isinstance(value.get(key), str) or not value[key].strip())
     errors.extend(f"{key} must be a list" for key in required_lists if not isinstance(value.get(key), list))
     if value.get("schema") != "studio.review/v2":
         errors.append("review schema must be studio.review/v2")

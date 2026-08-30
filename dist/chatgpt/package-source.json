@@ -8,7 +8,7 @@
         "CODEX": []
       },
       "generator": "scripts/build_studio.py",
-      "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+      "generator_digest": "63fbf080fe7640a803aab4b3e719c924033bd4f01fe09cd5e36ca2850eeae2ac",
       "generator_version": "2.0.1",
       "icon_sources": {
         "glyph": "brand/icon-system/glyphs/engineering-guard.svg",
@@ -26,7 +26,7 @@
         "CODEX": []
       },
       "generator": "scripts/build_studio.py",
-      "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+      "generator_digest": "63fbf080fe7640a803aab4b3e719c924033bd4f01fe09cd5e36ca2850eeae2ac",
       "generator_version": "2.0.1",
       "icon_sources": {
         "glyph": "brand/icon-system/glyphs/execution-guard.svg",
@@ -44,7 +44,7 @@
         "CODEX": []
       },
       "generator": "scripts/build_studio.py",
-      "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+      "generator_digest": "63fbf080fe7640a803aab4b3e719c924033bd4f01fe09cd5e36ca2850eeae2ac",
       "generator_version": "2.0.1",
       "icon_sources": {
         "glyph": "brand/icon-system/glyphs/interface-studio.svg",
@@ -62,7 +62,7 @@
         "CODEX": []
       },
       "generator": "scripts/build_studio.py",
-      "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+      "generator_digest": "63fbf080fe7640a803aab4b3e719c924033bd4f01fe09cd5e36ca2850eeae2ac",
       "generator_version": "2.0.1",
       "icon_sources": {
         "glyph": "brand/icon-system/glyphs/project-architect.svg",
@@ -80,7 +80,7 @@
         "CODEX": []
       },
       "generator": "scripts/build_studio.py",
-      "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+      "generator_digest": "63fbf080fe7640a803aab4b3e719c924033bd4f01fe09cd5e36ca2850eeae2ac",
       "generator_version": "2.0.1",
       "icon_sources": {
         "glyph": "brand/icon-system/glyphs/project-docs.svg",
@@ -98,7 +98,7 @@
         "CODEX": []
       },
       "generator": "scripts/build_studio.py",
-      "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+      "generator_digest": "63fbf080fe7640a803aab4b3e719c924033bd4f01fe09cd5e36ca2850eeae2ac",
       "generator_version": "2.0.1",
       "icon_sources": {
         "glyph": "brand/icon-system/glyphs/research-engineer.svg",
@@ -116,7 +116,7 @@
         "CODEX": []
       },
       "generator": "scripts/build_studio.py",
-      "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+      "generator_digest": "63fbf080fe7640a803aab4b3e719c924033bd4f01fe09cd5e36ca2850eeae2ac",
       "generator_version": "2.0.1",
       "icon_sources": {
         "glyph": "brand/icon-system/glyphs/studio-delivery.svg",
@@ -134,7 +134,7 @@
         "CODEX": []
       },
       "generator": "scripts/build_studio.py",
-      "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+      "generator_digest": "63fbf080fe7640a803aab4b3e719c924033bd4f01fe09cd5e36ca2850eeae2ac",
       "generator_version": "2.0.1",
       "icon_sources": {
         "glyph": "brand/icon-system/glyphs/studio-track.svg",
@@ -152,7 +152,7 @@
         "CODEX": []
       },
       "generator": "scripts/build_studio.py",
-      "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+      "generator_digest": "63fbf080fe7640a803aab4b3e719c924033bd4f01fe09cd5e36ca2850eeae2ac",
       "generator_version": "2.0.1",
       "icon_sources": {
         "glyph": "brand/icon-system/glyphs/web-app-builder.svg",

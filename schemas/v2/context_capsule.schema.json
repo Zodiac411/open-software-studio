@@ -5,8 +5,11 @@
   "description": "Versioned Studio V2 artifact contract; unknown top-level fields are rejected.",
   "properties": {
     "acceptance": {
-      "minLength": 1,
-      "type": "string"
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
     },
     "active_goal": {
       "minLength": 1,
@@ -21,6 +24,10 @@
     },
     "authority": {
       "minLength": 1,
+      "type": "string"
+    },
+    "created_at": {
+      "format": "date-time",
       "type": "string"
     },
     "decisions": {
@@ -56,6 +63,10 @@
       "minLength": 1,
       "type": "string"
     },
+    "repository": {
+      "minLength": 1,
+      "type": "string"
+    },
     "requirements": {
       "items": {
         "minLength": 1,
@@ -64,9 +75,21 @@
       "type": "array",
       "x-studio-reference": "product_spec.requirements"
     },
+    "reviewed_state": {
+      "additionalProperties": true,
+      "type": "object"
+    },
+    "schema": {
+      "minLength": 1,
+      "type": "string"
+    },
     "scope_budget": {
       "additionalProperties": true,
       "type": "object"
+    },
+    "sequence": {
+      "minimum": 1,
+      "type": "integer"
     },
     "snapshot_id": {
       "minLength": 1,
@@ -107,6 +130,10 @@
         "type": "string"
       },
       "type": "array"
+    },
+    "title": {
+      "minLength": 1,
+      "type": "string"
     },
     "verification": {
       "items": {

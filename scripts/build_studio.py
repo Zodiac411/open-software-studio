@@ -41,6 +41,8 @@ ARRAY_STRING_FIELDS = {
     "requirements", "allowed_paths", "forbidden_paths", "non_goals", "stop_conditions", "handoff_requirements",
     "claimed_outcomes", "unproven", "conditions", "artifact_set", "artifact_ids", "proof_levels", "commands", "runtime_probes",
     "work_packages", "dependencies", "next_actions", "outcomes", "friction", "decisions", "waivers",
+    "goals", "constraints", "assumptions", "parked_ideas", "solution_ladder", "risks", "edge_cases", "acceptance",
+    "success_measures", "unresolved_questions",
 }
 ARRAY_OBJECT_FIELDS = {
     "verification", "independent_checks", "findings", "evidence", "claims", "options", "scenarios", "entities",
@@ -382,10 +384,16 @@ def field_schema(field: str) -> dict[str, Any]:
 
 def schema_for(name: str, required: list[str], title: str, properties: dict[str, Any] | None = None, additional_properties: bool = False) -> dict[str, Any]:
     common: dict[str, Any] = {
+        "schema": {"type": "string", "minLength": 1},
         "document_id": field_schema("document_id"),
         "project_id": field_schema("project_id"),
         "status": field_schema("status"),
         "version": field_schema("version"),
+        "sequence": {"type": "integer", "minimum": 1},
+        "created_at": {"type": "string", "format": "date-time"},
+        "reviewed_state": {"type": "object", "additionalProperties": True},
+        "title": {"type": "string", "minLength": 1},
+        "repository": {"type": "string", "minLength": 1},
         "owner": field_schema("owner"),
         "authority": field_schema("authority"),
         "sources": {"type": "array", "items": {"type": "string", "minLength": 1}},
@@ -436,10 +444,10 @@ def render_schemas(catalog: dict[str, Any]) -> None:
         write_json(root / f"{name}.schema.json", schema_for(name, required, title, properties))
 
     review_schema = schema_for("independent_review", artifacts["INDEPENDENT_REVIEW"]["required_fields"], "Studio V2 independent review contract", {
-        "reviewer_id": {"type": "string", "minLength": 1}, "reviewer_session_id": {"type": "string", "minLength": 1}, "reviewer_role": {"type": "string", "minLength": 1, "not": {"anyOf": [{"pattern": "[Ee]xecutor"}, {"pattern": "[Ii]mplementer"}]}}, "reviewer_context": {"type": "string", "minLength": 1, "not": {"anyOf": [{"pattern": "[Ss]ame [Ss]ession"}, {"pattern": "[Ii]mplementation [Ss]ession"}]}}, "implementer_id": {"type": "string", "minLength": 1}, "implementer_session_id": {"type": "string", "minLength": 1}, "reviewed_head_sha": sha_fields, "base_sha": sha_fields, "requirement_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "artifact_set": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "evidence_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "independent_checks": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["name", "observed"], "properties": {"name": {"type": "string", "minLength": 1}, "observed": {"type": "string", "minLength": 1}}, "additionalProperties": True}}, "scope_delta": {"type": "object", "required": ["allowed", "changed"], "properties": {"allowed": {"type": "array", "items": {"type": "string"}}, "changed": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": True}, "findings": {"type": "array", "items": {"type": "object", "required": ["finding_id", "severity", "evidence"], "properties": {"finding_id": {"type": "string", "minLength": 1}, "severity": {"type": "string", "enum": ["BLOCKING", "IMPORTANT", "OPTIONAL"]}, "evidence": {"type": "string", "minLength": 1}}, "additionalProperties": True}}, "disposition": {"type": "string", "enum": ["ACCEPT", "REPAIR", "REJECT", "BLOCKED", "UNPROVEN"]}, "conditions": {"type": "array", "items": {"type": "string"}}
+        "reviewer_actor_id": {"type": "string", "minLength": 1}, "reviewer_session_id": {"type": "string", "minLength": 1}, "reviewer_role": {"type": "string", "minLength": 1, "not": {"anyOf": [{"pattern": "[Ee]xecutor"}, {"pattern": "[Ii]mplementer"}]}}, "reviewer_context": {"type": "string", "minLength": 1, "not": {"anyOf": [{"pattern": "[Ss]ame [Ss]ession"}, {"pattern": "[Ii]mplementation [Ss]ession"}]}}, "implementer_actor_id": {"type": "string", "minLength": 1}, "implementer_session_id": {"type": "string", "minLength": 1}, "reviewed_head_sha": sha_fields, "reviewed_base_sha": sha_fields, "requirements_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "artifact_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "evidence_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "independent_checks": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["name", "observed"], "properties": {"name": {"type": "string", "minLength": 1}, "observed": {"type": "string", "minLength": 1}}, "additionalProperties": False}}, "scope_delta": {"type": "object", "required": ["allowed", "changed"], "properties": {"allowed": {"type": "array", "items": {"type": "string"}}, "changed": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": False}, "findings": {"type": "array", "items": {"type": "object", "required": ["finding_id", "severity", "evidence"], "properties": {"finding_id": {"type": "string", "minLength": 1}, "severity": {"type": "string", "enum": ["BLOCKING", "IMPORTANT", "OPTIONAL"]}, "evidence": {"type": "string", "minLength": 1}}, "additionalProperties": True}}, "disposition": {"type": "string", "enum": ["ACCEPT", "REPAIR", "REJECT", "BLOCKED", "UNPROVEN"]}, "conditions": {"type": "array", "items": {"type": "string"}}
     })
     work_package_schema = schema_for("work_package", artifacts["WORK_PACKAGE"]["required_fields"], "Studio V2 work package contract", {
-        "base_sha": sha_fields, "implementer_id": {"type": "string", "minLength": 1}, "implementer_session_id": {"type": "string", "minLength": 1}, "requirement_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "scope_budget": {"type": "object", "required": ["primary_outcomes", "subsystems", "new_dependencies"], "properties": {"primary_outcomes": {"type": "integer", "minimum": 1}, "subsystems": {"type": "integer", "minimum": 1}, "new_dependencies": {"type": "integer", "minimum": 0}}, "additionalProperties": False}, "acceptance": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "verification": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["level", "command"], "properties": {"level": {"type": "string", "enum": catalog["evidence_levels"]}, "command": {"type": "string", "minLength": 1}}, "additionalProperties": True}}
+        "base_sha": sha_fields, "snapshot_id": {"type": ["string", "null"], "pattern": "^SNAP-[A-Z0-9]+(?:-[A-Z0-9]+)*$"}, "implementer_actor_id": {"type": "string", "minLength": 1}, "implementer_session_id": {"type": "string", "minLength": 1}, "requirement_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "scope_budget": {"type": "object", "required": ["primary_outcomes", "subsystems", "new_dependencies"], "properties": {"primary_outcomes": {"type": "integer", "minimum": 1}, "subsystems": {"type": "integer", "minimum": 1}, "new_dependencies": {"type": "integer", "minimum": 0}}, "additionalProperties": False}, "acceptance": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "verification": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["level", "command"], "properties": {"level": {"type": "string", "enum": catalog["evidence_levels"]}, "command": {"type": "string", "minLength": 1}}, "additionalProperties": False}}
     })
     evidence_schema = schema_for("evidence_receipt", artifacts["EVIDENCE_RECEIPT"]["required_fields"], "Studio V2 evidence receipt contract", {
         "level": {"type": "string", "enum": catalog["evidence_levels"]}, "command_or_probe": {"type": "string", "minLength": 1}, "observed": {"type": "string", "minLength": 1}, "timestamp": {"type": "string", "format": "date-time"}, "sequence": {"type": "integer", "minimum": 1}, "exit_code": {"type": "integer", "minimum": 0}, "observed_output_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "environment": {"type": ["string", "object"], "additionalProperties": {"type": "string"}}, "head_sha": sha_fields, "limitations": {"type": ["string", "array"], "minItems": 1, "items": {"type": "string", "minLength": 1}}
@@ -719,7 +727,8 @@ def generate_seeded_fixtures(catalog: dict[str, Any]) -> None:
         fail(f"refusing to replace unmarked seeded fixture path: {root}")
     root.mkdir(parents=True, exist_ok=True)
     write_text(root / ".studio-generated", "studio-v2\n")
-    write_json(root / "valid-work-package.json", {"document_id": "WP-001", "project_id": "PRJ-SD-001", "wp_id": "WP-SD-001", "status": "FROZEN", "snapshot_id": "SNAP-001", "base_sha": "d697efc16d86835ff3941f54b05e560b91a4a125", "primary_outcome": "Validate one bounded Studio package build.", "requirements": ["REQ-001"], "allowed_paths": ["scripts/", "catalog/"], "forbidden_paths": [".codex/", "secrets/"], "scope_budget": {"primary_outcomes": 1, "subsystems": 2, "new_dependencies": 0}, "acceptance": ["generator exits zero"], "verification": [{"level": "E2", "command": "python scripts/build_studio.py"}], "non_goals": ["merge", "release"], "stop_conditions": ["base SHA changes"], "rollback": "revert branch", "handoff_requirements": ["head SHA", "evidence"]})
+    requirements = ["REQ-001"]
+    write_json(root / "valid-work-package.json", {"schema": "studio.artifact/v2", "document_id": "WP-001", "project_id": "PRJ-SD-001", "wp_id": "WP-SD-001", "status": "FROZEN", "snapshot_id": "SNAP-001", "base_sha": "d697efc16d86835ff3941f54b05e560b91a4a125", "primary_outcome": "Validate one bounded Studio package build.", "requirements": requirements, "allowed_paths": ["scripts/", "catalog/"], "forbidden_paths": [".codex/", "secrets/"], "scope_budget": {"primary_outcomes": 1, "subsystems": 2, "new_dependencies": 0}, "acceptance": ["generator exits zero"], "verification": [{"level": "E2", "command": "python scripts/build_studio.py"}], "non_goals": ["merge", "release"], "stop_conditions": ["base SHA changes"], "rollback": "revert branch", "handoff_requirements": ["head SHA", "evidence"], "implementer_actor_id": "seeded-executor", "implementer_session_id": "seeded-session", "requirement_digest": hashlib.sha256(json.dumps(requirements, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()})
     write_json(root / "invalid-self-accept-review.json", {"document_id": "REV-001", "project_id": "PRJ-SD-001", "review_id": "REV-001", "reviewer_role": "executor", "reviewer_context": "same session", "reviewed_head_sha": "d697efc16d86835ff3941f54b05e560b91a4a125", "wp_id": "WP-SD-001", "requirements": ["REQ-001"], "independent_checks": [], "scope_delta": {}, "findings": [], "disposition": "ACCEPT", "conditions": []})
     write_json(root / "golden-review-trap.json", {"defect": "planted implementation defect", "expected_finding": "FIND-001", "severity": "BLOCKING", "required_repair": "observable output matches the frozen requirement", "executor_may_accept": False})
     write_json(root / "benchmark-cases.json", [
@@ -750,7 +759,13 @@ def output_snapshot(path: Path) -> dict[str, bytes]:
         return {path.name: path.read_bytes()}
     if not path.is_dir():
         return {}
-    return {str(child.relative_to(path)): child.read_bytes() for child in sorted(path.rglob("*")) if child.is_file()}
+    return {
+        str(child.relative_to(path)): child.read_bytes()
+        for child in sorted(path.rglob("*"))
+        if child.is_file()
+        and "__pycache__" not in child.parts
+        and child.suffix != ".pyc"
+    }
 
 
 def check_generated_outputs(catalog: dict[str, Any]) -> None:

@@ -81,6 +81,8 @@ def archive_entry_sort_key(name: str) -> tuple[str, bytes]:
 
 
 def main() -> None:
+    from studio import schema_errors
+
     catalog = read_json(ROOT / "catalog" / "studio.yaml")
     if catalog.get("schema") != "studio.catalog/v2":
         fail("catalog schema")
@@ -180,6 +182,14 @@ def main() -> None:
     invalid_review = read_json(seeded / "invalid-self-accept-review.json")
     if invalid_review.get("reviewer_role") != "executor" or invalid_review.get("disposition") != "ACCEPT":
         fail("self-accept review trap lost its invalid shape")
+    work_package_schema = read_json(ROOT / "schemas" / "v2" / "work_package.schema.json")
+    valid_work_package = read_json(seeded / "valid-work-package.json")
+    work_package_errors = schema_errors(valid_work_package, work_package_schema)
+    if work_package_errors:
+        fail("seeded valid work package violates its schema: " + "; ".join(work_package_errors))
+    review_schema = read_json(ROOT / "schemas" / "v2" / "independent_review.schema.json")
+    if not schema_errors(invalid_review, review_schema):
+        fail("seeded self-accept review must fail the independent-review schema")
     benchmarks = json.loads((seeded / "benchmark-cases.json").read_text(encoding="utf-8"))
     if len(benchmarks) < 6 or {item.get("family") for item in benchmarks} != {"catalog", "state", "evidence", "permissions", "review", "rollback"}:
         fail("seeded Studio benchmark coverage")

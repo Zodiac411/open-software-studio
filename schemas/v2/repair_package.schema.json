@@ -19,6 +19,10 @@
       "minLength": 1,
       "type": "string"
     },
+    "created_at": {
+      "format": "date-time",
+      "type": "string"
+    },
     "document_id": {
       "minLength": 1,
       "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*$",
@@ -68,9 +72,25 @@
       "pattern": "^REPAIR-[A-Z0-9]+(?:-[A-Z0-9]+)*$",
       "type": "string"
     },
+    "repository": {
+      "minLength": 1,
+      "type": "string"
+    },
     "required_behavior": {
       "minLength": 1,
       "type": "string"
+    },
+    "reviewed_state": {
+      "additionalProperties": true,
+      "type": "object"
+    },
+    "schema": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "sequence": {
+      "minimum": 1,
+      "type": "integer"
     },
     "sources": {
       "items": {
@@ -105,6 +125,10 @@
         "type": "string"
       },
       "type": "array"
+    },
+    "title": {
+      "minLength": 1,
+      "type": "string"
     },
     "verification": {
       "items": {

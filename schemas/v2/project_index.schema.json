@@ -16,6 +16,10 @@
       "minLength": 1,
       "type": "string"
     },
+    "created_at": {
+      "format": "date-time",
+      "type": "string"
+    },
     "document_id": {
       "minLength": 1,
       "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*$",
@@ -38,6 +42,22 @@
       "pattern": "^PRJ-[A-Z0-9]+(?:-[A-Z0-9]+)*$",
       "type": "string",
       "x-studio-reference": "project.project_id"
+    },
+    "repository": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "reviewed_state": {
+      "additionalProperties": true,
+      "type": "object"
+    },
+    "schema": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "sequence": {
+      "minimum": 1,
+      "type": "integer"
     },
     "snapshot": {
       "minLength": 1,

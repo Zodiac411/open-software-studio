@@ -16,16 +16,20 @@
     "head SHA",
     "evidence"
   ],
+  "implementer_actor_id": "seeded-executor",
+  "implementer_session_id": "seeded-session",
   "non_goals": [
     "merge",
     "release"
   ],
   "primary_outcome": "Validate one bounded Studio package build.",
   "project_id": "PRJ-SD-001",
+  "requirement_digest": "ea287210ec72c55a9b2171783dc25dd119629425b9413f1c263d35fae9da7623",
   "requirements": [
     "REQ-001"
   ],
   "rollback": "revert branch",
+  "schema": "studio.artifact/v2",
   "scope_budget": {
     "new_dependencies": 0,
     "primary_outcomes": 1,

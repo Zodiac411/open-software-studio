@@ -28,7 +28,7 @@ Never invent missing facts; use `TBD` or `UNPROVEN` with an owner and next actio
 | `project_id` | `string` | `project.project_id` |
 | `requirements` | `array[string]` | `product_spec.requirements` |
 | `scenarios` | `array[object]` | `required` |
-| `acceptance` | `string` | `required` |
+| `acceptance` | `array[string]` | `required` |
 | `non_goals` | `array[string]` | `required` |
 | `proof_level` | `string` | `required` |
 

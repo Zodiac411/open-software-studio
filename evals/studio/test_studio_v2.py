@@ -87,8 +87,12 @@ class StudioV2RegressionTests(unittest.TestCase):
             "requirements": wp["requirements"],
             "requirements_digest": digest(wp["requirements"]),
             "artifact_ids": ["WP-001", "HANDOFF"],
-            "independent_checks": ["reviewed the base-to-head diff", "ran the recorded verification command"],
-            "scope_delta": {"status": "within package"},
+            "evidence_digest": digest(["reviewed the base-to-head diff", "ran the recorded verification command"]),
+            "independent_checks": [
+                {"name": "base-to-head diff", "observed": "reviewed independently"},
+                {"name": "verification command", "observed": "ran independently"},
+            ],
+            "scope_delta": {"allowed": ["feature.py"], "changed": ["feature.py"]},
             "findings": [],
             "disposition": "ACCEPT",
             "conditions": [],
@@ -169,6 +173,43 @@ class StudioV2RegressionTests(unittest.TestCase):
         self.cli("evidence", "add", "--evidence-id", "EVID-ROUNDTRIP", "--requirement", "REQ-LANTERN", "--level", "E2", "--command-or-probe", "git status --short", "--observed", "command completed")
         _, result = self.cli("evidence", "validate")
         self.assertEqual(result["result"], "PASS")
+
+    def test_artifact_compiler_rejects_malformed_types_and_emits_portable_targets(self) -> None:
+        malformed = self.project / "malformed.json"
+        malformed.write_text(json.dumps({
+            "document_id": 42,
+            "project_id": "not-a-project-id",
+            "primary_outcome": None,
+            "target_actor": [],
+            "desired_outcome": "usable output",
+            "constraints": "none",
+            "non_goals": "not-a-list",
+            "assumptions": [],
+            "parked_ideas": [],
+            "solution_ladder": [],
+            "disposition": "ACCEPT",
+        }), encoding="utf-8")
+        _, rejected = self.cli("artifact", "compile", "--type", "PROJECT_BRIEF", "--data", str(malformed), check=False)
+        self.assertEqual(rejected["result"], "BLOCKED")
+        self.assertIn("schema validation failed", str(rejected["message"]))
+
+        valid = self.project / "valid.json"
+        valid.write_text(json.dumps({
+            "document_id": "BRIEF-001",
+            "project_id": "PRJ-GENERIC",
+            "primary_outcome": "Deliver the lantern workflow",
+            "target_actor": "Lantern operator",
+            "desired_outcome": "A directly verified workflow",
+            "constraints": ["No external writes"],
+            "non_goals": ["Release"],
+            "assumptions": ["Git remains available"],
+            "parked_ideas": ["Hosted integration"],
+            "solution_ladder": ["Reuse the current CLI"],
+            "disposition": "ACCEPT",
+        }), encoding="utf-8")
+        _, compiled = self.cli("artifact", "compile", "--type", "PROJECT_BRIEF", "--data", str(valid))
+        for key in ("markdown", "sidecar", "yaml", "github_body", "google_docs_payload"):
+            self.assertTrue(Path(str(compiled[key])).is_file(), key)
 
 
 if __name__ == "__main__":

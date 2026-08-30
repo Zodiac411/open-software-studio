@@ -27,6 +27,10 @@
       "pattern": "^[0-9a-f]{40}$",
       "type": "string"
     },
+    "created_at": {
+      "format": "date-time",
+      "type": "string"
+    },
     "document_id": {
       "minLength": 1,
       "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*$",
@@ -46,7 +50,7 @@
       },
       "type": "array"
     },
-    "implementer_id": {
+    "implementer_actor_id": {
       "minLength": 1,
       "type": "string"
     },
@@ -75,6 +79,10 @@
       "type": "string",
       "x-studio-reference": "project.project_id"
     },
+    "repository": {
+      "minLength": 1,
+      "type": "string"
+    },
     "requirement_digest": {
       "pattern": "^[0-9a-f]{64}$",
       "type": "string"
@@ -87,7 +95,15 @@
       "type": "array",
       "x-studio-reference": "product_spec.requirements"
     },
+    "reviewed_state": {
+      "additionalProperties": true,
+      "type": "object"
+    },
     "rollback": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema": {
       "minLength": 1,
       "type": "string"
     },
@@ -114,11 +130,16 @@
       ],
       "type": "object"
     },
+    "sequence": {
+      "minimum": 1,
+      "type": "integer"
+    },
     "snapshot_id": {
-      "minLength": 1,
       "pattern": "^SNAP-[A-Z0-9]+(?:-[A-Z0-9]+)*$",
-      "type": "string",
-      "x-studio-reference": "snapshot.snapshot_id"
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "sources": {
       "items": {
@@ -154,9 +175,13 @@
       },
       "type": "array"
     },
+    "title": {
+      "minLength": 1,
+      "type": "string"
+    },
     "verification": {
       "items": {
-        "additionalProperties": true,
+        "additionalProperties": false,
         "properties": {
           "command": {
             "minLength": 1,
@@ -211,7 +236,7 @@
     "stop_conditions",
     "rollback",
     "handoff_requirements",
-    "implementer_id",
+    "implementer_actor_id",
     "implementer_session_id",
     "requirement_digest"
   ],

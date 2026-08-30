@@ -33,7 +33,7 @@ Never invent missing facts; use `TBD` or `UNPROVEN` with an owner and next actio
 | `scope_budget` | `object` | `required` |
 | `allowed_paths` | `array[string]` | `required` |
 | `forbidden_paths` | `array[string]` | `required` |
-| `acceptance` | `string` | `required` |
+| `acceptance` | `array[string]` | `required` |
 | `proof` | `string` | `required` |
 | `stop_conditions` | `array[string]` | `required` |
 
