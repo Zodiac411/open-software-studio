@@ -4,7 +4,7 @@ Result: PASS_WITH_LIMITATIONS
 
 Project: PRJ-PILOT-B
 
-Implementation checkpoint: 988416c17a42117d80ac6425410890944a8fef39
+Implementation checkpoint: 3b739c1e16dc089749aa13d282b4f7cce470e9cf
 
 ## Evidence
 
@@ -18,9 +18,9 @@ Implementation checkpoint: 988416c17a42117d80ac6425410890944a8fef39
 - Repair validation: PASS.
 - After repair, python evals/pilots/brownfield/test_billing.py returned exit
   0 and format_cents(1234) returned "$12.34".
-- Current project state, SNAP-007, WP-001, EVID-PILOT-B-005, and
-  HANDOFF-DEE9454070BA are current against the implementation checkpoint.
-- The new EVID-PILOT-B-005 also records the committed-HEAD clean-checkout
+- Current project state, SNAP-009, WP-001, EVID-PILOT-B-007, and
+  HANDOFF-3B739C1E16DC are current against the implementation checkpoint.
+- The new EVID-PILOT-B-007 also records the committed-HEAD clean-checkout
   reproducibility gate.
 - A fresh isolated local review at this checkpoint is pending; historical
   REV-004 and INDEPENDENT_REVIEW_005 remain preserved.

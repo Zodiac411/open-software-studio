@@ -2,7 +2,7 @@
 
 Overall result: BLOCKED
 
-Implementation source checkpoint: 988416c17a42117d80ac6425410890944a8fef39
+Implementation source checkpoint: 3b739c1e16dc089749aa13d282b4f7cce470e9cf
 
 Branch: studio-v2-bootstrap
 
@@ -39,7 +39,7 @@ fresh Studio Track probe displayed the exact external mutation and stopped
 pending approval without writing. The refreshed Skills UI now visibly shows
 `Studio v2.0.0`. The previously blocked remote-source finding is repaired:
 `studio-v2-bootstrap` now publishes implementation checkpoint
-`988416c17a42117d80ac6425410890944a8fef39`, and a fresh clone from it passes the
+`3b739c1e16dc089749aa13d282b4f7cce470e9cf`, and a fresh clone from it passes the
 reproducibility gate. A new fresh ChatGPT Review is still required to inspect
 that published source and the evidence-only refresh. Canonical Drive still
 records the pre-V2 authoritative state and may only be updated after a

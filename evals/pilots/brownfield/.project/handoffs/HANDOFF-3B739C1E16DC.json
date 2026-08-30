@@ -1,0 +1,40 @@
+{
+  "base_sha": "3b739c1e16dc089749aa13d282b4f7cce470e9cf",
+  "branch": "studio-v2-bootstrap",
+  "claimed_outcomes": [
+    "current repository state is packaged for independent review"
+  ],
+  "commands": [
+    "python scripts/build_studio.py",
+    "python scripts/validate_studio.py",
+    "python scripts/run_evals.py"
+  ],
+  "created_at": "2026-08-30T19:51:52Z",
+  "document_id": "HANDOFF-3B739C1E16DC",
+  "evidence": [
+    {
+      "level": "E2",
+      "observed": "handoff generated from live Git state"
+    }
+  ],
+  "files": [
+    "evals/pilots/brownfield/.project/state.json                | 6 +++---",
+    "evals/pilots/brownfield/.project/work-packages/WP-001.json | 4 ++--",
+    "evals/pilots/greenfield/.project/state.json                | 8 ++++----",
+    "evals/pilots/greenfield/.project/work-packages/WP-001.json | 4 ++--",
+    "4 files changed, 11 insertions(+), 11 deletions(-)"
+  ],
+  "head_sha": "3b739c1e16dc089749aa13d282b4f7cce470e9cf",
+  "next_action": "independent fresh-context review",
+  "reviewer_action": "inspect requirements, current SHA, diff, CI/runtime evidence before this conclusion",
+  "schema": "studio.handoff/v2",
+  "scope_delta": {
+    "status": "REVIEW_REQUIRED"
+  },
+  "unproven": [
+    "fresh ChatGPT installation and review",
+    "mobile availability",
+    "external write smoke test"
+  ],
+  "wp_id": "WP-001"
+}

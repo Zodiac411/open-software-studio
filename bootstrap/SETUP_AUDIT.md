@@ -94,7 +94,7 @@ No credentials or secrets were requested, entered, or recorded.
   schemas/v2; skills/studio; templates/studio-v2; brand/icon-system;
   .agents/plugins/marketplace.json; the preserved server; and
   evals/studio plus evals/pilots.
-- Current implementation source checkpoint: 988416c17a42117d80ac6425410890944a8fef39 on
+- Current implementation source checkpoint: 3b739c1e16dc089749aa13d282b4f7cce470e9cf on
   studio-v2-bootstrap.
 - The branch is published at this checkpoint. Later bootstrap commits are
   evidence-only refreshes generated from this immutable source checkpoint.
@@ -192,20 +192,20 @@ was performed.
   `USER CHECK`.
 - Historical ChatGPT Review 003 and 004 were blocked by a missing or stale
   remote checkpoint; that source-publication finding is repaired. The current
-  published checkpoint is `988416c17a42117d80ac6425410890944a8fef39`, and a
+  published checkpoint is `3b739c1e16dc089749aa13d282b4f7cce470e9cf`, and a
   fresh review against it is still required. Canonical Drive remains on its
   pre-V2 authoritative state and needs separate owner approval before update.
 
 ## Repair pass: committed-HEAD reproducibility and lifecycle enforcement
 
-- Implementation checkpoint: `988416c17a42117d80ac6425410890944a8fef39`.
+- Implementation checkpoint: `3b739c1e16dc089749aa13d282b4f7cce470e9cf`.
 - `scripts/check_reproducibility.py` now materializes `HEAD` with `git archive`
   before building, so untracked worktree files cannot affect the proof.
 - `scripts/studio.py close` now requires a current independent `ACCEPT` review
   and checks the declared `IN_REVIEW -> ACCEPTED -> CLOSED` transitions. The
   negative gate was directly exercised and returned `BLOCKED` before a current
   review existed.
-- Both pilots were refreshed to `SNAP-007`, `EVID-PILOT-*-005`, and
-  `HANDOFF-DEE9454070BA`; their assertions, doctor/status, and evidence checks
+- Both pilots were refreshed to `SNAP-009`, `EVID-PILOT-*-007`, and
+  `HANDOFF-3B739C1E16DC`; their assertions, doctor/status, and evidence checks
   pass.
 - A new isolated local acceptance review and a fresh ChatGPT Review are pending.

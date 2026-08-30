@@ -4,7 +4,7 @@ Result: PASS_WITH_LIMITATIONS
 
 Recorded: 2026-08-30
 
-Implementation source checkpoint: `988416c17a42117d80ac6425410890944a8fef39` on
+Implementation source checkpoint: `3b739c1e16dc089749aa13d282b4f7cce470e9cf` on
 published branch `studio-v2-bootstrap`.
 
 The archive bytes are unchanged at this repaired checkpoint; subsequent

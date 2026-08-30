@@ -4,7 +4,7 @@ Result: PASS_WITH_LIMITATIONS
 
 Project: PRJ-PILOT-A
 
-Implementation checkpoint: 988416c17a42117d80ac6425410890944a8fef39
+Implementation checkpoint: 3b739c1e16dc089749aa13d282b4f7cce470e9cf
 
 ## Evidence
 
@@ -19,9 +19,9 @@ Implementation checkpoint: 988416c17a42117d80ac6425410890944a8fef39
   next action independent fresh-context review. It did not edit or merge.
 - Unrelated fresh Codex task: PASS. A separate process answered 2+2=4 without
   inspecting files or invoking Studio.
-- Current project state, SNAP-007, WP-001, EVID-PILOT-A-005, and
-  HANDOFF-DEE9454070BA are current against the implementation checkpoint.
-- The new EVID-PILOT-A-005 also records the committed-HEAD clean-checkout
+- Current project state, SNAP-009, WP-001, EVID-PILOT-A-007, and
+  HANDOFF-3B739C1E16DC are current against the implementation checkpoint.
+- The new EVID-PILOT-A-007 also records the committed-HEAD clean-checkout
   reproducibility gate.
 - A fresh isolated local review at this checkpoint is pending; historical
   REV-004 and INDEPENDENT_REVIEW_005 remain preserved.
