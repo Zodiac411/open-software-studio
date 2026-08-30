@@ -4,7 +4,7 @@ Result: PASS_WITH_LIMITATIONS
 
 Project: PRJ-PILOT-A
 
-Reviewed checkpoint: 55d4ab31c10d5ac22f0f3232bccd7d261fdea9b1
+Reviewed checkpoint: c00f7ab98ef83108675ffcda06f2f04f81c7977e
 
 ## Evidence
 
@@ -19,10 +19,11 @@ Reviewed checkpoint: 55d4ab31c10d5ac22f0f3232bccd7d261fdea9b1
   next action independent fresh-context review. It did not edit or merge.
 - Unrelated fresh Codex task: PASS. A separate process answered 2+2=4 without
   inspecting files or invoking Studio.
-- Current project state, SNAP-003, WP-001, EVID-PILOT-A-003, and
-  HANDOFF-55D4AB31C10D are current against the reviewed checkpoint.
-- Final local acceptance review: REV-003, fresh context, ACCEPT for the local
-  repaired checkpoint with no blocking local finding.
+- Current project state, SNAP-004, WP-001, EVID-PILOT-A-003, and
+  HANDOFF-C00F7AB98EF8 are current against the reviewed checkpoint.
+- Final local acceptance review: REV-004 and INDEPENDENT_REVIEW_005, fresh
+  context, ACCEPT/PASS_WITH_LIMITATIONS for the local repaired checkpoint with
+  no blocking local implementation finding.
 
 ## Cross-surface gates
 
@@ -36,10 +37,12 @@ Reviewed checkpoint: 55d4ab31c10d5ac22f0f3232bccd7d261fdea9b1
   https://chatgpt.com/c/6a947454-fac4-83eb-a3ed-3265561e8b76 showed the exact
   proposed GitHub mutation and stopped pending approval; no write occurred.
 - Codex handoff and local execution: PASS_WITH_LIMITATIONS.
-- Fresh ChatGPT Review: BLOCKED. The independent review ran at
-  https://chatgpt.com/c/6a946f5f-7ea4-83ed-bd4f-8c9de69440ee but could not
-  inspect current SHA 55d4ab31c10d5ac22f0f3232bccd7d261fdea9b1 because the
-  branch is not present on the canonical GitHub remote.
+- Fresh ChatGPT Review: BLOCKED. Review 003 ran at
+  https://chatgpt.com/c/6a947ba5-7af0-83eb-8549-2d5c1cde6d5b and could not
+  inspect current SHA c00f7ab98ef83108675ffcda06f2f04f81c7977e because the
+  branch is not present on the canonical GitHub remote; it also recorded the
+  stale canonical Drive baseline. Typed findings are in
+  `bootstrap/INDEPENDENT_CHATGPT_REVIEW_003.md`.
 - GitHub and Drive reads: PASS in both the connected Codex environment and the
   ChatGPT verification chat.
 - External writes: NOT_RUN.

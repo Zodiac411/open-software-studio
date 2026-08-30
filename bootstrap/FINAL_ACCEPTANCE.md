@@ -2,7 +2,7 @@
 
 Overall result: BLOCKED
 
-Reviewed source checkpoint: 55d4ab31c10d5ac22f0f3232bccd7d261fdea9b1
+Reviewed source checkpoint: c00f7ab98ef83108675ffcda06f2f04f81c7977e
 
 Branch: studio-v2-bootstrap
 
@@ -18,9 +18,9 @@ Branch: studio-v2-bootstrap
 | Google Drive read connection | PASS | CONNECTED_APPS_RECEIPT.md |
 | Write confirmation gating | PASS_WITH_LIMITATIONS | seeded gates and CLI track --apply failure pass; fresh ChatGPT Track probe displayed the exact mutation and stopped for approval; actual external write remains NOT_RUN |
 | Greenfield local pilot | PASS | PILOT_A_RECEIPT.md |
-| Brownfield defect found and repaired | PASS | INDEPENDENT_REVIEW_001.md, REV-001, bounded repair, REV-002, REV-003 |
+| Brownfield defect found and repaired | PASS | INDEPENDENT_REVIEW_001.md, REV-001, bounded repair, REV-002, REV-003, current local REV-004 and INDEPENDENT_REVIEW_005 |
 | Cross-surface ChatGPT -> Codex -> fresh ChatGPT Review pilots | BLOCKED | Fresh ChatGPT Review could not retrieve current local SHA from canonical GitHub |
-| Current-SHA independent review | BLOCKED | Local REV-003 accepts the repaired checkpoint; fresh ChatGPT Review blocked on remote SHA/branch availability |
+| Current-SHA independent review | BLOCKED | Local REV-004 and INDEPENDENT_REVIEW_005 accept the current local checkpoint; fresh ChatGPT Review 003 is blocked on remote SHA/branch availability and Drive baseline drift, with typed findings in INDEPENDENT_CHATGPT_REVIEW_003.md |
 | Rollback dry-run | PASS | ROLLBACK.md |
 | iPhone/mobile availability | USER CHECK | personal device verification not performed |
 
@@ -33,13 +33,14 @@ read-only GitHub/Drive verification chat passed. A fresh explicit `@Studio`
 routing chat returned `STUDIO_ROUTE_OK studio-chatgpt-studio-delivery`, and a
 fresh Studio Track probe displayed the exact external mutation and stopped
 pending approval without writing. The refreshed Skills UI now visibly shows
-`Studio v2.0.0`. The fresh independent review
-at https://chatgpt.com/c/6a946f5f-7ea4-83ed-bd4f-8c9de69440ee returned BLOCKED
+`Studio v2.0.0`. Fresh independent review 003 at
+https://chatgpt.com/c/6a947ba5-7af0-83eb-8549-2d5c1cde6d5b returned BLOCKED
 because GitHub could not find current SHA
-55d4ab31c10d5ac22f0f3232bccd7d261fdea9b1 or branch studio-v2-bootstrap. The
-reviewer could not independently inspect the current source tree, build inputs,
-or pilot/review files at that checkpoint. An explicitly approved external push
-or PR is required to close this gate; no push was performed. Actual external
+c00f7ab98ef83108675ffcda06f2f04f81c7977e or branch studio-v2-bootstrap, and
+Drive still records the pre-V2 baseline. Its typed findings are recorded in
+`bootstrap/INDEPENDENT_CHATGPT_REVIEW_003.md`. An explicitly approved GitHub
+push or PR is required to close the source gate; updating Drive also requires
+separate owner approval. No push or Drive write was performed. Actual external
 write execution and mobile verification remain open by policy.
 
 No merge, push, issue, milestone, Drive write, or release was performed.

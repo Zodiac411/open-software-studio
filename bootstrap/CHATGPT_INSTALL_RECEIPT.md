@@ -4,6 +4,9 @@ Result: PASS_WITH_LIMITATIONS
 
 Recorded: 2026-08-30
 
+Local source checkpoint: `c00f7ab98ef83108675ffcda06f2f04f81c7977e` on
+`studio-v2-bootstrap`.
+
 ## Artifact readiness
 
 - Build artifact: dist/chatgpt/studio.zip.
@@ -59,9 +62,11 @@ Recorded: 2026-08-30
   approval. Actual external issue creation remains NOT_RUN because it is
   irreversible repository history and requires a separate explicit approval.
 - Fresh independent Studio Review: BLOCKED at
-  https://chatgpt.com/c/6a946f5f-7ea4-83ed-bd4f-8c9de69440ee. It verified the
-  uploaded archive and available Drive evidence, but could not retrieve the
-  current local SHA or branch from the canonical GitHub remote.
+  https://chatgpt.com/c/6a947ba5-7af0-83eb-8549-2d5c1cde6d5b; the full typed
+  result is recorded in `bootstrap/INDEPENDENT_CHATGPT_REVIEW_003.md`. It
+  independently confirmed the canonical GitHub branch and SHA are absent and
+  also recorded that canonical Drive state still describes the pre-V2 baseline.
+  Local package and pilot evidence remained internally coherent.
 - No ChatGPT custom instruction, OAuth flow, account switch, permission
   change, or external write was performed. Passwords, MFA codes, recovery
   codes, cookies, OAuth tokens, and API keys were never requested or handled.

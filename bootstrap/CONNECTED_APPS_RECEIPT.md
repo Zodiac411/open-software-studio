@@ -52,6 +52,11 @@ NOT_RUN.
   chat at https://chatgpt.com/c/6a947454-fac4-83eb-a3ed-3265561e8b76 showed
   the exact proposed GitHub issue mutation and stopped for explicit approval;
   no external write was executed.
+- Fresh independent ChatGPT Review: BLOCKED. Review 003 at
+  https://chatgpt.com/c/6a947ba5-7af0-83eb-8549-2d5c1cde6d5b independently
+  confirmed that the expected branch and SHA are absent from canonical GitHub
+  and that Drive still records the pre-V2 baseline; typed findings are recorded
+  in `bootstrap/INDEPENDENT_CHATGPT_REVIEW_003.md`.
 - ChatGPT-side external writes: NOT_RUN. No issue, milestone, comment, file,
   folder, document, permission, or custom-instruction write was attempted.
 - Full Access was not enabled and no account selection or permission change was

@@ -4,7 +4,7 @@ Result: PASS_WITH_LIMITATIONS
 
 Project: PRJ-PILOT-B
 
-Reviewed checkpoint: 55d4ab31c10d5ac22f0f3232bccd7d261fdea9b1
+Reviewed checkpoint: c00f7ab98ef83108675ffcda06f2f04f81c7977e
 
 ## Evidence
 
@@ -18,11 +18,12 @@ Reviewed checkpoint: 55d4ab31c10d5ac22f0f3232bccd7d261fdea9b1
 - Repair validation: PASS.
 - After repair, python evals/pilots/brownfield/test_billing.py returned exit
   0 and format_cents(1234) returned "$12.34".
-- Current project state, SNAP-003, WP-001, EVID-PILOT-B-003, and
-  HANDOFF-55D4AB31C10D are current against the reviewed checkpoint.
-- Final independent review: REV-003, fresh 5.6 Luna reviewer, disposition
-  ACCEPT for the local repaired slice with no blocking finding at the current
-  source checkpoint.
+- Current project state, SNAP-004, WP-001, EVID-PILOT-B-003, and
+  HANDOFF-C00F7AB98EF8 are current against the reviewed checkpoint.
+- Final independent review: REV-004 and INDEPENDENT_REVIEW_005, fresh 5.6 Luna
+  reviewer, disposition ACCEPT/PASS_WITH_LIMITATIONS for the local repaired
+  slice with no blocking local implementation finding at the current source
+  checkpoint.
 
 ## Cross-surface gates
 
@@ -38,10 +39,12 @@ Reviewed checkpoint: 55d4ab31c10d5ac22f0f3232bccd7d261fdea9b1
 - Codex handoff, local defect detection, repair, green test, independent
   acceptance, and session close: PASS_WITH_LIMITATIONS because the fresh
   independent ChatGPT review is blocked by the unavailable remote checkpoint.
-- Fresh ChatGPT Review: BLOCKED. The independent review ran at
-  https://chatgpt.com/c/6a946f5f-7ea4-83ed-bd4f-8c9de69440ee but could not
-  inspect current SHA 55d4ab31c10d5ac22f0f3232bccd7d261fdea9b1 because the
-  branch is not present on the canonical GitHub remote.
+- Fresh ChatGPT Review: BLOCKED. Review 003 ran at
+  https://chatgpt.com/c/6a947ba5-7af0-83eb-8549-2d5c1cde6d5b and could not
+  inspect current SHA c00f7ab98ef83108675ffcda06f2f04f81c7977e because the
+  branch is not present on the canonical GitHub remote; it also recorded the
+  stale canonical Drive baseline. Typed findings are in
+  `bootstrap/INDEPENDENT_CHATGPT_REVIEW_003.md`.
 - External writes: NOT_RUN.
 - iPhone/mobile availability: USER CHECK.
 

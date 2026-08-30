@@ -10,7 +10,7 @@ Recorded: 2026-08-30
 - Codex: `codex-cli 0.144.5`.
 - Source branch: `studio-v2-bootstrap`.
 - Source revision at initial installation: `a9454048456c9cef9d5eca0fa8be47b3ecc4ee4c`.
-- Current source verification revision: `55d4ab31c10d5ac22f0f3232bccd7d261fdea9b1`.
+- Current source verification revision: `c00f7ab98ef83108675ffcda06f2f04f81c7977e`.
 - CLI syntax was read from the installed executable before use:
   `codex plugin marketplace add <path-or-git-source>` and
   `codex plugin add <plugin>@<marketplace>`.

@@ -90,7 +90,7 @@ No credentials or secrets were requested, entered, or recorded.
   schemas/v2; skills/studio; templates/studio-v2; brand/icon-system;
   .agents/plugins/marketplace.json; the preserved server; and
   evals/studio plus evals/pilots.
-- Current source checkpoint: 55d4ab31c10d5ac22f0f3232bccd7d261fdea9b1 on
+- Current source checkpoint: c00f7ab98ef83108675ffcda06f2f04f81c7977e on
   studio-v2-bootstrap.
 - Codex install: PASS_WITH_LIMITATIONS. studio-delivery@studio-v2 version 2.0.0
   is installed and enabled from the local studio-v2 marketplace; the seven
@@ -100,13 +100,15 @@ No credentials or secrets were requested, entered, or recorded.
   separate fresh trivial task was not routed through Studio.
 - Brownfield review loop: PASS_WITH_LIMITATIONS. REV-001 found the seeded
   formatter defect, REPAIR-FINDING-001 repaired it, REV-002 accepted the
-  repaired durable checkpoint, and REV-003 independently accepted the current
-  checkpoint.
+  repaired durable checkpoint, and current REV-004 plus
+  INDEPENDENT_REVIEW_005 independently accepted the local checkpoint.
 - Current pilot project state, snapshots, work packages, evidence, and
   handoffs match the current source checkpoint.
 - GitHub and Drive read probes: PASS. No external write was performed.
-- ChatGPT installation and fresh-chat review: BLOCKED pending confirmation of
-  the visible account chris folorunso / Pro with no visible workspace label.
+- ChatGPT installation and fresh-chat verification: PASS_WITH_LIMITATIONS.
+  The confirmed chris folorunso / Pro account has the accepted Studio v2.0.0
+  Skill installed and explicit @Studio routing passes; the independent remote
+  review remains blocked until the source checkpoint is published.
 - Pilot session close: PASS_WITH_LIMITATIONS for both local pilot projects;
   release and merge remain owner-gated.
 - iPhone/mobile availability: USER CHECK.
@@ -148,13 +150,13 @@ global state has been written by the implementation checkpoint.
   `https://chatgpt.com/c/6a946dee-ef10-83ed-9c1b-3e86b9b6cc15` used the
   Studio context-grounding route, visibly used GitHub and Google Drive, read
   both canonical locations read-only, and produced the requested V2 brief.
-- Fresh independent ChatGPT Review: BLOCKED at
-  `https://chatgpt.com/c/6a946f5f-7ea4-83ed-bd4f-8c9de69440ee`. The reviewer
-  independently verified the uploaded umbrella archive hash, package version,
-  no-MCP packaging, confirmation-gated policy, and Drive reads, but GitHub
-  could not find current SHA `55d4ab31c10d5ac22f0f3232bccd7d261fdea9b1` or
-  branch `studio-v2-bootstrap`. The local source tree and current SHA therefore
-  cannot be independently reconstructed from the canonical remote.
+- Fresh independent ChatGPT Review 003: BLOCKED at
+  `https://chatgpt.com/c/6a947ba5-7af0-83eb-8549-2d5c1cde6d5b`. The reviewer
+  independently verified the focused current receipts, pilot state, review
+  records, package-source metadata, and deterministic umbrella archive, then
+  confirmed that the expected GitHub SHA/branch is absent remotely and that
+  Drive remains on its pre-V2 authoritative state. Its typed findings are
+  recorded in `bootstrap/INDEPENDENT_CHATGPT_REVIEW_003.md`.
 - Closing this blocker requires an explicitly approved external GitHub push or
   PR, or an equivalent user-approved transfer of the current source checkpoint.
   No push, PR, issue, milestone, Drive write, permission change, or custom
@@ -182,5 +184,11 @@ global state has been written by the implementation checkpoint.
   the in-app browser remains the active supported route. iPhone/mobile remains
   `USER CHECK`.
 - The fresh independent ChatGPT Review remains `BLOCKED` only because the
-  source checkpoint and branch are not present on the canonical GitHub remote.
+  source checkpoint `c00f7ab98ef83108675ffcda06f2f04f81c7977e` and branch are
+  not present on the canonical GitHub remote.
   Closing that finding requires explicit approval to push or open a PR.
+
+The local fresh-context review `INDEPENDENT_REVIEW_005.md` and both pilot
+`REV-004` records now inspect the current c00f7ab98ef83108675ffcda06f2f04f81c7977e
+checkpoint, and both pilot sessions are CLOSED with current SNAP-004 and
+HANDOFF-C00F7AB98EF8 evidence. No local implementation finding remains.
