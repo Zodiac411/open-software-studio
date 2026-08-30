@@ -65,15 +65,16 @@ are evidence-only and do not change the implementation source checkpoint.
   mutation, explicitly stated that no issue was created, and stopped pending
   approval. Actual external issue creation remains NOT_RUN because it is
   irreversible repository history and requires a separate explicit approval.
-- Historical independent Studio Reviews 003 through 008 are preserved
+- Historical independent Studio Reviews 003 through 009 are preserved
   verbatim. Review 006 correctly blocked the prior checkpoint after a fresh
   Linux rebuild found host-dependent archive bytes and uncommitted generated
   outputs. Review 007 accepted the repaired source with one low portability
   note, and Review 008 accepted the complete archive-order repair with one
-  remaining contract finding. The complete-entry ordering and validator
-  assertion are now published at source checkpoint `468e231`; a new fresh
-  independent ChatGPT Review against that checkpoint and its later
-  evidence-only tip is pending.
+  remaining contract finding. Review 009 then verified the source repair but
+  found stale machine-readable review text in SETUP_STATE.json; that
+  evidence-only defect is repaired and Review 010 is pending. The complete-entry
+  ordering and validator assertion remain published at source checkpoint
+  `468e231`.
 - No ChatGPT custom instruction, OAuth flow, account switch, permission
   change, or external write was performed. Passwords, MFA codes, recovery
   codes, cookies, OAuth tokens, and API keys were never requested or handled.

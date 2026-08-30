@@ -1,0 +1,14 @@
+{
+  "schema": "studio.repair/v2",
+  "repair_id": "REPAIR-REV-009-001",
+  "accepted_findings": ["REV-009-001"],
+  "allowed_paths": ["bootstrap/SETUP_STATE.json", "bootstrap/INDEPENDENT_CHATGPT_REVIEW_009.md"],
+  "forbidden_paths": [".codex/", "secrets/", "credentials/"],
+  "required_behavior": "SETUP_STATE.json must contain no stale historical Review 007 or 17e9407 blocking_findings entry; current state must identify the Review 009 repair and the pending fresh Review 010.",
+  "regression_proof": ["python -m json.tool bootstrap/SETUP_STATE.json", "python scripts/validate_suite.py", "python scripts/run_evals.py"],
+  "evidence": ["Fresh ChatGPT Review 009 identified REV-009-001", "SETUP_STATE.json blocking_findings is cleared and the Review 009 repair is recorded", "a fresh ChatGPT Review 010 is required after this evidence-only repair"],
+  "non_goals": ["change Studio source behavior", "change package artifacts", "merge or release", "external writes"],
+  "repair_budget": {"primary_outcomes": 1, "subsystems": 1, "new_dependencies": 0},
+  "stop_conditions": ["stale Review 007 text remains in implementation.blocking_findings", "source or generated package paths change", "external state is modified"],
+  "source_checkpoint_sha": "468e231b55558052906aafc267e135608ddb94ff"
+}

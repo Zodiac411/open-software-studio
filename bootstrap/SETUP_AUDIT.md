@@ -108,14 +108,17 @@ No credentials or secrets were requested, entered, or recorded.
   formatter defect, REPAIR-FINDING-001 repaired it, and the current source
   checkpoint adds a committed-HEAD reproducibility gate, canonical source
   manifest validation, and fail-closed close transition. Current pilot
-  evidence is regenerated at `468e231`; final fresh ChatGPT review is pending.
+  evidence is regenerated at `468e231`; Review 009 found and the current
+  evidence refresh repairs stale machine-readable review state, and Review 010
+  is pending.
 - Current pilot project state, snapshots, work packages, evidence, and
   handoffs match the current source checkpoint.
 - GitHub and Drive read probes: PASS. No external write was performed.
 - ChatGPT installation and fresh-chat verification: PASS_WITH_LIMITATIONS.
   The confirmed chris folorunso / Pro account has the accepted Studio v2.0.0
   Skill installed and explicit @Studio routing passes; a fresh independent
-  review against the published checkpoint is pending.
+  Review 009 verified the source and archive repair but found stale state text;
+  the bounded evidence-only repair is recorded and Review 010 is pending.
 - Pilot session close: PASS_WITH_LIMITATIONS for both local pilot projects;
   release and merge remain owner-gated.
 - iPhone/mobile availability: USER CHECK.
@@ -273,6 +276,7 @@ was performed.
   validators, both repair validators, and both doctor checks pass from the
   repaired source.
 - The regenerated archive was accepted by the confirmed ChatGPT Skills
-  installation, whose detail view visibly shows `Studio v2.0.0`. A fresh
-  independent ChatGPT Review against source `468e231` and the current
-  evidence-only branch tip is pending.
+  installation, whose detail view visibly shows `Studio v2.0.0`. Review 009
+  verified source `468e231` and the current evidence-only branch tip but found
+  stale `SETUP_STATE.json` review text. `REPAIR-REV-009-001` records the fix;
+  Review 010 is pending against the refreshed branch tip.

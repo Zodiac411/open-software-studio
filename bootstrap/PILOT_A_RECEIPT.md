@@ -25,7 +25,9 @@ Implementation checkpoint: 468e231b55558052906aafc267e135608ddb94ff
   validator assertion, committed-HEAD clean-checkout reproducibility, and
   canonical source-manifest validation.
 - Review 008 accepted the prior checkpoint with one archive-order contract
-  finding; REPAIR-ARCHIVE-ORDER is now at `468e231`, and Review 009 is pending.
+  finding; REPAIR-ARCHIVE-ORDER is now at `468e231`. Review 009 verified that
+  repair but found stale `SETUP_STATE.json` review text; REPAIR-REV-009-001
+  records the fix and Review 010 is pending.
 
 ## Cross-surface gates
 
@@ -39,10 +41,10 @@ Implementation checkpoint: 468e231b55558052906aafc267e135608ddb94ff
   https://chatgpt.com/c/6a947454-fac4-83eb-a3ed-3265561e8b76 showed the exact
   proposed GitHub mutation and stopped pending approval; no write occurred.
 - Codex handoff and local execution: PASS_WITH_LIMITATIONS.
-- Fresh ChatGPT Review: PASS_WITH_LIMITATIONS in Review 008 for prior source
-  `17e9407`; the complete archive-order repair is published at `468e231` and
-  Review 009 is pending. Drive's authoritative update still requires separate
-  approval.
+- Fresh ChatGPT Review: Review 009 was BLOCKED by stale machine-readable state
+  text after independently verifying the complete archive-order repair at
+  `468e231`; REPAIR-REV-009-001 records the fix and Review 010 is pending.
+  Drive's authoritative update still requires separate approval.
 - GitHub and Drive reads: PASS in both the connected Codex environment and the
   ChatGPT verification chat.
 - External writes: NOT_RUN.
