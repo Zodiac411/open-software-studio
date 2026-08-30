@@ -1,0 +1,9 @@
+{
+  "approved_by": "pilot-owner",
+  "base_sha": "18ddbc14a6f9b16967064f4066ff167799cb8a92",
+  "created_at": "2026-08-30T17:24:00Z",
+  "project_id": "PRJ-PILOT-A",
+  "schema": "studio.snapshot/v2",
+  "snapshot_id": "SNAP-002",
+  "status": "FROZEN"
+}

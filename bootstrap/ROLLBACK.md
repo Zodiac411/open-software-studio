@@ -46,4 +46,11 @@ Generated packages, icons, templates, fixtures, and receipts are owned by the St
 
 ## Dry-run status
 
+Dry-run result at the 18ddbc14a6f9b16967064f4066ff167799cb8a92 checkpoint:
+PASS. The baseline resolves, the implementation branch is separate, the
+Codex backup exists with its recorded SHA-256, exactly one Studio marker block
+is present, generated Studio paths are owned by this branch, and no external
+write was performed. External disconnect/delete, merge, release, and ChatGPT
+rollback actions remain NOT_RUN unless explicitly approved.
+
 The rollback paths are structurally documented. A non-destructive dry-run will verify path ownership and baseline resolution after implementation. External disconnect/delete and merge/release actions remain `NOT_RUN` unless explicitly approved.

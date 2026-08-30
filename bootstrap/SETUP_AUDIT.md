@@ -47,7 +47,7 @@ PASS: 36 routing specialists x 3 cases; 10 execution scenarios; cross-plugin dem
 
 - `codex plugin --help`, `codex plugin marketplace --help`, `codex plugin list --help`, and `codex plugin add --help` were read from the installed CLI.
 - Existing installed and enabled Open Software Studio packages: `project-architect`, `interface-studio`, `engineering-guard`, `research-engineer`, `project-docs`, `web-app-builder`, and `execution-guard`, all at `0.1.0` from the existing `open-software-studio` marketplace snapshot.
-- Existing global instructions: `C:/Users/badcr/.codex/AGENTS.md`; preserved unchanged.
+- Existing global instructions: `C:/Users/badcr/.codex/AGENTS.md`; preserved except for the single marker-delimited Studio block recorded in the Codex installation receipt.
 - Existing Studio config: NOT_FOUND before implementation.
 - Existing global config observations: `approval_policy = never`, `sandbox_mode = danger-full-access`, `model = gpt-5.6-luna`, and max reasoning. These are baseline facts, not changes made by this setup.
 
@@ -82,6 +82,26 @@ The approved V2 documents describe a canonical Studio family, V2 schemas, file-b
 4. Owner retains merge/release decision.
 
 No credentials or secrets were requested, entered, or recorded.
+
+## Post-preflight setup and acceptance
+
+- Current source checkpoint: 18ddbc14a6f9b16967064f4066ff167799cb8a92 on
+  studio-v2-bootstrap.
+- Codex install: PASS_WITH_LIMITATIONS. studio-delivery@studio-v2 version 2.0.0
+  is installed and enabled from the local studio-v2 marketplace; the seven
+  legacy packages remain installed.
+- Codex fresh-session routing: PASS_WITH_LIMITATIONS. An isolated fresh
+  read-only session read the Studio state and the required next action. A
+  separate fresh trivial task was not routed through Studio.
+- Brownfield review loop: PASS_WITH_LIMITATIONS. REV-001 found the seeded
+  formatter defect, REPAIR-FINDING-001 repaired it, and REV-002 independently
+  accepted the repaired local checkpoint.
+- Current pilot project state, snapshots, work packages, evidence, and
+  handoffs match the current source checkpoint.
+- GitHub and Drive read probes: PASS. No external write was performed.
+- ChatGPT installation and fresh-chat review: BLOCKED pending confirmation of
+  the visible account chris folorunso / Pro with no visible workspace label.
+- iPhone/mobile availability: USER CHECK.
 
 ## Local implementation checkpoint
 

@@ -1,0 +1,43 @@
+{
+  "schema": "studio.review/v2",
+  "review_id": "REV-002",
+  "reviewer_role": "independent reviewer",
+  "reviewer_context": "fresh context",
+  "reviewed_head_sha": "18ddbc14a6f9b16967064f4066ff167799cb8a92",
+  "disposition": "ACCEPT",
+  "independent_checks": [
+    "python scripts/validate_studio.py",
+    "python scripts/validate_suite.py",
+    "python scripts/run_evals.py",
+    "python evals/pilots/greenfield/test_app.py",
+    "python evals/pilots/brownfield/test_billing.py",
+    "format_cents(1234) returned $12.34",
+    "both pilot doctor checks",
+    "current SHA and diff inspection",
+    "package and archive inspection",
+    "self-accept and write-confirmation gate inspection"
+  ],
+  "findings": [
+    {
+      "id": "F-CHATGPT-001",
+      "severity": "MEDIUM",
+      "status": "PASS_WITH_LIMITATIONS",
+      "evidence": "bootstrap/CHATGPT_INSTALL_RECEIPT.md; account/workspace confirmation and fresh ChatGPT invocation remain blocked",
+      "remediation": "confirm the intended account/workspace, then perform the separately gated ChatGPT verification"
+    },
+    {
+      "id": "F-EXTERNAL-001",
+      "severity": "LOW",
+      "status": "PASS_WITH_LIMITATIONS",
+      "evidence": "bootstrap/CONNECTED_APPS_RECEIPT.md and bootstrap/ROLLBACK.md; external writes and mobile availability were not run",
+      "remediation": "run only with explicit owner approval"
+    }
+  ],
+  "known_limitations": [
+    "worktree contains current pilot receipt/state records",
+    "fresh ChatGPT installation and review are not run",
+    "external writes are not run",
+    "mobile availability is USER CHECK"
+  ],
+  "created_at": "2026-08-30T17:28:00Z"
+}

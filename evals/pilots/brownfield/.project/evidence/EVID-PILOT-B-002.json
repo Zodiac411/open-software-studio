@@ -1,0 +1,12 @@
+{
+  "command_or_probe": "python test_billing.py",
+  "document_id": "EVID-PILOT-B-002",
+  "evidence_id": "EVID-PILOT-B-002",
+  "level": "E2",
+  "limitations": "local pilot only",
+  "observed": "brownfield formatter assertion passed after independent repair",
+  "project_id": "PRJ-PILOT-B",
+  "requirement": "REQ-PILOT-B-001",
+  "schema": "studio.evidence/v2",
+  "timestamp": "2026-08-30T17:26:42Z"
+}

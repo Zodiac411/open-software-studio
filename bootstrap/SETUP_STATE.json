@@ -73,21 +73,28 @@
     "evidence_level": "E2"
   },
   "implementation": {
-    "phase": "local_package_checkpoint",
+    "phase": "local_acceptance_checkpoint",
     "active_work_package": "WP-SD-001",
     "result": "PASS_WITH_LIMITATIONS",
     "current_branch": "studio-v2-bootstrap",
-    "current_head": "uncommitted checkpoint; baseline d697efc16d86835ff3941f54b05e560b91a4a125",
+    "current_head": "18ddbc14a6f9b16967064f4066ff167799cb8a92",
     "evidence": [
       "python scripts/build_studio.py -> PASS (9 packages, 22 templates, deterministic archives)",
       "python scripts/validate_suite.py -> PASS (catalog, packages, schemas, icons, archive, routing, seeded gates)",
       "python scripts/run_evals.py -> PASS (71 routing cases, 10 execution scenarios, 6 Studio gates)",
       "Plugin Creator validator -> PASS for all 9 generated packages",
       "Opal Seed contact sheet and actual 24px/32px assets visually inspected -> PASS",
-      "greenfield pilot -> PASS; brownfield planted-defect test -> intentionally red"
+      "greenfield pilot -> PASS at current checkpoint",
+      "brownfield planted-defect test -> first red, repaired, then PASS",
+      "Codex Studio package -> PASS_WITH_LIMITATIONS; installed and enabled at 2.0.0",
+      "fresh Codex Studio-directed session -> PASS_WITH_LIMITATIONS",
+      "fresh unrelated Codex task -> PASS",
+      "independent review REV-002 -> PASS_WITH_LIMITATIONS with no blocking local finding"
     ],
-    "blocking_findings": [],
-    "review_disposition": "NOT_RUN",
+    "blocking_findings": [
+      "ChatGPT account/workspace confirmation is required before browser-side installation"
+    ],
+    "review_disposition": "PASS_WITH_LIMITATIONS",
     "external_writes": "NOT_RUN"
   },
   "human_gates": {
