@@ -81,6 +81,13 @@ def current_sha(project: Path) -> str | None:
     return git(project, "rev-parse", "HEAD")
 
 
+def source_sha(project: Path, state: dict[str, Any] | None = None) -> str | None:
+    declared = state.get("source_checkpoint_sha") if state else None
+    if declared:
+        return git(project, "rev-parse", f"{declared}^{{commit}}")
+    return current_sha(project)
+
+
 def require_state(project: Path) -> tuple[Path, dict[str, Any]] | None:
     path = control_root(project) / "state.json"
     if not path.is_file():
@@ -94,9 +101,9 @@ def require_state(project: Path) -> tuple[Path, dict[str, Any]] | None:
 def save_state(path: Path, state: dict[str, Any], project: Path, **updates: Any) -> None:
     state.update(updates)
     state["updated_at"] = utc_now()
-    live = current_sha(project)
-    if live:
-        state["current_sha"] = live
+    checkpoint = source_sha(project, state)
+    if checkpoint:
+        state["current_sha"] = checkpoint
     write_json(path, state)
 
 
@@ -183,8 +190,9 @@ def doctor(args: argparse.Namespace) -> int:
     else:
         _, value = state
         live = current_sha(project)
+        checkpoint = source_sha(project, value)
         check("project-state", value.get("schema") == "studio.state/v2", ".project/state.json")
-        check("sha-freshness", not live or value.get("current_sha") in (None, live), f"state={value.get('current_sha')} live={live}")
+        check("sha-freshness", not live or (checkpoint is not None and value.get("current_sha") == checkpoint), f"state={value.get('current_sha')} source={checkpoint} live={live}")
         check("recovery-files", all((control_root(project) / "session" / name).is_file() for name in ("active-plan.md", "findings.md", "progress.md")), ".project/session")
     blocked = [item for item in checks if item["result"] == "BLOCKED"]
     return emit("BLOCKED" if blocked else "PASS", "Studio doctor completed", checks=checks, next_action="repair the named check" if blocked else "read the active project state before acting")
@@ -235,7 +243,7 @@ def freeze_project(args: argparse.Namespace) -> int:
     state_path, state = pair
     if state.get("phase") != "PLANNED":
         return fail(f"freeze requires PLANNED state, found {state.get('phase')}")
-    sha = current_sha(project)
+    sha = source_sha(project, state)
     if not sha:
         return fail("freeze requires a Git repository HEAD")
     snapshot = {"schema": "studio.snapshot/v2", "snapshot_id": "SNAP-001", "project_id": state["project_id"], "base_sha": sha, "status": "FROZEN", "approved_by": args.approved_by, "created_at": utc_now()}
@@ -424,8 +432,10 @@ def validate_review(args: argparse.Namespace) -> int:
     if value.get("reviewer_role", "").lower() == "executor" or value.get("reviewer_context", "").lower() in {"same session", "executor session"}:
         errors.append("executor or same-session review cannot accept work")
     live = current_sha(project)
-    if live and value.get("reviewed_head_sha") != live:
-        errors.append(f"review is stale: reviewed {value.get('reviewed_head_sha')} but live HEAD is {live}")
+    state_pair = require_state(project)
+    checkpoint = source_sha(project, state_pair[1] if state_pair else None)
+    if checkpoint and value.get("reviewed_head_sha") != checkpoint:
+        errors.append(f"review is stale: reviewed {value.get('reviewed_head_sha')} but source checkpoint is {checkpoint} (live evidence HEAD is {live})")
     if not value.get("independent_checks"):
         errors.append("review must name independent checks")
     if value.get("disposition") not in {"ACCEPT", "REPAIR", "BLOCKED"}:
@@ -462,15 +472,15 @@ def close_project(args: argparse.Namespace) -> int:
     handoffs = sorted((control_root(project) / "handoffs").glob("*.json"))
     if not handoffs:
         return fail("close requires an implementation handoff")
+    review = latest_json(control_root(project) / "reviews", "REV-")
+    if not review:
+        return fail("close requires a current independent ACCEPT review")
+    value = read_json(review)
+    checkpoint = source_sha(project, state)
+    if value.get("disposition") != "ACCEPT" or value.get("reviewed_head_sha") != checkpoint:
+        return fail("close requires a current independent ACCEPT review")
     phase = state.get("phase")
     if phase == "IN_REVIEW":
-        review = latest_json(control_root(project) / "reviews", "REV-")
-        if not review:
-            return fail("close requires a current independent ACCEPT review")
-        value = read_json(review)
-        live = current_sha(project)
-        if value.get("disposition") != "ACCEPT" or value.get("reviewed_head_sha") != live:
-            return fail("close requires a current independent ACCEPT review")
         if not transition_allowed("IN_REVIEW", "ACCEPTED") or not transition_allowed("ACCEPTED", "CLOSED"):
             return fail("state transition matrix does not permit review acceptance and close")
         phase = "ACCEPTED"
@@ -501,8 +511,8 @@ def release_project(args: argparse.Namespace) -> int:
     if not review:
         return fail("release requires an independent review")
     value = read_json(review)
-    live = current_sha(project)
-    if value.get("disposition") != "ACCEPT" or value.get("reviewed_head_sha") != live:
+    checkpoint = source_sha(project, state)
+    if value.get("disposition") != "ACCEPT" or value.get("reviewed_head_sha") != checkpoint:
         return fail("release requires a current independent ACCEPT review")
     state_path = pair[0]
     save_state(state_path, state, project, phase="RELEASED", status="PASS", next_action="maintain the released revision")
@@ -534,9 +544,10 @@ def status_project(args: argparse.Namespace) -> int:
         return emit("NOT_RUN", "target is not initialized as a Studio project", next_action="studio init")
     _, state = pair
     live = current_sha(project)
-    if live and state.get("current_sha") not in (None, live):
-        return emit("BLOCKED", "project state is stale against the live repository", state=state, live_sha=live, next_action="refresh context and review the SHA change")
-    return emit(state.get("status", "UNPROVEN"), "current Studio state", phase=state.get("phase"), active_wp=state.get("active_wp"), current_sha=live or state.get("current_sha"), next_action=state.get("next_action"), blocking_items=state.get("blocking_items", []))
+    checkpoint = source_sha(project, state)
+    if live and checkpoint is None or (checkpoint and state.get("current_sha") not in (None, checkpoint)):
+        return emit("BLOCKED", "project state is stale against the declared source checkpoint", state=state, source_checkpoint=checkpoint, live_evidence_head=live, next_action="refresh context and review the source SHA change")
+    return emit(state.get("status", "UNPROVEN"), "current Studio state", phase=state.get("phase"), active_wp=state.get("active_wp"), current_sha=checkpoint or live or state.get("current_sha"), live_evidence_head=live, next_action=state.get("next_action"), blocking_items=state.get("blocking_items", []))
 
 
 def parser() -> argparse.ArgumentParser:
