@@ -1,0 +1,12 @@
+{
+  "command_or_probe": "python test_app.py; python scripts/check_reproducibility.py",
+  "document_id": "EVID-PILOT-A-006",
+  "evidence_id": "EVID-PILOT-A-006",
+  "level": "E2",
+  "limitations": "local pilot and repository-source proof; external writes remain confirmation-gated",
+  "observed": "greenfield assertion and committed-HEAD clean-checkout reproducibility gate passed at implementation checkpoint 988416c17a42117d80ac6425410890944a8fef39",
+  "project_id": "PRJ-PILOT-A",
+  "requirement": "REQ-PILOT-A-001",
+  "schema": "studio.evidence/v2",
+  "timestamp": "2026-08-30T19:41:55Z"
+}

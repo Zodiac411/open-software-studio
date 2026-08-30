@@ -4,7 +4,7 @@ Result: PASS_WITH_LIMITATIONS
 
 Project: PRJ-PILOT-A
 
-Reviewed checkpoint: c00f7ab98ef83108675ffcda06f2f04f81c7977e
+Implementation checkpoint: dee9454070ba15ecf1c87f110b3db6cef1c59820
 
 ## Evidence
 
@@ -19,11 +19,12 @@ Reviewed checkpoint: c00f7ab98ef83108675ffcda06f2f04f81c7977e
   next action independent fresh-context review. It did not edit or merge.
 - Unrelated fresh Codex task: PASS. A separate process answered 2+2=4 without
   inspecting files or invoking Studio.
-- Current project state, SNAP-004, WP-001, EVID-PILOT-A-003, and
-  HANDOFF-C00F7AB98EF8 are current against the reviewed checkpoint.
-- Final local acceptance review: REV-004 and INDEPENDENT_REVIEW_005, fresh
-  context, ACCEPT/PASS_WITH_LIMITATIONS for the local repaired checkpoint with
-  no blocking local implementation finding.
+- Current project state, SNAP-007, WP-001, EVID-PILOT-A-005, and
+  HANDOFF-DEE9454070BA are current against the implementation checkpoint.
+- The new EVID-PILOT-A-005 also records the committed-HEAD clean-checkout
+  reproducibility gate.
+- A fresh isolated local review at this checkpoint is pending; historical
+  REV-004 and INDEPENDENT_REVIEW_005 remain preserved.
 
 ## Cross-surface gates
 
@@ -37,12 +38,9 @@ Reviewed checkpoint: c00f7ab98ef83108675ffcda06f2f04f81c7977e
   https://chatgpt.com/c/6a947454-fac4-83eb-a3ed-3265561e8b76 showed the exact
   proposed GitHub mutation and stopped pending approval; no write occurred.
 - Codex handoff and local execution: PASS_WITH_LIMITATIONS.
-- Fresh ChatGPT Review: BLOCKED. Review 003 ran at
-  https://chatgpt.com/c/6a947ba5-7af0-83eb-8549-2d5c1cde6d5b and could not
-  inspect current SHA c00f7ab98ef83108675ffcda06f2f04f81c7977e because the
-  branch is not present on the canonical GitHub remote; it also recorded the
-  stale canonical Drive baseline. Typed findings are in
-  `bootstrap/INDEPENDENT_CHATGPT_REVIEW_003.md`.
+- Fresh ChatGPT Review: NOT_RUN at the published repaired checkpoint. The
+  historical blocked reports remain in the bootstrap directory; Drive's
+  authoritative update still requires separate approval.
 - GitHub and Drive reads: PASS in both the connected Codex environment and the
   ChatGPT verification chat.
 - External writes: NOT_RUN.

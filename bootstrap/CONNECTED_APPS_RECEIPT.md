@@ -13,12 +13,14 @@ Recorded: 2026-08-30
 - Default branch: master.
 - Remote baseline HEAD: d697efc16d86835ff3941f54b05e560b91a4a125.
 - Permissions observed: admin/maintain/pull/push/triage.
-- External writes: none.
+- Branch publication: PASS. The explicitly authorized
+  `studio-v2-bootstrap` branch was pushed and read back at implementation
+  checkpoint `dee9454070ba15ecf1c87f110b3db6cef1c59820`.
 - Issue/milestone reconciliation: local confirmation-gated projection only;
-  no issue, milestone, comment, branch push, or PR was created.
+  no issue, milestone, comment, or PR was created.
 
-Status: PASS for the read-only connector probe; external write behavior is
-NOT_RUN.
+Status: PASS for the read-only connector probe and authorized branch
+publication; issue/milestone/PR write behavior is NOT_RUN.
 
 ## Google Drive
 
@@ -52,11 +54,11 @@ NOT_RUN.
   chat at https://chatgpt.com/c/6a947454-fac4-83eb-a3ed-3265561e8b76 showed
   the exact proposed GitHub issue mutation and stopped for explicit approval;
   no external write was executed.
-- Fresh independent ChatGPT Review: BLOCKED. Review 003 at
-  https://chatgpt.com/c/6a947ba5-7af0-83eb-8549-2d5c1cde6d5b independently
-  confirmed that the expected branch and SHA are absent from canonical GitHub
-  and that Drive still records the pre-V2 baseline; typed findings are recorded
-  in `bootstrap/INDEPENDENT_CHATGPT_REVIEW_003.md`.
+- Fresh independent ChatGPT Review: NOT_RUN at the repaired published
+  checkpoint. Historical blocked reviews are preserved in
+  `bootstrap/INDEPENDENT_CHATGPT_REVIEW_003.md` and
+  `bootstrap/INDEPENDENT_CHATGPT_REVIEW_004.md`; canonical Drive still records
+  the pre-V2 baseline.
 - ChatGPT-side external writes: NOT_RUN. No issue, milestone, comment, file,
   folder, document, permission, or custom-instruction write was attempted.
 - Full Access was not enabled and no account selection or permission change was

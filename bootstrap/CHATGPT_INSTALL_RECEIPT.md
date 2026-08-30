@@ -4,8 +4,11 @@ Result: PASS_WITH_LIMITATIONS
 
 Recorded: 2026-08-30
 
-Local source checkpoint: `c00f7ab98ef83108675ffcda06f2f04f81c7977e` on
-`studio-v2-bootstrap`.
+Implementation source checkpoint: `dee9454070ba15ecf1c87f110b3db6cef1c59820` on
+published branch `studio-v2-bootstrap`.
+
+The archive bytes are unchanged at this repaired checkpoint; subsequent
+receipt commits are evidence-only and do not change the installed artifact.
 
 ## Artifact readiness
 
@@ -61,12 +64,11 @@ Local source checkpoint: `c00f7ab98ef83108675ffcda06f2f04f81c7977e` on
   mutation, explicitly stated that no issue was created, and stopped pending
   approval. Actual external issue creation remains NOT_RUN because it is
   irreversible repository history and requires a separate explicit approval.
-- Fresh independent Studio Review: BLOCKED at
-  https://chatgpt.com/c/6a947ba5-7af0-83eb-8549-2d5c1cde6d5b; the full typed
-  result is recorded in `bootstrap/INDEPENDENT_CHATGPT_REVIEW_003.md`. It
-  independently confirmed the canonical GitHub branch and SHA are absent and
-  also recorded that canonical Drive state still describes the pre-V2 baseline.
-  Local package and pilot evidence remained internally coherent.
+- Historical independent Studio Reviews 003 and 004 are BLOCKED reports for
+  pre-publication/stale-evidence checkpoints and remain preserved verbatim.
+  A new fresh independent ChatGPT Review at the published checkpoint is
+  pending; it must verify the source checkpoint and later evidence-only commits
+  independently.
 - No ChatGPT custom instruction, OAuth flow, account switch, permission
   change, or external write was performed. Passwords, MFA codes, recovery
   codes, cookies, OAuth tokens, and API keys were never requested or handled.

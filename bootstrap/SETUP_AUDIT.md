@@ -74,12 +74,16 @@ docs/{artifact-system,architecture,install-codex,install-chatgpt,chatgpt-mobile,
 
 The approved V2 documents describe a canonical Studio family, V2 schemas, file-backed state, generated templates/packages, and a no-MCP default ChatGPT artifact. The repository baseline predates those features and has hand-maintained seven-plugin manifests plus MCP/app companion files. The bounded implementation will preserve those legacy source packages and IDs, add a catalog-driven generated Studio family, keep compatibility entries, and leave the existing MCP server out of the default ChatGPT archive.
 
-### Human gates currently open
+### Human gates and approvals
 
-1. Confirm the visible ChatGPT account `chris folorunso` / Pro is the intended account/workspace before any ChatGPT install, upload, OAuth, permission, or settings action.
-2. Approve any external GitHub push or reversible external write smoke test if needed for real-host marketplace/pilot evidence.
-3. Approve any ChatGPT custom-instruction diff if routing proves it is necessary.
-4. Owner retains merge/release decision.
+1. Account confirmation: PASS. The user confirmed the visible ChatGPT account
+   `chris folorunso` / Pro as the intended account/workspace.
+2. Branch publication: PASS. The user approved publication of
+   `studio-v2-bootstrap`; the repaired implementation checkpoint is published.
+3. External write smoke test, Drive authoritative update, and GitHub issue or
+   milestone reconciliation remain separately approval-gated and NOT_RUN.
+4. No ChatGPT custom-instruction diff was needed; the owner retains the
+   merge/release decision.
 
 No credentials or secrets were requested, entered, or recorded.
 
@@ -90,8 +94,10 @@ No credentials or secrets were requested, entered, or recorded.
   schemas/v2; skills/studio; templates/studio-v2; brand/icon-system;
   .agents/plugins/marketplace.json; the preserved server; and
   evals/studio plus evals/pilots.
-- Current source checkpoint: c00f7ab98ef83108675ffcda06f2f04f81c7977e on
+- Current implementation source checkpoint: dee9454070ba15ecf1c87f110b3db6cef1c59820 on
   studio-v2-bootstrap.
+- The branch is published at this checkpoint. Later bootstrap commits are
+  evidence-only refreshes generated from this immutable source checkpoint.
 - Codex install: PASS_WITH_LIMITATIONS. studio-delivery@studio-v2 version 2.0.0
   is installed and enabled from the local studio-v2 marketplace; the seven
   legacy packages remain installed.
@@ -99,16 +105,16 @@ No credentials or secrets were requested, entered, or recorded.
   read-only session read the Studio state and the required next action. A
   separate fresh trivial task was not routed through Studio.
 - Brownfield review loop: PASS_WITH_LIMITATIONS. REV-001 found the seeded
-  formatter defect, REPAIR-FINDING-001 repaired it, REV-002 accepted the
-  repaired durable checkpoint, and current REV-004 plus
-  INDEPENDENT_REVIEW_005 independently accepted the local checkpoint.
+  formatter defect, REPAIR-FINDING-001 repaired it, and the current source
+  checkpoint adds a committed-HEAD reproducibility gate and fail-closed close
+  transition. A fresh local acceptance review is pending.
 - Current pilot project state, snapshots, work packages, evidence, and
   handoffs match the current source checkpoint.
 - GitHub and Drive read probes: PASS. No external write was performed.
 - ChatGPT installation and fresh-chat verification: PASS_WITH_LIMITATIONS.
   The confirmed chris folorunso / Pro account has the accepted Studio v2.0.0
-  Skill installed and explicit @Studio routing passes; the independent remote
-  review remains blocked until the source checkpoint is published.
+  Skill installed and explicit @Studio routing passes; a fresh independent
+  review against the published checkpoint is pending.
 - Pilot session close: PASS_WITH_LIMITATIONS for both local pilot projects;
   release and merge remain owner-gated.
 - iPhone/mobile availability: USER CHECK.
@@ -124,7 +130,7 @@ independent reviews recorded below.
 | Canonical catalog and provenance | PASS | `catalog/studio.yaml`, pinned source register, no copied third-party files |
 | Generated family | PASS | 9 generated packages, public names Studio through Studio Track, legacy source packages preserved |
 | V2 artifacts and state | PASS | 22 catalog templates, `schemas/v2`, `scripts/studio.py`, `.project` recovery commands |
-| Deterministic build | PASS | two full rebuild output digests matched |
+| Deterministic build | PASS | two committed-HEAD rebuilds and a separate clean clone reproduced canonical text and binary content |
 | Package validation | PASS | repository validator and Plugin Creator validator passed all 9 packages |
 | ChatGPT artifact | PASS | `dist/chatgpt/studio.zip`, skills-first, no `.mcp.json`/`.app.json`/MCP declaration |
 | Icon gate | PASS | Opal Seed contact sheet plus actual 24px/32px files visually inspected; transparent corners preserved |
@@ -132,11 +138,13 @@ independent reviews recorded below.
 | Greenfield pilot | PASS | local requirement/test slice passes |
 | Brownfield planted defect | PASS | expected failure reproduced; bounded repair and current-SHA independent review complete |
 
-The current worktree is intentionally dirty with the implementation outputs;
-the branch is separate from `master`. No GitHub, Drive, ChatGPT, or Codex
-global state has been written by the implementation checkpoint.
+The current evidence refresh may leave this worktree dirty while it is being
+committed; the implementation branch is separate from `master`. The source
+checkpoint changed repository code only in the bounded reproducibility and
+close-gate repair. No Drive, issue, milestone, PR, merge, or permission write
+was performed.
 
-## Post-confirmation ChatGPT and fresh review evidence
+## Historical pre-publication ChatGPT and fresh review evidence
 
 - The user confirmed that the visible `chris folorunso` / `Pro` account, with
   no visible workspace label, is the intended ChatGPT destination.
@@ -157,10 +165,9 @@ global state has been written by the implementation checkpoint.
   confirmed that the expected GitHub SHA/branch is absent remotely and that
   Drive remains on its pre-V2 authoritative state. Its typed findings are
   recorded in `bootstrap/INDEPENDENT_CHATGPT_REVIEW_003.md`.
-- Closing this blocker requires an explicitly approved external GitHub push or
-  PR, or an equivalent user-approved transfer of the current source checkpoint.
-  No push, PR, issue, milestone, Drive write, permission change, or custom
-  instruction change was performed.
+- This historical blocker was closed for source publication by the authorized
+  branch push. No issue, milestone, PR, Drive write, permission change, or
+  custom instruction change was performed in that earlier pass.
 
 ## Fix pass: ChatGPT metadata, routing, and write-gate evidence
 
@@ -183,12 +190,22 @@ global state has been written by the implementation checkpoint.
   profile but disabled (`disableReasons: [1]`). No browser state was changed;
   the in-app browser remains the active supported route. iPhone/mobile remains
   `USER CHECK`.
-- The fresh independent ChatGPT Review remains `BLOCKED` only because the
-  source checkpoint `c00f7ab98ef83108675ffcda06f2f04f81c7977e` and branch are
-  not present on the canonical GitHub remote.
-  Closing that finding requires explicit approval to push or open a PR.
+- Historical ChatGPT Review 003 and 004 were blocked by a missing or stale
+  remote checkpoint; that source-publication finding is repaired. The current
+  published checkpoint is `dee9454070ba15ecf1c87f110b3db6cef1c59820`, and a
+  fresh review against it is still required. Canonical Drive remains on its
+  pre-V2 authoritative state and needs separate owner approval before update.
 
-The local fresh-context review `INDEPENDENT_REVIEW_005.md` and both pilot
-`REV-004` records now inspect the current c00f7ab98ef83108675ffcda06f2f04f81c7977e
-checkpoint, and both pilot sessions are CLOSED with current SNAP-004 and
-HANDOFF-C00F7AB98EF8 evidence. No local implementation finding remains.
+## Repair pass: committed-HEAD reproducibility and lifecycle enforcement
+
+- Implementation checkpoint: `dee9454070ba15ecf1c87f110b3db6cef1c59820`.
+- `scripts/check_reproducibility.py` now materializes `HEAD` with `git archive`
+  before building, so untracked worktree files cannot affect the proof.
+- `scripts/studio.py close` now requires a current independent `ACCEPT` review
+  and checks the declared `IN_REVIEW -> ACCEPTED -> CLOSED` transitions. The
+  negative gate was directly exercised and returned `BLOCKED` before a current
+  review existed.
+- Both pilots were refreshed to `SNAP-007`, `EVID-PILOT-*-005`, and
+  `HANDOFF-DEE9454070BA`; their assertions, doctor/status, and evidence checks
+  pass.
+- A new isolated local acceptance review and a fresh ChatGPT Review are pending.

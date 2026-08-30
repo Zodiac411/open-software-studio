@@ -10,7 +10,9 @@ Recorded: 2026-08-30
 - Codex: `codex-cli 0.144.5`.
 - Source branch: `studio-v2-bootstrap`.
 - Source revision at initial installation: `a9454048456c9cef9d5eca0fa8be47b3ecc4ee4c`.
-- Current source verification revision: `c00f7ab98ef83108675ffcda06f2f04f81c7977e`.
+- Current implementation source verification revision: `dee9454070ba15ecf1c87f110b3db6cef1c59820`.
+- The published `studio-v2-bootstrap` branch contains this immutable source
+  checkpoint; later bootstrap commits are evidence-only refreshes.
 - CLI syntax was read from the installed executable before use:
   `codex plugin marketplace add <path-or-git-source>` and
   `codex plugin add <plugin>@<marketplace>`.
@@ -18,7 +20,7 @@ Recorded: 2026-08-30
   worktree.
 - Install result: `studio-delivery@studio-v2`, version `2.0.0`, installed and
   enabled, with source `generated/codex/plugins/studio-delivery`.
-- Live recheck at the current source revision: `codex plugin list -m studio-v2 --json`
+- Live recheck at the implementation source revision: `codex plugin list -m studio-v2 --json`
   reports the package installed and enabled. The source manifest and cached
   2.0.0 manifest have identical SHA-256
   `ECFA6F197BE9A8E5DEF8FBF3D088C356E34614CBA067B76217DB4B0F880C42BA`.

@@ -4,7 +4,7 @@ Result: PASS_WITH_LIMITATIONS
 
 Project: PRJ-PILOT-B
 
-Reviewed checkpoint: c00f7ab98ef83108675ffcda06f2f04f81c7977e
+Implementation checkpoint: dee9454070ba15ecf1c87f110b3db6cef1c59820
 
 ## Evidence
 
@@ -18,12 +18,12 @@ Reviewed checkpoint: c00f7ab98ef83108675ffcda06f2f04f81c7977e
 - Repair validation: PASS.
 - After repair, python evals/pilots/brownfield/test_billing.py returned exit
   0 and format_cents(1234) returned "$12.34".
-- Current project state, SNAP-004, WP-001, EVID-PILOT-B-003, and
-  HANDOFF-C00F7AB98EF8 are current against the reviewed checkpoint.
-- Final independent review: REV-004 and INDEPENDENT_REVIEW_005, fresh 5.6 Luna
-  reviewer, disposition ACCEPT/PASS_WITH_LIMITATIONS for the local repaired
-  slice with no blocking local implementation finding at the current source
-  checkpoint.
+- Current project state, SNAP-007, WP-001, EVID-PILOT-B-005, and
+  HANDOFF-DEE9454070BA are current against the implementation checkpoint.
+- The new EVID-PILOT-B-005 also records the committed-HEAD clean-checkout
+  reproducibility gate.
+- A fresh isolated local review at this checkpoint is pending; historical
+  REV-004 and INDEPENDENT_REVIEW_005 remain preserved.
 
 ## Cross-surface gates
 
@@ -36,15 +36,13 @@ Reviewed checkpoint: c00f7ab98ef83108675ffcda06f2f04f81c7977e
 - ChatGPT write gate: PASS_WITH_LIMITATIONS. A fresh Studio Track probe at
   https://chatgpt.com/c/6a947454-fac4-83eb-a3ed-3265561e8b76 showed the exact
   proposed GitHub mutation and stopped pending approval; no write occurred.
-- Codex handoff, local defect detection, repair, green test, independent
-  acceptance, and session close: PASS_WITH_LIMITATIONS because the fresh
-  independent ChatGPT review is blocked by the unavailable remote checkpoint.
-- Fresh ChatGPT Review: BLOCKED. Review 003 ran at
-  https://chatgpt.com/c/6a947ba5-7af0-83eb-8549-2d5c1cde6d5b and could not
-  inspect current SHA c00f7ab98ef83108675ffcda06f2f04f81c7977e because the
-  branch is not present on the canonical GitHub remote; it also recorded the
-  stale canonical Drive baseline. Typed findings are in
-  `bootstrap/INDEPENDENT_CHATGPT_REVIEW_003.md`.
+- Codex handoff, local defect detection, repair, green test, and the
+  fail-closed session-close guard: PASS_WITH_LIMITATIONS. Session close will
+  only pass after the current independent local review is accepted; the fresh
+  ChatGPT review remains pending.
+- Fresh ChatGPT Review: NOT_RUN at the published repaired checkpoint. The
+  historical blocked reports remain in the bootstrap directory; Drive's
+  authoritative update still requires separate approval.
 - External writes: NOT_RUN.
 - iPhone/mobile availability: USER CHECK.
 

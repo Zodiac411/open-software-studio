@@ -52,7 +52,9 @@
       "result": "PASS",
       "account_label": "Zodiac411",
       "read_probe": "repository metadata and README read",
-      "target": "Zodiac411/open-software-studio"
+      "target": "Zodiac411/open-software-studio",
+      "published_branch": "studio-v2-bootstrap",
+      "published_checkpoint": "dee9454070ba15ecf1c87f110b3db6cef1c59820"
     },
     "google_drive": {
       "result": "PASS",
@@ -77,47 +79,50 @@
       "write_gate_probe": "PASS_WITH_LIMITATIONS",
       "write_gate_probe_url": "https://chatgpt.com/c/6a947454-fac4-83eb-a3ed-3265561e8b76",
       "write_gate_probe_result": "Read-only GitHub identity, exact proposed issue mutation, explicit approval stop, no write",
-      "reason": "The fresh independent ChatGPT review could not inspect the current local SHA because c00f7ab98ef83108675ffcda06f2f04f81c7977e and branch studio-v2-bootstrap are not present on the canonical remote; no external push was authorized.",
-      "review_url": "https://chatgpt.com/c/6a947ba5-7af0-83eb-8549-2d5c1cde6d5b",
-      "review_result": "BLOCKED",
-      "review_evidence": "bootstrap/INDEPENDENT_CHATGPT_REVIEW_003.md"
+      "reason": "The source-publication blocker is repaired and the published checkpoint is available. A new fresh independent review is pending; canonical Drive still requires separate owner approval for any authoritative update.",
+      "review_url": null,
+      "review_result": "NOT_RUN",
+      "review_evidence": null
     }
   },
   "baseline_validation": {
     "validate_suite": "PASS",
+    "check_reproducibility": "PASS",
     "run_evals": "PASS",
     "evidence_level": "E2"
   },
   "implementation": {
-    "phase": "local_acceptance_checkpoint",
+    "phase": "published_source_reconciliation",
     "active_work_package": "WP-SD-001",
     "result": "PASS_WITH_LIMITATIONS",
     "current_branch": "studio-v2-bootstrap",
-    "current_head": "c00f7ab98ef83108675ffcda06f2f04f81c7977e",
+    "current_head": "dee9454070ba15ecf1c87f110b3db6cef1c59820",
+    "source_checkpoint_sha": "dee9454070ba15ecf1c87f110b3db6cef1c59820",
+    "evidence_basis": "Pilot state, SNAP-007, EVID-PILOT-*-005, and HANDOFF-DEE9454070BA are generated from the immutable source checkpoint; later branch commits are evidence-only.",
     "evidence": [
       "python scripts/build_studio.py -> PASS (9 packages, 22 templates, deterministic archives)",
       "python scripts/validate_suite.py -> PASS (catalog, packages, schemas, icons, archive, routing, seeded gates)",
       "python scripts/run_evals.py -> PASS (71 routing cases, 10 execution scenarios, 6 Studio gates)",
       "Plugin Creator validator -> PASS for all 9 generated packages",
       "Opal Seed contact sheet and actual 24px/32px assets visually inspected -> PASS",
-      "greenfield pilot -> PASS at current checkpoint",
+      "greenfield pilot -> PASS at implementation checkpoint dee9454070ba15ecf1c87f110b3db6cef1c59820",
       "brownfield planted-defect test -> first red, repaired, then PASS",
       "Codex Studio package -> PASS_WITH_LIMITATIONS; installed and enabled at 2.0.0",
       "fresh Codex Studio-directed session -> PASS_WITH_LIMITATIONS",
       "fresh unrelated Codex task -> PASS",
-      "independent review REV-004 and INDEPENDENT_REVIEW_005 -> PASS_WITH_LIMITATIONS with no blocking local implementation finding",
+      "historical independent reviews remain preserved; fresh local review at the repaired checkpoint is pending",
       "both pilot session close commands -> PASS_WITH_LIMITATIONS",
       "ChatGPT Studio package install -> PASS_WITH_LIMITATIONS; personal Skills upload accepted and Studio is visibly installed",
       "ChatGPT package metadata refresh -> PASS; Studio v2.0.0 is visible in the Skills UI and detail view",
       "fresh @Studio routing probe -> PASS; STUDIO_ROUTE_OK studio-chatgpt-studio-delivery",
       "fresh ChatGPT write-confirmation probe -> PASS_WITH_LIMITATIONS; exact mutation shown and approval gate held",
       "fresh ChatGPT read-only verification -> PASS; Studio routing and GitHub/Drive reads were visibly used",
-      "fresh independent ChatGPT review 003 -> BLOCKED; current local SHA is absent from the canonical remote and Drive remains on its pre-V2 authoritative state; typed findings are recorded in bootstrap/INDEPENDENT_CHATGPT_REVIEW_003.md"
+      "fresh independent ChatGPT review at the published checkpoint -> NOT_RUN; historical blocked reports remain preserved and Drive remains on its pre-V2 authoritative state"
     ],
     "blocking_findings": [
-      "Fresh ChatGPT Review 003 could not independently inspect current SHA c00f7ab98ef83108675ffcda06f2f04f81c7977e because the branch and commit were not pushed to the canonical GitHub repository; external push/PR approval is required to close this gate. Drive's authoritative state also requires a separately approved update after publication."
+      "Fresh ChatGPT Review at published checkpoint dee9454070ba15ecf1c87f110b3db6cef1c59820 is pending. Canonical Drive's authoritative state requires a separately approved update after publication."
     ],
-    "review_disposition": "BLOCKED",
+    "review_disposition": "NOT_RUN",
     "external_writes": "NOT_RUN"
   },
   "human_gates": {

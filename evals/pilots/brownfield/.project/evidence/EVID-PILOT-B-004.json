@@ -1,0 +1,12 @@
+{
+  "command_or_probe": "python test_billing.py; python scripts/check_reproducibility.py",
+  "document_id": "EVID-PILOT-B-004",
+  "evidence_id": "EVID-PILOT-B-004",
+  "level": "E2",
+  "limitations": "local pilot and repository-source proof; external writes remain confirmation-gated",
+  "observed": "repaired brownfield assertion and clean-checkout reproducibility gate passed at implementation checkpoint bdaa19cd55d4953b6977e1df121a4ad426ed1e5a",
+  "project_id": "PRJ-PILOT-B",
+  "requirement": "REQ-PILOT-B-001",
+  "schema": "studio.evidence/v2",
+  "timestamp": "2026-08-30T19:29:16Z"
+}
