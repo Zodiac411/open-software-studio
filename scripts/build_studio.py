@@ -41,11 +41,15 @@ def write_json(path: Path, value: Any) -> None:
 
 def sha256(path: Path) -> str:
     digest = hashlib.sha256()
-    data = path.read_bytes()
-    if path.suffix.lower() in TEXT_SUFFIXES or path.name in TEXT_NAMES:
-        data = data.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    data = canonical_bytes(path, path.read_bytes())
     digest.update(data)
     return digest.hexdigest()
+
+
+def canonical_bytes(path: Path, data: bytes) -> bytes:
+    if path.suffix.lower() in TEXT_SUFFIXES or path.name in TEXT_NAMES:
+        return data.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return data
 
 
 def reset_owned(path: Path) -> None:
@@ -397,7 +401,7 @@ def zip_package(source: Path, package_id: str, output: Path, display_name: str) 
     with zipfile.ZipFile(output, "w", compression=zipfile.ZIP_DEFLATED) as archive:
         for path in sorted(paths):
             relative = path.relative_to(source).as_posix()
-            zip_entry(archive, f"{root_name}/{relative}", path.read_bytes())
+            zip_entry(archive, f"{root_name}/{relative}", canonical_bytes(path, path.read_bytes()))
         zip_entry(archive, f"{root_name}/SKILL.md", wrapper)
         zip_entry(archive, f"{root_name}/agents/openai.yaml", openai_yaml)
 

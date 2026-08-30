@@ -1,14 +1,14 @@
 {
   "archives": {
-    "dist/chatgpt/satellites/engineering-guard.zip": "a6330437d739027d3ab8571e15f4e5a0849a9c8956eed4583287286a8ccf4ad2",
-    "dist/chatgpt/satellites/execution-guard.zip": "7fd5f59b63af9474f48a1285bf2a56cf4d43e4620bee9260479a9b0cde9fb512",
-    "dist/chatgpt/satellites/interface-studio.zip": "bcdb6a8b8169f3abd82c7509a896d43af728d514ca27f5f1c9ea8385a1ebdbd8",
-    "dist/chatgpt/satellites/project-architect.zip": "4782807d4fd7bc6cc321d6ec166993a1e1e8ac1156c2c9158c682d164f3e6b57",
-    "dist/chatgpt/satellites/project-docs.zip": "7cc7bc503be06bf911ea8a7b937b6a5eb48ffb3eb0b48da6ee753c4f8843d2ba",
-    "dist/chatgpt/satellites/research-engineer.zip": "e89747f5aa28cd59180c43b3bb39ff6373fbecd15b15315a0b8ab0ce1052c752",
+    "dist/chatgpt/satellites/engineering-guard.zip": "c75eaae580f8ded63877de119e8674753e91edd4416367a050c55568ea9d831b",
+    "dist/chatgpt/satellites/execution-guard.zip": "195f7bfa56856fac72ca5df7691b521f338b215763607ad3c8eeb0fab04a7af5",
+    "dist/chatgpt/satellites/interface-studio.zip": "0b92ea8dad4f8c5f8917ba9c9eb282c12193c20ede73e90e4eb97ee1b11e8726",
+    "dist/chatgpt/satellites/project-architect.zip": "822c5d3528473874487a37dcfbf65b185bfbbdd8784fe4e2cea845cdd742c97a",
+    "dist/chatgpt/satellites/project-docs.zip": "0deafb9ad837fa85a19ec1430a4a571bb248f469e4773c156f77601070bd5e73",
+    "dist/chatgpt/satellites/research-engineer.zip": "c2640912243e0cbd0e24792b55cc1d91cd215b6e81045588097f413f8eb73a7e",
     "dist/chatgpt/satellites/studio-track.zip": "91a0a098a8d09056210ba564195fc0c49879977c1dbf72778e4f56c459f9102d",
-    "dist/chatgpt/satellites/web-app-builder.zip": "80cad34a22f145e0863ccdc46339d2c435c228e93da4452b17ec8cab3eeb8e4c",
-    "dist/chatgpt/studio.zip": "7645db0d9a99109bf37fa72a98e042c57b41448f2fb53e4ef693761ead9fff76"
+    "dist/chatgpt/satellites/web-app-builder.zip": "cd3d5cfa6bb146c20ca31e1549c83318ead6a1d2208dead4ac3fbb2801110fe9",
+    "dist/chatgpt/studio.zip": "96e79fd0edf0c01164336ae6af1532a0c4e851cbaa5ac477c57c7c10dfb030fa"
   },
   "schema": "studio.archive-hashes/v2",
   "version": "2.0.0"
