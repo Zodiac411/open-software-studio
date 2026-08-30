@@ -2,7 +2,7 @@
   "author": {
     "name": "Open Software Studio"
   },
-  "description": "Project bounded Studio work into GitHub Issues and Milestones while keeping .project state authoritative.",
+  "description": "Studio Track v2.0.0: Project bounded Studio work into GitHub Issues and Milestones while keeping .project state authoritative.",
   "interface": {
     "brandColor": "#C89D5B",
     "capabilities": [
@@ -20,10 +20,10 @@
     "displayName": "Studio Track",
     "logo": "./assets/logo.png",
     "logoDark": "./assets/logo-dark.png",
-    "longDescription": "Project bounded Studio work into GitHub Issues and Milestones while keeping .project state authoritative.",
+    "longDescription": "Studio Track v2.0.0: Project bounded Studio work into GitHub Issues and Milestones while keeping .project state authoritative.",
     "privacyPolicyURL": "https://github.com/Zodiac411/open-software-studio/blob/master/README.md",
     "screenshots": [],
-    "shortDescription": "Project bounded Studio work into GitHub Issues and Milestones wh",
+    "shortDescription": "Studio Track v2.0.0: Project bounded Studio work into GitHub Iss",
     "termsOfServiceURL": "https://github.com/Zodiac411/open-software-studio/blob/master/LICENSE",
     "websiteURL": "https://github.com/Zodiac411/open-software-studio"
   },

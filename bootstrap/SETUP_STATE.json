@@ -1,7 +1,7 @@
 {
   "schema": "studio.bootstrap.state/v2",
   "project_id": "PRJ-SD-001",
-  "recorded_at": "2026-08-30T16:29:15.8053770Z",
+  "recorded_at": "2026-08-30T18:01:36.8321353Z",
   "source_repository": "https://github.com/Zodiac411/open-software-studio",
   "baseline": {
     "remote_default_branch": "master",
@@ -23,7 +23,7 @@
     "codex": "codex-cli 0.144.5",
     "codex_home": "C:/Users/badcr/.codex",
     "browser_backends": ["iab"],
-    "chrome_extension": "UNPROVEN"
+    "chrome_extension": "BLOCKED: installed in Chrome Default but disabled (disableReasons [1])"
   },
   "codex": {
     "plugin_cli_help_verified": true,
@@ -61,10 +61,24 @@
       "target": "https://drive.google.com/drive/folders/1GDlSRW9aJVOvCH-fiZcWPQYsQcUNYGXe"
     },
     "chatgpt": {
-      "result": "BLOCKED",
+      "result": "PASS_WITH_LIMITATIONS",
       "visible_account": "chris folorunso / Pro",
       "workspace_label": null,
-      "reason": "Intended account/workspace has not yet been confirmed before browser-side mutation."
+      "route": "Plugins -> Skills -> Create -> Upload from your computer",
+      "install": "PASS",
+      "fresh_chat": "PASS",
+      "fresh_chat_url": "https://chatgpt.com/c/6a946dee-ef10-83ed-9c1b-3e86b9b6cc15",
+      "read_probe": "GitHub and Google Drive were visibly used read-only and both canonical locations resolved",
+      "explicit_mention": "PASS",
+      "explicit_mention_url": "https://chatgpt.com/c/6a94741f-cedc-83eb-a82c-240a2a5acd42",
+      "explicit_mention_result": "STUDIO_ROUTE_OK studio-chatgpt-studio-delivery",
+      "visible_version": "PASS: Skills Installed/Created by me entries and detail view show Studio v2.0.0",
+      "artifact_sha256": "7645DB0D9A99109BF37FA72A98E042C57B41448F2FB53E4EF693761EAD9FFF76",
+      "write_gate_probe": "PASS_WITH_LIMITATIONS",
+      "write_gate_probe_url": "https://chatgpt.com/c/6a947454-fac4-83eb-a3ed-3265561e8b76",
+      "write_gate_probe_result": "Read-only GitHub identity, exact proposed issue mutation, explicit approval stop, no write",
+      "reason": "The fresh independent ChatGPT review could not inspect the current local SHA because 55d4ab31c10d5ac22f0f3232bccd7d261fdea9b1 and branch studio-v2-bootstrap are not present on the canonical remote; no external push was authorized.",
+      "review_url": "https://chatgpt.com/c/6a946f5f-7ea4-83ed-bd4f-8c9de69440ee"
     }
   },
   "baseline_validation": {
@@ -77,7 +91,7 @@
     "active_work_package": "WP-SD-001",
     "result": "PASS_WITH_LIMITATIONS",
     "current_branch": "studio-v2-bootstrap",
-    "current_head": "18ddbc14a6f9b16967064f4066ff167799cb8a92",
+    "current_head": "55d4ab31c10d5ac22f0f3232bccd7d261fdea9b1",
     "evidence": [
       "python scripts/build_studio.py -> PASS (9 packages, 22 templates, deterministic archives)",
       "python scripts/validate_suite.py -> PASS (catalog, packages, schemas, icons, archive, routing, seeded gates)",
@@ -89,18 +103,26 @@
       "Codex Studio package -> PASS_WITH_LIMITATIONS; installed and enabled at 2.0.0",
       "fresh Codex Studio-directed session -> PASS_WITH_LIMITATIONS",
       "fresh unrelated Codex task -> PASS",
-      "independent review REV-002 -> PASS_WITH_LIMITATIONS with no blocking local finding"
+      "independent review REV-003 -> PASS_WITH_LIMITATIONS with no blocking local finding",
+      "both pilot session close commands -> PASS_WITH_LIMITATIONS",
+      "ChatGPT Studio package install -> PASS_WITH_LIMITATIONS; personal Skills upload accepted and Studio is visibly installed",
+      "ChatGPT package metadata refresh -> PASS; Studio v2.0.0 is visible in the Skills UI and detail view",
+      "fresh @Studio routing probe -> PASS; STUDIO_ROUTE_OK studio-chatgpt-studio-delivery",
+      "fresh ChatGPT write-confirmation probe -> PASS_WITH_LIMITATIONS; exact mutation shown and approval gate held",
+      "fresh ChatGPT read-only verification -> PASS; Studio routing and GitHub/Drive reads were visibly used",
+      "fresh independent ChatGPT review -> BLOCKED; current local SHA is absent from the canonical remote"
     ],
     "blocking_findings": [
-      "ChatGPT account/workspace confirmation is required before browser-side installation"
+      "Fresh ChatGPT Review could not independently inspect current SHA 55d4ab31c10d5ac22f0f3232bccd7d261fdea9b1 because the branch and commit were not pushed to the canonical GitHub repository; external push/PR approval is required to close this gate."
     ],
-    "review_disposition": "PASS_WITH_LIMITATIONS",
+    "review_disposition": "BLOCKED",
     "external_writes": "NOT_RUN"
   },
   "human_gates": {
-    "account_confirmation": "BLOCKED",
+    "account_confirmation": "PASS",
     "oauth_or_account_selection": "NOT_RUN",
-    "external_write_smoke": "NOT_RUN",
+    "external_write_smoke": "PASS_WITH_LIMITATIONS",
+    "external_write_execution": "NOT_RUN",
     "global_chatgpt_instruction_change": "NOT_RUN",
     "merge_or_release": "NOT_RUN",
     "iphone_mobile_check": "UNPROVEN"

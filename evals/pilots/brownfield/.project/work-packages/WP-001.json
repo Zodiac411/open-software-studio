@@ -10,7 +10,7 @@
     "skills/",
     "templates/"
   ],
-  "base_sha": "18ddbc14a6f9b16967064f4066ff167799cb8a92",
+  "base_sha": "55d4ab31c10d5ac22f0f3232bccd7d261fdea9b1",
   "document_id": "WP-001",
   "forbidden_paths": [
     ".codex/",
@@ -43,7 +43,7 @@
     "primary_outcomes": 1,
     "subsystems": 3
   },
-  "snapshot_id": "SNAP-002",
+  "snapshot_id": "SNAP-003",
   "status": "FROZEN",
   "stop_conditions": [
     "base SHA changes",

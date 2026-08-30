@@ -2,7 +2,7 @@
   "author": {
     "name": "Open Software Studio"
   },
-  "description": "Define UX, interaction, accessibility, responsive behavior, and visual systems. Does not implement repository code.",
+  "description": "Studio Design v2.0.0: Define UX, interaction, accessibility, responsive behavior, and visual systems. Does not implement repository code.",
   "interface": {
     "brandColor": "#D99C89",
     "capabilities": [
@@ -20,10 +20,10 @@
     "displayName": "Studio Design",
     "logo": "./assets/logo.png",
     "logoDark": "./assets/logo-dark.png",
-    "longDescription": "Define UX, interaction, accessibility, responsive behavior, and visual systems. Does not implement repository code.",
+    "longDescription": "Studio Design v2.0.0: Define UX, interaction, accessibility, responsive behavior, and visual systems. Does not implement repository code.",
     "privacyPolicyURL": "https://github.com/Zodiac411/open-software-studio/blob/master/README.md",
     "screenshots": [],
-    "shortDescription": "Define UX, interaction, accessibility, responsive behavior, and ",
+    "shortDescription": "Studio Design v2.0.0: Define UX, interaction, accessibility, res",
     "termsOfServiceURL": "https://github.com/Zodiac411/open-software-studio/blob/master/LICENSE",
     "websiteURL": "https://github.com/Zodiac411/open-software-studio"
   },

@@ -1,0 +1,57 @@
+{
+  "schema": "studio.review/v2",
+  "review_id": "REV-003",
+  "reviewer_role": "independent reviewer",
+  "reviewer_context": "fresh context",
+  "reviewed_head_sha": "55d4ab31c10d5ac22f0f3232bccd7d261fdea9b1",
+  "disposition": "ACCEPT",
+  "independent_checks": [
+    "python scripts/validate_suite.py",
+    "python scripts/validate_studio.py",
+    "python scripts/run_evals.py",
+    "python evals/pilots/greenfield/test_app.py",
+    "python evals/pilots/brownfield/test_billing.py",
+    "both studio doctor/status/wp/evidence checks",
+    "package manifest and ChatGPT archive inspection",
+    "72 package manifest hashes and archive hash comparison",
+    "current SHA, diff, and pilot freshness inspection",
+    "REV-001 repair and no-self-accept gate inspection"
+  ],
+  "findings": [
+    {
+      "id": "F-LOCAL-001",
+      "severity": "LOW",
+      "status": "PASS",
+      "evidence": "validators, evaluations, both pilot commands, and both doctor checks passed",
+      "remediation": "none for the local repaired checkpoint"
+    },
+    {
+      "id": "F-REPAIR-001",
+      "severity": "LOW",
+      "status": "PASS",
+      "evidence": "REV-001 found the seeded cents defect; REPAIR-FINDING-001 is bounded to billing.py; current assertion returns $12.34",
+      "remediation": "none"
+    },
+    {
+      "id": "F-PACKAGE-001",
+      "severity": "LOW",
+      "status": "PASS",
+      "evidence": "72 of 72 manifest hashes match; archive hash is 211DEAE786FBC38A2C768FE4084ABFB0315DD8FF0683A95A8A7A3A8FECE57259; archive has 79 entries and no MCP/app declaration",
+      "remediation": "none"
+    },
+    {
+      "id": "F-EXTERNAL-001",
+      "severity": "MEDIUM",
+      "status": "PASS_WITH_LIMITATIONS",
+      "evidence": "ChatGPT account/fresh-chat, external writes, OAuth, and mobile remain gated or unrun",
+      "remediation": "perform only after the explicit human gates in the receipts"
+    }
+  ],
+  "known_limitations": [
+    "ChatGPT installation and fresh-chat review are blocked pending account confirmation",
+    "ChatGPT-side GitHub and Drive reads are not run",
+    "external writes are not run",
+    "mobile availability is USER CHECK"
+  ],
+  "created_at": "2026-08-30T17:48:00Z"
+}

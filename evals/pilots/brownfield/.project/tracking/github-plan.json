@@ -8,7 +8,7 @@
           "named validators pass",
           "independent review is fresh and non-self-accepting"
         ],
-        "base_sha": "c2d9bcfeefe9819413a7262edd676332ef73613d",
+        "base_sha": "55d4ab31c10d5ac22f0f3232bccd7d261fdea9b1",
         "requirements": [
           "REQ-CATALOG",
           "REQ-PROTOCOL"

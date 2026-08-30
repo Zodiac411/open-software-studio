@@ -2,7 +2,7 @@
   "author": {
     "name": "Open Software Studio"
   },
-  "description": "Implement approved repository work with local conventions, reuse-first scope, direct verification, and a reviewable handoff.",
+  "description": "Studio Build v2.0.0: Implement approved repository work with local conventions, reuse-first scope, direct verification, and a reviewable handoff.",
   "interface": {
     "brandColor": "#7EAED2",
     "capabilities": [
@@ -20,10 +20,10 @@
     "displayName": "Studio Build",
     "logo": "./assets/logo.png",
     "logoDark": "./assets/logo-dark.png",
-    "longDescription": "Implement approved repository work with local conventions, reuse-first scope, direct verification, and a reviewable handoff.",
+    "longDescription": "Studio Build v2.0.0: Implement approved repository work with local conventions, reuse-first scope, direct verification, and a reviewable handoff.",
     "privacyPolicyURL": "https://github.com/Zodiac411/open-software-studio/blob/master/README.md",
     "screenshots": [],
-    "shortDescription": "Implement approved repository work with local conventions, reuse",
+    "shortDescription": "Studio Build v2.0.0: Implement approved repository work with loc",
     "termsOfServiceURL": "https://github.com/Zodiac411/open-software-studio/blob/master/LICENSE",
     "websiteURL": "https://github.com/Zodiac411/open-software-studio"
   },

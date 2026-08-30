@@ -9,7 +9,8 @@ Recorded: 2026-08-30
 - Host: Windows 11 Pro 10.0.26200, PowerShell 7.6.4.
 - Codex: `codex-cli 0.144.5`.
 - Source branch: `studio-v2-bootstrap`.
-- Source revision at installation: `a9454048456c9cef9d5eca0fa8be47b3ecc4ee4c`.
+- Source revision at initial installation: `a9454048456c9cef9d5eca0fa8be47b3ecc4ee4c`.
+- Current source verification revision: `55d4ab31c10d5ac22f0f3232bccd7d261fdea9b1`.
 - CLI syntax was read from the installed executable before use:
   `codex plugin marketplace add <path-or-git-source>` and
   `codex plugin add <plugin>@<marketplace>`.
@@ -17,6 +18,10 @@ Recorded: 2026-08-30
   worktree.
 - Install result: `studio-delivery@studio-v2`, version `2.0.0`, installed and
   enabled, with source `generated/codex/plugins/studio-delivery`.
+- Live recheck at the current source revision: `codex plugin list -m studio-v2 --json`
+  reports the package installed and enabled. The source manifest and cached
+  2.0.0 manifest have identical SHA-256
+  `ECFA6F197BE9A8E5DEF8FBF3D088C356E34614CBA067B76217DB4B0F880C42BA`.
 - The seven pre-existing `open-software-studio` packages were preserved and
   remained installed/enabled: `project-architect`, `interface-studio`,
   `engineering-guard`, `research-engineer`, `project-docs`,
@@ -71,8 +76,10 @@ All unrelated global instructions were retained.
   The isolated retry avoided that unrelated host configuration; no host config
   was changed.
 - Codex emitted pre-existing loader warnings for unrelated cached plugins and
-  a stale models-cache field. They did not prevent Studio installation or the
-  two isolated session results, but they remain a host limitation.
+  a stale models-cache field; the default process also reported a non-curated
+  marketplace-cache warning for studio-delivery. Direct plugin listing,
+  matching source/cache manifests, and the isolated fresh session still prove
+  the installed 2.0.0 package, but these host warnings remain a limitation.
 
 ## Rollback
 

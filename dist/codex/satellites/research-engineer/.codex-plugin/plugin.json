@@ -2,7 +2,7 @@
   "author": {
     "name": "Open Software Studio"
   },
-  "description": "Gather current decision-changing external evidence with source quality, freshness, license, and confidence. Does not invent proof.",
+  "description": "Studio Research v2.0.0: Gather current decision-changing external evidence with source quality, freshness, license, and confidence. Does not invent proof.",
   "interface": {
     "brandColor": "#74B9C9",
     "capabilities": [
@@ -20,10 +20,10 @@
     "displayName": "Studio Research",
     "logo": "./assets/logo.png",
     "logoDark": "./assets/logo-dark.png",
-    "longDescription": "Gather current decision-changing external evidence with source quality, freshness, license, and confidence. Does not invent proof.",
+    "longDescription": "Studio Research v2.0.0: Gather current decision-changing external evidence with source quality, freshness, license, and confidence. Does not invent proof.",
     "privacyPolicyURL": "https://github.com/Zodiac411/open-software-studio/blob/master/README.md",
     "screenshots": [],
-    "shortDescription": "Gather current decision-changing external evidence with source q",
+    "shortDescription": "Studio Research v2.0.0: Gather current decision-changing externa",
     "termsOfServiceURL": "https://github.com/Zodiac411/open-software-studio/blob/master/LICENSE",
     "websiteURL": "https://github.com/Zodiac411/open-software-studio"
   },

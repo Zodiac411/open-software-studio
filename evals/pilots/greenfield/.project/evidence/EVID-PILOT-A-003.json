@@ -1,0 +1,12 @@
+{
+  "command_or_probe": "python test_app.py",
+  "document_id": "EVID-PILOT-A-003",
+  "evidence_id": "EVID-PILOT-A-003",
+  "level": "E2",
+  "limitations": "local pilot only",
+  "observed": "greenfield assertion passed at durable receipt checkpoint",
+  "project_id": "PRJ-PILOT-A",
+  "requirement": "REQ-PILOT-A-001",
+  "schema": "studio.evidence/v2",
+  "timestamp": "2026-08-30T17:33:36Z"
+}

@@ -2,7 +2,7 @@
   "author": {
     "name": "Open Software Studio"
   },
-  "description": "Compile durable, linked Studio documents and machine sidecars from approved structured state. Does not create competing authority.",
+  "description": "Studio Docs v2.0.0: Compile durable, linked Studio documents and machine sidecars from approved structured state. Does not create competing authority.",
   "interface": {
     "brandColor": "#D9B36C",
     "capabilities": [
@@ -20,10 +20,10 @@
     "displayName": "Studio Docs",
     "logo": "./assets/logo.png",
     "logoDark": "./assets/logo-dark.png",
-    "longDescription": "Compile durable, linked Studio documents and machine sidecars from approved structured state. Does not create competing authority.",
+    "longDescription": "Studio Docs v2.0.0: Compile durable, linked Studio documents and machine sidecars from approved structured state. Does not create competing authority.",
     "privacyPolicyURL": "https://github.com/Zodiac411/open-software-studio/blob/master/README.md",
     "screenshots": [],
-    "shortDescription": "Compile durable, linked Studio documents and machine sidecars fr",
+    "shortDescription": "Studio Docs v2.0.0: Compile durable, linked Studio documents and",
     "termsOfServiceURL": "https://github.com/Zodiac411/open-software-studio/blob/master/LICENSE",
     "websiteURL": "https://github.com/Zodiac411/open-software-studio"
   },

@@ -45,6 +45,9 @@ def check_manifest(path: Path, plugin: dict[str, Any]) -> set[str]:
     manifest = read_json(path)
     if manifest.get("name") != plugin["id"] or manifest.get("version") != "2.0.0":
         fail(f"{path}: package identity/version")
+    expected_prefix = f"{plugin['display_name']} v{manifest['version']}:"
+    if not manifest.get("description", "").startswith(expected_prefix):
+        fail(f"{path}: user-visible version label")
     if manifest.get("skills") != "./skills/":
         fail(f"{path}: skills path")
     if "mcpServers" in manifest or "apps" in manifest:
@@ -112,6 +115,9 @@ def main() -> None:
         names = bundle.namelist()
         if "studio/SKILL.md" not in names or "studio/agents/openai.yaml" not in names:
             fail("ChatGPT archive is not skills-first")
+        skill_text = bundle.read("studio/SKILL.md").decode("utf-8")
+        if "Studio v2.0.0:" not in skill_text:
+            fail("ChatGPT archive does not expose its version")
         if any(name.endswith((".mcp.json", ".app.json")) for name in names):
             fail("ChatGPT archive contains a server/app declaration")
         for name in names:

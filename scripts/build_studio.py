@@ -254,10 +254,12 @@ def render_schemas(catalog: dict[str, Any]) -> None:
 
 def plugin_manifest(catalog: dict[str, Any], plugin: dict[str, Any], skills: list[str], role: str) -> dict[str, Any]:
     display = plugin["display_name"]
+    version = catalog["suite"]["version"]
+    description = f"{display} v{version}: {plugin['description']}"
     return {
         "name": plugin["id"],
-        "version": catalog["suite"]["version"],
-        "description": plugin["description"],
+        "version": version,
+        "description": description,
         "author": {"name": "Open Software Studio"},
         "repository": catalog["repository"]["url"],
         "license": catalog["license"]["spdx"],
@@ -265,8 +267,8 @@ def plugin_manifest(catalog: dict[str, Any], plugin: dict[str, Any], skills: lis
         "skills": "./skills/",
         "interface": {
             "displayName": display,
-            "shortDescription": plugin["description"][:64],
-            "longDescription": plugin["description"],
+            "shortDescription": description[:64],
+            "longDescription": description,
             "developerName": "Open Software Studio",
             "category": plugin["category"],
             "capabilities": ["Interactive", "Read", "Write"],
@@ -318,7 +320,7 @@ def assemble_packages(catalog: dict[str, Any]) -> dict[str, dict[str, Any]]:
             if not source.is_dir():
                 fail(f"{plugin_id}: missing skill source {source}")
             copy_tree(source, package / "skills" / skill_id)
-        write_text(package / "README.md", f"# {plugin['display_name']}\n\nGenerated from `catalog/studio.yaml` by `scripts/build_studio.py`. Legacy aliases: {', '.join(plugin['legacy_aliases'])}.\n\nThis generated package is skills-first and contains no MCP or app declaration.\n")
+        write_text(package / "README.md", f"# {plugin['display_name']}\n\nVersion: {catalog['suite']['version']}\n\nGenerated from `catalog/studio.yaml` by `scripts/build_studio.py`. Legacy aliases: {', '.join(plugin['legacy_aliases'])}.\n\nThis generated package is skills-first and contains no MCP or app declaration.\n")
         package_info[plugin_id] = {"display_name": plugin["display_name"], "version": catalog["suite"]["version"], "skills": skill_ids, "legacy_aliases": plugin["legacy_aliases"], "path": str(package.relative_to(ROOT)).replace("\\", "/")}
     return package_info
 
@@ -371,7 +373,7 @@ def zip_package(source: Path, package_id: str, output: Path, display_name: str) 
     wrapper = "\n".join([
         FRONTMATTER,
         f"name: studio-chatgpt-{package_id}",
-        f"description: Use the {display_name} Studio workflow as a skills-first ChatGPT package.",
+        f"description: {display_name} v{manifest['version']}: skills-first ChatGPT workflow for bounded software delivery.",
         "---",
         f"# {display_name}",
         "",

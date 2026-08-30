@@ -2,7 +2,7 @@
   "author": {
     "name": "Open Software Studio"
   },
-  "description": "Shape requirements, architecture decisions, and implementation-ready work. Does not implement or accept code.",
+  "description": "Studio Plan v2.0.0: Shape requirements, architecture decisions, and implementation-ready work. Does not implement or accept code.",
   "interface": {
     "brandColor": "#C89D5B",
     "capabilities": [
@@ -20,10 +20,10 @@
     "displayName": "Studio Plan",
     "logo": "./assets/logo.png",
     "logoDark": "./assets/logo-dark.png",
-    "longDescription": "Shape requirements, architecture decisions, and implementation-ready work. Does not implement or accept code.",
+    "longDescription": "Studio Plan v2.0.0: Shape requirements, architecture decisions, and implementation-ready work. Does not implement or accept code.",
     "privacyPolicyURL": "https://github.com/Zodiac411/open-software-studio/blob/master/README.md",
     "screenshots": [],
-    "shortDescription": "Shape requirements, architecture decisions, and implementation-r",
+    "shortDescription": "Studio Plan v2.0.0: Shape requirements, architecture decisions, ",
     "termsOfServiceURL": "https://github.com/Zodiac411/open-software-studio/blob/master/LICENSE",
     "websiteURL": "https://github.com/Zodiac411/open-software-studio"
   },

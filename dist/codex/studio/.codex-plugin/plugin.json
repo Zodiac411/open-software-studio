@@ -2,7 +2,7 @@
   "author": {
     "name": "Open Software Studio"
   },
-  "description": "Orchestrate the complete ChatGPT to Codex delivery loop with one bounded, evidence-backed workflow.",
+  "description": "Studio v2.0.0: Orchestrate the complete ChatGPT to Codex delivery loop with one bounded, evidence-backed workflow.",
   "interface": {
     "brandColor": "#DDE8E4",
     "capabilities": [
@@ -20,10 +20,10 @@
     "displayName": "Studio",
     "logo": "./assets/logo.png",
     "logoDark": "./assets/logo-dark.png",
-    "longDescription": "Orchestrate the complete ChatGPT to Codex delivery loop with one bounded, evidence-backed workflow.",
+    "longDescription": "Studio v2.0.0: Orchestrate the complete ChatGPT to Codex delivery loop with one bounded, evidence-backed workflow.",
     "privacyPolicyURL": "https://github.com/Zodiac411/open-software-studio/blob/master/README.md",
     "screenshots": [],
-    "shortDescription": "Orchestrate the complete ChatGPT to Codex delivery loop with one",
+    "shortDescription": "Studio v2.0.0: Orchestrate the complete ChatGPT to Codex deliver",
     "termsOfServiceURL": "https://github.com/Zodiac411/open-software-studio/blob/master/LICENSE",
     "websiteURL": "https://github.com/Zodiac411/open-software-studio"
   },

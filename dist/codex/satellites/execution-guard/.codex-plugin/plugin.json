@@ -2,7 +2,7 @@
   "author": {
     "name": "Open Software Studio"
   },
-  "description": "Verify grounded, bounded, evidence-backed execution and fail honestly when requested proof is missing.",
+  "description": "Studio Verify v2.0.0: Verify grounded, bounded, evidence-backed execution and fail honestly when requested proof is missing.",
   "interface": {
     "brandColor": "#5E9F9C",
     "capabilities": [
@@ -20,10 +20,10 @@
     "displayName": "Studio Verify",
     "logo": "./assets/logo.png",
     "logoDark": "./assets/logo-dark.png",
-    "longDescription": "Verify grounded, bounded, evidence-backed execution and fail honestly when requested proof is missing.",
+    "longDescription": "Studio Verify v2.0.0: Verify grounded, bounded, evidence-backed execution and fail honestly when requested proof is missing.",
     "privacyPolicyURL": "https://github.com/Zodiac411/open-software-studio/blob/master/README.md",
     "screenshots": [],
-    "shortDescription": "Verify grounded, bounded, evidence-backed execution and fail hon",
+    "shortDescription": "Studio Verify v2.0.0: Verify grounded, bounded, evidence-backed ",
     "termsOfServiceURL": "https://github.com/Zodiac411/open-software-studio/blob/master/LICENSE",
     "websiteURL": "https://github.com/Zodiac411/open-software-studio"
   },
