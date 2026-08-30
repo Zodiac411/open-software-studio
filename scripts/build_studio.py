@@ -8,15 +8,12 @@ import hashlib
 import json
 import re
 import shutil
-import sys
 import zipfile
 from pathlib import Path
 from typing import Any, Iterable
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = ROOT / "catalog" / "studio.yaml"
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-from render_icons import render_all  # noqa: E402
 
 
 ID_PATTERN = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
@@ -463,12 +460,16 @@ def generate_seeded_fixtures(catalog: dict[str, Any]) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check-only", action="store_true", help="validate the catalog and generated package shape without rewriting outputs")
+    parser.add_argument("--render-icons", action="store_true", help="regenerate the checked-in Opal Seed raster and vector source assets before packaging")
     args = parser.parse_args()
     catalog = load_catalog()
     if args.check_only:
         print("PASS: Studio catalog is structurally valid")
         return 0
-    render_all(catalog, ROOT)
+    if args.render_icons:
+        from render_icons import render_all
+
+        render_all(catalog, ROOT)
     render_generated_skills(catalog)
     render_templates(catalog)
     render_schemas(catalog)

@@ -28,8 +28,13 @@ a connected app. The seven pre-V2 package directories remain untouched as
 compatibility sources until parity is accepted.
 
 Run `python scripts/build_studio.py` to regenerate the package family,
-templates, schemas, Opal Seed icon family, routing cases, and deterministic
-archives. `python scripts/validate_suite.py` validates the generated outputs.
+templates, schemas, routing cases, and deterministic archives from the
+checked-in Opal Seed assets. Run `python scripts/build_studio.py --render-icons`
+only when the catalog's icon roles or palette change; review and commit the
+resulting assets together. Run `python scripts/check_reproducibility.py` to
+verify two isolated clean-checkout builds reproduce every repository byte.
+`python scripts/validate_suite.py` runs the structural and reproducibility
+gates.
 
 ## Start here
 
