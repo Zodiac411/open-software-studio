@@ -94,7 +94,7 @@ No credentials or secrets were requested, entered, or recorded.
   schemas/v2; skills/studio; templates/studio-v2; brand/icon-system;
   .agents/plugins/marketplace.json; the preserved server; and
   evals/studio plus evals/pilots.
-- Current implementation source checkpoint: 8f8e9fc2164a1ceeb503aecb36edbf8dc8c48dd6 on
+- Current implementation source checkpoint: 17e9407569eb642e11d86def752c22ae6b638337 on
   studio-v2-bootstrap.
 - The branch is published at this checkpoint. Later bootstrap commits are
   evidence-only refreshes generated from this immutable source checkpoint.
@@ -108,7 +108,7 @@ No credentials or secrets were requested, entered, or recorded.
   formatter defect, REPAIR-FINDING-001 repaired it, and the current source
   checkpoint adds a committed-HEAD reproducibility gate, canonical source
   manifest validation, and fail-closed close transition. Current pilot
-  evidence is regenerated at `8f8e9fc`; final fresh ChatGPT review is pending.
+  evidence is regenerated at `17e9407`; final fresh ChatGPT review is pending.
 - Current pilot project state, snapshots, work packages, evidence, and
   handoffs match the current source checkpoint.
 - GitHub and Drive read probes: PASS. No external write was performed.
@@ -242,3 +242,16 @@ was performed.
   current branch tip, source checkpoint, active receipts, package hashes,
   pilot evidence, Codex installation, ChatGPT installation, connector reads,
   permissions, and rollback evidence before reading any conclusion.
+
+## Current archive tie-breaker repair
+
+- Review 007 returned PASS_WITH_LIMITATIONS for source `8f8e9fc` and identified
+  `REV-007-014`, a low portability risk for case-fold collisions.
+- `REPAIR-ARCHIVE-TIEBREAK` adds an explicit UTF-8 byte tie-breaker to
+  `archive_sort_key`. The current catalog has no collision, so the published
+  archive and manifest hashes remain unchanged.
+- The repair is published at `17e9407569eb642e11d86def752c22ae6`; the local
+  collision probe, `check_reproducibility.py`, `validate_suite.py`, both pilot
+  evidence validators, and both doctor checks pass.
+- Review 008 is required against this new source checkpoint and its current
+  evidence-only branch tip.

@@ -4,7 +4,7 @@ Result: PASS_WITH_LIMITATIONS
 
 Recorded: 2026-08-30
 
-Implementation source checkpoint: `8f8e9fc2164a1ceeb503aecb36edbf8dc8c48dd6` on
+Implementation source checkpoint: `17e9407569eb642e11d86def752c22ae6b638337` on
 published branch `studio-v2-bootstrap`.
 
 The archive was rebuilt after the committed-HEAD reproducibility repair and
@@ -65,12 +65,13 @@ are evidence-only and do not change the implementation source checkpoint.
   mutation, explicitly stated that no issue was created, and stopped pending
   approval. Actual external issue creation remains NOT_RUN because it is
   irreversible repository history and requires a separate explicit approval.
-- Historical independent Studio Reviews 003 through 006 are preserved
+- Historical independent Studio Reviews 003 through 007 are preserved
   verbatim. Review 006 correctly blocked the prior checkpoint after a fresh
   Linux rebuild found host-dependent archive bytes and uncommitted generated
-  outputs. The bounded ZIP_STORED repair and regenerated outputs are now
-  published at source checkpoint `8f8e9fc`; a new fresh independent ChatGPT
-  Review against that checkpoint and its later evidence-only tip is pending.
+  outputs. Review 007 accepted the repaired source with one low portability
+  note; the explicit UTF-8 tie-breaker is now published at source checkpoint
+  `17e9407`. A new fresh independent ChatGPT Review against that checkpoint
+  and its later evidence-only tip is pending.
 - No ChatGPT custom instruction, OAuth flow, account switch, permission
   change, or external write was performed. Passwords, MFA codes, recovery
   codes, cookies, OAuth tokens, and API keys were never requested or handled.

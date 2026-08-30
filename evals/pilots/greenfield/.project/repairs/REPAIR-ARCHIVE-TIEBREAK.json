@@ -1,0 +1,14 @@
+{
+  "schema": "studio.repair/v2",
+  "repair_id": "REPAIR-ARCHIVE-TIEBREAK",
+  "accepted_findings": ["REV-007-014"],
+  "allowed_paths": ["scripts/build_studio.py", "dist/chatgpt/", "generated/catalog/"],
+  "forbidden_paths": [".codex/", "secrets/", "credentials/"],
+  "required_behavior": "Archive paths that collide after casefolding have an explicit UTF-8 byte tie-breaker and remain deterministic across hosts.",
+  "regression_proof": ["python scripts/check_reproducibility.py", "python scripts/validate_suite.py"],
+  "evidence": ["Fresh ChatGPT Review 007 identified the missing explicit byte tie-breaker as a low portability risk", "archive_sort_key now orders by casefolded POSIX path and UTF-8 bytes", "current archive hashes remain unchanged because no casefold collision exists"],
+  "non_goals": ["change Studio behavior", "merge or release", "external writes"],
+  "repair_budget": {"primary_outcomes": 1, "subsystems": 1, "new_dependencies": 0},
+  "stop_conditions": ["reproducibility differs after the tie-breaker change", "source scope expands beyond allowed paths"],
+  "source_checkpoint_sha": "17e9407569eb642e11d86def752c22ae6b638337"
+}

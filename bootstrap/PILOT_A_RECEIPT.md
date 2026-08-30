@@ -4,7 +4,7 @@ Result: PASS_WITH_LIMITATIONS
 
 Project: PRJ-PILOT-A
 
-Implementation checkpoint: 8f8e9fc2164a1ceeb503aecb36edbf8dc8c48dd6
+Implementation checkpoint: 17e9407569eb642e11d86def752c22ae6b638337
 
 ## Evidence
 
@@ -19,14 +19,13 @@ Implementation checkpoint: 8f8e9fc2164a1ceeb503aecb36edbf8dc8c48dd6
   next action independent fresh-context review. It did not edit or merge.
 - Unrelated fresh Codex task: PASS. A separate process answered 2+2=4 without
   inspecting files or invoking Studio.
-- Current project state, SNAP-012, WP-001, EVID-PILOT-A-010, and
-  HANDOFF-8F8E9FC2164A are current against the implementation checkpoint.
-- EVID-PILOT-A-010 records the repaired committed-HEAD clean-checkout
-  reproducibility, archive-byte, and canonical source-manifest validation
-  gates.
-- Current independent review: Review 006 blocked the prior checkpoint because
-  generated archive outputs were not committed; the ZIP_STORED repair is now
-  at `8f8e9fc`, and a new fresh ChatGPT review is pending.
+- Current project state, SNAP-013, WP-001, EVID-PILOT-A-011, and
+  HANDOFF-17E9407569EB are current against the implementation checkpoint.
+- EVID-PILOT-A-011 records the repaired committed-HEAD clean-checkout
+  reproducibility, explicit archive tie-breaker, and canonical source-manifest
+  validation gates.
+- Review 007 accepted the prior checkpoint with one low portability finding;
+  REPAIR-ARCHIVE-TIEBREAK is now at `17e9407`, and Review 008 is pending.
 
 ## Cross-surface gates
 
@@ -40,8 +39,8 @@ Implementation checkpoint: 8f8e9fc2164a1ceeb503aecb36edbf8dc8c48dd6
   https://chatgpt.com/c/6a947454-fac4-83eb-a3ed-3265561e8b76 showed the exact
   proposed GitHub mutation and stopped pending approval; no write occurred.
 - Codex handoff and local execution: PASS_WITH_LIMITATIONS.
-- Fresh ChatGPT Review: BLOCKED at prior published checkpoint `4afaa3d` in
-  Review 006; the repaired checkpoint `8f8e9fc` is published and Review 007 is
+- Fresh ChatGPT Review: PASS_WITH_LIMITATIONS in Review 007 for prior source
+  `8f8e9fc`; the tie-breaker repair is published at `17e9407` and Review 008 is
   pending. Drive's authoritative update still requires separate approval.
 - GitHub and Drive reads: PASS in both the connected Codex environment and the
   ChatGPT verification chat.

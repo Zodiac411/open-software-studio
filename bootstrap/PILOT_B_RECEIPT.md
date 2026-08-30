@@ -4,7 +4,7 @@ Result: PASS_WITH_LIMITATIONS
 
 Project: PRJ-PILOT-B
 
-Implementation checkpoint: 8f8e9fc2164a1ceeb503aecb36edbf8dc8c48dd6
+Implementation checkpoint: 17e9407569eb642e11d86def752c22ae6b638337
 
 ## Evidence
 
@@ -18,14 +18,13 @@ Implementation checkpoint: 8f8e9fc2164a1ceeb503aecb36edbf8dc8c48dd6
 - Repair validation: PASS.
 - After repair, python evals/pilots/brownfield/test_billing.py returned exit
   0 and format_cents(1234) returned "$12.34".
-- Current project state, SNAP-012, WP-001, EVID-PILOT-B-010, and
-  HANDOFF-8F8E9FC2164A are current against the implementation checkpoint.
-- EVID-PILOT-B-010 records the repaired committed-HEAD clean-checkout
-  reproducibility, archive-byte, and canonical source-manifest validation
-  gates.
-- Current independent review: Review 006 blocked the prior checkpoint because
-  generated archive outputs were not committed; the ZIP_STORED repair is now
-  at `8f8e9fc`, and a new fresh ChatGPT review is pending.
+- Current project state, SNAP-013, WP-001, EVID-PILOT-B-011, and
+  HANDOFF-17E9407569EB are current against the implementation checkpoint.
+- EVID-PILOT-B-011 records the repaired committed-HEAD clean-checkout
+  reproducibility, explicit archive tie-breaker, and canonical source-manifest
+  validation gates.
+- Review 007 accepted the prior checkpoint with one low portability finding;
+  REPAIR-ARCHIVE-TIEBREAK is now at `17e9407`, and Review 008 is pending.
 
 ## Cross-surface gates
 
@@ -42,8 +41,8 @@ Implementation checkpoint: 8f8e9fc2164a1ceeb503aecb36edbf8dc8c48dd6
   acceptance, and the fail-closed session-close guard: PASS_WITH_LIMITATIONS.
   Both pilot sessions closed only after the current independent local review
   was accepted; the fresh ChatGPT review remains pending.
-- Fresh ChatGPT Review: BLOCKED at prior published checkpoint `4afaa3d` in
-  Review 006; the repaired checkpoint `8f8e9fc` is published and Review 007 is
+- Fresh ChatGPT Review: PASS_WITH_LIMITATIONS in Review 007 for prior source
+  `8f8e9fc`; the tie-breaker repair is published at `17e9407` and Review 008 is
   pending. Drive's authoritative update still requires separate approval.
 - External writes: NOT_RUN.
 - iPhone/mobile availability: USER CHECK.
