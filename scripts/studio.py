@@ -388,9 +388,11 @@ def handoff_project(args: argparse.Namespace) -> int:
     if not sha:
         return fail("handoff requires a Git HEAD")
     wp_id = state.get("active_wp") or "WP-001"
+    snapshot_path = control_root(project) / "snapshots" / f"{state.get('snapshot_id', 'SNAP-001')}.json"
+    snapshot = read_json(snapshot_path) if snapshot_path.is_file() else {}
     diff = git(project, "diff", "--stat") or "clean or unavailable"
     review_id = f"HANDOFF-{sha[:12].upper()}"
-    value = {"schema": "studio.handoff/v2", "document_id": review_id, "wp_id": wp_id, "base_sha": state.get("snapshot_id"), "head_sha": sha, "branch": git(project, "branch", "--show-current"), "claimed_outcomes": ["current repository state is packaged for independent review"], "files": [line.strip() for line in diff.splitlines() if line.strip()], "commands": ["python scripts/build_studio.py", "python scripts/validate_studio.py", "python scripts/run_evals.py"], "evidence": [{"level": "E2", "observed": "handoff generated from live Git state"}], "scope_delta": {"status": "REVIEW_REQUIRED"}, "unproven": ["fresh ChatGPT installation and review", "mobile availability", "external write smoke test"], "next_action": "independent fresh-context review", "reviewer_action": "inspect requirements, current SHA, diff, CI/runtime evidence before this conclusion", "created_at": utc_now()}
+    value = {"schema": "studio.handoff/v2", "document_id": review_id, "wp_id": wp_id, "base_sha": snapshot.get("base_sha"), "head_sha": sha, "branch": git(project, "branch", "--show-current"), "claimed_outcomes": ["current repository state is packaged for independent review"], "files": [line.strip() for line in diff.splitlines() if line.strip()], "commands": ["python scripts/build_studio.py", "python scripts/validate_studio.py", "python scripts/run_evals.py"], "evidence": [{"level": "E2", "observed": "handoff generated from live Git state"}], "scope_delta": {"status": "REVIEW_REQUIRED"}, "unproven": ["fresh ChatGPT installation and review", "mobile availability", "external write smoke test"], "next_action": "independent fresh-context review", "reviewer_action": "inspect requirements, current SHA, diff, CI/runtime evidence before this conclusion", "created_at": utc_now()}
     path = control_root(project) / "handoffs" / f"{review_id}.json"
     write_json(path, value)
     write_text(path.with_suffix(".md"), "# Studio implementation handoff\n\n" + "\n".join(f"- {key}: `{json.dumps(value[key], ensure_ascii=False)}`" for key in ("wp_id", "head_sha", "branch", "next_action", "reviewer_action")) + "\n")
