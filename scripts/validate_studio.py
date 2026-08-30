@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import struct
 import zipfile
 from pathlib import Path
@@ -12,6 +13,8 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
 RESULT_STATES = ["PASS", "PASS_WITH_LIMITATIONS", "BLOCKED", "NOT_RUN", "UNPROVEN"]
+TEXT_SUFFIXES = {".css", ".html", ".js", ".json", ".md", ".py", ".svg", ".toml", ".ts", ".txt", ".yaml", ".yml"}
+TEXT_NAMES = {".gitignore", ".studio-generated"}
 
 
 def fail(message: str) -> None:
@@ -66,6 +69,13 @@ def check_manifest(path: Path, plugin: dict[str, Any]) -> set[str]:
     return {item.parent.name for item in (package / "skills").glob("*/SKILL.md")}
 
 
+def canonical_sha256(path: Path) -> str:
+    data = path.read_bytes()
+    if path.suffix.lower() in TEXT_SUFFIXES or path.name in TEXT_NAMES:
+        data = data.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return hashlib.sha256(data).hexdigest()
+
+
 def main() -> None:
     catalog = read_json(ROOT / "catalog" / "studio.yaml")
     if catalog.get("schema") != "studio.catalog/v2":
@@ -101,6 +111,22 @@ def main() -> None:
         dist_package = ROOT / "dist" / "marketplace" / "plugins" / plugin["id"]
         if not (dist_package / ".codex-plugin" / "plugin.json").is_file():
             fail(f"{plugin['id']}: marketplace distribution missing")
+
+    source_manifest = read_json(ROOT / "generated" / "catalog" / "source-manifest.json")
+    if source_manifest.get("hash_mode") != "sha256-lf-normalized-text":
+        fail("source manifest hash mode is not explicit")
+    source_files = source_manifest.get("files")
+    if not isinstance(source_files, dict) or not source_files:
+        fail("source manifest files are missing")
+    for name, expected in source_files.items():
+        relative = Path(name)
+        if relative.is_absolute() or ".." in relative.parts:
+            fail(f"source manifest path is not repository-relative: {name}")
+        path = ROOT / relative
+        if not path.is_file():
+            fail(f"source manifest file is missing: {name}")
+        if canonical_sha256(path) != expected:
+            fail(f"source manifest hash mismatch: {name}")
 
     studio = ROOT / "dist" / "codex" / "studio"
     if not (studio / ".codex-plugin" / "plugin.json").is_file():

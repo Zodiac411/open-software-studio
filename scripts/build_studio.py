@@ -431,7 +431,7 @@ def render_catalog_outputs(catalog: dict[str, Any], package_info: dict[str, dict
         for path in sorted(source.rglob("*")):
             if path.is_file():
                 source_files[str(path.relative_to(ROOT)).replace("\\", "/")] = sha256(path)
-    write_json(generated / "source-manifest.json", {"schema": "studio.source-manifest/v2", "version": catalog["suite"]["version"], "files": source_files, "copied_files": [], "modifications": "Generated packages copy repository-owned source skills; no third-party files or text are copied."})
+    write_json(generated / "source-manifest.json", {"schema": "studio.source-manifest/v2", "version": catalog["suite"]["version"], "hash_mode": "sha256-lf-normalized-text", "files": source_files, "copied_files": [], "modifications": "Generated packages copy repository-owned source skills; no third-party files or text are copied."})
     lines = ["# Studio V2 package table", "", "Generated from `catalog/studio.yaml`.", "", "| Package | Display name | Skills | Legacy aliases |", "|---|---|---:|---|"]
     for info in package_info.values():
         lines.append(f"| `{info['path']}` | {info['display_name']} | {len(info['skills'])} | {', '.join(info['legacy_aliases'])} |")

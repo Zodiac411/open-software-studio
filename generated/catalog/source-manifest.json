@@ -74,6 +74,7 @@
     "skills/studio/studio-verify/SKILL.md": "0686fd8c733dba6c0c8cebca651539627fefb50268d4a3761c0a722cc4b17b8d",
     "skills/studio/studio-work/SKILL.md": "f8ccb9be97a4a57a52d1e0f5709a3e8a33ad2a74041ae81c78ffead379bc4f5c"
   },
+  "hash_mode": "sha256-lf-normalized-text",
   "modifications": "Generated packages copy repository-owned source skills; no third-party files or text are copied.",
   "schema": "studio.source-manifest/v2",
   "version": "2.0.0"
