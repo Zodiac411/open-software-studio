@@ -22,8 +22,9 @@ Implementation checkpoint: 3b739c1e16dc089749aa13d282b4f7cce470e9cf
   HANDOFF-3B739C1E16DC are current against the implementation checkpoint.
 - The new EVID-PILOT-B-007 also records the committed-HEAD clean-checkout
   reproducibility gate.
-- A fresh isolated local review at this checkpoint is pending; historical
-  REV-004 and INDEPENDENT_REVIEW_005 remain preserved.
+- Current independent review: REV-005 and INDEPENDENT_REVIEW_006, fresh
+  isolated context, ACCEPT/PASS_WITH_LIMITATIONS with no blocking local
+  implementation finding.
 
 ## Cross-surface gates
 
@@ -36,10 +37,10 @@ Implementation checkpoint: 3b739c1e16dc089749aa13d282b4f7cce470e9cf
 - ChatGPT write gate: PASS_WITH_LIMITATIONS. A fresh Studio Track probe at
   https://chatgpt.com/c/6a947454-fac4-83eb-a3ed-3265561e8b76 showed the exact
   proposed GitHub mutation and stopped pending approval; no write occurred.
-- Codex handoff, local defect detection, repair, green test, and the
-  fail-closed session-close guard: PASS_WITH_LIMITATIONS. Session close will
-  only pass after the current independent local review is accepted; the fresh
-  ChatGPT review remains pending.
+- Codex handoff, local defect detection, repair, green test, independent
+  acceptance, and the fail-closed session-close guard: PASS_WITH_LIMITATIONS.
+  Both pilot sessions closed only after the current independent local review
+  was accepted; the fresh ChatGPT review remains pending.
 - Fresh ChatGPT Review: NOT_RUN at the published repaired checkpoint. The
   historical blocked reports remain in the bootstrap directory; Drive's
   authoritative update still requires separate approval.

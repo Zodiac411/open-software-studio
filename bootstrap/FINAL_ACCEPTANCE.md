@@ -21,10 +21,10 @@ be treated as a new implementation revision.
 | GitHub read connection | PASS | CONNECTED_APPS_RECEIPT.md |
 | Google Drive read connection | PASS | CONNECTED_APPS_RECEIPT.md |
 | Write confirmation gating | PASS_WITH_LIMITATIONS | seeded gates and CLI track --apply failure pass; fresh ChatGPT Track probe displayed the exact mutation and stopped for approval; actual external write remains NOT_RUN |
-| Greenfield local pilot | PASS | PILOT_A_RECEIPT.md |
-| Brownfield defect found and repaired | PASS | INDEPENDENT_REVIEW_001.md, REV-001, bounded repair, REV-002, REV-003, current local REV-004 and INDEPENDENT_REVIEW_005 |
-| Cross-surface ChatGPT -> Codex -> fresh ChatGPT Review pilots | BLOCKED | Source is now published; a new fresh ChatGPT Review is still pending, and canonical Drive remains pre-V2 |
-| Current-SHA independent review | NOT_RUN | New local review and fresh ChatGPT Review are pending at the repaired checkpoint; historical blocked reviews remain in INDEPENDENT_CHATGPT_REVIEW_003.md and INDEPENDENT_CHATGPT_REVIEW_004.md |
+| Greenfield local pilot | PASS_WITH_LIMITATIONS | PILOT_A_RECEIPT.md; current REV-005 and INDEPENDENT_REVIEW_006 |
+| Brownfield defect found and repaired | PASS | INDEPENDENT_REVIEW_001.md, REV-001, bounded repair, REV-002, REV-003, current REV-005 and INDEPENDENT_REVIEW_006 |
+| Cross-surface ChatGPT -> Codex -> fresh ChatGPT Review pilots | NOT_RUN | Local ChatGPT and Codex legs pass; a new fresh ChatGPT Review is pending, and canonical Drive remains pre-V2 |
+| Current-SHA independent review | PASS_WITH_LIMITATIONS | Current local REV-005 and INDEPENDENT_REVIEW_006 accept the source checkpoint; fresh ChatGPT Review is pending |
 | Rollback dry-run | PASS | ROLLBACK.md |
 | iPhone/mobile availability | USER CHECK | personal device verification not performed |
 
@@ -40,8 +40,9 @@ pending approval without writing. The refreshed Skills UI now visibly shows
 `Studio v2.0.0`. The previously blocked remote-source finding is repaired:
 `studio-v2-bootstrap` now publishes implementation checkpoint
 `3b739c1e16dc089749aa13d282b4f7cce470e9cf`, and a fresh clone from it passes the
-reproducibility gate. A new fresh ChatGPT Review is still required to inspect
-that published source and the evidence-only refresh. Canonical Drive still
+reproducibility gate. The fresh isolated local review accepted that published
+source and the evidence-only refresh; a new fresh ChatGPT Review is still
+required to inspect it independently. Canonical Drive still
 records the pre-V2 authoritative state and may only be updated after a
 separate explicit owner approval. Actual external write execution, branch
 protection, and mobile verification remain open by policy.

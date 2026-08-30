@@ -23,8 +23,9 @@ Implementation checkpoint: 3b739c1e16dc089749aa13d282b4f7cce470e9cf
   HANDOFF-3B739C1E16DC are current against the implementation checkpoint.
 - The new EVID-PILOT-A-007 also records the committed-HEAD clean-checkout
   reproducibility gate.
-- A fresh isolated local review at this checkpoint is pending; historical
-  REV-004 and INDEPENDENT_REVIEW_005 remain preserved.
+- Current independent review: REV-005 and INDEPENDENT_REVIEW_006, fresh
+  isolated context, ACCEPT/PASS_WITH_LIMITATIONS with no blocking local
+  implementation finding.
 
 ## Cross-surface gates
 

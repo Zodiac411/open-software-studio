@@ -107,7 +107,8 @@ No credentials or secrets were requested, entered, or recorded.
 - Brownfield review loop: PASS_WITH_LIMITATIONS. REV-001 found the seeded
   formatter defect, REPAIR-FINDING-001 repaired it, and the current source
   checkpoint adds a committed-HEAD reproducibility gate and fail-closed close
-  transition. A fresh local acceptance review is pending.
+  transition. The fresh isolated local acceptance review is recorded in
+  `INDEPENDENT_REVIEW_006.md` and accepted the checkpoint.
 - Current pilot project state, snapshots, work packages, evidence, and
   handoffs match the current source checkpoint.
 - GitHub and Drive read probes: PASS. No external write was performed.
@@ -208,4 +209,6 @@ was performed.
 - Both pilots were refreshed to `SNAP-009`, `EVID-PILOT-*-007`, and
   `HANDOFF-3B739C1E16DC`; their assertions, doctor/status, and evidence checks
   pass.
-- A new isolated local acceptance review and a fresh ChatGPT Review are pending.
+- The new isolated local acceptance review is complete: `REV-005` and
+  `INDEPENDENT_REVIEW_006` accepted the checkpoint, and both guarded session
+  close commands passed. A fresh ChatGPT Review is pending.

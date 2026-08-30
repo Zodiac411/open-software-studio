@@ -110,7 +110,7 @@
       "Codex Studio package -> PASS_WITH_LIMITATIONS; installed and enabled at 2.0.0",
       "fresh Codex Studio-directed session -> PASS_WITH_LIMITATIONS",
       "fresh unrelated Codex task -> PASS",
-      "historical independent reviews remain preserved; fresh local review at the repaired checkpoint is pending",
+      "current independent review REV-005 and INDEPENDENT_REVIEW_006 -> ACCEPT/PASS_WITH_LIMITATIONS with no blocking local implementation finding",
       "both pilot session close commands -> PASS_WITH_LIMITATIONS",
       "ChatGPT Studio package install -> PASS_WITH_LIMITATIONS; personal Skills upload accepted and Studio is visibly installed",
       "ChatGPT package metadata refresh -> PASS; Studio v2.0.0 is visible in the Skills UI and detail view",
@@ -122,7 +122,8 @@
     "blocking_findings": [
       "Fresh ChatGPT Review at published checkpoint 3b739c1e16dc089749aa13d282b4f7cce470e9cf is pending. Canonical Drive's authoritative state requires a separately approved update after publication."
     ],
-    "review_disposition": "NOT_RUN",
+    "local_review_disposition": "ACCEPT",
+    "review_disposition": "PASS_WITH_LIMITATIONS",
     "external_writes": "NOT_RUN"
   },
   "human_gates": {
