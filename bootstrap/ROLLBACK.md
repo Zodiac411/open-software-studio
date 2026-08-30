@@ -46,7 +46,7 @@ Generated packages, icons, templates, fixtures, and receipts are owned by the St
 
 ## Dry-run status
 
-Dry-run result at the 441d656fca614db87089a580857227401ceb04a7 implementation
+Dry-run result at the 4afaa3d17be234187fe77aece05a9e2024cac556 implementation
 checkpoint:
 PASS. The baseline resolves, the implementation branch is separate, the
 Codex backup exists with its recorded SHA-256, exactly one Studio marker block

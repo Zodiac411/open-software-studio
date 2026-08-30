@@ -94,7 +94,7 @@ No credentials or secrets were requested, entered, or recorded.
   schemas/v2; skills/studio; templates/studio-v2; brand/icon-system;
   .agents/plugins/marketplace.json; the preserved server; and
   evals/studio plus evals/pilots.
-- Current implementation source checkpoint: 441d656fca614db87089a580857227401ceb04a7 on
+- Current implementation source checkpoint: 4afaa3d17be234187fe77aece05a9e2024cac556 on
   studio-v2-bootstrap.
 - The branch is published at this checkpoint. Later bootstrap commits are
   evidence-only refreshes generated from this immutable source checkpoint.
@@ -108,7 +108,7 @@ No credentials or secrets were requested, entered, or recorded.
   formatter defect, REPAIR-FINDING-001 repaired it, and the current source
   checkpoint adds a committed-HEAD reproducibility gate, canonical source
   manifest validation, and fail-closed close transition. Current pilot
-  evidence is regenerated at `441d656`; final fresh ChatGPT review is pending.
+  evidence is regenerated at `4afaa3d`; final fresh ChatGPT review is pending.
 - Current pilot project state, snapshots, work packages, evidence, and
   handoffs match the current source checkpoint.
 - GitHub and Drive read probes: PASS. No external write was performed.
@@ -193,23 +193,36 @@ was performed.
   `USER CHECK`.
 - Historical ChatGPT Review 003 and 004 were blocked by a missing or stale
   remote checkpoint; that source-publication finding is repaired. The current
-  published checkpoint is `441d656fca614db87089a580857227401ceb04a7`, and a
+  published checkpoint is `4afaa3d17be234187fe77aece05a9e2024cac556`, and a
   fresh review against it is still required. Canonical Drive remains on its
   pre-V2 authoritative state and needs separate owner approval before update.
 
 ## Repair pass: committed-HEAD reproducibility and lifecycle enforcement
 
-- Implementation checkpoint: `441d656fca614db87089a580857227401ceb04a7`.
+- Implementation checkpoint: `4afaa3d17be234187fe77aece05a9e2024cac556`.
 - `scripts/check_reproducibility.py` now materializes `HEAD` with `git archive`
   before building, so untracked worktree files cannot affect the proof.
 - `scripts/studio.py close` now requires a current independent `ACCEPT` review
   and checks the declared `IN_REVIEW -> ACCEPTED -> CLOSED` transitions. The
   negative gate was directly exercised and returned `BLOCKED` before a current
   review existed.
-- Both pilots were refreshed to `SNAP-010`, `EVID-PILOT-*-008`, and
-  `HANDOFF-441D656FCA61`; their assertions, doctor/status, and evidence checks
+- Both pilots were refreshed to `SNAP-011`, `EVID-PILOT-*-009`, and
+  `HANDOFF-4AFAA3D17BE2`; their assertions, doctor/status, and evidence checks
   pass.
 - Historical local acceptance records `REV-005` and `INDEPENDENT_REVIEW_006`
-  cover the prior source checkpoint. The current source-manifest and archive
-  repairs pass the repository validators; a fresh ChatGPT Review is pending
-  against `441d656` and the evidence-only branch tip.
+  cover the prior source checkpoint. The archive-order repair at `4afaa3d`
+  passes the repository validators and committed-HEAD reproducibility gate; a
+  fresh ChatGPT Review is pending against the new source checkpoint and its
+  evidence-only branch tip.
+
+## Current repair review
+
+- Fresh ChatGPT Review 005 at
+  `https://chatgpt.com/c/6a949225-51d0-83eb-9e92-c10b1107c2f7` returned
+  `BLOCKED` because the clean Linux rebuild exposed host-dependent archive
+  ordering at the prior source checkpoint. Its typed findings and repair
+  record are preserved in `INDEPENDENT_CHATGPT_REVIEW_005.md`.
+- The minimal archive sort repair is committed at
+  `4afaa3d17be234187fe77aece05a9e2024cac556`. Local validation, evaluation,
+  both pilots, and source-manifest checks pass at that checkpoint. A new fresh
+  ChatGPT Review is required before acceptance can close.

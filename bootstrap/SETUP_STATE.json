@@ -54,7 +54,7 @@
       "read_probe": "repository metadata and README read",
       "target": "Zodiac411/open-software-studio",
       "published_branch": "studio-v2-bootstrap",
-      "published_checkpoint": "441d656fca614db87089a580857227401ceb04a7"
+      "published_checkpoint": "4afaa3d17be234187fe77aece05a9e2024cac556"
     },
     "google_drive": {
       "result": "PASS",
@@ -79,10 +79,10 @@
       "write_gate_probe": "PASS_WITH_LIMITATIONS",
       "write_gate_probe_url": "https://chatgpt.com/c/6a947454-fac4-83eb-a3ed-3265561e8b76",
       "write_gate_probe_result": "Read-only GitHub identity, exact proposed issue mutation, explicit approval stop, no write",
-      "reason": "The source-publication and reproducibility blockers are repaired at 441d656. A new fresh independent review is pending; canonical Drive still requires separate owner approval for any authoritative update.",
-      "review_url": null,
-      "review_result": "NOT_RUN",
-      "review_evidence": null
+      "reason": "The source-publication, text-normalization, and archive-order blockers are repaired at 4afaa3d. The latest fresh review found the archive-order defect and a new independent review is pending; canonical Drive still requires separate owner approval for any authoritative update.",
+      "review_url": "https://chatgpt.com/c/6a949225-51d0-83eb-9e92-c10b1107c2f7",
+      "review_result": "BLOCKED",
+      "review_evidence": "bootstrap/INDEPENDENT_CHATGPT_REVIEW_005.md"
     }
   },
   "baseline_validation": {
@@ -96,31 +96,31 @@
     "active_work_package": "WP-SD-001",
     "result": "PASS_WITH_LIMITATIONS",
     "current_branch": "studio-v2-bootstrap",
-    "current_head": "441d656fca614db87089a580857227401ceb04a7",
-    "source_checkpoint_sha": "441d656fca614db87089a580857227401ceb04a7",
-    "evidence_basis": "Pilot state, SNAP-010, EVID-PILOT-*-008, and HANDOFF-441D656FCA61 are generated from the immutable source checkpoint; later branch commits are evidence-only.",
+    "current_head": "4afaa3d17be234187fe77aece05a9e2024cac556",
+    "source_checkpoint_sha": "4afaa3d17be234187fe77aece05a9e2024cac556",
+    "evidence_basis": "Pilot state, SNAP-011, EVID-PILOT-*-009, and HANDOFF-4AFAA3D17BE2 are generated from the immutable source checkpoint; later branch commits are evidence-only.",
     "evidence": [
       "python scripts/build_studio.py -> PASS (9 packages, 22 templates, deterministic archives)",
       "python scripts/validate_suite.py -> PASS (catalog, packages, schemas, icons, archive, routing, seeded gates)",
       "python scripts/run_evals.py -> PASS (71 routing cases, 10 execution scenarios, 6 Studio gates)",
       "Plugin Creator validator -> PASS for all 9 generated packages",
       "Opal Seed contact sheet and actual 24px/32px assets visually inspected -> PASS",
-      "greenfield pilot -> PASS at implementation checkpoint 441d656fca614db87089a580857227401ceb04a7",
+      "greenfield pilot -> PASS at implementation checkpoint 4afaa3d17be234187fe77aece05a9e2024cac556",
       "brownfield planted-defect test -> first red, repaired, then PASS",
       "Codex Studio package -> PASS_WITH_LIMITATIONS; installed and enabled at 2.0.0",
       "fresh Codex Studio-directed session -> PASS_WITH_LIMITATIONS",
       "fresh unrelated Codex task -> PASS",
-      "current local review receipts will be regenerated after the fresh ChatGPT review at 441d656; historical REV-005 and INDEPENDENT_REVIEW_006 are preserved",
+      "fresh ChatGPT review at 34bd8f3 -> BLOCKED on host-dependent archive ordering; repair committed at 4afaa3d and a new fresh review is pending",
       "both pilot session close commands -> PASS_WITH_LIMITATIONS",
       "ChatGPT Studio package install -> PASS_WITH_LIMITATIONS; personal Skills upload accepted and Studio is visibly installed",
       "ChatGPT package metadata refresh -> PASS; Studio v2.0.0 is visible in the Skills UI and detail view",
       "fresh @Studio routing probe -> PASS; STUDIO_ROUTE_V2_OK studio-chatgpt-studio-delivery",
       "fresh ChatGPT write-confirmation probe -> PASS_WITH_LIMITATIONS; exact mutation shown and approval gate held",
       "fresh ChatGPT read-only verification -> PASS; Studio routing and GitHub/Drive reads were visibly used",
-      "fresh independent ChatGPT review at published checkpoint 441d656 -> NOT_RUN; historical blocked reports remain preserved and Drive remains on its pre-V2 authoritative state"
+      "fresh independent ChatGPT review at branch tip 34bd8f3 -> BLOCKED on archive ordering; new review at source checkpoint 4afaa3d is pending; Drive remains on its pre-V2 authoritative state"
     ],
     "blocking_findings": [
-      "Fresh ChatGPT Review at published checkpoint 441d656 is pending. Canonical Drive's authoritative state requires a separately approved update after publication."
+      "Fresh ChatGPT Review at source checkpoint 4afaa3d is pending after the archive-order repair. Canonical Drive's authoritative state requires a separately approved update after publication."
     ],
     "local_review_disposition": "ACCEPT",
     "review_disposition": "PASS_WITH_LIMITATIONS",

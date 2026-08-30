@@ -4,7 +4,7 @@ Result: PASS_WITH_LIMITATIONS
 
 Recorded: 2026-08-30
 
-Implementation source checkpoint: `441d656fca614db87089a580857227401ceb04a7` on
+Implementation source checkpoint: `4afaa3d17be234187fe77aece05a9e2024cac556` on
 published branch `studio-v2-bootstrap`.
 
 The archive was rebuilt after the committed-HEAD reproducibility repair and
@@ -68,7 +68,7 @@ are evidence-only and do not change the implementation source checkpoint.
 - Historical independent Studio Reviews 003 and 004 are BLOCKED reports for
   pre-publication/stale-evidence checkpoints and remain preserved verbatim.
   A new fresh independent ChatGPT Review at the published checkpoint is
-  pending; it must verify source checkpoint `441d656` and later evidence-only
+  pending; it must verify source checkpoint `4afaa3d` and later evidence-only
   commits independently.
 - No ChatGPT custom instruction, OAuth flow, account switch, permission
   change, or external write was performed. Passwords, MFA codes, recovery

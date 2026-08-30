@@ -15,7 +15,7 @@ Recorded: 2026-08-30
 - Permissions observed: admin/maintain/pull/push/triage.
 - Branch publication: PASS. The explicitly authorized
   `studio-v2-bootstrap` branch was pushed and read back at implementation
-  checkpoint `441d656fca614db87089a580857227401ceb04a7`.
+  checkpoint `4afaa3d17be234187fe77aece05a9e2024cac556`.
 - Issue/milestone reconciliation: local confirmation-gated projection only;
   no issue, milestone, comment, or PR was created.
 
@@ -55,7 +55,7 @@ NOT_RUN.
   the exact proposed GitHub issue mutation and stopped for explicit approval;
   no external write was executed.
 - Fresh independent ChatGPT Review: NOT_RUN at published checkpoint
-  `441d656`. Historical blocked reviews are preserved in
+  `4afaa3d`. Historical blocked reviews are preserved in
   `bootstrap/INDEPENDENT_CHATGPT_REVIEW_003.md` and
   `bootstrap/INDEPENDENT_CHATGPT_REVIEW_004.md`; canonical Drive still records
   the pre-V2 baseline.
