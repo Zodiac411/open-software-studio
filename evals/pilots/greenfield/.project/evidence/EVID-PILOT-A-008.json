@@ -1,0 +1,12 @@
+{
+  "command_or_probe": "python evals/pilots/greenfield/test_app.py; python scripts/check_reproducibility.py; python scripts/validate_studio.py",
+  "document_id": "EVID-PILOT-A-008",
+  "evidence_id": "EVID-PILOT-A-008",
+  "level": "E2",
+  "limitations": "local pilot and repository-source proof; external writes remain confirmation-gated",
+  "observed": "greenfield assertion, cross-platform clean-checkout reproducibility, and source-manifest validation passed at implementation checkpoint 441d656fca614db87089a580857227401ceb04a7",
+  "project_id": "PRJ-PILOT-A",
+  "requirement": "REQ-PILOT-A-001",
+  "schema": "studio.evidence/v2",
+  "timestamp": "2026-08-30T20:15:38Z"
+}

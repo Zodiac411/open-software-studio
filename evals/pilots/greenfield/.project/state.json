@@ -3,9 +3,9 @@
   "archetype": "auto",
   "blocking_items": [],
   "created_at": "2026-08-30T17:09:43Z",
-  "current_sha": "3b739c1e16dc089749aa13d282b4f7cce470e9cf",
-  "next_action": "validate independent review and obtain release approval",
-  "phase": "CLOSED",
+  "current_sha": "441d656fca614db87089a580857227401ceb04a7",
+  "next_action": "independent fresh-context review",
+  "phase": "IN_REVIEW",
   "profile": "standard",
   "project_id": "PRJ-PILOT-A",
   "proof": [
@@ -15,8 +15,8 @@
     }
   ],
   "schema": "studio.state/v2",
-  "snapshot_id": "SNAP-009",
-  "source_checkpoint_sha": "3b739c1e16dc089749aa13d282b4f7cce470e9cf",
+  "snapshot_id": "SNAP-010",
+  "source_checkpoint_sha": "441d656fca614db87089a580857227401ceb04a7",
   "status": "PASS_WITH_LIMITATIONS",
-  "updated_at": "2026-08-30T19:57:05Z"
+  "updated_at": "2026-08-30T20:15:02Z"
 }
