@@ -393,7 +393,7 @@ def handoff_project(args: argparse.Namespace) -> int:
     if pair is None:
         return fail("run studio init before studio handoff")
     state_path, state = pair
-    sha = current_sha(project)
+    sha = source_sha(project, state)
     if not sha:
         return fail("handoff requires a Git HEAD")
     wp_id = state.get("active_wp") or "WP-001"
