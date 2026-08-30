@@ -1,7 +1,7 @@
 {
   "schema": "studio.bootstrap.state/v2",
   "project_id": "PRJ-SD-001",
-  "recorded_at": "2026-08-30T20:24:56.6024073Z",
+  "recorded_at": "2026-08-30T21:04:43.028Z",
   "source_repository": "https://github.com/Zodiac411/open-software-studio",
   "baseline": {
     "remote_default_branch": "master",
@@ -54,7 +54,7 @@
       "read_probe": "repository metadata and README read",
       "target": "Zodiac411/open-software-studio",
       "published_branch": "studio-v2-bootstrap",
-      "published_checkpoint": "4afaa3d17be234187fe77aece05a9e2024cac556"
+      "published_checkpoint": "8f8e9fc2164a1ceeb503aecb36edbf8dc8c48dd6"
     },
     "google_drive": {
       "result": "PASS",
@@ -75,14 +75,14 @@
       "explicit_mention_url": "https://chatgpt.com/c/6a9490be-6f08-83eb-9110-f95f56ee4226",
       "explicit_mention_result": "STUDIO_ROUTE_V2_OK studio-chatgpt-studio-delivery",
       "visible_version": "PASS: Skills Installed/Created by me entries and detail view show Studio v2.0.0",
-      "artifact_sha256": "96E79FD0EDF0C01164336AE6AF1532A0C4E851CBAA5AC477C57C7C10DFB030FA",
+      "artifact_sha256": "38E3332CDF0F822F65C1C66C69DCB74C083BF899044578AEE519BF9F6E98D0C7B",
       "write_gate_probe": "PASS_WITH_LIMITATIONS",
       "write_gate_probe_url": "https://chatgpt.com/c/6a947454-fac4-83eb-a3ed-3265561e8b76",
       "write_gate_probe_result": "Read-only GitHub identity, exact proposed issue mutation, explicit approval stop, no write",
-      "reason": "The source-publication, text-normalization, and archive-order blockers are repaired at 4afaa3d. The latest fresh review found the archive-order defect and a new independent review is pending; canonical Drive still requires separate owner approval for any authoritative update.",
-      "review_url": "https://chatgpt.com/c/6a949225-51d0-83eb-9e92-c10b1107c2f7",
+      "reason": "Review 006 found host-dependent archive bytes and uncommitted generated outputs at the prior checkpoint. ZIP_STORED and regenerated outputs are published at 8f8e9fc; a new independent review is pending. Canonical Drive still requires separate owner approval for any authoritative update.",
+      "review_url": "https://chatgpt.com/c/6a949605-ca38-83eb-8b11-832aac95035b",
       "review_result": "BLOCKED",
-      "review_evidence": "bootstrap/INDEPENDENT_CHATGPT_REVIEW_005.md"
+      "review_evidence": "bootstrap/INDEPENDENT_CHATGPT_REVIEW_006.md"
     }
   },
   "baseline_validation": {
@@ -92,35 +92,35 @@
     "evidence_level": "E2"
   },
   "implementation": {
-    "phase": "published_source_reconciliation",
+    "phase": "archive_byte_repair_review_pending",
     "active_work_package": "WP-SD-001",
     "result": "PASS_WITH_LIMITATIONS",
     "current_branch": "studio-v2-bootstrap",
-    "current_head": "4afaa3d17be234187fe77aece05a9e2024cac556",
-    "source_checkpoint_sha": "4afaa3d17be234187fe77aece05a9e2024cac556",
-    "evidence_basis": "Pilot state, SNAP-011, EVID-PILOT-*-009, and HANDOFF-4AFAA3D17BE2 are generated from the immutable source checkpoint; later branch commits are evidence-only.",
+    "current_head": "8f8e9fc2164a1ceeb503aecb36edbf8dc8c48dd6",
+    "source_checkpoint_sha": "8f8e9fc2164a1ceeb503aecb36edbf8dc8c48dd6",
+    "evidence_basis": "Pilot state, SNAP-012, EVID-PILOT-*-010, and HANDOFF-8F8E9FC2164A are generated from the immutable source checkpoint; later branch commits are evidence-only.",
     "evidence": [
       "python scripts/build_studio.py -> PASS (9 packages, 22 templates, deterministic archives)",
       "python scripts/validate_suite.py -> PASS (catalog, packages, schemas, icons, archive, routing, seeded gates)",
       "python scripts/run_evals.py -> PASS (71 routing cases, 10 execution scenarios, 6 Studio gates)",
       "Plugin Creator validator -> PASS for all 9 generated packages",
       "Opal Seed contact sheet and actual 24px/32px assets visually inspected -> PASS",
-      "greenfield pilot -> PASS at implementation checkpoint 4afaa3d17be234187fe77aece05a9e2024cac556",
+      "greenfield pilot -> PASS at implementation checkpoint 8f8e9fc2164a1ceeb503aecb36edbf8dc8c48dd6",
       "brownfield planted-defect test -> first red, repaired, then PASS",
       "Codex Studio package -> PASS_WITH_LIMITATIONS; installed and enabled at 2.0.0",
       "fresh Codex Studio-directed session -> PASS_WITH_LIMITATIONS",
       "fresh unrelated Codex task -> PASS",
-      "fresh ChatGPT review at 34bd8f3 -> BLOCKED on host-dependent archive ordering; repair committed at 4afaa3d and a new fresh review is pending",
+      "fresh ChatGPT Review 006 at branch tip 29b3671 -> BLOCKED on host-dependent archive bytes and uncommitted generated outputs; repair committed at 8f8e9fc and Review 007 is pending",
       "both pilot session close commands -> PASS_WITH_LIMITATIONS",
       "ChatGPT Studio package install -> PASS_WITH_LIMITATIONS; personal Skills upload accepted and Studio is visibly installed",
       "ChatGPT package metadata refresh -> PASS; Studio v2.0.0 is visible in the Skills UI and detail view",
       "fresh @Studio routing probe -> PASS; STUDIO_ROUTE_V2_OK studio-chatgpt-studio-delivery",
       "fresh ChatGPT write-confirmation probe -> PASS_WITH_LIMITATIONS; exact mutation shown and approval gate held",
       "fresh ChatGPT read-only verification -> PASS; Studio routing and GitHub/Drive reads were visibly used",
-      "fresh independent ChatGPT review at branch tip 34bd8f3 -> BLOCKED on archive ordering; new review at source checkpoint 4afaa3d is pending; Drive remains on its pre-V2 authoritative state"
+      "fresh independent ChatGPT Review 006 at source checkpoint 4afaa3d -> BLOCKED on uncommitted host-dependent archive outputs; repaired source checkpoint 8f8e9fc is published and Review 007 is pending; Drive remains on its pre-V2 authoritative state"
     ],
     "blocking_findings": [
-      "Fresh ChatGPT Review at source checkpoint 4afaa3d is pending after the archive-order repair. Canonical Drive's authoritative state requires a separately approved update after publication."
+      "Fresh ChatGPT Review 006 blocked the prior checkpoint because Linux rebuilt different archive bytes and generated outputs were not committed. The ZIP_STORED repair and regenerated outputs are published at 8f8e9fc; Review 007 is pending. Canonical Drive's authoritative state requires a separately approved update after publication."
     ],
     "local_review_disposition": "ACCEPT",
     "review_disposition": "PASS_WITH_LIMITATIONS",
