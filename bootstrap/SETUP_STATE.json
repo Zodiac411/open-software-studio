@@ -1,7 +1,7 @@
 {
   "schema": "studio.bootstrap.state/v2",
   "project_id": "PRJ-SD-001",
-  "recorded_at": "2026-08-30T21:54:43.885Z",
+  "recorded_at": "2026-08-30T22:02:53.192Z",
   "source_repository": "https://github.com/Zodiac411/open-software-studio",
   "baseline": {
     "remote_default_branch": "master",
@@ -111,7 +111,7 @@
       "fresh Codex Studio-directed session -> PASS_WITH_LIMITATIONS",
       "fresh unrelated Codex task -> PASS",
       "fresh ChatGPT Review 008 at branch tip 27a387b -> PASS_WITH_LIMITATIONS for source 17e9407; REV-008-011 complete-entry archive-order repair committed at 468e231; Review 009 then found stale state text and REPAIR-REV-009-001 records the fix; Review 010 accepted the repaired state",
-      "both pilot session close commands -> PASS_WITH_LIMITATIONS",
+      "greenfield and brownfield REV-006 local independent review receipts -> PASS; guarded close commands -> PASS_WITH_LIMITATIONS; both machine-readable pilot states are CLOSED",
       "ChatGPT Studio package install -> PASS_WITH_LIMITATIONS; personal Skills upload accepted and Studio is visibly installed",
       "ChatGPT package metadata refresh -> PASS; Studio v2.0.0 is visible in the Skills UI and detail view",
       "fresh @Studio routing probe -> PASS; STUDIO_ROUTE_V2_OK studio-chatgpt-studio-delivery",

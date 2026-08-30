@@ -112,7 +112,8 @@ No credentials or secrets were requested, entered, or recorded.
   review state, `REPAIR-REV-009-001` repaired it, and fresh Review 010 accepted
   the repaired state with no local defect.
 - Current pilot project state, snapshots, work packages, evidence, and
-  handoffs match the current source checkpoint.
+  handoffs match the current source checkpoint; fresh local REV-006 receipts
+  validate and the guarded close command has moved both pilot states to CLOSED.
 - GitHub and Drive read probes: PASS. No external write was performed.
 - ChatGPT installation and fresh-chat verification: PASS_WITH_LIMITATIONS.
   The confirmed chris folorunso / Pro account has the accepted Studio v2.0.0

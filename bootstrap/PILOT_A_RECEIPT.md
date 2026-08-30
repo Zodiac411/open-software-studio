@@ -46,10 +46,15 @@ Implementation checkpoint: 468e231b55558052906aafc267e135608ddb94ff
   independently verifying the complete archive-order repair at `468e231` and
   the state repair. Drive's authoritative update still requires separate
   approval.
+- Local independent receipt: `.project/reviews/REV-006.json` validates as
+  `PASS` with disposition `ACCEPT` at source `468e231`; the guarded `close`
+  command returned `PASS_WITH_LIMITATIONS`, and the machine-readable project
+  state is now `CLOSED`.
 - GitHub and Drive reads: PASS in both the connected Codex environment and the
   ChatGPT verification chat.
 - External writes: NOT_RUN.
 - iPhone/mobile availability: USER CHECK.
 
-The greenfield ChatGPT -> Codex -> fresh ChatGPT Review loop is complete with
-the documented external and user-check limitations.
+The greenfield ChatGPT -> Codex -> fresh ChatGPT Review loop is complete, and
+the guarded local session close is proven, with the documented external and
+user-check limitations.

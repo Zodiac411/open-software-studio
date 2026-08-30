@@ -21,8 +21,8 @@ be treated as a new implementation revision.
 | GitHub read connection | PASS | CONNECTED_APPS_RECEIPT.md |
 | Google Drive read connection | PASS | CONNECTED_APPS_RECEIPT.md |
 | Write confirmation gating | PASS_WITH_LIMITATIONS | seeded gates and CLI track --apply failure pass; fresh ChatGPT Track probe displayed the exact mutation and stopped for approval; actual external write remains NOT_RUN |
-| Greenfield local pilot | PASS_WITH_LIMITATIONS | PILOT_A_RECEIPT.md; current SNAP-014, EVID-PILOT-A-012, and HANDOFF-468E231B5555 |
-| Brownfield defect found and repaired | PASS | INDEPENDENT_REVIEW_001.md, REV-001, bounded repairs, REV-002, REV-003, and current EVID-PILOT-B-012 |
+| Greenfield local pilot | PASS_WITH_LIMITATIONS | PILOT_A_RECEIPT.md; current SNAP-014, EVID-PILOT-A-012, REV-006, closed state, and HANDOFF-468E231B5555 |
+| Brownfield defect found and repaired | PASS | INDEPENDENT_REVIEW_001.md, REV-001, bounded repairs, REV-002, REV-003, current EVID-PILOT-B-012, REV-006, and closed state |
 | Cross-surface ChatGPT -> Codex -> fresh ChatGPT Review pilots | PASS_WITH_LIMITATIONS | Local ChatGPT and Codex legs pass; Review 010 accepted source 468e231 and the current evidence chain with only recorded external/host limitations |
 | Current-SHA independent review | PASS_WITH_LIMITATIONS | Fresh Review 010 accepted source 468e231 and remote tip 320ec6d with no local source, package, validator, receipt, or state defect |
 | Rollback dry-run | PASS | ROLLBACK.md |
