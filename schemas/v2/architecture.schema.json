@@ -1,47 +1,110 @@
 {
   "$id": "studio://schemas/v2/ARCHITECTURE.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "additionalProperties": true,
+  "additionalProperties": false,
+  "description": "Versioned Studio V2 artifact contract; unknown top-level fields are rejected.",
   "properties": {
     "authority": {
+      "minLength": 1,
       "type": "string"
+    },
+    "boundaries": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "chosen_architecture": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "dependencies": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
     },
     "document_id": {
-      "pattern": "^[A-Z][A-Z0-9-]+$",
+      "minLength": 1,
+      "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*$",
       "type": "string"
     },
+    "failure_recovery": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "options": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "type": "array"
+    },
     "owner": {
+      "minLength": 1,
       "type": "string"
     },
     "project_id": {
-      "pattern": "^PRJ-[A-Z0-9-]+$",
+      "minLength": 1,
+      "pattern": "^PRJ-[A-Z0-9]+(?:-[A-Z0-9]+)*$",
+      "type": "string",
+      "x-studio-reference": "project.project_id"
+    },
+    "quality_attributes": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "revisit_triggers": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "rollback": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "security": {
+      "minLength": 1,
       "type": "string"
     },
     "sources": {
       "items": {
+        "minLength": 1,
         "type": "string"
       },
       "type": "array"
     },
     "status": {
+      "enum": [
+        "DRAFT",
+        "PROPOSED",
+        "APPROVED",
+        "FROZEN",
+        "IN_PROGRESS",
+        "PROVING",
+        "IN_REVIEW",
+        "ACCEPTED",
+        "CLOSED",
+        "RELEASED",
+        "PASS",
+        "PASS_WITH_LIMITATIONS",
+        "BLOCKED",
+        "NOT_RUN",
+        "UNPROVEN"
+      ],
       "type": "string"
     },
     "verification": {
-      "enum": [
-        "E0",
-        "E1",
-        "E2",
-        "E3",
-        "E4",
-        "E5",
-        "verified",
-        "partial",
-        "unverified",
-        "not-applicable"
-      ]
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "verified_current_architecture": {
+      "minLength": 1,
+      "type": "string"
     },
     "version": {
-      "pattern": "^2\\.",
+      "const": "2.0.0",
       "type": "string"
     }
   },
@@ -59,5 +122,6 @@
     "revisit_triggers"
   ],
   "title": "Studio V2 ARCHITECTURE artifact",
-  "type": "object"
+  "type": "object",
+  "x-studio-version": "2.0.0"
 }

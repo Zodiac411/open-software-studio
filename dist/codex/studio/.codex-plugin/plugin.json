@@ -13,8 +13,8 @@
     "category": "Productivity",
     "composerIcon": "./assets/plugin-icon.png",
     "defaultPrompt": [
-      "Use Studio for this bounded software task.",
-      "Read the current Studio state before acting."
+      "Use Studio to coordinate this bounded software task.",
+      "Read the current Studio state and evidence before acting."
     ],
     "developerName": "Open Software Studio",
     "displayName": "Studio",

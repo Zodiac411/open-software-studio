@@ -1,47 +1,120 @@
 {
   "$id": "studio://schemas/v2/REPAIR_PACKAGE.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "additionalProperties": true,
+  "additionalProperties": false,
+  "description": "Versioned Studio V2 artifact contract; unknown top-level fields are rejected.",
   "properties": {
+    "accepted_findings": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "allowed_paths": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
+    },
     "authority": {
+      "minLength": 1,
       "type": "string"
     },
     "document_id": {
-      "pattern": "^[A-Z][A-Z0-9-]+$",
+      "minLength": 1,
+      "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*$",
       "type": "string"
     },
+    "evidence": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "forbidden_paths": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "non_goals": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
+    },
     "owner": {
+      "minLength": 1,
       "type": "string"
     },
     "project_id": {
-      "pattern": "^PRJ-[A-Z0-9-]+$",
+      "minLength": 1,
+      "pattern": "^PRJ-[A-Z0-9]+(?:-[A-Z0-9]+)*$",
+      "type": "string",
+      "x-studio-reference": "project.project_id"
+    },
+    "regression_proof": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "repair_budget": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "repair_id": {
+      "minLength": 1,
+      "pattern": "^REPAIR-[A-Z0-9]+(?:-[A-Z0-9]+)*$",
+      "type": "string"
+    },
+    "required_behavior": {
+      "minLength": 1,
       "type": "string"
     },
     "sources": {
       "items": {
+        "minLength": 1,
         "type": "string"
       },
       "type": "array"
     },
     "status": {
+      "enum": [
+        "DRAFT",
+        "PROPOSED",
+        "APPROVED",
+        "FROZEN",
+        "IN_PROGRESS",
+        "PROVING",
+        "IN_REVIEW",
+        "ACCEPTED",
+        "CLOSED",
+        "RELEASED",
+        "PASS",
+        "PASS_WITH_LIMITATIONS",
+        "BLOCKED",
+        "NOT_RUN",
+        "UNPROVEN"
+      ],
       "type": "string"
     },
+    "stop_conditions": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
+    },
     "verification": {
-      "enum": [
-        "E0",
-        "E1",
-        "E2",
-        "E3",
-        "E4",
-        "E5",
-        "verified",
-        "partial",
-        "unverified",
-        "not-applicable"
-      ]
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "type": "array"
     },
     "version": {
-      "pattern": "^2\\.",
+      "const": "2.0.0",
       "type": "string"
     }
   },
@@ -59,5 +132,6 @@
     "stop_conditions"
   ],
   "title": "Studio V2 REPAIR_PACKAGE artifact",
-  "type": "object"
+  "type": "object",
+  "x-studio-version": "2.0.0"
 }

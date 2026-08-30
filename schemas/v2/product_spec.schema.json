@@ -1,32 +1,40 @@
 {
   "$id": "studio://schemas/v2/PRODUCT_SPEC.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "additionalProperties": true,
+  "additionalProperties": false,
+  "description": "Versioned Studio V2 artifact contract; unknown top-level fields are rejected.",
   "properties": {
+    "acceptance": {
+      "minLength": 1,
+      "type": "string"
+    },
     "authority": {
+      "minLength": 1,
       "type": "string"
     },
     "document_id": {
-      "pattern": "^[A-Z][A-Z0-9-]+$",
+      "minLength": 1,
+      "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*$",
       "type": "string"
     },
-    "owner": {
-      "type": "string"
-    },
-    "project_id": {
-      "pattern": "^PRJ-[A-Z0-9-]+$",
-      "type": "string"
-    },
-    "sources": {
+    "non_goals": {
       "items": {
+        "minLength": 1,
         "type": "string"
       },
       "type": "array"
     },
-    "status": {
+    "owner": {
+      "minLength": 1,
       "type": "string"
     },
-    "verification": {
+    "project_id": {
+      "minLength": 1,
+      "pattern": "^PRJ-[A-Z0-9]+(?:-[A-Z0-9]+)*$",
+      "type": "string",
+      "x-studio-reference": "project.project_id"
+    },
+    "proof_level": {
       "enum": [
         "E0",
         "E1",
@@ -34,14 +42,61 @@
         "E3",
         "E4",
         "E5",
-        "verified",
-        "partial",
-        "unverified",
-        "not-applicable"
-      ]
+        "UNPROVEN"
+      ],
+      "type": "string"
+    },
+    "requirements": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array",
+      "x-studio-reference": "product_spec.requirements"
+    },
+    "scenarios": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "sources": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "status": {
+      "enum": [
+        "DRAFT",
+        "PROPOSED",
+        "APPROVED",
+        "FROZEN",
+        "IN_PROGRESS",
+        "PROVING",
+        "IN_REVIEW",
+        "ACCEPTED",
+        "CLOSED",
+        "RELEASED",
+        "PASS",
+        "PASS_WITH_LIMITATIONS",
+        "BLOCKED",
+        "NOT_RUN",
+        "UNPROVEN"
+      ],
+      "type": "string"
+    },
+    "verification": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "type": "array"
     },
     "version": {
-      "pattern": "^2\\.",
+      "const": "2.0.0",
       "type": "string"
     }
   },
@@ -55,5 +110,6 @@
     "proof_level"
   ],
   "title": "Studio V2 PRODUCT_SPEC artifact",
-  "type": "object"
+  "type": "object",
+  "x-studio-version": "2.0.0"
 }

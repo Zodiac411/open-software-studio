@@ -1,64 +1,291 @@
 {
-  "$id": "studio://schemas/v2/INDEPENDENT_REVIEW.schema.json",
+  "$id": "studio://schemas/v2/independent_review.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "additionalProperties": true,
+  "additionalProperties": false,
+  "description": "Versioned Studio V2 artifact contract; unknown top-level fields are rejected.",
   "properties": {
+    "artifact_ids": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "artifact_set": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
     "authority": {
+      "minLength": 1,
       "type": "string"
     },
-    "document_id": {
-      "pattern": "^[A-Z][A-Z0-9-]+$",
+    "base_sha": {
+      "pattern": "^[0-9a-f]{40}$",
       "type": "string"
     },
-    "owner": {
-      "type": "string"
-    },
-    "project_id": {
-      "pattern": "^PRJ-[A-Z0-9-]+$",
-      "type": "string"
-    },
-    "sources": {
+    "conditions": {
       "items": {
         "type": "string"
       },
       "type": "array"
     },
+    "disposition": {
+      "enum": [
+        "ACCEPT",
+        "REPAIR",
+        "REJECT",
+        "BLOCKED",
+        "UNPROVEN"
+      ],
+      "type": "string"
+    },
+    "document_id": {
+      "minLength": 1,
+      "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*$",
+      "type": "string"
+    },
+    "evidence_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "findings": {
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "evidence": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "finding_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "BLOCKING",
+              "IMPORTANT",
+              "OPTIONAL"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "finding_id",
+          "severity",
+          "evidence"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "implementer_actor_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "implementer_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "implementer_session_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "independent_checks": {
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "observed": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "observed"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "owner": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "project_id": {
+      "minLength": 1,
+      "pattern": "^PRJ-[A-Z0-9]+(?:-[A-Z0-9]+)*$",
+      "type": "string",
+      "x-studio-reference": "project.project_id"
+    },
+    "requirement_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "requirements": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array",
+      "x-studio-reference": "product_spec.requirements"
+    },
+    "requirements_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "review_id": {
+      "minLength": 1,
+      "pattern": "^REV-[A-Z0-9]+(?:-[A-Z0-9]+)*$",
+      "type": "string",
+      "x-studio-reference": "independent_review.review_id"
+    },
+    "reviewed_base_sha": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "reviewed_head_sha": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "reviewer_actor_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "reviewer_context": {
+      "minLength": 1,
+      "not": {
+        "anyOf": [
+          {
+            "pattern": "[Ss]ame [Ss]ession"
+          },
+          {
+            "pattern": "[Ii]mplementation [Ss]ession"
+          }
+        ]
+      },
+      "type": "string"
+    },
+    "reviewer_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "reviewer_role": {
+      "minLength": 1,
+      "not": {
+        "anyOf": [
+          {
+            "pattern": "[Ee]xecutor"
+          },
+          {
+            "pattern": "[Ii]mplementer"
+          }
+        ]
+      },
+      "type": "string"
+    },
+    "reviewer_session_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "scope_delta": {
+      "additionalProperties": true,
+      "properties": {
+        "allowed": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "changed": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "allowed",
+        "changed"
+      ],
+      "type": "object"
+    },
+    "sources": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
+    },
     "status": {
+      "enum": [
+        "DRAFT",
+        "PROPOSED",
+        "APPROVED",
+        "FROZEN",
+        "IN_PROGRESS",
+        "PROVING",
+        "IN_REVIEW",
+        "ACCEPTED",
+        "CLOSED",
+        "RELEASED",
+        "PASS",
+        "PASS_WITH_LIMITATIONS",
+        "BLOCKED",
+        "NOT_RUN",
+        "UNPROVEN"
+      ],
       "type": "string"
     },
     "verification": {
-      "enum": [
-        "E0",
-        "E1",
-        "E2",
-        "E3",
-        "E4",
-        "E5",
-        "verified",
-        "partial",
-        "unverified",
-        "not-applicable"
-      ]
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "type": "array"
     },
     "version": {
-      "pattern": "^2\\.",
+      "const": "2.0.0",
       "type": "string"
+    },
+    "wp_id": {
+      "minLength": 1,
+      "pattern": "^WP-[A-Z0-9]+(?:-[A-Z0-9]+)*$",
+      "type": "string",
+      "x-studio-reference": "work_package.wp_id"
     }
   },
   "required": [
     "document_id",
     "review_id",
+    "reviewer_actor_id",
+    "reviewer_session_id",
     "reviewer_role",
     "reviewer_context",
+    "implementer_actor_id",
+    "implementer_session_id",
+    "reviewed_base_sha",
     "reviewed_head_sha",
     "wp_id",
     "requirements",
+    "requirements_digest",
+    "artifact_ids",
+    "evidence_digest",
     "independent_checks",
     "scope_delta",
     "findings",
     "disposition",
     "conditions"
   ],
-  "title": "Studio V2 INDEPENDENT_REVIEW artifact",
-  "type": "object"
+  "title": "Studio V2 independent review contract",
+  "type": "object",
+  "x-studio-version": "2.0.0"
 }

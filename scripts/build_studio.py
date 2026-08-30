@@ -8,6 +8,9 @@ import hashlib
 import json
 import re
 import shutil
+import subprocess
+import sys
+import tempfile
 import zipfile
 from pathlib import Path
 from typing import Any, Iterable
@@ -20,6 +23,36 @@ TEXT_NAMES = {".gitignore", ".studio-generated"}
 
 ID_PATTERN = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 FRONTMATTER = "---\n"
+STUDIO_VERSION = "2.0.0"
+STATUS_VALUES = ["DRAFT", "PROPOSED", "APPROVED", "FROZEN", "IN_PROGRESS", "PROVING", "IN_REVIEW", "ACCEPTED", "CLOSED", "RELEASED", "PASS", "PASS_WITH_LIMITATIONS", "BLOCKED", "NOT_RUN", "UNPROVEN"]
+SHA_PATTERN = "^[0-9a-f]{40}$"
+ID_FIELDS = {
+    "document_id": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*$",
+    "project_id": "^PRJ-[A-Z0-9]+(?:-[A-Z0-9]+)*$",
+    "wp_id": "^WP-[A-Z0-9]+(?:-[A-Z0-9]+)*$",
+    "snapshot_id": "^SNAP-[A-Z0-9]+(?:-[A-Z0-9]+)*$",
+    "review_id": "^REV-[A-Z0-9]+(?:-[A-Z0-9]+)*$",
+    "repair_id": "^REPAIR-[A-Z0-9]+(?:-[A-Z0-9]+)*$",
+    "evidence_id": "^EVID-[A-Z0-9]+(?:-[A-Z0-9]+)*$",
+    "milestone_id": "^MILESTONE-[A-Z0-9]+(?:-[A-Z0-9]+)*$",
+    "change_id": "^CHG-[A-Z0-9]+(?:-[A-Z0-9]+)*$",
+}
+ARRAY_STRING_FIELDS = {
+    "requirements", "allowed_paths", "forbidden_paths", "non_goals", "stop_conditions", "handoff_requirements",
+    "claimed_outcomes", "unproven", "conditions", "artifact_set", "artifact_ids", "proof_levels", "commands", "runtime_probes",
+    "work_packages", "dependencies", "next_actions", "outcomes", "friction", "decisions", "waivers",
+}
+ARRAY_OBJECT_FIELDS = {
+    "verification", "independent_checks", "findings", "evidence", "claims", "options", "scenarios", "entities",
+    "relationships", "invariants", "ownership", "unknowns", "states", "components", "package_digests",
+}
+OBJECT_FIELDS = {"scope_budget", "scope_delta", "environment"}
+DATE_FIELDS = {"timestamp", "occurred_at", "retrieved", "last_verified", "next_review_trigger"}
+REFERENCE_FIELDS = {
+    "project_id": "project.project_id", "wp_id": "work_package.wp_id", "snapshot_id": "snapshot.snapshot_id",
+    "review_id": "independent_review.review_id", "evidence_id": "evidence_receipt.evidence_id",
+    "requirement": "product_spec.requirements", "requirements": "product_spec.requirements",
+}
 
 
 def fail(message: str) -> None:
@@ -75,8 +108,13 @@ def load_catalog() -> dict[str, Any]:
 
 def validate_catalog(catalog: dict[str, Any]) -> None:
     suite = catalog.get("suite", {})
-    if suite.get("id") != "studio" or suite.get("version") != "2.0.0":
+    if suite.get("id") != "studio" or suite.get("version") != STUDIO_VERSION:
         fail("catalog suite identity/version")
+    generation = catalog.get("generation", {})
+    if generation.get("generator") != "scripts/build_studio.py" or generation.get("generator_version") != "2.0.1":
+        fail("catalog generation metadata")
+    if generation.get("icon_renderer") != "scripts/render_icons.py" or not generation.get("manifest_roots"):
+        fail("catalog generation inputs")
     if catalog.get("result_states") != ["PASS", "PASS_WITH_LIMITATIONS", "BLOCKED", "NOT_RUN", "UNPROVEN"]:
         fail("catalog result state vocabulary")
     generated = catalog.get("generated_skills", [])
@@ -103,6 +141,24 @@ def validate_catalog(catalog: dict[str, Any]) -> None:
     roles = catalog.get("icon_system", {}).get("roles", {})
     if set(roles) != set(plugin_ids):
         fail("icon roles must cover every generated plugin")
+    icon_assets = catalog["icon_system"].get("source_assets", [])
+    if not icon_assets or any(not (ROOT / item).exists() for item in icon_assets):
+        fail("icon source assets must exist")
+    defaults = catalog.get("package_defaults", {})
+    if set(defaults) != set(plugin_ids):
+        fail("package defaults must cover every generated plugin")
+    for plugin_id, config in defaults.items():
+        if not config.get("default_prompt") or not config.get("chatgpt_default_prompt"):
+            fail(f"{plugin_id}: missing catalog prompts")
+        if not isinstance(config.get("app_references", {}).get("CHATGPT"), list):
+            fail(f"{plugin_id}: ChatGPT app references must be explicit")
+        recipe = config.get("recipe", {})
+        if not recipe.get("id") or not recipe.get("version") or not recipe.get("chatgpt"):
+            fail(f"{plugin_id}: incomplete package recipe")
+    lens_contracts = catalog.get("lens_contracts", {})
+    for skill in generated:
+        if skill.get("role") == "lens" and skill.get("id") not in lens_contracts:
+            fail(f"{skill['id']}: missing lens contract")
 
 
 def skill_index(catalog: dict[str, Any]) -> dict[str, dict[str, Any]]:
@@ -114,6 +170,30 @@ def skill_index(catalog: dict[str, Any]) -> dict[str, dict[str, Any]]:
     return index
 
 
+def package_config(catalog: dict[str, Any], plugin_id: str) -> dict[str, Any]:
+    return catalog["package_defaults"][plugin_id]
+
+
+def value_digest(value: Any) -> str:
+    return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
+def package_metadata(catalog: dict[str, Any], plugin: dict[str, Any]) -> dict[str, Any]:
+    config = package_config(catalog, plugin["id"])
+    generation = catalog["generation"]
+    return {
+        "suite_version": catalog["suite"]["version"],
+        "generator": generation["generator"],
+        "generator_version": generation["generator_version"],
+        "generator_digest": sha256(ROOT / generation["generator"]),
+        "recipe_id": config["recipe"]["id"],
+        "recipe_version": config["recipe"]["version"],
+        "recipe_digest": value_digest(config["recipe"]),
+        "app_references": config["app_references"],
+        "icon_sources": catalog["icon_system"]["roles"][plugin["id"]]["sources"],
+    }
+
+
 def render_generated_skills(catalog: dict[str, Any]) -> None:
     root = ROOT / "skills" / "studio"
     if root.exists() and not (root / ".studio-generated").is_file():
@@ -122,6 +202,13 @@ def render_generated_skills(catalog: dict[str, Any]) -> None:
     for skill in catalog["generated_skills"]:
         title = skill["id"].replace("-", " ").title()
         outputs = ", ".join(f"`{value}`" for value in skill["outputs"])
+        contract = catalog.get("lens_contracts", {}).get(skill["id"], {
+            "input_contract": f"current project state and the request for {skill['focus']}",
+            "method": f"Apply a bounded review of {skill['focus']} and preserve the evidence trail.",
+            "output_contract": f"named {', '.join(skill['outputs'])} outputs with evidence and one next action",
+            "stop_condition": "Stop when required context or direct proof is missing.",
+            "escalation": "Escalate unresolved authority, safety, or scope conflicts instead of guessing.",
+        })
         body = "\n".join(
             [
                 FRONTMATTER,
@@ -139,11 +226,19 @@ def render_generated_skills(catalog: dict[str, Any]) -> None:
                 f"- This skill does not own {skill['never_owns']}.",
                 "- Keep durable decisions as observations, assumptions, constraints, options, evidence, trade-offs, risks, confidence, and revisit triggers; never store private chain-of-thought.",
                 "",
+                "## Lens contract",
+                "",
+                f"- Input: {contract['input_contract']}",
+                f"- Method: {contract['method']}",
+                f"- Output: {contract['output_contract']}",
+                f"- Stop: {contract['stop_condition']}",
+                f"- Escalate: {contract['escalation']}",
+                "",
                 "## Procedure",
                 "",
                 "1. Identify the active profile, archetype, phase, work package, authority map, and next valid transition.",
-                "2. Apply the smallest adequate solution ladder and record why higher machinery is not required.",
-                "3. Make requirements, acceptance, scope, proof level, and stop conditions observable.",
+                "2. Read only the inputs named by the lens contract and apply its method to the smallest adequate scope.",
+                "3. Make requirements, acceptance, scope, proof, and the contract stop condition observable.",
                 "4. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.",
                 "5. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.",
                 "",
@@ -157,25 +252,90 @@ def render_generated_skills(catalog: dict[str, Any]) -> None:
 
 
 def template_text(name: str, spec: dict[str, Any]) -> str:
+    goals = {
+        "PROJECT_INDEX": "Keep project identity, authority, phase, and recovery entry points in one readable index.",
+        "CURRENT_STATE": "Expose the current phase, revision, proof, blockers, and exactly one next action.",
+        "PROJECT_BRIEF": "Turn the request into a bounded outcome with explicit constraints, assumptions, and disposition.",
+        "PRODUCT_SPEC": "Make the desired behavior, scenarios, acceptance, and proof observable.",
+        "CHANGE_PROPOSAL": "Record why a decision should change, its impact, approval, and rollback.",
+        "RESEARCH_DECISION_MEMO": "Connect decision-changing claims to source quality, trade-offs, confidence, and refresh triggers.",
+        "SOURCE_LEDGER": "Preserve claim-level source, freshness, license, strength, and decision links.",
+        "DOMAIN_MODEL": "Define only the entities, relationships, invariants, ownership, and unknowns needed next.",
+        "ARCHITECTURE": "Make boundaries, quality attributes, dependencies, trust edges, recovery, and revisit triggers reviewable.",
+        "ADR": "Capture one durable decision, the options considered, consequences, evidence, and revisit trigger.",
+        "EXPERIENCE_SPEC": "Describe the actor's flow, states, responsive behavior, accessibility, fallback, and visual proof.",
+        "DELIVERY_PLAN": "Sequence bounded work packages with dependencies, requirements, budget, and review gates.",
+        "VERIFICATION_CONTRACT": "Map every requirement to direct commands, probes, evidence levels, failure policy, and rollback.",
+        "WORK_PACKAGE": "Give one executor a frozen, bounded outcome with allowed paths, proof, stop conditions, and handoff.",
+        "CONTEXT_CAPSULE": "Provide only the active work package context required for a safe fresh session.",
+        "IMPLEMENTATION_HANDOFF": "Let an independent reviewer reproduce what changed, what was tested, and what remains unproven.",
+        "INDEPENDENT_REVIEW": "Prove an independent reviewer examined the exact requirements, revision, scope, evidence, and findings.",
+        "REPAIR_PACKAGE": "Turn accepted findings into a bounded repair with regression proof and explicit stop conditions.",
+        "EVIDENCE_RECEIPT": "Record one direct observation with its requirement, command, result, digest, environment, and limitation.",
+        "MILESTONE_RECEIPT": "Tie a milestone outcome to accepted work packages, evidence, revision, residual risk, and owner approval.",
+        "RELEASE_RECEIPT": "Qualify one release revision with review, package evidence, limitations, waivers, rollback, and approval.",
+        "RETRO_DISTILLATION": "Separate measured learning and friction from the next bounded improvements."
+    }
+    goal = goals.get(name, f"Capture the {name.lower().replace('_', ' ')} needed for the next Studio decision.")
     lines = [
         FRONTMATTER,
         "schema: studio.artifact-template/v2",
         f"artifact_type: {name}",
         "authority: Studio catalog",
         "status: DRAFT",
-        "version: 2.0",
+        f"version: {STUDIO_VERSION}",
         "---",
         f"# {name}",
         "",
+        goal,
         "Fill only the fields required for the current profile and next phase.",
         "Never invent missing facts; use `TBD` or `UNPROVEN` with an owner and next action.",
         "",
-        "## Required fields",
+        "## Non-goals",
         "",
+        "- Do not create a competing authority, silently expand scope, or convert an unverified claim into proof.",
+        "",
+        "## Assumptions",
+        "",
+        "- State each load-bearing assumption, owner, confidence, and cheapest useful validation.",
+        "",
+        "## Requirements and inputs",
+        "",
+        "| Field | Shape | Reference or rule |",
+        "|---|---|---|",
     ]
-    lines.extend(f"- `{field}`" for field in spec["required_fields"])
+    for field in spec["required_fields"]:
+        schema = field_schema(field)
+        shape = schema.get("type", "value")
+        if isinstance(shape, list):
+            shape = " or ".join(shape)
+        if "items" in schema:
+            item_type = schema["items"].get("type", "value")
+            shape = f"{shape}[{item_type}]"
+        rule = schema.get("x-studio-reference", schema.get("format", schema.get("pattern", "required")))
+        lines.append(f"| `{field}` | `{shape}` | `{rule}` |")
+    lines.extend([
+        "",
+        "## Proof",
+        "",
+        "- Evidence level: `E0`/`E1`/`E2`/`E3`/`E4`/`E5` or `UNPROVEN`.",
+        "- Direct command or probe: `TBD`.",
+        "- Observed result and output digest: `TBD`.",
+        "",
+        "## References",
+        "",
+        "- Governing source or linked artifact ID: `TBD`.",
+        "- Current revision or retrieval date: `TBD`.",
+        "",
+        "## Next action",
+        "",
+        "- Name one owner, one bounded action, and the evidence needed to close it.",
+        "",
+        "## Artifact blueprint",
+        "",
+    ])
     for section in spec["sections"]:
-        lines.extend(["", f"## {section}", "", "- "])
+        lines.extend([f"### {section}", "", f"Record the {section.lower()} using the fields above; link IDs and direct proof where available.", ""])
     return "\n".join(lines) + "\n"
 
 
@@ -186,27 +346,64 @@ def render_templates(catalog: dict[str, Any]) -> None:
         write_text(root / f"{name.lower()}.md", template_text(name, spec))
 
 
-def schema_for(name: str, required: list[str], title: str, properties: dict[str, Any] | None = None) -> dict[str, Any]:
+def field_schema(field: str) -> dict[str, Any]:
+    if field in ID_FIELDS:
+        schema: dict[str, Any] = {"type": "string", "pattern": ID_FIELDS[field], "minLength": 1}
+    elif field in {"base_sha", "head_sha", "reviewed_base_sha", "reviewed_head_sha", "current_sha", "revision", "candidate_sha"}:
+        schema = {"type": "string", "pattern": SHA_PATTERN}
+    elif field in {"requirement_digest", "requirements_digest", "evidence_digest", "output_digest", "observed_output_digest"}:
+        schema = {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+    elif field in DATE_FIELDS:
+        schema = {"type": "string", "format": "date-time"}
+    elif field in ARRAY_STRING_FIELDS:
+        schema = {"type": "array", "items": {"type": "string", "minLength": 1}}
+    elif field in ARRAY_OBJECT_FIELDS:
+        schema = {"type": "array", "items": {"type": "object", "additionalProperties": True}}
+    elif field in OBJECT_FIELDS:
+        schema = {"type": "object", "additionalProperties": True}
+    elif field == "level" or field == "proof_level":
+        schema = {"type": "string", "enum": ["E0", "E1", "E2", "E3", "E4", "E5", "UNPROVEN"]}
+    elif field == "verification":
+        schema = {"type": "array", "items": {"type": "object", "additionalProperties": True}}
+    elif field == "status":
+        schema = {"type": "string", "enum": STATUS_VALUES}
+    elif field == "severity":
+        schema = {"type": "string", "enum": ["BLOCKING", "IMPORTANT", "OPTIONAL"]}
+    elif field == "disposition":
+        schema = {"type": "string", "enum": ["ACCEPT", "REPAIR", "REJECT", "BLOCKED", "UNPROVEN"]}
+    elif field == "version":
+        schema = {"type": "string", "const": STUDIO_VERSION}
+    else:
+        schema = {"type": "string", "minLength": 1}
+    if field in REFERENCE_FIELDS:
+        schema["x-studio-reference"] = REFERENCE_FIELDS[field]
+    return schema
+
+
+def schema_for(name: str, required: list[str], title: str, properties: dict[str, Any] | None = None, additional_properties: bool = False) -> dict[str, Any]:
     common: dict[str, Any] = {
-        "document_id": {"type": "string", "pattern": "^[A-Z][A-Z0-9-]+$"},
-        "project_id": {"type": "string", "pattern": "^PRJ-[A-Z0-9-]+$"},
-        "status": {"type": "string"},
-        "version": {"type": "string", "pattern": "^2\\."},
-        "owner": {"type": "string"},
-        "authority": {"type": "string"},
-        "sources": {"type": "array", "items": {"type": "string"}},
-        "verification": {"enum": ["E0", "E1", "E2", "E3", "E4", "E5", "verified", "partial", "unverified", "not-applicable"]},
+        "document_id": field_schema("document_id"),
+        "project_id": field_schema("project_id"),
+        "status": field_schema("status"),
+        "version": field_schema("version"),
+        "owner": field_schema("owner"),
+        "authority": field_schema("authority"),
+        "sources": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "verification": field_schema("verification"),
     }
+    common.update({field: field_schema(field) for field in required if field not in common})
     if properties:
         common.update(properties)
     return {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "$id": f"studio://schemas/v2/{name}.schema.json",
         "title": title,
+        "description": "Versioned Studio V2 artifact contract; unknown top-level fields are rejected.",
         "type": "object",
-        "additionalProperties": True,
+        "additionalProperties": additional_properties,
         "properties": common,
         "required": required,
+        "x-studio-version": STUDIO_VERSION,
     }
 
 
@@ -217,24 +414,40 @@ def render_schemas(catalog: dict[str, Any]) -> None:
     for name, spec in artifacts.items():
         write_json(root / f"{name.lower()}.schema.json", schema_for(name, spec["required_fields"], f"Studio V2 {name} artifact"))
 
-    special: dict[str, dict[str, Any]] = {
-        "project": schema_for(
-            "project",
-            ["project_id", "profile", "archetype", "phase", "status", "active_wp", "authorities"],
-            "Studio V2 project control plane",
-            {"profile": {"enum": ["lite", "standard", "full"]}, "archetype": {"enum": catalog["archetypes"]}, "phase": {"type": "string"}, "active_wp": {"type": ["string", "null"]}, "authorities": {"type": "object"}},
-        ),
-        "state": schema_for(
-            "state",
-            ["project_id", "phase", "status", "active_wp", "current_sha", "next_action"],
-            "Studio V2 state projection",
-            {"phase": {"type": "string"}, "active_wp": {"type": ["string", "null"]}, "current_sha": {"type": ["string", "null"], "pattern": "^([0-9a-f]{40})?$"}, "next_action": {"type": "string"}},
-        ),
-        "event": schema_for("event", ["event_id", "project_id", "event_type", "occurred_at", "actor"], "Studio V2 state event", {"event_id": {"type": "string", "pattern": "^EV-[0-9]{3,}$"}, "event_type": {"type": "string"}, "occurred_at": {"type": "string", "format": "date-time"}, "actor": {"type": "string"}}),
-        "snapshot": schema_for("snapshot", ["snapshot_id", "project_id", "base_sha", "status", "approved_by"], "Studio V2 frozen snapshot", {"snapshot_id": {"type": "string", "pattern": "^SNAP-[0-9]{3,}$"}, "base_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"}, "approved_by": {"type": "string"}}),
-        "finding": schema_for("finding", ["finding_id", "severity", "requirement", "evidence", "repair_acceptance"], "Studio V2 review finding", {"finding_id": {"type": "string", "pattern": "^FIND-[0-9]{3,}$"}, "severity": {"enum": ["BLOCKING", "IMPORTANT", "OPTIONAL"]}, "requirement": {"type": "string"}, "evidence": {"type": "string"}, "repair_acceptance": {"type": "string"}}),
+    sha_fields = {"type": "string", "pattern": SHA_PATTERN}
+    common_contracts = {
+        "project": ("Studio V2 project control plane", ["project_id", "profile", "archetype", "phase", "status", "active_wp", "authorities"], {
+            "profile": {"type": "string", "enum": ["lite", "standard", "full"]}, "archetype": {"type": "string", "enum": catalog["archetypes"]}, "phase": {"type": "string", "enum": ["INTAKE", "SHAPED", "PLANNED", "FROZEN", "IMPLEMENTING", "PROVING", "IN_REVIEW", "REPAIR", "ACCEPTED", "CLOSED", "RELEASED"]}, "active_wp": {"type": ["string", "null"], "pattern": "^WP-[A-Z0-9-]+$"}, "authorities": {"type": "object", "additionalProperties": {"type": "string"}}
+        }),
+        "state": ("Studio V2 state projection", ["project_id", "phase", "status", "active_wp", "current_sha", "next_action"], {
+            "phase": {"type": "string", "enum": ["INTAKE", "SHAPED", "PLANNED", "FROZEN", "IMPLEMENTING", "PROVING", "IN_REVIEW", "REPAIR", "ACCEPTED", "CLOSED", "RELEASED"]}, "active_wp": {"type": ["string", "null"], "pattern": "^WP-[A-Z0-9-]+$"}, "current_sha": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"}, "next_action": {"type": "string", "minLength": 1}
+        }),
+        "event": ("Studio V2 state event", ["event_id", "project_id", "event_type", "occurred_at", "actor"], {
+            "event_id": {"type": "string", "pattern": "^EV-[0-9]{3,}$"}, "event_type": {"type": "string", "minLength": 1}, "occurred_at": {"type": "string", "format": "date-time"}, "actor": {"type": "string", "minLength": 1}
+        }),
+        "snapshot": ("Studio V2 frozen snapshot", ["snapshot_id", "project_id", "base_sha", "status", "approved_by"], {
+            "snapshot_id": {"type": "string", "pattern": "^SNAP-[A-Z0-9]+(?:-[A-Z0-9]+)*$"}, "base_sha": sha_fields, "approved_by": {"type": "string", "minLength": 1}
+        }),
+        "finding": ("Studio V2 review finding", ["finding_id", "severity", "requirement", "evidence", "repair_acceptance"], {
+            "finding_id": {"type": "string", "pattern": "^FIND-[0-9]{3,}$"}, "severity": {"type": "string", "enum": ["BLOCKING", "IMPORTANT", "OPTIONAL"]}, "requirement": {"type": "string", "minLength": 1}, "evidence": {"type": "string", "minLength": 1}, "repair_acceptance": {"type": "string", "minLength": 1}
+        }),
     }
-    for name, schema in special.items():
+    for name, (title, required, properties) in common_contracts.items():
+        write_json(root / f"{name}.schema.json", schema_for(name, required, title, properties))
+
+    review_schema = schema_for("independent_review", artifacts["INDEPENDENT_REVIEW"]["required_fields"], "Studio V2 independent review contract", {
+        "reviewer_id": {"type": "string", "minLength": 1}, "reviewer_session_id": {"type": "string", "minLength": 1}, "reviewer_role": {"type": "string", "minLength": 1, "not": {"anyOf": [{"pattern": "[Ee]xecutor"}, {"pattern": "[Ii]mplementer"}]}}, "reviewer_context": {"type": "string", "minLength": 1, "not": {"anyOf": [{"pattern": "[Ss]ame [Ss]ession"}, {"pattern": "[Ii]mplementation [Ss]ession"}]}}, "implementer_id": {"type": "string", "minLength": 1}, "implementer_session_id": {"type": "string", "minLength": 1}, "reviewed_head_sha": sha_fields, "base_sha": sha_fields, "requirement_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "artifact_set": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "evidence_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "independent_checks": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["name", "observed"], "properties": {"name": {"type": "string", "minLength": 1}, "observed": {"type": "string", "minLength": 1}}, "additionalProperties": True}}, "scope_delta": {"type": "object", "required": ["allowed", "changed"], "properties": {"allowed": {"type": "array", "items": {"type": "string"}}, "changed": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": True}, "findings": {"type": "array", "items": {"type": "object", "required": ["finding_id", "severity", "evidence"], "properties": {"finding_id": {"type": "string", "minLength": 1}, "severity": {"type": "string", "enum": ["BLOCKING", "IMPORTANT", "OPTIONAL"]}, "evidence": {"type": "string", "minLength": 1}}, "additionalProperties": True}}, "disposition": {"type": "string", "enum": ["ACCEPT", "REPAIR", "REJECT", "BLOCKED", "UNPROVEN"]}, "conditions": {"type": "array", "items": {"type": "string"}}
+    })
+    work_package_schema = schema_for("work_package", artifacts["WORK_PACKAGE"]["required_fields"], "Studio V2 work package contract", {
+        "base_sha": sha_fields, "implementer_id": {"type": "string", "minLength": 1}, "implementer_session_id": {"type": "string", "minLength": 1}, "requirement_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "scope_budget": {"type": "object", "required": ["primary_outcomes", "subsystems", "new_dependencies"], "properties": {"primary_outcomes": {"type": "integer", "minimum": 1}, "subsystems": {"type": "integer", "minimum": 1}, "new_dependencies": {"type": "integer", "minimum": 0}}, "additionalProperties": False}, "acceptance": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "verification": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["level", "command"], "properties": {"level": {"type": "string", "enum": catalog["evidence_levels"]}, "command": {"type": "string", "minLength": 1}}, "additionalProperties": True}}
+    })
+    evidence_schema = schema_for("evidence_receipt", artifacts["EVIDENCE_RECEIPT"]["required_fields"], "Studio V2 evidence receipt contract", {
+        "level": {"type": "string", "enum": catalog["evidence_levels"]}, "command_or_probe": {"type": "string", "minLength": 1}, "observed": {"type": "string", "minLength": 1}, "timestamp": {"type": "string", "format": "date-time"}, "sequence": {"type": "integer", "minimum": 1}, "exit_code": {"type": "integer", "minimum": 0}, "observed_output_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "environment": {"type": ["string", "object"], "additionalProperties": {"type": "string"}}, "head_sha": sha_fields, "limitations": {"type": ["string", "array"], "minItems": 1, "items": {"type": "string", "minLength": 1}}
+    })
+    release_schema = schema_for("release_receipt", artifacts["RELEASE_RECEIPT"]["required_fields"], "Studio V2 release receipt contract", {
+        "version": {"type": "string", "pattern": "^2\\."}, "revision": sha_fields, "review_id": field_schema("review_id"), "requirement_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "package_digests": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}, "environment": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "string"}}, "evidence": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "limitations": {"type": "array", "items": {"type": "string"}}, "waivers": {"type": "array", "items": {"type": "string"}}, "rollback": {"type": "string", "minLength": 1}, "owner_approval": {"type": "string", "minLength": 1}
+    })
+    for name, schema in {"independent_review": review_schema, "work_package": work_package_schema, "evidence_receipt": evidence_schema, "release_receipt": release_schema}.items():
         write_json(root / f"{name}.schema.json", schema)
     write_json(
         root / "state-transitions.json",
@@ -262,6 +475,7 @@ def plugin_manifest(catalog: dict[str, Any], plugin: dict[str, Any], skills: lis
     display = plugin["display_name"]
     version = catalog["suite"]["version"]
     description = f"{display} v{version}: {plugin['description']}"
+    config = package_config(catalog, plugin["id"])
     return {
         "name": plugin["id"],
         "version": version,
@@ -281,7 +495,7 @@ def plugin_manifest(catalog: dict[str, Any], plugin: dict[str, Any], skills: lis
             "websiteURL": catalog["repository"]["url"],
             "privacyPolicyURL": f"{catalog['repository']['url']}/blob/master/README.md",
             "termsOfServiceURL": f"{catalog['repository']['url']}/blob/master/LICENSE",
-            "defaultPrompt": [f"Use {display} for this bounded software task.", "Read the current Studio state before acting."],
+            "defaultPrompt": config["default_prompt"],
             "brandColor": catalog["icon_system"]["palette"][catalog["icon_system"]["roles"][role]["accent"]],
             "composerIcon": "./assets/plugin-icon.png",
             "logo": "./assets/logo.png",
@@ -318,6 +532,9 @@ def assemble_packages(catalog: dict[str, Any]) -> dict[str, dict[str, Any]]:
         write_json(package / ".codex-plugin" / "plugin.json", manifest)
         (package / "assets").mkdir(parents=True, exist_ok=True)
         role = role_map[plugin_id]
+        for source in role.get("sources", {}).values():
+            if not (ROOT / source).is_file():
+                fail(f"{plugin_id}: missing icon source {source}")
         icon_root = ROOT / "brand" / "icon-system" / "generated"
         for filename, source in (("plugin-icon.png", f"{plugin_id}-128.png"), ("chatgpt-icon.png", f"{plugin_id}-64.png"), ("logo.png", f"{plugin_id}-256.png"), ("logo-dark.png", f"{plugin_id}-mono-256.png")):
             shutil.copy2(icon_root / source, package / "assets" / filename)
@@ -327,7 +544,7 @@ def assemble_packages(catalog: dict[str, Any]) -> dict[str, dict[str, Any]]:
                 fail(f"{plugin_id}: missing skill source {source}")
             copy_tree(source, package / "skills" / skill_id)
         write_text(package / "README.md", f"# {plugin['display_name']}\n\nVersion: {catalog['suite']['version']}\n\nGenerated from `catalog/studio.yaml` by `scripts/build_studio.py`. Legacy aliases: {', '.join(plugin['legacy_aliases'])}.\n\nThis generated package is skills-first and contains no MCP or app declaration.\n")
-        package_info[plugin_id] = {"display_name": plugin["display_name"], "version": catalog["suite"]["version"], "skills": skill_ids, "legacy_aliases": plugin["legacy_aliases"], "path": str(package.relative_to(ROOT)).replace("\\", "/")}
+        package_info[plugin_id] = {"display_name": plugin["display_name"], "version": catalog["suite"]["version"], "skills": skill_ids, "legacy_aliases": plugin["legacy_aliases"], "path": str(package.relative_to(ROOT)).replace("\\", "/"), "metadata": package_metadata(catalog, plugin)}
     return package_info
 
 
@@ -379,13 +596,20 @@ def archive_sort_key(path: Path, source: Path) -> tuple[str, bytes]:
     return archive_name_sort_key(path.relative_to(source).as_posix())
 
 
-def zip_package(source: Path, package_id: str, output: Path, display_name: str) -> None:
+def zip_package(source: Path, plugin: dict[str, Any], output: Path) -> None:
+    package_id = plugin["id"]
+    display_name = plugin["display_name"]
+    config = package_config(load_catalog(), package_id)
     output.parent.mkdir(parents=True, exist_ok=True)
     root_name = "studio" if package_id == "studio-delivery" else package_id
     manifest = json.loads((source / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
     if "mcpServers" in manifest or "apps" in manifest:
         fail(f"{package_id}: default ChatGPT package cannot declare MCP/apps")
-    paths = [path for path in source.rglob("*") if path.is_file() and ".studio-generated" not in path.parts and path.name not in {".studio-generated", ".mcp.json", ".app.json"}]
+    chatgpt_recipe = config["recipe"]["chatgpt"]
+    if chatgpt_recipe.get("app_references") != [] or chatgpt_recipe.get("mcp_servers") != []:
+        fail(f"{package_id}: skills-first ChatGPT recipe must declare no apps or MCP servers")
+    excluded = set(chatgpt_recipe.get("exclude", [])) | {".studio-generated"}
+    paths = [path for path in source.rglob("*") if path.is_file() and ".studio-generated" not in path.parts and path.name not in excluded]
     wrapper = "\n".join([
         FRONTMATTER,
         f"name: studio-chatgpt-{package_id}",
@@ -405,7 +629,7 @@ def zip_package(source: Path, package_id: str, output: Path, display_name: str) 
         '  icon_small: "./assets/chatgpt-icon.png"',
         '  icon_large: "./assets/logo.png"',
         f"  brand_color: {json.dumps(manifest['interface']['brandColor'])}",
-        f"  default_prompt: {json.dumps(f'Use {display_name} for this bounded software task.')}",
+        f"  default_prompt: {json.dumps(config['chatgpt_default_prompt'])}",
         "",
     ]).encode("utf-8")
     entries = [
@@ -430,9 +654,9 @@ def package_chatgpt(catalog: dict[str, Any], package_info: dict[str, dict[str, A
     hashes: dict[str, str] = {}
     for plugin_id, info in package_info.items():
         output = root / "studio.zip" if plugin_id == "studio-delivery" else root / "satellites" / f"{plugin_id}.zip"
-        zip_package(ROOT / "generated" / "codex" / "plugins" / plugin_id, plugin_id, output, info["display_name"])
+        zip_package(ROOT / "generated" / "codex" / "plugins" / plugin_id, next(plugin for plugin in catalog["plugins"] if plugin["id"] == plugin_id), output)
         hashes[str(output.relative_to(ROOT)).replace("\\", "/")] = sha256(output)
-    write_json(root / "package-source.json", {"schema": "studio.chatgpt-packages/v2", "version": catalog["suite"]["version"], "default": "dist/chatgpt/studio.zip", "mcp_declared": False, "packages": hashes})
+    write_json(root / "package-source.json", {"schema": "studio.chatgpt-packages/v2", "version": catalog["suite"]["version"], "default": "dist/chatgpt/studio.zip", "mcp_declared": False, "packages": hashes, "metadata": {plugin_id: info["metadata"] for plugin_id, info in package_info.items()}})
     return hashes
 
 
@@ -443,13 +667,34 @@ def render_catalog_outputs(catalog: dict[str, Any], package_info: dict[str, dict
     write_json(generated / "compatibility-aliases.json", {"schema": "studio.compatibility/v2", "version": catalog["suite"]["version"], "aliases": [{"package": p["id"], "display_name": p["display_name"], "aliases": p["legacy_aliases"]} for p in catalog["plugins"]]})
     write_json(generated / "archive-hashes.json", {"schema": "studio.archive-hashes/v2", "version": catalog["suite"]["version"], "archives": archive_hashes})
     source_files: dict[str, str] = {"catalog/studio.yaml": sha256(CATALOG_PATH)}
+
+    def add_manifest_path(relative: str) -> None:
+        path = ROOT / relative
+        if path.is_file():
+            source_files[relative.replace("\\", "/")] = sha256(path)
+            return
+        if not path.is_dir():
+            fail(f"source manifest input is missing: {relative}")
+        for child in sorted(path.rglob("*")):
+            if child.is_file():
+                source_files[str(child.relative_to(ROOT)).replace("\\", "/")] = sha256(child)
+
+    add_manifest_path(catalog["generation"]["generator"])
+    add_manifest_path(catalog["generation"]["icon_renderer"])
+    for relative in (
+        catalog["generation"]["manifest_roots"]
+        + catalog["generation"]["validation_inputs"]
+        + catalog["icon_system"]["source_assets"]
+    ):
+        add_manifest_path(relative)
+    add_manifest_path("skills/studio")
     index = skill_index(catalog)
     for skill_id, skill in index.items():
         source = ROOT / "skills" / "studio" / skill_id if skill.get("generated") else ROOT / skill["source"]
         for path in sorted(source.rglob("*")):
             if path.is_file():
                 source_files[str(path.relative_to(ROOT)).replace("\\", "/")] = sha256(path)
-    write_json(generated / "source-manifest.json", {"schema": "studio.source-manifest/v2", "version": catalog["suite"]["version"], "hash_mode": "sha256-lf-normalized-text", "files": source_files, "copied_files": [], "modifications": "Generated packages copy repository-owned source skills; no third-party files or text are copied."})
+    write_json(generated / "source-manifest.json", {"schema": "studio.source-manifest/v2", "version": catalog["suite"]["version"], "hash_mode": catalog["generation"]["hash_mode"], "files": source_files, "copied_files": [], "modifications": "Generated packages copy repository-owned source skills; no third-party files or text are copied."})
     lines = ["# Studio V2 package table", "", "Generated from `catalog/studio.yaml`.", "", "| Package | Display name | Skills | Legacy aliases |", "|---|---|---:|---|"]
     for info in package_info.values():
         lines.append(f"| `{info['path']}` | {info['display_name']} | {len(info['skills'])} | {', '.join(info['legacy_aliases'])} |")
@@ -470,7 +715,10 @@ def generate_routing_cases(catalog: dict[str, Any]) -> None:
 
 def generate_seeded_fixtures(catalog: dict[str, Any]) -> None:
     root = ROOT / "evals" / "studio"
-    reset_owned(root)
+    if root.exists() and not (root / ".studio-generated").is_file():
+        fail(f"refusing to replace unmarked seeded fixture path: {root}")
+    root.mkdir(parents=True, exist_ok=True)
+    write_text(root / ".studio-generated", "studio-v2\n")
     write_json(root / "valid-work-package.json", {"document_id": "WP-001", "project_id": "PRJ-SD-001", "wp_id": "WP-SD-001", "status": "FROZEN", "snapshot_id": "SNAP-001", "base_sha": "d697efc16d86835ff3941f54b05e560b91a4a125", "primary_outcome": "Validate one bounded Studio package build.", "requirements": ["REQ-001"], "allowed_paths": ["scripts/", "catalog/"], "forbidden_paths": [".codex/", "secrets/"], "scope_budget": {"primary_outcomes": 1, "subsystems": 2, "new_dependencies": 0}, "acceptance": ["generator exits zero"], "verification": [{"level": "E2", "command": "python scripts/build_studio.py"}], "non_goals": ["merge", "release"], "stop_conditions": ["base SHA changes"], "rollback": "revert branch", "handoff_requirements": ["head SHA", "evidence"]})
     write_json(root / "invalid-self-accept-review.json", {"document_id": "REV-001", "project_id": "PRJ-SD-001", "review_id": "REV-001", "reviewer_role": "executor", "reviewer_context": "same session", "reviewed_head_sha": "d697efc16d86835ff3941f54b05e560b91a4a125", "wp_id": "WP-SD-001", "requirements": ["REQ-001"], "independent_checks": [], "scope_delta": {}, "findings": [], "disposition": "ACCEPT", "conditions": []})
     write_json(root / "golden-review-trap.json", {"defect": "planted implementation defect", "expected_finding": "FIND-001", "severity": "BLOCKING", "required_repair": "observable output matches the frozen requirement", "executor_may_accept": False})
@@ -484,6 +732,42 @@ def generate_seeded_fixtures(catalog: dict[str, Any]) -> None:
     ])
 
 
+CHECK_OUTPUTS = (
+    "skills/studio",
+    "templates/studio-v2",
+    "schemas/v2",
+    "generated/codex",
+    "generated/catalog",
+    "dist",
+    ".agents/plugins/marketplace.json",
+    "evals/routing/cases.json",
+    "evals/studio",
+)
+
+
+def output_snapshot(path: Path) -> dict[str, bytes]:
+    if path.is_file():
+        return {path.name: path.read_bytes()}
+    if not path.is_dir():
+        return {}
+    return {str(child.relative_to(path)): child.read_bytes() for child in sorted(path.rglob("*")) if child.is_file()}
+
+
+def check_generated_outputs(catalog: dict[str, Any]) -> None:
+    with tempfile.TemporaryDirectory(prefix="studio-v2-check-") as temp_name:
+        temp_root = Path(temp_name)
+        shutil.copytree(ROOT, temp_root, ignore=shutil.ignore_patterns(".git", ".pytest_cache", "__pycache__"), dirs_exist_ok=True)
+        completed = subprocess.run([sys.executable, str(temp_root / "scripts" / "build_studio.py")], cwd=temp_root, capture_output=True, text=True)
+        if completed.returncode != 0:
+            fail(f"canonical check build failed: {completed.stdout}{completed.stderr}")
+        for relative in CHECK_OUTPUTS:
+            actual = ROOT / relative
+            expected = temp_root / relative
+            if output_snapshot(actual) != output_snapshot(expected):
+                fail(f"generated output differs from canonical build: {relative}")
+    print("PASS: catalog and all canonical generated outputs match a clean temporary rebuild")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check-only", action="store_true", help="validate the catalog and generated package shape without rewriting outputs")
@@ -491,7 +775,7 @@ def main() -> int:
     args = parser.parse_args()
     catalog = load_catalog()
     if args.check_only:
-        print("PASS: Studio catalog is structurally valid")
+        check_generated_outputs(catalog)
         return 0
     if args.render_icons:
         from render_icons import render_all

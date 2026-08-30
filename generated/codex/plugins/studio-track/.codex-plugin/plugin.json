@@ -13,8 +13,8 @@
     "category": "Productivity",
     "composerIcon": "./assets/plugin-icon.png",
     "defaultPrompt": [
-      "Use Studio Track for this bounded software task.",
-      "Read the current Studio state before acting."
+      "Use Studio Track to prepare a typed issue or milestone projection.",
+      "Keep .project state authoritative and writes confirmation-gated."
     ],
     "developerName": "Open Software Studio",
     "displayName": "Studio Track",

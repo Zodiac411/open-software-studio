@@ -6,6 +6,24 @@
         "Engineering Guard",
         "engineering-guard"
       ],
+      "metadata": {
+        "app_references": {
+          "CHATGPT": [],
+          "CODEX": []
+        },
+        "generator": "scripts/build_studio.py",
+        "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+        "generator_version": "2.0.1",
+        "icon_sources": {
+          "glyph": "brand/icon-system/glyphs/engineering-guard.svg",
+          "master": "brand/icon-system/masters/engineering-guard.svg",
+          "monochrome": "brand/icon-system/monochrome/engineering-guard.svg"
+        },
+        "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+        "recipe_id": "skills-first",
+        "recipe_version": "2.0",
+        "suite_version": "2.0.0"
+      },
       "path": "generated/codex/plugins/engineering-guard",
       "skills": [
         "studio-review",
@@ -29,6 +47,24 @@
         "Execution Guard",
         "execution-guard"
       ],
+      "metadata": {
+        "app_references": {
+          "CHATGPT": [],
+          "CODEX": []
+        },
+        "generator": "scripts/build_studio.py",
+        "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+        "generator_version": "2.0.1",
+        "icon_sources": {
+          "glyph": "brand/icon-system/glyphs/execution-guard.svg",
+          "master": "brand/icon-system/masters/execution-guard.svg",
+          "monochrome": "brand/icon-system/monochrome/execution-guard.svg"
+        },
+        "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+        "recipe_id": "skills-first",
+        "recipe_version": "2.0",
+        "suite_version": "2.0.0"
+      },
       "path": "generated/codex/plugins/execution-guard",
       "skills": [
         "studio-work",
@@ -58,6 +94,24 @@
         "Interface Studio",
         "interface-studio"
       ],
+      "metadata": {
+        "app_references": {
+          "CHATGPT": [],
+          "CODEX": []
+        },
+        "generator": "scripts/build_studio.py",
+        "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+        "generator_version": "2.0.1",
+        "icon_sources": {
+          "glyph": "brand/icon-system/glyphs/interface-studio.svg",
+          "master": "brand/icon-system/masters/interface-studio.svg",
+          "monochrome": "brand/icon-system/monochrome/interface-studio.svg"
+        },
+        "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+        "recipe_id": "skills-first",
+        "recipe_version": "2.0",
+        "suite_version": "2.0.0"
+      },
       "path": "generated/codex/plugins/interface-studio",
       "skills": [
         "studio-start",
@@ -80,6 +134,24 @@
         "Project Architect",
         "project-architect"
       ],
+      "metadata": {
+        "app_references": {
+          "CHATGPT": [],
+          "CODEX": []
+        },
+        "generator": "scripts/build_studio.py",
+        "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+        "generator_version": "2.0.1",
+        "icon_sources": {
+          "glyph": "brand/icon-system/glyphs/project-architect.svg",
+          "master": "brand/icon-system/masters/project-architect.svg",
+          "monochrome": "brand/icon-system/monochrome/project-architect.svg"
+        },
+        "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+        "recipe_id": "skills-first",
+        "recipe_version": "2.0",
+        "suite_version": "2.0.0"
+      },
       "path": "generated/codex/plugins/project-architect",
       "skills": [
         "studio-start",
@@ -114,6 +186,24 @@
         "Project Docs",
         "project-docs"
       ],
+      "metadata": {
+        "app_references": {
+          "CHATGPT": [],
+          "CODEX": []
+        },
+        "generator": "scripts/build_studio.py",
+        "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+        "generator_version": "2.0.1",
+        "icon_sources": {
+          "glyph": "brand/icon-system/glyphs/project-docs.svg",
+          "master": "brand/icon-system/masters/project-docs.svg",
+          "monochrome": "brand/icon-system/monochrome/project-docs.svg"
+        },
+        "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+        "recipe_id": "skills-first",
+        "recipe_version": "2.0",
+        "suite_version": "2.0.0"
+      },
       "path": "generated/codex/plugins/project-docs",
       "skills": [
         "studio-start",
@@ -136,6 +226,24 @@
         "Research Engineer",
         "research-engineer"
       ],
+      "metadata": {
+        "app_references": {
+          "CHATGPT": [],
+          "CODEX": []
+        },
+        "generator": "scripts/build_studio.py",
+        "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+        "generator_version": "2.0.1",
+        "icon_sources": {
+          "glyph": "brand/icon-system/glyphs/research-engineer.svg",
+          "master": "brand/icon-system/masters/research-engineer.svg",
+          "monochrome": "brand/icon-system/monochrome/research-engineer.svg"
+        },
+        "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+        "recipe_id": "skills-first",
+        "recipe_version": "2.0",
+        "suite_version": "2.0.0"
+      },
       "path": "generated/codex/plugins/research-engineer",
       "skills": [
         "studio-start",
@@ -159,6 +267,24 @@
         "open-software-studio",
         "studio"
       ],
+      "metadata": {
+        "app_references": {
+          "CHATGPT": [],
+          "CODEX": []
+        },
+        "generator": "scripts/build_studio.py",
+        "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+        "generator_version": "2.0.1",
+        "icon_sources": {
+          "glyph": "brand/icon-system/glyphs/studio-delivery.svg",
+          "master": "brand/icon-system/masters/studio-delivery.svg",
+          "monochrome": "brand/icon-system/monochrome/studio-delivery.svg"
+        },
+        "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+        "recipe_id": "skills-first",
+        "recipe_version": "2.0",
+        "suite_version": "2.0.0"
+      },
       "path": "generated/codex/plugins/studio-delivery",
       "skills": [
         "studio-start",
@@ -240,6 +366,24 @@
       "legacy_aliases": [
         "studio-track"
       ],
+      "metadata": {
+        "app_references": {
+          "CHATGPT": [],
+          "CODEX": []
+        },
+        "generator": "scripts/build_studio.py",
+        "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+        "generator_version": "2.0.1",
+        "icon_sources": {
+          "glyph": "brand/icon-system/glyphs/studio-track.svg",
+          "master": "brand/icon-system/masters/studio-track.svg",
+          "monochrome": "brand/icon-system/monochrome/studio-track.svg"
+        },
+        "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+        "recipe_id": "skills-first",
+        "recipe_version": "2.0",
+        "suite_version": "2.0.0"
+      },
       "path": "generated/codex/plugins/studio-track",
       "skills": [
         "studio-start",
@@ -259,6 +403,24 @@
         "Web App Builder",
         "web-app-builder"
       ],
+      "metadata": {
+        "app_references": {
+          "CHATGPT": [],
+          "CODEX": []
+        },
+        "generator": "scripts/build_studio.py",
+        "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+        "generator_version": "2.0.1",
+        "icon_sources": {
+          "glyph": "brand/icon-system/glyphs/web-app-builder.svg",
+          "master": "brand/icon-system/masters/web-app-builder.svg",
+          "monochrome": "brand/icon-system/monochrome/web-app-builder.svg"
+        },
+        "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+        "recipe_id": "skills-first",
+        "recipe_version": "2.0",
+        "suite_version": "2.0.0"
+      },
       "path": "generated/codex/plugins/web-app-builder",
       "skills": [
         "studio-work",

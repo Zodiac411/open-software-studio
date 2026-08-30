@@ -14,11 +14,19 @@ Use this lens only when the request needs deterministic artifact and template in
 - This skill does not own silently filling missing facts.
 - Keep durable decisions as observations, assumptions, constraints, options, evidence, trade-offs, risks, confidence, and revisit triggers; never store private chain-of-thought.
 
+## Lens contract
+
+- Input: artifact data, schema, references, current revision, and evidence receipts
+- Method: Validate IDs, types, links, required fields, scope, proof, freshness, and unsupported claims deterministically.
+- Output: lint result with typed errors, source field, evidence gap, and next action
+- Stop: Reject the artifact on schema, broken-reference, stale-proof, or overclaim errors.
+- Escalate: Escalate missing authority or unverifiable external evidence as UNPROVEN.
+
 ## Procedure
 
 1. Identify the active profile, archetype, phase, work package, authority map, and next valid transition.
-2. Apply the smallest adequate solution ladder and record why higher machinery is not required.
-3. Make requirements, acceptance, scope, proof level, and stop conditions observable.
+2. Read only the inputs named by the lens contract and apply its method to the smallest adequate scope.
+3. Make requirements, acceptance, scope, proof, and the contract stop condition observable.
 4. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
 5. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
 

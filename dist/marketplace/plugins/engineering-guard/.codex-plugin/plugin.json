@@ -13,8 +13,8 @@
     "category": "Developer Tools",
     "composerIcon": "./assets/plugin-icon.png",
     "defaultPrompt": [
-      "Use Studio Review for this bounded software task.",
-      "Read the current Studio state before acting."
+      "Use Studio Review in a fresh context to challenge this work.",
+      "Never accept work performed by the reviewer."
     ],
     "developerName": "Open Software Studio",
     "displayName": "Studio Review",

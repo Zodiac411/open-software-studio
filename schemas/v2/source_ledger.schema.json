@@ -1,47 +1,95 @@
 {
   "$id": "studio://schemas/v2/SOURCE_LEDGER.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "additionalProperties": true,
+  "additionalProperties": false,
+  "description": "Versioned Studio V2 artifact contract; unknown top-level fields are rejected.",
   "properties": {
-    "authority": {
+    "affected_decision": {
+      "minLength": 1,
       "type": "string"
     },
+    "authority": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "claims": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "type": "array"
+    },
     "document_id": {
-      "pattern": "^[A-Z][A-Z0-9-]+$",
+      "minLength": 1,
+      "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*$",
+      "type": "string"
+    },
+    "freshness": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "license": {
+      "minLength": 1,
       "type": "string"
     },
     "owner": {
+      "minLength": 1,
       "type": "string"
     },
     "project_id": {
-      "pattern": "^PRJ-[A-Z0-9-]+$",
+      "minLength": 1,
+      "pattern": "^PRJ-[A-Z0-9]+(?:-[A-Z0-9]+)*$",
+      "type": "string",
+      "x-studio-reference": "project.project_id"
+    },
+    "retrieved": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "source": {
+      "minLength": 1,
       "type": "string"
     },
     "sources": {
       "items": {
+        "minLength": 1,
         "type": "string"
       },
       "type": "array"
     },
     "status": {
+      "enum": [
+        "DRAFT",
+        "PROPOSED",
+        "APPROVED",
+        "FROZEN",
+        "IN_PROGRESS",
+        "PROVING",
+        "IN_REVIEW",
+        "ACCEPTED",
+        "CLOSED",
+        "RELEASED",
+        "PASS",
+        "PASS_WITH_LIMITATIONS",
+        "BLOCKED",
+        "NOT_RUN",
+        "UNPROVEN"
+      ],
+      "type": "string"
+    },
+    "strength": {
+      "minLength": 1,
       "type": "string"
     },
     "verification": {
-      "enum": [
-        "E0",
-        "E1",
-        "E2",
-        "E3",
-        "E4",
-        "E5",
-        "verified",
-        "partial",
-        "unverified",
-        "not-applicable"
-      ]
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "type": "array"
     },
     "version": {
-      "pattern": "^2\\.",
+      "const": "2.0.0",
       "type": "string"
     }
   },
@@ -56,5 +104,6 @@
     "affected_decision"
   ],
   "title": "Studio V2 SOURCE_LEDGER artifact",
-  "type": "object"
+  "type": "object",
+  "x-studio-version": "2.0.0"
 }

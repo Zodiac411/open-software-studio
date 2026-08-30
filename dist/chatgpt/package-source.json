@@ -1,16 +1,180 @@
 {
   "default": "dist/chatgpt/studio.zip",
   "mcp_declared": false,
+  "metadata": {
+    "engineering-guard": {
+      "app_references": {
+        "CHATGPT": [],
+        "CODEX": []
+      },
+      "generator": "scripts/build_studio.py",
+      "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+      "generator_version": "2.0.1",
+      "icon_sources": {
+        "glyph": "brand/icon-system/glyphs/engineering-guard.svg",
+        "master": "brand/icon-system/masters/engineering-guard.svg",
+        "monochrome": "brand/icon-system/monochrome/engineering-guard.svg"
+      },
+      "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+      "recipe_id": "skills-first",
+      "recipe_version": "2.0",
+      "suite_version": "2.0.0"
+    },
+    "execution-guard": {
+      "app_references": {
+        "CHATGPT": [],
+        "CODEX": []
+      },
+      "generator": "scripts/build_studio.py",
+      "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+      "generator_version": "2.0.1",
+      "icon_sources": {
+        "glyph": "brand/icon-system/glyphs/execution-guard.svg",
+        "master": "brand/icon-system/masters/execution-guard.svg",
+        "monochrome": "brand/icon-system/monochrome/execution-guard.svg"
+      },
+      "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+      "recipe_id": "skills-first",
+      "recipe_version": "2.0",
+      "suite_version": "2.0.0"
+    },
+    "interface-studio": {
+      "app_references": {
+        "CHATGPT": [],
+        "CODEX": []
+      },
+      "generator": "scripts/build_studio.py",
+      "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+      "generator_version": "2.0.1",
+      "icon_sources": {
+        "glyph": "brand/icon-system/glyphs/interface-studio.svg",
+        "master": "brand/icon-system/masters/interface-studio.svg",
+        "monochrome": "brand/icon-system/monochrome/interface-studio.svg"
+      },
+      "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+      "recipe_id": "skills-first",
+      "recipe_version": "2.0",
+      "suite_version": "2.0.0"
+    },
+    "project-architect": {
+      "app_references": {
+        "CHATGPT": [],
+        "CODEX": []
+      },
+      "generator": "scripts/build_studio.py",
+      "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+      "generator_version": "2.0.1",
+      "icon_sources": {
+        "glyph": "brand/icon-system/glyphs/project-architect.svg",
+        "master": "brand/icon-system/masters/project-architect.svg",
+        "monochrome": "brand/icon-system/monochrome/project-architect.svg"
+      },
+      "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+      "recipe_id": "skills-first",
+      "recipe_version": "2.0",
+      "suite_version": "2.0.0"
+    },
+    "project-docs": {
+      "app_references": {
+        "CHATGPT": [],
+        "CODEX": []
+      },
+      "generator": "scripts/build_studio.py",
+      "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+      "generator_version": "2.0.1",
+      "icon_sources": {
+        "glyph": "brand/icon-system/glyphs/project-docs.svg",
+        "master": "brand/icon-system/masters/project-docs.svg",
+        "monochrome": "brand/icon-system/monochrome/project-docs.svg"
+      },
+      "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+      "recipe_id": "skills-first",
+      "recipe_version": "2.0",
+      "suite_version": "2.0.0"
+    },
+    "research-engineer": {
+      "app_references": {
+        "CHATGPT": [],
+        "CODEX": []
+      },
+      "generator": "scripts/build_studio.py",
+      "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+      "generator_version": "2.0.1",
+      "icon_sources": {
+        "glyph": "brand/icon-system/glyphs/research-engineer.svg",
+        "master": "brand/icon-system/masters/research-engineer.svg",
+        "monochrome": "brand/icon-system/monochrome/research-engineer.svg"
+      },
+      "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+      "recipe_id": "skills-first",
+      "recipe_version": "2.0",
+      "suite_version": "2.0.0"
+    },
+    "studio-delivery": {
+      "app_references": {
+        "CHATGPT": [],
+        "CODEX": []
+      },
+      "generator": "scripts/build_studio.py",
+      "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+      "generator_version": "2.0.1",
+      "icon_sources": {
+        "glyph": "brand/icon-system/glyphs/studio-delivery.svg",
+        "master": "brand/icon-system/masters/studio-delivery.svg",
+        "monochrome": "brand/icon-system/monochrome/studio-delivery.svg"
+      },
+      "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+      "recipe_id": "skills-first",
+      "recipe_version": "2.0",
+      "suite_version": "2.0.0"
+    },
+    "studio-track": {
+      "app_references": {
+        "CHATGPT": [],
+        "CODEX": []
+      },
+      "generator": "scripts/build_studio.py",
+      "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+      "generator_version": "2.0.1",
+      "icon_sources": {
+        "glyph": "brand/icon-system/glyphs/studio-track.svg",
+        "master": "brand/icon-system/masters/studio-track.svg",
+        "monochrome": "brand/icon-system/monochrome/studio-track.svg"
+      },
+      "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+      "recipe_id": "skills-first",
+      "recipe_version": "2.0",
+      "suite_version": "2.0.0"
+    },
+    "web-app-builder": {
+      "app_references": {
+        "CHATGPT": [],
+        "CODEX": []
+      },
+      "generator": "scripts/build_studio.py",
+      "generator_digest": "a3880096d472951b5e9e98d19a782845344a1c388b3a69ed8646c158d794c55f",
+      "generator_version": "2.0.1",
+      "icon_sources": {
+        "glyph": "brand/icon-system/glyphs/web-app-builder.svg",
+        "master": "brand/icon-system/masters/web-app-builder.svg",
+        "monochrome": "brand/icon-system/monochrome/web-app-builder.svg"
+      },
+      "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+      "recipe_id": "skills-first",
+      "recipe_version": "2.0",
+      "suite_version": "2.0.0"
+    }
+  },
   "packages": {
-    "dist/chatgpt/satellites/engineering-guard.zip": "7de14f181e60defcd931bfa0a09a562ca29aac5d72c20112f7aed2d705b201a2",
-    "dist/chatgpt/satellites/execution-guard.zip": "72305fa3dd90ec0fbc062adee980822c4eadfaad77742bc1f127409dbbe1add4",
-    "dist/chatgpt/satellites/interface-studio.zip": "f7615cd30db9537cfa802016fe185910836305b0e36a8cb76045913c5adcb8e2",
-    "dist/chatgpt/satellites/project-architect.zip": "79cbe022384142247c6a6c01c0ce0f12850b137a6f6f19878e0cfd422f80d517",
-    "dist/chatgpt/satellites/project-docs.zip": "61272e57024f64759ed72328d5df5b594efb8751b8f7228b5be561ce45b86a2a",
-    "dist/chatgpt/satellites/research-engineer.zip": "e063c28d2d9b2b3c83eeb22b0c0249d7809138228b8033610c9e43a34ad74101",
-    "dist/chatgpt/satellites/studio-track.zip": "adf9b29908878b03a4a119d54061b56bd95d731f092ff5c38ccf3661b499e9da",
-    "dist/chatgpt/satellites/web-app-builder.zip": "e561086d1cd3159608983d7cec2533746a1c495c7925d742cc0317bbb77e45ad",
-    "dist/chatgpt/studio.zip": "08a62a947120249783b51c91b115962dd6644dcf5207d279ac4f74074a95dad8"
+    "dist/chatgpt/satellites/engineering-guard.zip": "8126840078246350df9a77a9f9dbd082abafbdf15611a8200d3ee4eca0bfd031",
+    "dist/chatgpt/satellites/execution-guard.zip": "ae93bf629e5f67a9871928ba41e587ad2aaa040a572009f9e11a7cbd39fe3193",
+    "dist/chatgpt/satellites/interface-studio.zip": "6aa2985544c0339760c7e55b59c7a9e502ec3c9fa2070e1202096f3562776d29",
+    "dist/chatgpt/satellites/project-architect.zip": "3472e11aba43284fad81b50b1e247deee64b1fc3f1d0623cd170e368dc72616f",
+    "dist/chatgpt/satellites/project-docs.zip": "409463d9e1eb9400bf2c1139dc7e239ed5075ca81fcf85133bc72886e1331e83",
+    "dist/chatgpt/satellites/research-engineer.zip": "338afa20c46795bceb403e963eab436e7d16e022324dc6da1a182d7c6bffc03c",
+    "dist/chatgpt/satellites/studio-track.zip": "cec6c7972edbeb022c2b59a4f0b53536eeece4aec19cbf7d6a6785a4eb7a704e",
+    "dist/chatgpt/satellites/web-app-builder.zip": "4aab9abc650ee11dd5d917ada32cf56657e7a2ddeae0964dbc5fc0ae7cca00a7",
+    "dist/chatgpt/studio.zip": "ff18a803e7a1c50b727e9e5e085156ed918e6432476ee6bcd8df388765c45c8e"
   },
   "schema": "studio.chatgpt-packages/v2",
   "version": "2.0.0"

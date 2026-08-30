@@ -14,11 +14,19 @@ Use this lens only when the request needs hard constraints, soft preferences, co
 - This skill does not own weakening a required safeguard.
 - Keep durable decisions as observations, assumptions, constraints, options, evidence, trade-offs, risks, confidence, and revisit triggers; never store private chain-of-thought.
 
+## Lens contract
+
+- Input: brief, authorities, platform context, and proposed solution
+- Method: Separate hard constraints from preferences, identify conflicts, and attach evidence or authority to each.
+- Output: constraint ledger with source, severity, conflict, and enforcement point
+- Stop: Stop when a hard constraint is missing authority or conflicts with the proposed outcome.
+- Escalate: Escalate legal, security, accessibility, or platform conflicts to the named authority.
+
 ## Procedure
 
 1. Identify the active profile, archetype, phase, work package, authority map, and next valid transition.
-2. Apply the smallest adequate solution ladder and record why higher machinery is not required.
-3. Make requirements, acceptance, scope, proof level, and stop conditions observable.
+2. Read only the inputs named by the lens contract and apply its method to the smallest adequate scope.
+3. Make requirements, acceptance, scope, proof, and the contract stop condition observable.
 4. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
 5. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
 

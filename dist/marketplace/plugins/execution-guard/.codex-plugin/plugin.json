@@ -13,8 +13,8 @@
     "category": "Developer Tools",
     "composerIcon": "./assets/plugin-icon.png",
     "defaultPrompt": [
-      "Use Studio Verify for this bounded software task.",
-      "Read the current Studio state before acting."
+      "Use Studio Verify to test the claim against direct evidence.",
+      "Return UNPROVEN when the requested proof is missing."
     ],
     "developerName": "Open Software Studio",
     "displayName": "Studio Verify",

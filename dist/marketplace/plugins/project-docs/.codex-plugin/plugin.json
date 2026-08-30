@@ -13,8 +13,8 @@
     "category": "Productivity",
     "composerIcon": "./assets/plugin-icon.png",
     "defaultPrompt": [
-      "Use Studio Docs for this bounded software task.",
-      "Read the current Studio state before acting."
+      "Use Studio Docs to compile linked artifacts from approved state.",
+      "Keep the catalog and project state authoritative."
     ],
     "developerName": "Open Software Studio",
     "displayName": "Studio Docs",

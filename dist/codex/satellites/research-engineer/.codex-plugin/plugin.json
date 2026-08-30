@@ -13,8 +13,8 @@
     "category": "Education & Research",
     "composerIcon": "./assets/plugin-icon.png",
     "defaultPrompt": [
-      "Use Studio Research for this bounded software task.",
-      "Read the current Studio state before acting."
+      "Use Studio Research only for decision-changing evidence.",
+      "Record source quality, freshness, license, and confidence."
     ],
     "developerName": "Open Software Studio",
     "displayName": "Studio Research",

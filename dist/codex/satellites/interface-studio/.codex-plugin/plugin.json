@@ -13,8 +13,8 @@
     "category": "Creativity",
     "composerIcon": "./assets/plugin-icon.png",
     "defaultPrompt": [
-      "Use Studio Design for this bounded software task.",
-      "Read the current Studio state before acting."
+      "Use Studio Design for UX, interaction, and visual-system decisions.",
+      "Keep implementation outside this package."
     ],
     "developerName": "Open Software Studio",
     "displayName": "Studio Design",

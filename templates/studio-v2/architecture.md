@@ -4,71 +4,100 @@ schema: studio.artifact-template/v2
 artifact_type: ARCHITECTURE
 authority: Studio catalog
 status: DRAFT
-version: 2.0
+version: 2.0.0
 ---
 # ARCHITECTURE
 
+Make boundaries, quality attributes, dependencies, trust edges, recovery, and revisit triggers reviewable.
 Fill only the fields required for the current profile and next phase.
 Never invent missing facts; use `TBD` or `UNPROVEN` with an owner and next action.
 
-## Required fields
+## Non-goals
 
-- `document_id`
-- `verified_current_architecture`
-- `boundaries`
-- `quality_attributes`
-- `options`
-- `chosen_architecture`
-- `failure_recovery`
-- `security`
-- `dependencies`
-- `rollback`
-- `revisit_triggers`
+- Do not create a competing authority, silently expand scope, or convert an unverified claim into proof.
 
-## Verified current architecture
+## Assumptions
 
-- 
+- State each load-bearing assumption, owner, confidence, and cheapest useful validation.
 
-## Ownership boundaries
+## Requirements and inputs
 
-- 
+| Field | Shape | Reference or rule |
+|---|---|---|
+| `document_id` | `string` | `^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*$` |
+| `verified_current_architecture` | `string` | `required` |
+| `boundaries` | `string` | `required` |
+| `quality_attributes` | `string` | `required` |
+| `options` | `array[object]` | `required` |
+| `chosen_architecture` | `string` | `required` |
+| `failure_recovery` | `string` | `required` |
+| `security` | `string` | `required` |
+| `dependencies` | `array[string]` | `required` |
+| `rollback` | `string` | `required` |
+| `revisit_triggers` | `string` | `required` |
 
-## Quality attributes
+## Proof
 
-- 
+- Evidence level: `E0`/`E1`/`E2`/`E3`/`E4`/`E5` or `UNPROVEN`.
+- Direct command or probe: `TBD`.
+- Observed result and output digest: `TBD`.
 
-## Options considered
+## References
 
-- 
+- Governing source or linked artifact ID: `TBD`.
+- Current revision or retrieval date: `TBD`.
 
-## Chosen architecture
+## Next action
 
-- 
+- Name one owner, one bounded action, and the evidence needed to close it.
 
-## Data and control flow
+## Artifact blueprint
 
-- 
+### Verified current architecture
 
-## Failure and recovery
+Record the verified current architecture using the fields above; link IDs and direct proof where available.
 
-- 
+### Ownership boundaries
 
-## Security and trust boundaries
+Record the ownership boundaries using the fields above; link IDs and direct proof where available.
 
-- 
+### Quality attributes
 
-## Dependency policy
+Record the quality attributes using the fields above; link IDs and direct proof where available.
 
-- 
+### Options considered
 
-## Migration and rollback
+Record the options considered using the fields above; link IDs and direct proof where available.
 
-- 
+### Chosen architecture
 
-## ADR index
+Record the chosen architecture using the fields above; link IDs and direct proof where available.
 
-- 
+### Data and control flow
 
-## Revisit triggers
+Record the data and control flow using the fields above; link IDs and direct proof where available.
 
-- 
+### Failure and recovery
+
+Record the failure and recovery using the fields above; link IDs and direct proof where available.
+
+### Security and trust boundaries
+
+Record the security and trust boundaries using the fields above; link IDs and direct proof where available.
+
+### Dependency policy
+
+Record the dependency policy using the fields above; link IDs and direct proof where available.
+
+### Migration and rollback
+
+Record the migration and rollback using the fields above; link IDs and direct proof where available.
+
+### ADR index
+
+Record the adr index using the fields above; link IDs and direct proof where available.
+
+### Revisit triggers
+
+Record the revisit triggers using the fields above; link IDs and direct proof where available.
+

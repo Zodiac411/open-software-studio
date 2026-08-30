@@ -13,8 +13,8 @@
     "category": "Developer Tools",
     "composerIcon": "./assets/plugin-icon.png",
     "defaultPrompt": [
-      "Use Studio Build for this bounded software task.",
-      "Read the current Studio state before acting."
+      "Use Studio Build only for an approved work package.",
+      "Verify the bounded change directly and prepare a handoff."
     ],
     "developerName": "Open Software Studio",
     "displayName": "Studio Build",

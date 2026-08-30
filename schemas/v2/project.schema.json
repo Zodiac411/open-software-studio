@@ -1,9 +1,11 @@
 {
   "$id": "studio://schemas/v2/project.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "additionalProperties": true,
+  "additionalProperties": false,
+  "description": "Versioned Studio V2 artifact contract; unknown top-level fields are rejected.",
   "properties": {
     "active_wp": {
+      "pattern": "^WP-[A-Z0-9-]+$",
       "type": [
         "string",
         "null"
@@ -18,22 +20,42 @@
         "game",
         "integration",
         "mcp-app"
-      ]
+      ],
+      "type": "string"
     },
     "authorities": {
+      "additionalProperties": {
+        "type": "string"
+      },
       "type": "object"
     },
     "authority": {
+      "minLength": 1,
       "type": "string"
     },
     "document_id": {
-      "pattern": "^[A-Z][A-Z0-9-]+$",
+      "minLength": 1,
+      "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*$",
       "type": "string"
     },
     "owner": {
+      "minLength": 1,
       "type": "string"
     },
     "phase": {
+      "enum": [
+        "INTAKE",
+        "SHAPED",
+        "PLANNED",
+        "FROZEN",
+        "IMPLEMENTING",
+        "PROVING",
+        "IN_REVIEW",
+        "REPAIR",
+        "ACCEPTED",
+        "CLOSED",
+        "RELEASED"
+      ],
       "type": "string"
     },
     "profile": {
@@ -41,37 +63,51 @@
         "lite",
         "standard",
         "full"
-      ]
+      ],
+      "type": "string"
     },
     "project_id": {
-      "pattern": "^PRJ-[A-Z0-9-]+$",
-      "type": "string"
+      "minLength": 1,
+      "pattern": "^PRJ-[A-Z0-9]+(?:-[A-Z0-9]+)*$",
+      "type": "string",
+      "x-studio-reference": "project.project_id"
     },
     "sources": {
       "items": {
+        "minLength": 1,
         "type": "string"
       },
       "type": "array"
     },
     "status": {
+      "enum": [
+        "DRAFT",
+        "PROPOSED",
+        "APPROVED",
+        "FROZEN",
+        "IN_PROGRESS",
+        "PROVING",
+        "IN_REVIEW",
+        "ACCEPTED",
+        "CLOSED",
+        "RELEASED",
+        "PASS",
+        "PASS_WITH_LIMITATIONS",
+        "BLOCKED",
+        "NOT_RUN",
+        "UNPROVEN"
+      ],
       "type": "string"
     },
     "verification": {
-      "enum": [
-        "E0",
-        "E1",
-        "E2",
-        "E3",
-        "E4",
-        "E5",
-        "verified",
-        "partial",
-        "unverified",
-        "not-applicable"
-      ]
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "type": "array"
     },
     "version": {
-      "pattern": "^2\\.",
+      "const": "2.0.0",
       "type": "string"
     }
   },
@@ -85,5 +121,6 @@
     "authorities"
   ],
   "title": "Studio V2 project control plane",
-  "type": "object"
+  "type": "object",
+  "x-studio-version": "2.0.0"
 }

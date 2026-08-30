@@ -1,47 +1,134 @@
 {
-  "$id": "studio://schemas/v2/EVIDENCE_RECEIPT.schema.json",
+  "$id": "studio://schemas/v2/evidence_receipt.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "additionalProperties": true,
+  "additionalProperties": false,
+  "description": "Versioned Studio V2 artifact contract; unknown top-level fields are rejected.",
   "properties": {
     "authority": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "command_or_probe": {
+      "minLength": 1,
       "type": "string"
     },
     "document_id": {
-      "pattern": "^[A-Z][A-Z0-9-]+$",
+      "minLength": 1,
+      "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*$",
       "type": "string"
     },
-    "owner": {
-      "type": "string"
-    },
-    "project_id": {
-      "pattern": "^PRJ-[A-Z0-9-]+$",
-      "type": "string"
-    },
-    "sources": {
-      "items": {
+    "environment": {
+      "additionalProperties": {
         "type": "string"
       },
-      "type": "array"
+      "type": [
+        "string",
+        "object"
+      ]
     },
-    "status": {
+    "evidence_id": {
+      "minLength": 1,
+      "pattern": "^EVID-[A-Z0-9]+(?:-[A-Z0-9]+)*$",
+      "type": "string",
+      "x-studio-reference": "evidence_receipt.evidence_id"
+    },
+    "exit_code": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "head_sha": {
+      "pattern": "^[0-9a-f]{40}$",
       "type": "string"
     },
-    "verification": {
+    "level": {
       "enum": [
         "E0",
         "E1",
         "E2",
         "E3",
         "E4",
-        "E5",
-        "verified",
-        "partial",
-        "unverified",
-        "not-applicable"
+        "E5"
+      ],
+      "type": "string"
+    },
+    "limitations": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": [
+        "string",
+        "array"
       ]
     },
+    "observed": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "observed_output_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "owner": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "project_id": {
+      "minLength": 1,
+      "pattern": "^PRJ-[A-Z0-9]+(?:-[A-Z0-9]+)*$",
+      "type": "string",
+      "x-studio-reference": "project.project_id"
+    },
+    "requirement": {
+      "minLength": 1,
+      "type": "string",
+      "x-studio-reference": "product_spec.requirements"
+    },
+    "sequence": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "sources": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "status": {
+      "enum": [
+        "DRAFT",
+        "PROPOSED",
+        "APPROVED",
+        "FROZEN",
+        "IN_PROGRESS",
+        "PROVING",
+        "IN_REVIEW",
+        "ACCEPTED",
+        "CLOSED",
+        "RELEASED",
+        "PASS",
+        "PASS_WITH_LIMITATIONS",
+        "BLOCKED",
+        "NOT_RUN",
+        "UNPROVEN"
+      ],
+      "type": "string"
+    },
+    "timestamp": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "verification": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "type": "array"
+    },
     "version": {
-      "pattern": "^2\\.",
+      "const": "2.0.0",
       "type": "string"
     }
   },
@@ -53,8 +140,14 @@
     "command_or_probe",
     "observed",
     "timestamp",
-    "limitations"
+    "limitations",
+    "sequence",
+    "head_sha",
+    "exit_code",
+    "environment",
+    "observed_output_digest"
   ],
-  "title": "Studio V2 EVIDENCE_RECEIPT artifact",
-  "type": "object"
+  "title": "Studio V2 evidence receipt contract",
+  "type": "object",
+  "x-studio-version": "2.0.0"
 }

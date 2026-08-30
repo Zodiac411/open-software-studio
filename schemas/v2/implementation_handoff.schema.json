@@ -1,48 +1,127 @@
 {
   "$id": "studio://schemas/v2/IMPLEMENTATION_HANDOFF.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "additionalProperties": true,
+  "additionalProperties": false,
+  "description": "Versioned Studio V2 artifact contract; unknown top-level fields are rejected.",
   "properties": {
     "authority": {
+      "minLength": 1,
       "type": "string"
     },
+    "base_sha": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "branch": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "claimed_outcomes": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "commands": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
+    },
     "document_id": {
-      "pattern": "^[A-Z][A-Z0-9-]+$",
+      "minLength": 1,
+      "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*$",
+      "type": "string"
+    },
+    "evidence": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "files": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "head_sha": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "next_action": {
+      "minLength": 1,
       "type": "string"
     },
     "owner": {
+      "minLength": 1,
       "type": "string"
     },
     "project_id": {
-      "pattern": "^PRJ-[A-Z0-9-]+$",
+      "minLength": 1,
+      "pattern": "^PRJ-[A-Z0-9]+(?:-[A-Z0-9]+)*$",
+      "type": "string",
+      "x-studio-reference": "project.project_id"
+    },
+    "reviewer_action": {
+      "minLength": 1,
       "type": "string"
+    },
+    "scope_delta": {
+      "additionalProperties": true,
+      "type": "object"
     },
     "sources": {
       "items": {
+        "minLength": 1,
         "type": "string"
       },
       "type": "array"
     },
     "status": {
+      "enum": [
+        "DRAFT",
+        "PROPOSED",
+        "APPROVED",
+        "FROZEN",
+        "IN_PROGRESS",
+        "PROVING",
+        "IN_REVIEW",
+        "ACCEPTED",
+        "CLOSED",
+        "RELEASED",
+        "PASS",
+        "PASS_WITH_LIMITATIONS",
+        "BLOCKED",
+        "NOT_RUN",
+        "UNPROVEN"
+      ],
       "type": "string"
+    },
+    "unproven": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
     },
     "verification": {
-      "enum": [
-        "E0",
-        "E1",
-        "E2",
-        "E3",
-        "E4",
-        "E5",
-        "verified",
-        "partial",
-        "unverified",
-        "not-applicable"
-      ]
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "type": "array"
     },
     "version": {
-      "pattern": "^2\\.",
+      "const": "2.0.0",
       "type": "string"
+    },
+    "wp_id": {
+      "minLength": 1,
+      "pattern": "^WP-[A-Z0-9]+(?:-[A-Z0-9]+)*$",
+      "type": "string",
+      "x-studio-reference": "work_package.wp_id"
     }
   },
   "required": [
@@ -61,5 +140,6 @@
     "reviewer_action"
   ],
   "title": "Studio V2 IMPLEMENTATION_HANDOFF artifact",
-  "type": "object"
+  "type": "object",
+  "x-studio-version": "2.0.0"
 }

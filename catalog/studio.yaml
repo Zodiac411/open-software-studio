@@ -6,6 +6,19 @@
     "protocol_version": "2.0.0",
     "display_name": "Studio"
   },
+  "generation": {
+    "generator": "scripts/build_studio.py",
+    "generator_version": "2.0.1",
+    "icon_renderer": "scripts/render_icons.py",
+    "manifest_roots": [
+      "schemas/v2",
+      "templates/studio-v2"
+    ],
+    "hash_mode": "sha256-lf-normalized-text",
+    "validation_inputs": [
+      "evals/studio/test_studio_v2.py"
+    ]
+  },
   "repository": {
     "url": "https://github.com/Zodiac411/open-software-studio",
     "default_branch": "master"
@@ -16,8 +29,22 @@
   },
   "icon_system": {
     "source": "brand/icon-system/icon-grid.svg",
+    "source_assets": [
+      "brand/icon-system/icon-grid.svg",
+      "brand/icon-system/material-tokens.json",
+      "brand/icon-system/glyphs",
+      "brand/icon-system/masters",
+      "brand/icon-system/monochrome"
+    ],
     "motif": "opal-seed",
-    "sizes": [32, 48, 64, 128, 256, 512],
+    "sizes": [
+      32,
+      48,
+      64,
+      128,
+      256,
+      512
+    ],
     "safe_inset": 0.14,
     "palette": {
       "paper": "#F7F0E6",
@@ -33,176 +60,2052 @@
       "teal": "#5E9F9C"
     },
     "roles": {
-      "studio-delivery": { "glyph": "orbit", "accent": "opal" },
-      "project-architect": { "glyph": "compass", "accent": "gold" },
-      "interface-studio": { "glyph": "planes", "accent": "rose" },
-      "research-engineer": { "glyph": "lens", "accent": "cyan" },
-      "project-docs": { "glyph": "leaf", "accent": "amber" },
-      "engineering-guard": { "glyph": "aperture", "accent": "sage" },
-      "web-app-builder": { "glyph": "blocks", "accent": "sky" },
-      "execution-guard": { "glyph": "halo", "accent": "teal" },
-      "studio-track": { "glyph": "path", "accent": "gold" }
+      "studio-delivery": {
+        "glyph": "orbit",
+        "accent": "opal",
+        "sources": {
+          "glyph": "brand/icon-system/glyphs/studio-delivery.svg",
+          "master": "brand/icon-system/masters/studio-delivery.svg",
+          "monochrome": "brand/icon-system/monochrome/studio-delivery.svg"
+        }
+      },
+      "project-architect": {
+        "glyph": "compass",
+        "accent": "gold",
+        "sources": {
+          "glyph": "brand/icon-system/glyphs/project-architect.svg",
+          "master": "brand/icon-system/masters/project-architect.svg",
+          "monochrome": "brand/icon-system/monochrome/project-architect.svg"
+        }
+      },
+      "interface-studio": {
+        "glyph": "planes",
+        "accent": "rose",
+        "sources": {
+          "glyph": "brand/icon-system/glyphs/interface-studio.svg",
+          "master": "brand/icon-system/masters/interface-studio.svg",
+          "monochrome": "brand/icon-system/monochrome/interface-studio.svg"
+        }
+      },
+      "research-engineer": {
+        "glyph": "lens",
+        "accent": "cyan",
+        "sources": {
+          "glyph": "brand/icon-system/glyphs/research-engineer.svg",
+          "master": "brand/icon-system/masters/research-engineer.svg",
+          "monochrome": "brand/icon-system/monochrome/research-engineer.svg"
+        }
+      },
+      "project-docs": {
+        "glyph": "leaf",
+        "accent": "amber",
+        "sources": {
+          "glyph": "brand/icon-system/glyphs/project-docs.svg",
+          "master": "brand/icon-system/masters/project-docs.svg",
+          "monochrome": "brand/icon-system/monochrome/project-docs.svg"
+        }
+      },
+      "engineering-guard": {
+        "glyph": "aperture",
+        "accent": "sage",
+        "sources": {
+          "glyph": "brand/icon-system/glyphs/engineering-guard.svg",
+          "master": "brand/icon-system/masters/engineering-guard.svg",
+          "monochrome": "brand/icon-system/monochrome/engineering-guard.svg"
+        }
+      },
+      "web-app-builder": {
+        "glyph": "blocks",
+        "accent": "sky",
+        "sources": {
+          "glyph": "brand/icon-system/glyphs/web-app-builder.svg",
+          "master": "brand/icon-system/masters/web-app-builder.svg",
+          "monochrome": "brand/icon-system/monochrome/web-app-builder.svg"
+        }
+      },
+      "execution-guard": {
+        "glyph": "halo",
+        "accent": "teal",
+        "sources": {
+          "glyph": "brand/icon-system/glyphs/execution-guard.svg",
+          "master": "brand/icon-system/masters/execution-guard.svg",
+          "monochrome": "brand/icon-system/monochrome/execution-guard.svg"
+        }
+      },
+      "studio-track": {
+        "glyph": "path",
+        "accent": "gold",
+        "sources": {
+          "glyph": "brand/icon-system/glyphs/studio-track.svg",
+          "master": "brand/icon-system/masters/studio-track.svg",
+          "monochrome": "brand/icon-system/monochrome/studio-track.svg"
+        }
+      }
     }
   },
   "profiles": {
     "lite": {
       "max_active_wps": 1,
       "max_subsystems": 1,
-      "artifacts": ["PROJECT_INDEX", "PROJECT_BRIEF", "WORK_PACKAGE", "IMPLEMENTATION_HANDOFF", "INDEPENDENT_REVIEW"]
+      "artifacts": [
+        "PROJECT_INDEX",
+        "PROJECT_BRIEF",
+        "WORK_PACKAGE",
+        "IMPLEMENTATION_HANDOFF",
+        "INDEPENDENT_REVIEW"
+      ]
     },
     "standard": {
       "max_active_wps": 2,
       "max_subsystems": 2,
-      "artifacts": ["PROJECT_INDEX", "PROJECT_BRIEF", "PRODUCT_SPEC", "DOMAIN_MODEL", "ARCHITECTURE", "DELIVERY_PLAN", "VERIFICATION_CONTRACT", "WORK_PACKAGE", "CONTEXT_CAPSULE", "IMPLEMENTATION_HANDOFF", "INDEPENDENT_REVIEW", "EVIDENCE_RECEIPT"]
+      "artifacts": [
+        "PROJECT_INDEX",
+        "PROJECT_BRIEF",
+        "PRODUCT_SPEC",
+        "DOMAIN_MODEL",
+        "ARCHITECTURE",
+        "DELIVERY_PLAN",
+        "VERIFICATION_CONTRACT",
+        "WORK_PACKAGE",
+        "CONTEXT_CAPSULE",
+        "IMPLEMENTATION_HANDOFF",
+        "INDEPENDENT_REVIEW",
+        "EVIDENCE_RECEIPT"
+      ]
     },
     "full": {
       "max_active_wps": 2,
       "max_subsystems": 4,
-      "artifacts": ["PROJECT_INDEX", "PROJECT_BRIEF", "PRODUCT_SPEC", "CHANGE_PROPOSAL", "RESEARCH_DECISION_MEMO", "SOURCE_LEDGER", "DOMAIN_MODEL", "ARCHITECTURE", "EXPERIENCE_SPEC", "DELIVERY_PLAN", "VERIFICATION_CONTRACT", "WORK_PACKAGE", "CONTEXT_CAPSULE", "IMPLEMENTATION_HANDOFF", "INDEPENDENT_REVIEW", "REPAIR_PACKAGE", "EVIDENCE_RECEIPT", "MILESTONE_RECEIPT", "RELEASE_RECEIPT", "RETRO_DISTILLATION"]
+      "artifacts": [
+        "PROJECT_INDEX",
+        "PROJECT_BRIEF",
+        "PRODUCT_SPEC",
+        "CHANGE_PROPOSAL",
+        "RESEARCH_DECISION_MEMO",
+        "SOURCE_LEDGER",
+        "DOMAIN_MODEL",
+        "ARCHITECTURE",
+        "EXPERIENCE_SPEC",
+        "DELIVERY_PLAN",
+        "VERIFICATION_CONTRACT",
+        "WORK_PACKAGE",
+        "CONTEXT_CAPSULE",
+        "IMPLEMENTATION_HANDOFF",
+        "INDEPENDENT_REVIEW",
+        "REPAIR_PACKAGE",
+        "EVIDENCE_RECEIPT",
+        "MILESTONE_RECEIPT",
+        "RELEASE_RECEIPT",
+        "RETRO_DISTILLATION"
+      ]
     }
   },
-  "archetypes": ["auto", "software", "plugin", "web", "game", "integration", "mcp-app"],
-  "evidence_levels": ["E0", "E1", "E2", "E3", "E4", "E5"],
-  "result_states": ["PASS", "PASS_WITH_LIMITATIONS", "BLOCKED", "NOT_RUN", "UNPROVEN"],
+  "archetypes": [
+    "auto",
+    "software",
+    "plugin",
+    "web",
+    "game",
+    "integration",
+    "mcp-app"
+  ],
+  "evidence_levels": [
+    "E0",
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5"
+  ],
+  "result_states": [
+    "PASS",
+    "PASS_WITH_LIMITATIONS",
+    "BLOCKED",
+    "NOT_RUN",
+    "UNPROVEN"
+  ],
   "artifact_templates": {
-    "PROJECT_INDEX": { "required_fields": ["document_id", "project_id", "title", "authority", "status", "version", "owner", "approved_by", "applies_to", "snapshot", "last_verified", "next_review_trigger"], "sections": ["Project in one paragraph", "Authority map", "Read-by-task routes", "Current phase", "Immediate next action", "Recovery path"] },
-    "CURRENT_STATE": { "required_fields": ["document_id", "project_id", "phase", "status", "active_wp", "current_sha", "next_action", "blocking_items", "proof", "last_event", "recovery_files"], "sections": ["Current phase", "Active work package", "Current revision", "Proof and limitations", "Blocking items", "Recovery files", "Next action"] },
-    "PROJECT_BRIEF": { "required_fields": ["document_id", "project_id", "primary_outcome", "target_actor", "desired_outcome", "constraints", "non_goals", "assumptions", "parked_ideas", "solution_ladder", "disposition"], "sections": ["Problem and current limitation", "Target actor", "Desired outcome", "Success signals", "Constraints", "Primary outcome", "Non-goals", "Assumptions", "Parked ideas", "Smallest adequate solution", "Decision"] },
-    "PRODUCT_SPEC": { "required_fields": ["document_id", "project_id", "requirements", "scenarios", "acceptance", "non_goals", "proof_level"], "sections": ["Outcome", "Actors and scenarios", "Functional requirements", "Non-functional requirements", "Acceptance", "Proof plan", "Non-goals"] },
-    "CHANGE_PROPOSAL": { "required_fields": ["document_id", "change_id", "reason", "current_decision", "proposed_decision", "impact", "approval", "rollback"], "sections": ["Reason", "Current decision", "Proposed change", "Impact", "Approval", "Rollback"] },
-    "RESEARCH_DECISION_MEMO": { "required_fields": ["document_id", "claims", "decision", "trade_offs", "confidence", "refresh_trigger"], "sections": ["Decision question", "Material claims", "Options", "Decision", "Trade-offs", "Confidence", "Refresh trigger"] },
-    "SOURCE_LEDGER": { "required_fields": ["document_id", "claims", "source", "retrieved", "freshness", "license", "strength", "affected_decision"], "sections": ["Claim ledger", "Source quality", "Freshness", "License and attribution", "Decision links"] },
-    "DOMAIN_MODEL": { "required_fields": ["document_id", "entities", "relationships", "invariants", "ownership", "unknowns"], "sections": ["Entities", "Relationships", "Invariants", "Ownership", "Unknowns"] },
-    "ARCHITECTURE": { "required_fields": ["document_id", "verified_current_architecture", "boundaries", "quality_attributes", "options", "chosen_architecture", "failure_recovery", "security", "dependencies", "rollback", "revisit_triggers"], "sections": ["Verified current architecture", "Ownership boundaries", "Quality attributes", "Options considered", "Chosen architecture", "Data and control flow", "Failure and recovery", "Security and trust boundaries", "Dependency policy", "Migration and rollback", "ADR index", "Revisit triggers"] },
-    "ADR": { "required_fields": ["document_id", "decision", "status", "context", "options", "consequences", "evidence", "revisit_trigger"], "sections": ["Context", "Decision", "Options", "Consequences", "Evidence", "Revisit trigger"] },
-    "EXPERIENCE_SPEC": { "required_fields": ["document_id", "actor", "flow", "states", "components", "responsive", "accessibility", "fallback", "visual_qa"], "sections": ["Actor and job", "Task flow", "Surface map", "State matrix", "Component map", "Interaction rules", "Responsive composition", "Accessibility acceptance", "Dreamfield material budget", "Fallbacks", "Visual QA"] },
-    "DELIVERY_PLAN": { "required_fields": ["document_id", "work_packages", "dependencies", "requirements", "scope_budget", "review_gate"], "sections": ["Dependency graph", "Work package table", "Scope budget", "Review gate"] },
-    "VERIFICATION_CONTRACT": { "required_fields": ["document_id", "requirements", "proof_levels", "commands", "runtime_probes", "failure_policy", "rollback"], "sections": ["Requirement-to-proof map", "Commands", "Runtime probes", "Failure policy", "Rollback"] },
-    "WORK_PACKAGE": { "required_fields": ["document_id", "wp_id", "status", "snapshot_id", "base_sha", "primary_outcome", "requirements", "allowed_paths", "forbidden_paths", "scope_budget", "acceptance", "verification", "non_goals", "stop_conditions", "rollback", "handoff_requirements"], "sections": ["Primary outcome", "Value slice", "Proof slice", "Requirements", "Assumptions and constraints", "Allowed paths", "Forbidden paths", "Solution ladder", "Scope budget", "Acceptance and verification", "Non-goals", "Stop and replan conditions", "Rollback", "Handoff"] },
-    "CONTEXT_CAPSULE": { "required_fields": ["document_id", "wp_id", "snapshot_id", "active_goal", "requirements", "decisions", "scope_budget", "allowed_paths", "forbidden_paths", "acceptance", "proof", "stop_conditions"], "sections": ["Active goal", "Relevant requirements", "Relevant decisions", "Scope budget", "Allowed and forbidden paths", "Acceptance", "Proof", "Stop conditions"] },
-    "IMPLEMENTATION_HANDOFF": { "required_fields": ["document_id", "wp_id", "base_sha", "head_sha", "branch", "claimed_outcomes", "files", "commands", "evidence", "scope_delta", "unproven", "next_action", "reviewer_action"], "sections": ["Baseline and head", "Claimed outcomes", "Files and diff", "Observed verification", "Evidence levels", "Scope delta", "Failures and unproven boundaries", "Residual risks", "Rollback", "Requested reviewer action"] },
-    "INDEPENDENT_REVIEW": { "required_fields": ["document_id", "review_id", "reviewer_role", "reviewer_context", "reviewed_head_sha", "wp_id", "requirements", "independent_checks", "scope_delta", "findings", "disposition", "conditions"], "sections": ["Independence", "Reviewed state", "Requirement coverage", "Independent checks", "Findings", "Disposition", "Acceptance conditions"] },
-    "REPAIR_PACKAGE": { "required_fields": ["document_id", "repair_id", "accepted_findings", "allowed_paths", "forbidden_paths", "required_behavior", "regression_proof", "evidence", "non_goals", "repair_budget", "stop_conditions"], "sections": ["Accepted findings", "Allowed and forbidden scope", "Required behavior", "Regression proof", "Evidence", "Non-goals", "Stop conditions"] },
-    "EVIDENCE_RECEIPT": { "required_fields": ["document_id", "evidence_id", "requirement", "level", "command_or_probe", "observed", "timestamp", "limitations"], "sections": ["Requirement", "Evidence level", "Command or probe", "Observed result", "Limitations"] },
-    "MILESTONE_RECEIPT": { "required_fields": ["document_id", "milestone_id", "revision", "work_packages", "evidence", "remaining_risk", "owner_approval"], "sections": ["Outcome", "Accepted work", "Evidence", "Remaining risk", "Owner approval"] },
-    "RELEASE_RECEIPT": { "required_fields": ["document_id", "version", "revision", "environment", "evidence", "limitations", "waivers", "rollback", "owner_approval"], "sections": ["Revision", "Environment", "Evidence", "Known limitations", "Waivers", "Rollback", "Owner approval"] },
-    "RETRO_DISTILLATION": { "required_fields": ["document_id", "outcomes", "friction", "measured_evidence", "decisions", "next_actions"], "sections": ["Outcomes", "Friction", "Measured evidence", "Decisions", "Next actions"] }
+    "PROJECT_INDEX": {
+      "required_fields": [
+        "document_id",
+        "project_id",
+        "title",
+        "authority",
+        "status",
+        "version",
+        "owner",
+        "approved_by",
+        "applies_to",
+        "snapshot",
+        "last_verified",
+        "next_review_trigger"
+      ],
+      "sections": [
+        "Project in one paragraph",
+        "Authority map",
+        "Read-by-task routes",
+        "Current phase",
+        "Immediate next action",
+        "Recovery path"
+      ]
+    },
+    "CURRENT_STATE": {
+      "required_fields": [
+        "document_id",
+        "project_id",
+        "phase",
+        "status",
+        "active_wp",
+        "current_sha",
+        "next_action",
+        "blocking_items",
+        "proof",
+        "last_event",
+        "recovery_files"
+      ],
+      "sections": [
+        "Current phase",
+        "Active work package",
+        "Current revision",
+        "Proof and limitations",
+        "Blocking items",
+        "Recovery files",
+        "Next action"
+      ]
+    },
+    "PROJECT_BRIEF": {
+      "required_fields": [
+        "document_id",
+        "project_id",
+        "primary_outcome",
+        "target_actor",
+        "desired_outcome",
+        "constraints",
+        "non_goals",
+        "assumptions",
+        "parked_ideas",
+        "solution_ladder",
+        "disposition"
+      ],
+      "sections": [
+        "Problem and current limitation",
+        "Target actor",
+        "Desired outcome",
+        "Success signals",
+        "Constraints",
+        "Primary outcome",
+        "Non-goals",
+        "Assumptions",
+        "Parked ideas",
+        "Smallest adequate solution",
+        "Decision"
+      ]
+    },
+    "PRODUCT_SPEC": {
+      "required_fields": [
+        "document_id",
+        "project_id",
+        "requirements",
+        "scenarios",
+        "acceptance",
+        "non_goals",
+        "proof_level"
+      ],
+      "sections": [
+        "Outcome",
+        "Actors and scenarios",
+        "Functional requirements",
+        "Non-functional requirements",
+        "Acceptance",
+        "Proof plan",
+        "Non-goals"
+      ]
+    },
+    "CHANGE_PROPOSAL": {
+      "required_fields": [
+        "document_id",
+        "change_id",
+        "reason",
+        "current_decision",
+        "proposed_decision",
+        "impact",
+        "approval",
+        "rollback"
+      ],
+      "sections": [
+        "Reason",
+        "Current decision",
+        "Proposed change",
+        "Impact",
+        "Approval",
+        "Rollback"
+      ]
+    },
+    "RESEARCH_DECISION_MEMO": {
+      "required_fields": [
+        "document_id",
+        "claims",
+        "decision",
+        "trade_offs",
+        "confidence",
+        "refresh_trigger"
+      ],
+      "sections": [
+        "Decision question",
+        "Material claims",
+        "Options",
+        "Decision",
+        "Trade-offs",
+        "Confidence",
+        "Refresh trigger"
+      ]
+    },
+    "SOURCE_LEDGER": {
+      "required_fields": [
+        "document_id",
+        "claims",
+        "source",
+        "retrieved",
+        "freshness",
+        "license",
+        "strength",
+        "affected_decision"
+      ],
+      "sections": [
+        "Claim ledger",
+        "Source quality",
+        "Freshness",
+        "License and attribution",
+        "Decision links"
+      ]
+    },
+    "DOMAIN_MODEL": {
+      "required_fields": [
+        "document_id",
+        "entities",
+        "relationships",
+        "invariants",
+        "ownership",
+        "unknowns"
+      ],
+      "sections": [
+        "Entities",
+        "Relationships",
+        "Invariants",
+        "Ownership",
+        "Unknowns"
+      ]
+    },
+    "ARCHITECTURE": {
+      "required_fields": [
+        "document_id",
+        "verified_current_architecture",
+        "boundaries",
+        "quality_attributes",
+        "options",
+        "chosen_architecture",
+        "failure_recovery",
+        "security",
+        "dependencies",
+        "rollback",
+        "revisit_triggers"
+      ],
+      "sections": [
+        "Verified current architecture",
+        "Ownership boundaries",
+        "Quality attributes",
+        "Options considered",
+        "Chosen architecture",
+        "Data and control flow",
+        "Failure and recovery",
+        "Security and trust boundaries",
+        "Dependency policy",
+        "Migration and rollback",
+        "ADR index",
+        "Revisit triggers"
+      ]
+    },
+    "ADR": {
+      "required_fields": [
+        "document_id",
+        "decision",
+        "status",
+        "context",
+        "options",
+        "consequences",
+        "evidence",
+        "revisit_trigger"
+      ],
+      "sections": [
+        "Context",
+        "Decision",
+        "Options",
+        "Consequences",
+        "Evidence",
+        "Revisit trigger"
+      ]
+    },
+    "EXPERIENCE_SPEC": {
+      "required_fields": [
+        "document_id",
+        "actor",
+        "flow",
+        "states",
+        "components",
+        "responsive",
+        "accessibility",
+        "fallback",
+        "visual_qa"
+      ],
+      "sections": [
+        "Actor and job",
+        "Task flow",
+        "Surface map",
+        "State matrix",
+        "Component map",
+        "Interaction rules",
+        "Responsive composition",
+        "Accessibility acceptance",
+        "Dreamfield material budget",
+        "Fallbacks",
+        "Visual QA"
+      ]
+    },
+    "DELIVERY_PLAN": {
+      "required_fields": [
+        "document_id",
+        "work_packages",
+        "dependencies",
+        "requirements",
+        "scope_budget",
+        "review_gate"
+      ],
+      "sections": [
+        "Dependency graph",
+        "Work package table",
+        "Scope budget",
+        "Review gate"
+      ]
+    },
+    "VERIFICATION_CONTRACT": {
+      "required_fields": [
+        "document_id",
+        "requirements",
+        "proof_levels",
+        "commands",
+        "runtime_probes",
+        "failure_policy",
+        "rollback"
+      ],
+      "sections": [
+        "Requirement-to-proof map",
+        "Commands",
+        "Runtime probes",
+        "Failure policy",
+        "Rollback"
+      ]
+    },
+    "WORK_PACKAGE": {
+      "required_fields": [
+        "document_id",
+        "wp_id",
+        "status",
+        "snapshot_id",
+        "base_sha",
+        "primary_outcome",
+        "requirements",
+        "allowed_paths",
+        "forbidden_paths",
+        "scope_budget",
+        "acceptance",
+        "verification",
+        "non_goals",
+        "stop_conditions",
+        "rollback",
+        "handoff_requirements",
+        "implementer_id",
+        "implementer_session_id",
+        "requirement_digest"
+      ],
+      "sections": [
+        "Primary outcome",
+        "Value slice",
+        "Proof slice",
+        "Requirements",
+        "Assumptions and constraints",
+        "Allowed paths",
+        "Forbidden paths",
+        "Solution ladder",
+        "Scope budget",
+        "Acceptance and verification",
+        "Non-goals",
+        "Stop and replan conditions",
+        "Rollback",
+        "Handoff"
+      ]
+    },
+    "CONTEXT_CAPSULE": {
+      "required_fields": [
+        "document_id",
+        "wp_id",
+        "snapshot_id",
+        "active_goal",
+        "requirements",
+        "decisions",
+        "scope_budget",
+        "allowed_paths",
+        "forbidden_paths",
+        "acceptance",
+        "proof",
+        "stop_conditions"
+      ],
+      "sections": [
+        "Active goal",
+        "Relevant requirements",
+        "Relevant decisions",
+        "Scope budget",
+        "Allowed and forbidden paths",
+        "Acceptance",
+        "Proof",
+        "Stop conditions"
+      ]
+    },
+    "IMPLEMENTATION_HANDOFF": {
+      "required_fields": [
+        "document_id",
+        "wp_id",
+        "base_sha",
+        "head_sha",
+        "branch",
+        "claimed_outcomes",
+        "files",
+        "commands",
+        "evidence",
+        "scope_delta",
+        "unproven",
+        "next_action",
+        "reviewer_action"
+      ],
+      "sections": [
+        "Baseline and head",
+        "Claimed outcomes",
+        "Files and diff",
+        "Observed verification",
+        "Evidence levels",
+        "Scope delta",
+        "Failures and unproven boundaries",
+        "Residual risks",
+        "Rollback",
+        "Requested reviewer action"
+      ]
+    },
+    "INDEPENDENT_REVIEW": {
+      "required_fields": [
+        "document_id",
+        "review_id",
+        "reviewer_actor_id",
+        "reviewer_session_id",
+        "reviewer_role",
+        "reviewer_context",
+        "implementer_actor_id",
+        "implementer_session_id",
+        "reviewed_base_sha",
+        "reviewed_head_sha",
+        "wp_id",
+        "requirements",
+        "requirements_digest",
+        "artifact_ids",
+        "evidence_digest",
+        "independent_checks",
+        "scope_delta",
+        "findings",
+        "disposition",
+        "conditions"
+      ],
+      "sections": [
+        "Independence",
+        "Reviewed state",
+        "Requirement coverage",
+        "Independent checks",
+        "Findings",
+        "Disposition",
+        "Acceptance conditions"
+      ]
+    },
+    "REPAIR_PACKAGE": {
+      "required_fields": [
+        "document_id",
+        "repair_id",
+        "accepted_findings",
+        "allowed_paths",
+        "forbidden_paths",
+        "required_behavior",
+        "regression_proof",
+        "evidence",
+        "non_goals",
+        "repair_budget",
+        "stop_conditions"
+      ],
+      "sections": [
+        "Accepted findings",
+        "Allowed and forbidden scope",
+        "Required behavior",
+        "Regression proof",
+        "Evidence",
+        "Non-goals",
+        "Stop conditions"
+      ]
+    },
+    "EVIDENCE_RECEIPT": {
+      "required_fields": [
+        "document_id",
+        "evidence_id",
+        "requirement",
+        "level",
+        "command_or_probe",
+        "observed",
+        "timestamp",
+        "limitations",
+        "sequence",
+        "head_sha",
+        "exit_code",
+        "environment",
+        "observed_output_digest"
+      ],
+      "sections": [
+        "Requirement",
+        "Evidence level",
+        "Command or probe",
+        "Observed result",
+        "Limitations"
+      ]
+    },
+    "MILESTONE_RECEIPT": {
+      "required_fields": [
+        "document_id",
+        "milestone_id",
+        "revision",
+        "work_packages",
+        "evidence",
+        "remaining_risk",
+        "owner_approval"
+      ],
+      "sections": [
+        "Outcome",
+        "Accepted work",
+        "Evidence",
+        "Remaining risk",
+        "Owner approval"
+      ]
+    },
+    "RELEASE_RECEIPT": {
+      "required_fields": [
+        "document_id",
+        "version",
+        "revision",
+        "review_id",
+        "requirement_digest",
+        "package_digests",
+        "environment",
+        "evidence",
+        "limitations",
+        "waivers",
+        "rollback",
+        "owner_approval"
+      ],
+      "sections": [
+        "Revision",
+        "Environment",
+        "Evidence",
+        "Known limitations",
+        "Waivers",
+        "Rollback",
+        "Owner approval"
+      ]
+    },
+    "RETRO_DISTILLATION": {
+      "required_fields": [
+        "document_id",
+        "outcomes",
+        "friction",
+        "measured_evidence",
+        "decisions",
+        "next_actions"
+      ],
+      "sections": [
+        "Outcomes",
+        "Friction",
+        "Measured evidence",
+        "Decisions",
+        "Next actions"
+      ]
+    }
+  },
+  "lens_contracts": {
+    "studio-scope-guard": {
+      "input_contract": "approved outcome, scope budget, reuse candidates, and safety requirements",
+      "method": "Apply necessity, reuse, native, dependency, and minimum-solution checks; record the rejected overshoot.",
+      "output_contract": "bounded scope decision with budget, reuse ledger, and explicit safety exceptions",
+      "stop_condition": "Stop and replan when the budget is exceeded or a required safeguard would be removed.",
+      "escalation": "Escalate unresolved scope or safety conflicts to the project owner."
+    },
+    "studio-ambiguity-audit": {
+      "input_contract": "brief, requirements, actor, boundary, and success language",
+      "method": "Mark ambiguous nouns, verbs, actors, boundaries, and measures; convert each into a decision question.",
+      "output_contract": "ambiguity register with clarified wording or an owner for each open decision",
+      "stop_condition": "Stop before planning when an ambiguity changes the actor, boundary, or success measure.",
+      "escalation": "Escalate unanswered clarify-or-stop questions to the authority owner."
+    },
+    "studio-assumption-map": {
+      "input_contract": "brief, constraints, unknowns, and available evidence",
+      "method": "Rank assumptions by uncertainty and impact, assign an owner, and choose the cheapest useful test.",
+      "output_contract": "assumption map ordered by risk with evidence and validation sequence",
+      "stop_condition": "Stop or mark UNPROVEN when a load-bearing assumption has no owner or test.",
+      "escalation": "Escalate high-impact assumptions that cannot be cheaply tested."
+    },
+    "studio-constraint-audit": {
+      "input_contract": "brief, authorities, platform context, and proposed solution",
+      "method": "Separate hard constraints from preferences, identify conflicts, and attach evidence or authority to each.",
+      "output_contract": "constraint ledger with source, severity, conflict, and enforcement point",
+      "stop_condition": "Stop when a hard constraint is missing authority or conflicts with the proposed outcome.",
+      "escalation": "Escalate legal, security, accessibility, or platform conflicts to the named authority."
+    },
+    "studio-requirement-quality": {
+      "input_contract": "requirements, scenarios, owners, acceptance, and proof plan",
+      "method": "Check each requirement for actor, behavior, priority, observable acceptance, proof, and traceability.",
+      "output_contract": "requirement quality findings linked to IDs and repair wording",
+      "stop_condition": "Stop approval when a must-have requirement is not observable or lacks proof.",
+      "escalation": "Escalate conflicting or ownerless requirements before freezing the plan."
+    },
+    "studio-acceptance-writer": {
+      "input_contract": "approved outcomes, requirements, and verification capabilities",
+      "method": "Translate outcomes into observable criteria with command/probe, expected result, evidence level, and failure handling.",
+      "output_contract": "acceptance table that maps every required outcome to direct proof",
+      "stop_condition": "Stop when a criterion cannot name an observation or acceptable limitation.",
+      "escalation": "Escalate proof gaps instead of lowering the acceptance bar silently."
+    },
+    "studio-edge-case-audit": {
+      "input_contract": "requirements, flow/state model, risk, and recovery constraints",
+      "method": "Select only failure, boundary, accessibility, concurrency, migration, and recovery cases that could change acceptance.",
+      "output_contract": "prioritized edge-case checks with trigger, expected behavior, and recovery proof",
+      "stop_condition": "Stop when a critical failure path has no safe fallback or owner.",
+      "escalation": "Escalate critical data-loss, security, or accessibility cases immediately."
+    },
+    "studio-premortem": {
+      "input_contract": "high-risk plan, dependencies, assumptions, and fallback options",
+      "method": "Imagine a bounded failure, trace its earliest signal, prevention, owner, and fallback.",
+      "output_contract": "short failure register tied to plan decisions and monitoring signals",
+      "stop_condition": "Stop plan approval when a likely failure has neither prevention nor fallback.",
+      "escalation": "Escalate risks that exceed the approved budget or cannot be observed early."
+    },
+    "studio-strategy-red-team": {
+      "input_contract": "approved plan, evidence, authority map, and scope delta",
+      "method": "Adversarially test load-bearing assumptions, hidden coupling, false proof, scope gaming, and authority conflicts.",
+      "output_contract": "independent findings with severity, evidence, repair acceptance, and disposition",
+      "stop_condition": "Reject acceptance when a blocking claim is unsupported or the reviewed scope is stale.",
+      "escalation": "Escalate blocking findings to a fresh independent reviewer; never repair silently."
+    },
+    "studio-option-tradeoff": {
+      "input_contract": "decision question, bounded options, evidence, cost, and reversibility",
+      "method": "Compare only viable options across outcome fit, evidence, risk, cost, reversibility, and maintenance burden.",
+      "output_contract": "decision memo with scored trade-offs, selected option, and revisit trigger",
+      "stop_condition": "Stop when options are not comparable or the decision authority is missing.",
+      "escalation": "Escalate an unresolved trade-off to the decision owner with the smallest useful experiment."
+    },
+    "studio-domain-model": {
+      "input_contract": "approved outcome, vocabulary, actors, data, and ownership",
+      "method": "Model only the minimum entities, relationships, invariants, ownership, and unknowns needed for the next decision.",
+      "output_contract": "domain model with stable IDs, relationship direction, invariants, and open questions",
+      "stop_condition": "Stop when an invariant or ownership boundary is unknown for a required behavior.",
+      "escalation": "Escalate cross-boundary ownership conflicts before architecture selection."
+    },
+    "studio-architecture-review": {
+      "input_contract": "current architecture, proposed boundaries, quality attributes, and evidence",
+      "method": "Review ownership, trust edges, dependencies, failure recovery, security, and revisit triggers against requirements.",
+      "output_contract": "architecture fitness findings and accepted boundary decisions",
+      "stop_condition": "Reject the option when a critical trust edge, failure path, or quality attribute is unaddressed.",
+      "escalation": "Escalate architecture risks that require a new authority, dependency, or migration."
+    },
+    "studio-issue-plan": {
+      "input_contract": "frozen work package, dependencies, repository identity, and proof plan",
+      "method": "Project one bounded package into create/update/no-op/stale/conflict actions while preserving Studio authority.",
+      "output_contract": "typed issue or milestone reconciliation plan with idempotency keys and drift notes",
+      "stop_condition": "Do not apply when repository identity, base revision, or action conflict is unresolved.",
+      "escalation": "Escalate connector permission or unsupported-operation differences without fabricating success."
+    },
+    "studio-artifact-lint": {
+      "input_contract": "artifact data, schema, references, current revision, and evidence receipts",
+      "method": "Validate IDs, types, links, required fields, scope, proof, freshness, and unsupported claims deterministically.",
+      "output_contract": "lint result with typed errors, source field, evidence gap, and next action",
+      "stop_condition": "Reject the artifact on schema, broken-reference, stale-proof, or overclaim errors.",
+      "escalation": "Escalate missing authority or unverifiable external evidence as UNPROVEN."
+    }
   },
   "generated_skills": [
-    { "id": "studio-start", "description": "Start a Studio project by selecting a proportional profile, archetype, authorities, and next valid phase.", "role": "front-door", "focus": "project intake, profile selection, repository and Drive identity, and next-action routing", "outputs": ["PROJECT_INDEX", "PROJECT_BRIEF"], "never_owns": "implementation or acceptance" },
-    { "id": "studio-shape", "description": "Shape an ambiguous product or repository request into a decision-ready scope and smallest adequate solution.", "role": "front-door", "focus": "problem framing, assumptions, constraints, solution ladder, scope budget, and disposition", "outputs": ["PROJECT_BRIEF", "CHANGE_PROPOSAL"], "never_owns": "premature implementation" },
-    { "id": "studio-plan", "description": "Plan approved Studio work by linking requirements, decisions, proof, dependencies, and bounded work packages.", "role": "front-door", "focus": "requirements, architecture, UX, verification, plan critique, and snapshot readiness", "outputs": ["PRODUCT_SPEC", "ARCHITECTURE", "DELIVERY_PLAN", "VERIFICATION_CONTRACT", "WORK_PACKAGE"], "never_owns": "code execution or self-acceptance" },
-    { "id": "studio-design", "description": "Route experience decisions through flows, states, accessibility, responsive behavior, and Dreamfield visual QA.", "role": "front-door", "focus": "UX, interaction, accessibility, responsive composition, and visual evidence", "outputs": ["EXPERIENCE_SPEC"], "never_owns": "repository implementation" },
-    { "id": "studio-research", "description": "Research only decision-changing external evidence and record source quality, freshness, license, and confidence.", "role": "front-door", "focus": "primary sources, repository health, current APIs, trade-offs, and refresh triggers", "outputs": ["RESEARCH_DECISION_MEMO", "SOURCE_LEDGER"], "never_owns": "unsupported claims or implementation" },
-    { "id": "studio-docs", "description": "Compile the smallest coherent Studio artifact pack and machine sidecars from approved structured state.", "role": "front-door", "focus": "template selection, traceability, authority, supersession, and durable document output", "outputs": ["PROJECT_INDEX", "CURRENT_STATE", "EVIDENCE_RECEIPT"], "never_owns": "competing manual source of truth" },
-    { "id": "studio-work", "description": "Route an approved work package through context, implementation, proof, repair, closeout, or release preparation.", "role": "front-door", "focus": "active work package, context capsule, bounded execution, proof, and closeout", "outputs": ["CONTEXT_CAPSULE", "IMPLEMENTATION_HANDOFF", "REPAIR_PACKAGE"], "never_owns": "merge or independent acceptance" },
-    { "id": "studio-build", "description": "Implement one approved repository work package with reuse-first scope, required safety, and direct verification.", "role": "front-door", "focus": "repository evidence, allowed paths, smallest safe change, tests, and handoff", "outputs": ["IMPLEMENTATION_HANDOFF", "EVIDENCE_RECEIPT"], "never_owns": "planning authority or review acceptance" },
-    { "id": "studio-verify", "description": "Verify mechanics, evidence levels, freshness, scope, and rollback without converting weak evidence into a pass.", "role": "front-door", "focus": "deterministic validators, evidence grading, seeded gates, and honest limitations", "outputs": ["VERIFICATION_CONTRACT", "EVIDENCE_RECEIPT"], "never_owns": "self-acceptance" },
-    { "id": "studio-review", "description": "Independently review the current SHA, requirements, diff, CI, runtime evidence, and scope delta in a fresh context.", "role": "front-door", "focus": "independent findings, review disposition, repair acceptance, and stale-state detection", "outputs": ["INDEPENDENT_REVIEW", "REPAIR_PACKAGE"], "never_owns": "the work it accepts" },
-    { "id": "studio-status", "description": "Report canonical project state, drift, blockers, proof, and exactly one next valid action.", "role": "front-door", "focus": "reconcile .project state, GitHub projections, Drive authorities, and current SHA", "outputs": ["CURRENT_STATE"], "never_owns": "silent mutation" },
-    { "id": "studio-track", "description": "Project approved Studio work packages into GitHub Issues and Milestones while keeping .project state authoritative.", "role": "front-door", "focus": "idempotent issue and milestone projection, dependencies, stale reviews, and drift", "outputs": ["MILESTONE_RECEIPT", "WORK_PACKAGE"], "never_owns": "a second task authority" },
-    { "id": "studio-release", "description": "Qualify a Studio release by checking accepted work, revision, proof, compatibility, rollback, and owner approval.", "role": "front-door", "focus": "release gates, version alignment, migration, target-host evidence, and rollback", "outputs": ["RELEASE_RECEIPT"], "never_owns": "publishing or owner approval" },
-    { "id": "studio-improve", "description": "Distil verified project learnings into bounded improvements without smuggling optional work into current acceptance.", "role": "front-door", "focus": "retro evidence, friction, decisions, and separately scoped improvements", "outputs": ["RETRO_DISTILLATION", "CHANGE_PROPOSAL"], "never_owns": "unapproved scope expansion" },
-    { "id": "studio-doctor", "description": "Diagnose Studio catalog, package, schema, state, tool, and permission readiness without modifying user work.", "role": "front-door", "focus": "read-only health checks, actionable blockers, and fail-open behavior", "outputs": ["EVIDENCE_RECEIPT"], "never_owns": "automatic repair or permission escalation" },
-    { "id": "studio-init", "description": "Initialize an idempotent Studio .project control plane with file-backed active plan, findings, and progress state.", "role": "front-door", "focus": "safe project initialization and recovery files", "outputs": ["PROJECT_INDEX", "CURRENT_STATE"], "never_owns": "overwriting existing project state" },
-    { "id": "studio-context", "description": "Compile a compact work-package context capsule from current requirements, decisions, scope, proof, and stop conditions.", "role": "front-door", "focus": "selective context, authority boundaries, and fresh-session recovery", "outputs": ["CONTEXT_CAPSULE"], "never_owns": "full-history injection" },
-    { "id": "studio-evidence", "description": "Grade and validate named evidence against requirement proof levels, freshness, and current repository state.", "role": "front-door", "focus": "E0 through E5 evidence receipts, direct observations, and unproven boundaries", "outputs": ["EVIDENCE_RECEIPT"], "never_owns": "unsupported completion claims" },
-    { "id": "studio-handoff", "description": "Compile a fact-first implementation handoff from the current branch, SHA, diff, checks, evidence, and scope delta.", "role": "front-door", "focus": "handoff claim package and reviewer action", "outputs": ["IMPLEMENTATION_HANDOFF"], "never_owns": "review disposition" },
-    { "id": "studio-repair", "description": "Execute only an accepted bounded repair package and emit fresh evidence for independent re-review.", "role": "front-door", "focus": "accepted findings, allowed paths, regression proof, and stop conditions", "outputs": ["REPAIR_PACKAGE", "IMPLEMENTATION_HANDOFF"], "never_owns": "optional finding promotion" },
-    { "id": "studio-close", "description": "Close an implementation session by persisting progress, evidence, handoff, blockers, and the next reviewer action.", "role": "front-door", "focus": "file-backed recovery, clean closeout, and no self-acceptance", "outputs": ["IMPLEMENTATION_HANDOFF", "EVIDENCE_RECEIPT", "RETRO_DISTILLATION"], "never_owns": "merge or release" },
-    { "id": "studio-scope-guard", "description": "Apply the necessity, reuse, native, dependency, and minimum ladder before adding Studio scope.", "role": "lens", "focus": "scope budget, reuse ledger, overshoot audit, safety exemptions, and replan triggers", "outputs": ["PROJECT_BRIEF", "WORK_PACKAGE"], "never_owns": "removing security, accessibility, validation, or error handling" },
-    { "id": "studio-ambiguity-audit", "description": "Find ambiguous nouns, verbs, actors, boundaries, and success statements before they harden into requirements.", "role": "lens", "focus": "observable language, missing decisions, and clarify-or-stop questions", "outputs": ["PROJECT_BRIEF", "PRODUCT_SPEC"], "never_owns": "inventing product decisions" },
-    { "id": "studio-assumption-map", "description": "Extract and rank assumptions by uncertainty, impact, owner, evidence, and cheapest useful test.", "role": "lens", "focus": "load-bearing assumptions and validation order", "outputs": ["PROJECT_BRIEF", "RESEARCH_DECISION_MEMO"], "never_owns": "presenting assumptions as facts" },
-    { "id": "studio-constraint-audit", "description": "Identify technical, legal, platform, accessibility, security, budget, and delivery constraints with evidence.", "role": "lens", "focus": "hard constraints, soft preferences, conflicts, and missing authority", "outputs": ["PROJECT_BRIEF", "VERIFICATION_CONTRACT"], "never_owns": "weakening a required safeguard" },
-    { "id": "studio-requirement-quality", "description": "Check requirements for observable behavior, ownership, priority, scenario, acceptance, proof, and traceability.", "role": "lens", "focus": "testable requirement wording and conflict/gap detection", "outputs": ["PRODUCT_SPEC", "VERIFICATION_CONTRACT"], "never_owns": "adding unrequested features" },
-    { "id": "studio-acceptance-writer", "description": "Turn approved outcomes into precise acceptance criteria with direct commands, probes, and evidence levels.", "role": "lens", "focus": "observable acceptance and proof contract", "outputs": ["PRODUCT_SPEC", "VERIFICATION_CONTRACT", "WORK_PACKAGE"], "never_owns": "claiming a result before observation" },
-    { "id": "studio-edge-case-audit", "description": "Elicit relevant failure, boundary, accessibility, concurrency, migration, and recovery cases for a bounded change.", "role": "lens", "focus": "critical edge cases proportional to risk", "outputs": ["VERIFICATION_CONTRACT", "WORK_PACKAGE"], "never_owns": "inventing a test matrix without a requirement" },
-    { "id": "studio-premortem", "description": "Run a focused pre-mortem for a high-risk plan and connect likely failures to signals, prevention, and fallback.", "role": "lens", "focus": "early failure signals and recovery", "outputs": ["ARCHITECTURE", "DELIVERY_PLAN"], "never_owns": "expanding the project because of hypotheticals" },
-    { "id": "studio-strategy-red-team", "description": "Challenge load-bearing assumptions, hidden coupling, false proof, scope gaming, and authority conflicts.", "role": "lens", "focus": "adversarial plan and review critique", "outputs": ["INDEPENDENT_REVIEW", "CHANGE_PROPOSAL"], "never_owns": "quietly redesigning the approved plan" },
-    { "id": "studio-option-tradeoff", "description": "Compare bounded options by outcome fit, evidence, risk, cost, reversibility, and maintenance burden.", "role": "lens", "focus": "decision trace and explicit trade-offs", "outputs": ["RESEARCH_DECISION_MEMO", "ARCHITECTURE"], "never_owns": "unbounded option generation" },
-    { "id": "studio-domain-model", "description": "Model the minimum entities, relationships, invariants, ownership, and unknowns needed for the next decision.", "role": "lens", "focus": "domain boundaries and durable vocabulary", "outputs": ["DOMAIN_MODEL"], "never_owns": "premature database or subsystem design" },
-    { "id": "studio-architecture-review", "description": "Review architecture boundaries, quality attributes, dependencies, trust edges, failure recovery, and revisit triggers.", "role": "lens", "focus": "evidence-led architecture fitness and risk", "outputs": ["ARCHITECTURE", "INDEPENDENT_REVIEW"], "never_owns": "implementation acceptance" },
-    { "id": "studio-issue-plan", "description": "Compile one reviewable Studio work package into an idempotent GitHub issue projection with dependencies and proof.", "role": "lens", "focus": "issue-ready scope, labels, dependencies, and drift detection", "outputs": ["WORK_PACKAGE", "MILESTONE_RECEIPT"], "never_owns": "making GitHub a second authority" },
-    { "id": "studio-artifact-lint", "description": "Lint Studio artifacts for IDs, authority, links, required fields, scope, proof, freshness, and unsupported claims.", "role": "lens", "focus": "deterministic artifact and template integrity", "outputs": ["EVIDENCE_RECEIPT", "INDEPENDENT_REVIEW"], "never_owns": "silently filling missing facts" }
+    {
+      "id": "studio-start",
+      "description": "Start a Studio project by selecting a proportional profile, archetype, authorities, and next valid phase.",
+      "role": "front-door",
+      "focus": "project intake, profile selection, repository and Drive identity, and next-action routing",
+      "outputs": [
+        "PROJECT_INDEX",
+        "PROJECT_BRIEF"
+      ],
+      "never_owns": "implementation or acceptance"
+    },
+    {
+      "id": "studio-shape",
+      "description": "Shape an ambiguous product or repository request into a decision-ready scope and smallest adequate solution.",
+      "role": "front-door",
+      "focus": "problem framing, assumptions, constraints, solution ladder, scope budget, and disposition",
+      "outputs": [
+        "PROJECT_BRIEF",
+        "CHANGE_PROPOSAL"
+      ],
+      "never_owns": "premature implementation"
+    },
+    {
+      "id": "studio-plan",
+      "description": "Plan approved Studio work by linking requirements, decisions, proof, dependencies, and bounded work packages.",
+      "role": "front-door",
+      "focus": "requirements, architecture, UX, verification, plan critique, and snapshot readiness",
+      "outputs": [
+        "PRODUCT_SPEC",
+        "ARCHITECTURE",
+        "DELIVERY_PLAN",
+        "VERIFICATION_CONTRACT",
+        "WORK_PACKAGE"
+      ],
+      "never_owns": "code execution or self-acceptance"
+    },
+    {
+      "id": "studio-design",
+      "description": "Route experience decisions through flows, states, accessibility, responsive behavior, and Dreamfield visual QA.",
+      "role": "front-door",
+      "focus": "UX, interaction, accessibility, responsive composition, and visual evidence",
+      "outputs": [
+        "EXPERIENCE_SPEC"
+      ],
+      "never_owns": "repository implementation"
+    },
+    {
+      "id": "studio-research",
+      "description": "Research only decision-changing external evidence and record source quality, freshness, license, and confidence.",
+      "role": "front-door",
+      "focus": "primary sources, repository health, current APIs, trade-offs, and refresh triggers",
+      "outputs": [
+        "RESEARCH_DECISION_MEMO",
+        "SOURCE_LEDGER"
+      ],
+      "never_owns": "unsupported claims or implementation"
+    },
+    {
+      "id": "studio-docs",
+      "description": "Compile the smallest coherent Studio artifact pack and machine sidecars from approved structured state.",
+      "role": "front-door",
+      "focus": "template selection, traceability, authority, supersession, and durable document output",
+      "outputs": [
+        "PROJECT_INDEX",
+        "CURRENT_STATE",
+        "EVIDENCE_RECEIPT"
+      ],
+      "never_owns": "competing manual source of truth"
+    },
+    {
+      "id": "studio-work",
+      "description": "Route an approved work package through context, implementation, proof, repair, closeout, or release preparation.",
+      "role": "front-door",
+      "focus": "active work package, context capsule, bounded execution, proof, and closeout",
+      "outputs": [
+        "CONTEXT_CAPSULE",
+        "IMPLEMENTATION_HANDOFF",
+        "REPAIR_PACKAGE"
+      ],
+      "never_owns": "merge or independent acceptance"
+    },
+    {
+      "id": "studio-build",
+      "description": "Implement one approved repository work package with reuse-first scope, required safety, and direct verification.",
+      "role": "front-door",
+      "focus": "repository evidence, allowed paths, smallest safe change, tests, and handoff",
+      "outputs": [
+        "IMPLEMENTATION_HANDOFF",
+        "EVIDENCE_RECEIPT"
+      ],
+      "never_owns": "planning authority or review acceptance"
+    },
+    {
+      "id": "studio-verify",
+      "description": "Verify mechanics, evidence levels, freshness, scope, and rollback without converting weak evidence into a pass.",
+      "role": "front-door",
+      "focus": "deterministic validators, evidence grading, seeded gates, and honest limitations",
+      "outputs": [
+        "VERIFICATION_CONTRACT",
+        "EVIDENCE_RECEIPT"
+      ],
+      "never_owns": "self-acceptance"
+    },
+    {
+      "id": "studio-review",
+      "description": "Independently review the current SHA, requirements, diff, CI, runtime evidence, and scope delta in a fresh context.",
+      "role": "front-door",
+      "focus": "independent findings, review disposition, repair acceptance, and stale-state detection",
+      "outputs": [
+        "INDEPENDENT_REVIEW",
+        "REPAIR_PACKAGE"
+      ],
+      "never_owns": "the work it accepts"
+    },
+    {
+      "id": "studio-status",
+      "description": "Report canonical project state, drift, blockers, proof, and exactly one next valid action.",
+      "role": "front-door",
+      "focus": "reconcile .project state, GitHub projections, Drive authorities, and current SHA",
+      "outputs": [
+        "CURRENT_STATE"
+      ],
+      "never_owns": "silent mutation"
+    },
+    {
+      "id": "studio-track",
+      "description": "Project approved Studio work packages into GitHub Issues and Milestones while keeping .project state authoritative.",
+      "role": "front-door",
+      "focus": "idempotent issue and milestone projection, dependencies, stale reviews, and drift",
+      "outputs": [
+        "MILESTONE_RECEIPT",
+        "WORK_PACKAGE"
+      ],
+      "never_owns": "a second task authority"
+    },
+    {
+      "id": "studio-release",
+      "description": "Qualify a Studio release by checking accepted work, revision, proof, compatibility, rollback, and owner approval.",
+      "role": "front-door",
+      "focus": "release gates, version alignment, migration, target-host evidence, and rollback",
+      "outputs": [
+        "RELEASE_RECEIPT"
+      ],
+      "never_owns": "publishing or owner approval"
+    },
+    {
+      "id": "studio-improve",
+      "description": "Distil verified project learnings into bounded improvements without smuggling optional work into current acceptance.",
+      "role": "front-door",
+      "focus": "retro evidence, friction, decisions, and separately scoped improvements",
+      "outputs": [
+        "RETRO_DISTILLATION",
+        "CHANGE_PROPOSAL"
+      ],
+      "never_owns": "unapproved scope expansion"
+    },
+    {
+      "id": "studio-doctor",
+      "description": "Diagnose Studio catalog, package, schema, state, tool, and permission readiness without modifying user work.",
+      "role": "front-door",
+      "focus": "read-only health checks, actionable blockers, and fail-open behavior",
+      "outputs": [
+        "EVIDENCE_RECEIPT"
+      ],
+      "never_owns": "automatic repair or permission escalation"
+    },
+    {
+      "id": "studio-init",
+      "description": "Initialize an idempotent Studio .project control plane with file-backed active plan, findings, and progress state.",
+      "role": "front-door",
+      "focus": "safe project initialization and recovery files",
+      "outputs": [
+        "PROJECT_INDEX",
+        "CURRENT_STATE"
+      ],
+      "never_owns": "overwriting existing project state"
+    },
+    {
+      "id": "studio-context",
+      "description": "Compile a compact work-package context capsule from current requirements, decisions, scope, proof, and stop conditions.",
+      "role": "front-door",
+      "focus": "selective context, authority boundaries, and fresh-session recovery",
+      "outputs": [
+        "CONTEXT_CAPSULE"
+      ],
+      "never_owns": "full-history injection"
+    },
+    {
+      "id": "studio-evidence",
+      "description": "Grade and validate named evidence against requirement proof levels, freshness, and current repository state.",
+      "role": "front-door",
+      "focus": "E0 through E5 evidence receipts, direct observations, and unproven boundaries",
+      "outputs": [
+        "EVIDENCE_RECEIPT"
+      ],
+      "never_owns": "unsupported completion claims"
+    },
+    {
+      "id": "studio-handoff",
+      "description": "Compile a fact-first implementation handoff from the current branch, SHA, diff, checks, evidence, and scope delta.",
+      "role": "front-door",
+      "focus": "handoff claim package and reviewer action",
+      "outputs": [
+        "IMPLEMENTATION_HANDOFF"
+      ],
+      "never_owns": "review disposition"
+    },
+    {
+      "id": "studio-repair",
+      "description": "Execute only an accepted bounded repair package and emit fresh evidence for independent re-review.",
+      "role": "front-door",
+      "focus": "accepted findings, allowed paths, regression proof, and stop conditions",
+      "outputs": [
+        "REPAIR_PACKAGE",
+        "IMPLEMENTATION_HANDOFF"
+      ],
+      "never_owns": "optional finding promotion"
+    },
+    {
+      "id": "studio-close",
+      "description": "Close an implementation session by persisting progress, evidence, handoff, blockers, and the next reviewer action.",
+      "role": "front-door",
+      "focus": "file-backed recovery, clean closeout, and no self-acceptance",
+      "outputs": [
+        "IMPLEMENTATION_HANDOFF",
+        "EVIDENCE_RECEIPT",
+        "RETRO_DISTILLATION"
+      ],
+      "never_owns": "merge or release"
+    },
+    {
+      "id": "studio-scope-guard",
+      "description": "Apply the necessity, reuse, native, dependency, and minimum ladder before adding Studio scope.",
+      "role": "lens",
+      "focus": "scope budget, reuse ledger, overshoot audit, safety exemptions, and replan triggers",
+      "outputs": [
+        "PROJECT_BRIEF",
+        "WORK_PACKAGE"
+      ],
+      "never_owns": "removing security, accessibility, validation, or error handling"
+    },
+    {
+      "id": "studio-ambiguity-audit",
+      "description": "Find ambiguous nouns, verbs, actors, boundaries, and success statements before they harden into requirements.",
+      "role": "lens",
+      "focus": "observable language, missing decisions, and clarify-or-stop questions",
+      "outputs": [
+        "PROJECT_BRIEF",
+        "PRODUCT_SPEC"
+      ],
+      "never_owns": "inventing product decisions"
+    },
+    {
+      "id": "studio-assumption-map",
+      "description": "Extract and rank assumptions by uncertainty, impact, owner, evidence, and cheapest useful test.",
+      "role": "lens",
+      "focus": "load-bearing assumptions and validation order",
+      "outputs": [
+        "PROJECT_BRIEF",
+        "RESEARCH_DECISION_MEMO"
+      ],
+      "never_owns": "presenting assumptions as facts"
+    },
+    {
+      "id": "studio-constraint-audit",
+      "description": "Identify technical, legal, platform, accessibility, security, budget, and delivery constraints with evidence.",
+      "role": "lens",
+      "focus": "hard constraints, soft preferences, conflicts, and missing authority",
+      "outputs": [
+        "PROJECT_BRIEF",
+        "VERIFICATION_CONTRACT"
+      ],
+      "never_owns": "weakening a required safeguard"
+    },
+    {
+      "id": "studio-requirement-quality",
+      "description": "Check requirements for observable behavior, ownership, priority, scenario, acceptance, proof, and traceability.",
+      "role": "lens",
+      "focus": "testable requirement wording and conflict/gap detection",
+      "outputs": [
+        "PRODUCT_SPEC",
+        "VERIFICATION_CONTRACT"
+      ],
+      "never_owns": "adding unrequested features"
+    },
+    {
+      "id": "studio-acceptance-writer",
+      "description": "Turn approved outcomes into precise acceptance criteria with direct commands, probes, and evidence levels.",
+      "role": "lens",
+      "focus": "observable acceptance and proof contract",
+      "outputs": [
+        "PRODUCT_SPEC",
+        "VERIFICATION_CONTRACT",
+        "WORK_PACKAGE"
+      ],
+      "never_owns": "claiming a result before observation"
+    },
+    {
+      "id": "studio-edge-case-audit",
+      "description": "Elicit relevant failure, boundary, accessibility, concurrency, migration, and recovery cases for a bounded change.",
+      "role": "lens",
+      "focus": "critical edge cases proportional to risk",
+      "outputs": [
+        "VERIFICATION_CONTRACT",
+        "WORK_PACKAGE"
+      ],
+      "never_owns": "inventing a test matrix without a requirement"
+    },
+    {
+      "id": "studio-premortem",
+      "description": "Run a focused pre-mortem for a high-risk plan and connect likely failures to signals, prevention, and fallback.",
+      "role": "lens",
+      "focus": "early failure signals and recovery",
+      "outputs": [
+        "ARCHITECTURE",
+        "DELIVERY_PLAN"
+      ],
+      "never_owns": "expanding the project because of hypotheticals"
+    },
+    {
+      "id": "studio-strategy-red-team",
+      "description": "Challenge load-bearing assumptions, hidden coupling, false proof, scope gaming, and authority conflicts.",
+      "role": "lens",
+      "focus": "adversarial plan and review critique",
+      "outputs": [
+        "INDEPENDENT_REVIEW",
+        "CHANGE_PROPOSAL"
+      ],
+      "never_owns": "quietly redesigning the approved plan"
+    },
+    {
+      "id": "studio-option-tradeoff",
+      "description": "Compare bounded options by outcome fit, evidence, risk, cost, reversibility, and maintenance burden.",
+      "role": "lens",
+      "focus": "decision trace and explicit trade-offs",
+      "outputs": [
+        "RESEARCH_DECISION_MEMO",
+        "ARCHITECTURE"
+      ],
+      "never_owns": "unbounded option generation"
+    },
+    {
+      "id": "studio-domain-model",
+      "description": "Model the minimum entities, relationships, invariants, ownership, and unknowns needed for the next decision.",
+      "role": "lens",
+      "focus": "domain boundaries and durable vocabulary",
+      "outputs": [
+        "DOMAIN_MODEL"
+      ],
+      "never_owns": "premature database or subsystem design"
+    },
+    {
+      "id": "studio-architecture-review",
+      "description": "Review architecture boundaries, quality attributes, dependencies, trust edges, failure recovery, and revisit triggers.",
+      "role": "lens",
+      "focus": "evidence-led architecture fitness and risk",
+      "outputs": [
+        "ARCHITECTURE",
+        "INDEPENDENT_REVIEW"
+      ],
+      "never_owns": "implementation acceptance"
+    },
+    {
+      "id": "studio-issue-plan",
+      "description": "Compile one reviewable Studio work package into an idempotent GitHub issue projection with dependencies and proof.",
+      "role": "lens",
+      "focus": "issue-ready scope, labels, dependencies, and drift detection",
+      "outputs": [
+        "WORK_PACKAGE",
+        "MILESTONE_RECEIPT"
+      ],
+      "never_owns": "making GitHub a second authority"
+    },
+    {
+      "id": "studio-artifact-lint",
+      "description": "Lint Studio artifacts for IDs, authority, links, required fields, scope, proof, freshness, and unsupported claims.",
+      "role": "lens",
+      "focus": "deterministic artifact and template integrity",
+      "outputs": [
+        "EVIDENCE_RECEIPT",
+        "INDEPENDENT_REVIEW"
+      ],
+      "never_owns": "silently filling missing facts"
+    }
   ],
   "legacy_skills": [
-    { "id": "project-architect-router", "source": "plugins/project-architect/skills/project-architect-router" },
-    { "id": "project-discovery", "source": "plugins/project-architect/skills/project-discovery" },
-    { "id": "architecture-design", "source": "plugins/project-architect/skills/architecture-design" },
-    { "id": "implementation-planning", "source": "plugins/project-architect/skills/implementation-planning" },
-    { "id": "interface-studio-router", "source": "plugins/interface-studio/skills/interface-studio-router" },
-    { "id": "flow-and-interaction", "source": "plugins/interface-studio/skills/flow-and-interaction" },
-    { "id": "design-system-planner", "source": "plugins/interface-studio/skills/design-system-planner" },
-    { "id": "visual-qa", "source": "plugins/interface-studio/skills/visual-qa" },
-    { "id": "engineering-guard-router", "source": "plugins/engineering-guard/skills/engineering-guard-router" },
-    { "id": "architecture-risk-review", "source": "plugins/engineering-guard/skills/architecture-risk-review" },
-    { "id": "implementation-readiness", "source": "plugins/engineering-guard/skills/implementation-readiness" },
-    { "id": "implementation-review", "source": "plugins/engineering-guard/skills/implementation-review" },
-    { "id": "research-router", "source": "plugins/research-engineer/skills/research-router" },
-    { "id": "research-brief", "source": "plugins/research-engineer/skills/research-brief" },
-    { "id": "deep-web-research", "source": "plugins/research-engineer/skills/deep-web-research" },
-    { "id": "github-deep-dive", "source": "plugins/research-engineer/skills/github-deep-dive" },
-    { "id": "extension-discovery", "source": "plugins/research-engineer/skills/extension-discovery" },
-    { "id": "project-docs-router", "source": "plugins/project-docs/skills/project-docs-router" },
-    { "id": "artifact-selector", "source": "plugins/project-docs/skills/artifact-selector" },
-    { "id": "project-doc-pack", "source": "plugins/project-docs/skills/project-doc-pack" },
-    { "id": "traceability-and-handoff", "source": "plugins/project-docs/skills/traceability-and-handoff" },
-    { "id": "web-app-builder-router", "source": "plugins/web-app-builder/skills/web-app-builder-router" },
-    { "id": "repo-intake", "source": "plugins/web-app-builder/skills/repo-intake" },
-    { "id": "implementation-and-integration", "source": "plugins/web-app-builder/skills/implementation-and-integration" },
-    { "id": "debugging-and-verification", "source": "plugins/web-app-builder/skills/debugging-and-verification" },
-    { "id": "execution-guard", "source": "plugins/execution-guard/skills/execution-guard" },
-    { "id": "pragmatic-core", "source": "plugins/execution-guard/skills/pragmatic-core" },
-    { "id": "context-grounding", "source": "plugins/execution-guard/skills/context-grounding" },
-    { "id": "source-and-reuse", "source": "plugins/execution-guard/skills/source-and-reuse" },
-    { "id": "incremental-build", "source": "plugins/execution-guard/skills/incremental-build" },
-    { "id": "test-for-behavior", "source": "plugins/execution-guard/skills/test-for-behavior" },
-    { "id": "debug-root-cause", "source": "plugins/execution-guard/skills/debug-root-cause" },
-    { "id": "final-review", "source": "plugins/execution-guard/skills/final-review" },
-    { "id": "quality-contract", "source": "plugins/execution-guard/skills/quality-contract" },
-    { "id": "prove-it", "source": "plugins/execution-guard/skills/prove-it" },
-    { "id": "handoff", "source": "plugins/execution-guard/skills/handoff" }
+    {
+      "id": "project-architect-router",
+      "source": "plugins/project-architect/skills/project-architect-router"
+    },
+    {
+      "id": "project-discovery",
+      "source": "plugins/project-architect/skills/project-discovery"
+    },
+    {
+      "id": "architecture-design",
+      "source": "plugins/project-architect/skills/architecture-design"
+    },
+    {
+      "id": "implementation-planning",
+      "source": "plugins/project-architect/skills/implementation-planning"
+    },
+    {
+      "id": "interface-studio-router",
+      "source": "plugins/interface-studio/skills/interface-studio-router"
+    },
+    {
+      "id": "flow-and-interaction",
+      "source": "plugins/interface-studio/skills/flow-and-interaction"
+    },
+    {
+      "id": "design-system-planner",
+      "source": "plugins/interface-studio/skills/design-system-planner"
+    },
+    {
+      "id": "visual-qa",
+      "source": "plugins/interface-studio/skills/visual-qa"
+    },
+    {
+      "id": "engineering-guard-router",
+      "source": "plugins/engineering-guard/skills/engineering-guard-router"
+    },
+    {
+      "id": "architecture-risk-review",
+      "source": "plugins/engineering-guard/skills/architecture-risk-review"
+    },
+    {
+      "id": "implementation-readiness",
+      "source": "plugins/engineering-guard/skills/implementation-readiness"
+    },
+    {
+      "id": "implementation-review",
+      "source": "plugins/engineering-guard/skills/implementation-review"
+    },
+    {
+      "id": "research-router",
+      "source": "plugins/research-engineer/skills/research-router"
+    },
+    {
+      "id": "research-brief",
+      "source": "plugins/research-engineer/skills/research-brief"
+    },
+    {
+      "id": "deep-web-research",
+      "source": "plugins/research-engineer/skills/deep-web-research"
+    },
+    {
+      "id": "github-deep-dive",
+      "source": "plugins/research-engineer/skills/github-deep-dive"
+    },
+    {
+      "id": "extension-discovery",
+      "source": "plugins/research-engineer/skills/extension-discovery"
+    },
+    {
+      "id": "project-docs-router",
+      "source": "plugins/project-docs/skills/project-docs-router"
+    },
+    {
+      "id": "artifact-selector",
+      "source": "plugins/project-docs/skills/artifact-selector"
+    },
+    {
+      "id": "project-doc-pack",
+      "source": "plugins/project-docs/skills/project-doc-pack"
+    },
+    {
+      "id": "traceability-and-handoff",
+      "source": "plugins/project-docs/skills/traceability-and-handoff"
+    },
+    {
+      "id": "web-app-builder-router",
+      "source": "plugins/web-app-builder/skills/web-app-builder-router"
+    },
+    {
+      "id": "repo-intake",
+      "source": "plugins/web-app-builder/skills/repo-intake"
+    },
+    {
+      "id": "implementation-and-integration",
+      "source": "plugins/web-app-builder/skills/implementation-and-integration"
+    },
+    {
+      "id": "debugging-and-verification",
+      "source": "plugins/web-app-builder/skills/debugging-and-verification"
+    },
+    {
+      "id": "execution-guard",
+      "source": "plugins/execution-guard/skills/execution-guard"
+    },
+    {
+      "id": "pragmatic-core",
+      "source": "plugins/execution-guard/skills/pragmatic-core"
+    },
+    {
+      "id": "context-grounding",
+      "source": "plugins/execution-guard/skills/context-grounding"
+    },
+    {
+      "id": "source-and-reuse",
+      "source": "plugins/execution-guard/skills/source-and-reuse"
+    },
+    {
+      "id": "incremental-build",
+      "source": "plugins/execution-guard/skills/incremental-build"
+    },
+    {
+      "id": "test-for-behavior",
+      "source": "plugins/execution-guard/skills/test-for-behavior"
+    },
+    {
+      "id": "debug-root-cause",
+      "source": "plugins/execution-guard/skills/debug-root-cause"
+    },
+    {
+      "id": "final-review",
+      "source": "plugins/execution-guard/skills/final-review"
+    },
+    {
+      "id": "quality-contract",
+      "source": "plugins/execution-guard/skills/quality-contract"
+    },
+    {
+      "id": "prove-it",
+      "source": "plugins/execution-guard/skills/prove-it"
+    },
+    {
+      "id": "handoff",
+      "source": "plugins/execution-guard/skills/handoff"
+    }
   ],
   "legacy_plugins": [
-    { "id": "project-architect", "version": "0.1.0" },
-    { "id": "interface-studio", "version": "0.1.0" },
-    { "id": "research-engineer", "version": "0.1.0" },
-    { "id": "project-docs", "version": "0.1.0" },
-    { "id": "engineering-guard", "version": "0.1.0" },
-    { "id": "web-app-builder", "version": "0.1.0" },
-    { "id": "execution-guard", "version": "0.1.0" }
+    {
+      "id": "project-architect",
+      "version": "0.1.0"
+    },
+    {
+      "id": "interface-studio",
+      "version": "0.1.0"
+    },
+    {
+      "id": "research-engineer",
+      "version": "0.1.0"
+    },
+    {
+      "id": "project-docs",
+      "version": "0.1.0"
+    },
+    {
+      "id": "engineering-guard",
+      "version": "0.1.0"
+    },
+    {
+      "id": "web-app-builder",
+      "version": "0.1.0"
+    },
+    {
+      "id": "execution-guard",
+      "version": "0.1.0"
+    }
   ],
+  "package_defaults": {
+    "studio-delivery": {
+      "default_prompt": [
+        "Use Studio to coordinate this bounded software task.",
+        "Read the current Studio state and evidence before acting."
+      ],
+      "chatgpt_default_prompt": "Use Studio to coordinate this bounded software task from the current project state.",
+      "app_references": {
+        "CHATGPT": [],
+        "CODEX": []
+      },
+      "recipe": {
+        "id": "skills-first",
+        "version": "2.0",
+        "include": [
+          "manifest",
+          "assets",
+          "skills",
+          "readme"
+        ],
+        "chatgpt": {
+          "wrapper": true,
+          "app_references": [],
+          "mcp_servers": [],
+          "exclude": [
+            ".mcp.json",
+            ".app.json"
+          ]
+        }
+      }
+    },
+    "project-architect": {
+      "default_prompt": [
+        "Use Studio Plan for requirements and architecture decisions.",
+        "Do not implement or accept repository changes."
+      ],
+      "chatgpt_default_prompt": "Use Studio Plan to shape this request into bounded, implementation-ready work.",
+      "app_references": {
+        "CHATGPT": [],
+        "CODEX": []
+      },
+      "recipe": {
+        "id": "skills-first",
+        "version": "2.0",
+        "include": [
+          "manifest",
+          "assets",
+          "skills",
+          "readme"
+        ],
+        "chatgpt": {
+          "wrapper": true,
+          "app_references": [],
+          "mcp_servers": [],
+          "exclude": [
+            ".mcp.json",
+            ".app.json"
+          ]
+        }
+      }
+    },
+    "interface-studio": {
+      "default_prompt": [
+        "Use Studio Design for UX, interaction, and visual-system decisions.",
+        "Keep implementation outside this package."
+      ],
+      "chatgpt_default_prompt": "Use Studio Design to define the experience, states, accessibility, and visual proof for this request.",
+      "app_references": {
+        "CHATGPT": [],
+        "CODEX": []
+      },
+      "recipe": {
+        "id": "skills-first",
+        "version": "2.0",
+        "include": [
+          "manifest",
+          "assets",
+          "skills",
+          "readme"
+        ],
+        "chatgpt": {
+          "wrapper": true,
+          "app_references": [],
+          "mcp_servers": [],
+          "exclude": [
+            ".mcp.json",
+            ".app.json"
+          ]
+        }
+      }
+    },
+    "research-engineer": {
+      "default_prompt": [
+        "Use Studio Research only for decision-changing evidence.",
+        "Record source quality, freshness, license, and confidence."
+      ],
+      "chatgpt_default_prompt": "Use Studio Research to gather only current evidence that can change this decision.",
+      "app_references": {
+        "CHATGPT": [],
+        "CODEX": []
+      },
+      "recipe": {
+        "id": "skills-first",
+        "version": "2.0",
+        "include": [
+          "manifest",
+          "assets",
+          "skills",
+          "readme"
+        ],
+        "chatgpt": {
+          "wrapper": true,
+          "app_references": [],
+          "mcp_servers": [],
+          "exclude": [
+            ".mcp.json",
+            ".app.json"
+          ]
+        }
+      }
+    },
+    "project-docs": {
+      "default_prompt": [
+        "Use Studio Docs to compile linked artifacts from approved state.",
+        "Keep the catalog and project state authoritative."
+      ],
+      "chatgpt_default_prompt": "Use Studio Docs to compile the smallest linked artifact pack from approved project state.",
+      "app_references": {
+        "CHATGPT": [],
+        "CODEX": []
+      },
+      "recipe": {
+        "id": "skills-first",
+        "version": "2.0",
+        "include": [
+          "manifest",
+          "assets",
+          "skills",
+          "readme"
+        ],
+        "chatgpt": {
+          "wrapper": true,
+          "app_references": [],
+          "mcp_servers": [],
+          "exclude": [
+            ".mcp.json",
+            ".app.json"
+          ]
+        }
+      }
+    },
+    "engineering-guard": {
+      "default_prompt": [
+        "Use Studio Review in a fresh context to challenge this work.",
+        "Never accept work performed by the reviewer."
+      ],
+      "chatgpt_default_prompt": "Use Studio Review in a fresh context to test the current evidence and find blocking defects.",
+      "app_references": {
+        "CHATGPT": [],
+        "CODEX": []
+      },
+      "recipe": {
+        "id": "skills-first",
+        "version": "2.0",
+        "include": [
+          "manifest",
+          "assets",
+          "skills",
+          "readme"
+        ],
+        "chatgpt": {
+          "wrapper": true,
+          "app_references": [],
+          "mcp_servers": [],
+          "exclude": [
+            ".mcp.json",
+            ".app.json"
+          ]
+        }
+      }
+    },
+    "web-app-builder": {
+      "default_prompt": [
+        "Use Studio Build only for an approved work package.",
+        "Verify the bounded change directly and prepare a handoff."
+      ],
+      "chatgpt_default_prompt": "Use Studio Build to implement this approved work package within its allowed paths.",
+      "app_references": {
+        "CHATGPT": [],
+        "CODEX": []
+      },
+      "recipe": {
+        "id": "skills-first",
+        "version": "2.0",
+        "include": [
+          "manifest",
+          "assets",
+          "skills",
+          "readme"
+        ],
+        "chatgpt": {
+          "wrapper": true,
+          "app_references": [],
+          "mcp_servers": [],
+          "exclude": [
+            ".mcp.json",
+            ".app.json"
+          ]
+        }
+      }
+    },
+    "execution-guard": {
+      "default_prompt": [
+        "Use Studio Verify to test the claim against direct evidence.",
+        "Return UNPROVEN when the requested proof is missing."
+      ],
+      "chatgpt_default_prompt": "Use Studio Verify to challenge this claim with direct, bounded evidence.",
+      "app_references": {
+        "CHATGPT": [],
+        "CODEX": []
+      },
+      "recipe": {
+        "id": "skills-first",
+        "version": "2.0",
+        "include": [
+          "manifest",
+          "assets",
+          "skills",
+          "readme"
+        ],
+        "chatgpt": {
+          "wrapper": true,
+          "app_references": [],
+          "mcp_servers": [],
+          "exclude": [
+            ".mcp.json",
+            ".app.json"
+          ]
+        }
+      }
+    },
+    "studio-track": {
+      "default_prompt": [
+        "Use Studio Track to prepare a typed issue or milestone projection.",
+        "Keep .project state authoritative and writes confirmation-gated."
+      ],
+      "chatgpt_default_prompt": "Use Studio Track to prepare an idempotent issue or milestone projection from the frozen work package.",
+      "app_references": {
+        "CHATGPT": [],
+        "CODEX": []
+      },
+      "recipe": {
+        "id": "skills-first",
+        "version": "2.0",
+        "include": [
+          "manifest",
+          "assets",
+          "skills",
+          "readme"
+        ],
+        "chatgpt": {
+          "wrapper": true,
+          "app_references": [],
+          "mcp_servers": [],
+          "exclude": [
+            ".mcp.json",
+            ".app.json"
+          ]
+        }
+      }
+    }
+  },
   "plugins": [
-    { "id": "studio-delivery", "display_name": "Studio", "description": "Orchestrate the complete ChatGPT to Codex delivery loop with one bounded, evidence-backed workflow.", "category": "Productivity", "legacy_aliases": ["open-software-studio", "studio"], "skills": "all", "surfaces": ["CHATGPT", "CODEX"] },
-    { "id": "project-architect", "display_name": "Studio Plan", "description": "Shape requirements, architecture decisions, and implementation-ready work. Does not implement or accept code.", "category": "Productivity", "legacy_aliases": ["Project Architect", "project-architect"], "skills": ["studio-start", "studio-shape", "studio-plan", "studio-status", "studio-doctor", "studio-scope-guard", "studio-ambiguity-audit", "studio-assumption-map", "studio-constraint-audit", "studio-requirement-quality", "studio-acceptance-writer", "studio-edge-case-audit", "studio-premortem", "studio-strategy-red-team", "studio-option-tradeoff", "studio-domain-model", "studio-architecture-review", "studio-issue-plan", "studio-artifact-lint", "project-architect-router", "project-discovery", "architecture-design", "implementation-planning"], "surfaces": ["CHATGPT", "CODEX"] },
-    { "id": "interface-studio", "display_name": "Studio Design", "description": "Define UX, interaction, accessibility, responsive behavior, and visual systems. Does not implement repository code.", "category": "Creativity", "legacy_aliases": ["Interface Studio", "interface-studio"], "skills": ["studio-start", "studio-shape", "studio-design", "studio-plan", "studio-scope-guard", "studio-acceptance-writer", "studio-edge-case-audit", "interface-studio-router", "flow-and-interaction", "design-system-planner", "visual-qa"], "surfaces": ["CHATGPT", "CODEX"] },
-    { "id": "research-engineer", "display_name": "Studio Research", "description": "Gather current decision-changing external evidence with source quality, freshness, license, and confidence. Does not invent proof.", "category": "Education & Research", "legacy_aliases": ["Research Engineer", "research-engineer"], "skills": ["studio-start", "studio-research", "studio-plan", "studio-status", "studio-assumption-map", "studio-constraint-audit", "studio-option-tradeoff", "research-router", "research-brief", "deep-web-research", "github-deep-dive", "extension-discovery"], "surfaces": ["CHATGPT", "CODEX"] },
-    { "id": "project-docs", "display_name": "Studio Docs", "description": "Compile durable, linked Studio documents and machine sidecars from approved structured state. Does not create competing authority.", "category": "Productivity", "legacy_aliases": ["Project Docs", "project-docs"], "skills": ["studio-start", "studio-plan", "studio-docs", "studio-context", "studio-handoff", "studio-close", "studio-artifact-lint", "project-docs-router", "artifact-selector", "project-doc-pack", "traceability-and-handoff"], "surfaces": ["CHATGPT", "CODEX"] },
-    { "id": "engineering-guard", "display_name": "Studio Review", "description": "Independently challenge plans, changes, evidence, and release claims in a fresh context. Does not perform or accept its own work.", "category": "Developer Tools", "legacy_aliases": ["Engineering Guard", "engineering-guard"], "skills": ["studio-review", "studio-verify", "studio-evidence", "studio-repair", "studio-doctor", "studio-artifact-lint", "studio-strategy-red-team", "studio-premortem", "engineering-guard-router", "architecture-risk-review", "implementation-readiness", "implementation-review"], "surfaces": ["CHATGPT", "CODEX"] },
-    { "id": "web-app-builder", "display_name": "Studio Build", "description": "Implement approved repository work with local conventions, reuse-first scope, direct verification, and a reviewable handoff.", "category": "Developer Tools", "legacy_aliases": ["Web App Builder", "web-app-builder"], "skills": ["studio-work", "studio-build", "studio-context", "studio-evidence", "studio-handoff", "studio-close", "studio-repair", "studio-scope-guard", "web-app-builder-router", "repo-intake", "implementation-and-integration", "debugging-and-verification"], "surfaces": ["CHATGPT", "CODEX"] },
-    { "id": "execution-guard", "display_name": "Studio Verify", "description": "Verify grounded, bounded, evidence-backed execution and fail honestly when requested proof is missing.", "category": "Developer Tools", "legacy_aliases": ["Execution Guard", "execution-guard"], "skills": ["studio-work", "studio-verify", "studio-evidence", "studio-doctor", "studio-handoff", "studio-close", "studio-review", "execution-guard", "pragmatic-core", "context-grounding", "source-and-reuse", "incremental-build", "test-for-behavior", "debug-root-cause", "final-review", "quality-contract", "prove-it", "handoff"], "surfaces": ["CHATGPT", "CODEX"] },
-    { "id": "studio-track", "display_name": "Studio Track", "description": "Project bounded Studio work into GitHub Issues and Milestones while keeping .project state authoritative.", "category": "Productivity", "legacy_aliases": ["studio-track"], "skills": ["studio-start", "studio-status", "studio-track", "studio-context", "studio-evidence", "studio-handoff", "studio-issue-plan", "studio-artifact-lint"], "surfaces": ["CHATGPT", "CODEX"] }
+    {
+      "id": "studio-delivery",
+      "display_name": "Studio",
+      "description": "Orchestrate the complete ChatGPT to Codex delivery loop with one bounded, evidence-backed workflow.",
+      "category": "Productivity",
+      "legacy_aliases": [
+        "open-software-studio",
+        "studio"
+      ],
+      "skills": "all",
+      "surfaces": [
+        "CHATGPT",
+        "CODEX"
+      ]
+    },
+    {
+      "id": "project-architect",
+      "display_name": "Studio Plan",
+      "description": "Shape requirements, architecture decisions, and implementation-ready work. Does not implement or accept code.",
+      "category": "Productivity",
+      "legacy_aliases": [
+        "Project Architect",
+        "project-architect"
+      ],
+      "skills": [
+        "studio-start",
+        "studio-shape",
+        "studio-plan",
+        "studio-status",
+        "studio-doctor",
+        "studio-scope-guard",
+        "studio-ambiguity-audit",
+        "studio-assumption-map",
+        "studio-constraint-audit",
+        "studio-requirement-quality",
+        "studio-acceptance-writer",
+        "studio-edge-case-audit",
+        "studio-premortem",
+        "studio-strategy-red-team",
+        "studio-option-tradeoff",
+        "studio-domain-model",
+        "studio-architecture-review",
+        "studio-issue-plan",
+        "studio-artifact-lint",
+        "project-architect-router",
+        "project-discovery",
+        "architecture-design",
+        "implementation-planning"
+      ],
+      "surfaces": [
+        "CHATGPT",
+        "CODEX"
+      ]
+    },
+    {
+      "id": "interface-studio",
+      "display_name": "Studio Design",
+      "description": "Define UX, interaction, accessibility, responsive behavior, and visual systems. Does not implement repository code.",
+      "category": "Creativity",
+      "legacy_aliases": [
+        "Interface Studio",
+        "interface-studio"
+      ],
+      "skills": [
+        "studio-start",
+        "studio-shape",
+        "studio-design",
+        "studio-plan",
+        "studio-scope-guard",
+        "studio-acceptance-writer",
+        "studio-edge-case-audit",
+        "interface-studio-router",
+        "flow-and-interaction",
+        "design-system-planner",
+        "visual-qa"
+      ],
+      "surfaces": [
+        "CHATGPT",
+        "CODEX"
+      ]
+    },
+    {
+      "id": "research-engineer",
+      "display_name": "Studio Research",
+      "description": "Gather current decision-changing external evidence with source quality, freshness, license, and confidence. Does not invent proof.",
+      "category": "Education & Research",
+      "legacy_aliases": [
+        "Research Engineer",
+        "research-engineer"
+      ],
+      "skills": [
+        "studio-start",
+        "studio-research",
+        "studio-plan",
+        "studio-status",
+        "studio-assumption-map",
+        "studio-constraint-audit",
+        "studio-option-tradeoff",
+        "research-router",
+        "research-brief",
+        "deep-web-research",
+        "github-deep-dive",
+        "extension-discovery"
+      ],
+      "surfaces": [
+        "CHATGPT",
+        "CODEX"
+      ]
+    },
+    {
+      "id": "project-docs",
+      "display_name": "Studio Docs",
+      "description": "Compile durable, linked Studio documents and machine sidecars from approved structured state. Does not create competing authority.",
+      "category": "Productivity",
+      "legacy_aliases": [
+        "Project Docs",
+        "project-docs"
+      ],
+      "skills": [
+        "studio-start",
+        "studio-plan",
+        "studio-docs",
+        "studio-context",
+        "studio-handoff",
+        "studio-close",
+        "studio-artifact-lint",
+        "project-docs-router",
+        "artifact-selector",
+        "project-doc-pack",
+        "traceability-and-handoff"
+      ],
+      "surfaces": [
+        "CHATGPT",
+        "CODEX"
+      ]
+    },
+    {
+      "id": "engineering-guard",
+      "display_name": "Studio Review",
+      "description": "Independently challenge plans, changes, evidence, and release claims in a fresh context. Does not perform or accept its own work.",
+      "category": "Developer Tools",
+      "legacy_aliases": [
+        "Engineering Guard",
+        "engineering-guard"
+      ],
+      "skills": [
+        "studio-review",
+        "studio-verify",
+        "studio-evidence",
+        "studio-repair",
+        "studio-doctor",
+        "studio-artifact-lint",
+        "studio-strategy-red-team",
+        "studio-premortem",
+        "engineering-guard-router",
+        "architecture-risk-review",
+        "implementation-readiness",
+        "implementation-review"
+      ],
+      "surfaces": [
+        "CHATGPT",
+        "CODEX"
+      ]
+    },
+    {
+      "id": "web-app-builder",
+      "display_name": "Studio Build",
+      "description": "Implement approved repository work with local conventions, reuse-first scope, direct verification, and a reviewable handoff.",
+      "category": "Developer Tools",
+      "legacy_aliases": [
+        "Web App Builder",
+        "web-app-builder"
+      ],
+      "skills": [
+        "studio-work",
+        "studio-build",
+        "studio-context",
+        "studio-evidence",
+        "studio-handoff",
+        "studio-close",
+        "studio-repair",
+        "studio-scope-guard",
+        "web-app-builder-router",
+        "repo-intake",
+        "implementation-and-integration",
+        "debugging-and-verification"
+      ],
+      "surfaces": [
+        "CHATGPT",
+        "CODEX"
+      ]
+    },
+    {
+      "id": "execution-guard",
+      "display_name": "Studio Verify",
+      "description": "Verify grounded, bounded, evidence-backed execution and fail honestly when requested proof is missing.",
+      "category": "Developer Tools",
+      "legacy_aliases": [
+        "Execution Guard",
+        "execution-guard"
+      ],
+      "skills": [
+        "studio-work",
+        "studio-verify",
+        "studio-evidence",
+        "studio-doctor",
+        "studio-handoff",
+        "studio-close",
+        "studio-review",
+        "execution-guard",
+        "pragmatic-core",
+        "context-grounding",
+        "source-and-reuse",
+        "incremental-build",
+        "test-for-behavior",
+        "debug-root-cause",
+        "final-review",
+        "quality-contract",
+        "prove-it",
+        "handoff"
+      ],
+      "surfaces": [
+        "CHATGPT",
+        "CODEX"
+      ]
+    },
+    {
+      "id": "studio-track",
+      "display_name": "Studio Track",
+      "description": "Project bounded Studio work into GitHub Issues and Milestones while keeping .project state authoritative.",
+      "category": "Productivity",
+      "legacy_aliases": [
+        "studio-track"
+      ],
+      "skills": [
+        "studio-start",
+        "studio-status",
+        "studio-track",
+        "studio-context",
+        "studio-evidence",
+        "studio-handoff",
+        "studio-issue-plan",
+        "studio-artifact-lint"
+      ],
+      "surfaces": [
+        "CHATGPT",
+        "CODEX"
+      ]
+    }
   ],
   "provenance": [
-    { "source": "openai/plugins", "repository": "https://github.com/openai/plugins", "revision": "1e285826e604f66f7208f7ac4dba0fe8341d1f57", "license": "MIT", "method": "plugin manifest, marketplace, and skills conventions", "copied_files": [], "modifications": "clean-room structural adaptation" },
-    { "source": "github/spec-kit", "repository": "https://github.com/github/spec-kit", "revision": "51e52be6c3b26fed3ff5424c671f4a559519a759", "license": "MIT", "method": "specification-to-plan sequencing and convergence", "copied_files": [], "modifications": "reduced to Studio artifact and work-package contracts" },
-    { "source": "garrytan/gstack", "repository": "https://github.com/garrytan/gstack", "revision": "07b59e396c6be5a86619a43151cb9ed62a15ae69", "license": "MIT", "method": "focused review and fresh-context workflow ideas", "copied_files": [], "modifications": "reduced to typed findings and bounded repair" },
-    { "source": "DietrichGebert/ponytail", "repository": "https://github.com/DietrichGebert/ponytail", "revision": "2ed6c52c9d7e5e56942508591085fd45dea277d3", "license": "MIT", "method": "necessity, reuse, native, dependency, and minimum solution ladder", "copied_files": [], "modifications": "expressed as studio-scope-guard; no source text copied" },
-    { "source": "Fission-AI/OpenSpec", "repository": "https://github.com/Fission-AI/OpenSpec", "revision": "a0ddb60d040c61f4907436a9d91310934b1dda63", "license": "MIT", "method": "current truth versus active change and lightweight change folders", "copied_files": [], "modifications": "mapped to Studio change and supersession fields" },
-    { "source": "Mekawey0/Agent_Do", "repository": "https://github.com/Mekawey0/Agent_Do", "revision": "4c0ecbe4403520bb24c7c8ff64c8092bfc50db42", "license": "MIT", "method": "one command family, file-backed coordination, compact handoff, bounded repair", "copied_files": [], "modifications": "implemented only the required Studio mechanics" },
-    { "source": "WillowRyu/agent-handoff", "repository": "https://github.com/WillowRyu/agent-handoff", "revision": "6179248b0a644cc8695f9f9dedd883587c4d4378", "license": "MIT", "method": "plan, execute, verify separation and disk-backed handoff", "copied_files": [], "modifications": "reduced to fresh review and evidence fields" },
-    { "source": "TAKEOFF69/codex-skills-kit", "repository": "https://github.com/TAKEOFF69/codex-skills-kit", "revision": "51645ad29d63fbbb301e42d8497c4fe80e09bac9", "license": "MIT (code), CC BY 4.0 (skill/example/fixture content)", "method": "seeded proof, evidence-bounded verification, session close, retrospective distillation", "copied_files": [], "modifications": "clean-room reimplementation; no source content copied" },
-    { "source": "OthmanAdi/planning-with-files", "repository": "https://github.com/OthmanAdi/planning-with-files", "revision": "d5d35e6a2316459418e7381faa2682b2894d02c1", "license": "MIT", "method": "persistent plan, findings, progress, doctor, and completion gate", "copied_files": [], "modifications": "mapped into .project/session; no competing task system" },
-    { "source": "github/awesome-copilot", "repository": "https://github.com/github/awesome-copilot", "revision": "f11a4e441c5ff061b4f8ae37952be8c602e4034e", "license": "MIT", "method": "evidence-first codebase mapping and issue-ready planning", "copied_files": [], "modifications": "selected concepts only; no skill pack imported" },
-    { "source": "45ck/business-analysis-skills", "repository": "https://github.com/45ck/business-analysis-skills", "revision": "4eedd98f84c7546d56ea6aab077e3846767e758a", "license": "MIT", "method": "ambiguity, assumptions, constraints, requirement gaps, and acceptance", "copied_files": [], "modifications": "reimplemented as internal Plan lenses" },
-    { "source": "phuryn/pm-skills", "repository": "https://github.com/phuryn/pm-skills", "revision": "18468a95b427e70e258b51389796367c6f684e7d", "license": "MIT", "method": "risky assumptions, outcomes, pre-mortem, red team, and scenarios", "copied_files": [], "modifications": "reimplemented as proportional Studio lenses" },
-    { "source": "neurofoo/agent-skills", "repository": "https://github.com/neurofoo/agent-skills", "revision": "0e7ac2aa4d094352a082ebeedf1dbb4c52b77782", "license": "MIT", "method": "pre-mortem, red team, Five Whys, and decision lenses", "copied_files": [], "modifications": "selected reasoning prompts only" },
-    { "source": "Pablo-aps/prove-it", "repository": "https://github.com/Pablo-aps/prove-it", "revision": "4c5a6426a620019239b094f8cd0721ee25af59d4", "license": "Apache-2.0", "method": "adversarial completion verdict", "copied_files": [], "modifications": "reduced to E0-E5 evidence classification and explicit UNPROVEN state" },
-    { "source": "MrLesk/Backlog.md", "repository": "https://github.com/MrLesk/Backlog.md", "revision": "3d73793b96e3a200411e21675f9adc95338267de", "license": "MIT", "method": "portable task projection and one-task context ideas", "copied_files": [], "modifications": "not enabled; Studio Track remains the only default task projection" },
-    { "source": "gastownhall/beads", "repository": "https://github.com/gastownhall/beads", "revision": "cbfc505e39a60514c57dcdb5afe155c8659647ba", "license": "MIT", "method": "dependency graph adapter candidate", "copied_files": [], "modifications": "not enabled for Lite or Standard" },
-    { "source": "openai/symphony", "repository": "https://github.com/openai/symphony", "revision": "8001b52e3062495a16e520e4ceaf8f9de868c4d0", "license": "Apache-2.0", "method": "isolated autonomous execution adapter candidate", "copied_files": [], "modifications": "not enabled; merge remains owner-controlled" },
-    { "source": "github/github-mcp-server", "repository": "https://github.com/github/github-mcp-server", "revision": "febc3293a4feb70e62399f39a26b082f78b9b176", "license": "MIT", "method": "portable GitHub adapter candidate", "copied_files": [], "modifications": "not bundled when native GitHub tooling is available" },
-    { "source": "BlacklineCloud/agent-skills", "repository": "https://github.com/BlacklineCloud/agent-skills", "revision": "6a95391ad5f0a398c33f14d5aeb902bb1f9d13c0", "license": "MIT", "method": "canonical source tree, changed-only validation, generated marketplace", "copied_files": [], "modifications": "reimplemented as catalog generation and bounded validators" },
-    { "source": "addyosmani/agent-skills", "repository": "https://github.com/addyosmani/agent-skills", "revision": "d2c37ef6225dd8726cdd369a8030307f48592d26", "license": "MIT", "method": "source, incremental, context, debug, and review concepts", "copied_files": [], "modifications": "clean-room adaptation only" }
+    {
+      "source": "openai/plugins",
+      "repository": "https://github.com/openai/plugins",
+      "revision": "1e285826e604f66f7208f7ac4dba0fe8341d1f57",
+      "license": "MIT",
+      "method": "plugin manifest, marketplace, and skills conventions",
+      "copied_files": [],
+      "modifications": "clean-room structural adaptation"
+    },
+    {
+      "source": "github/spec-kit",
+      "repository": "https://github.com/github/spec-kit",
+      "revision": "51e52be6c3b26fed3ff5424c671f4a559519a759",
+      "license": "MIT",
+      "method": "specification-to-plan sequencing and convergence",
+      "copied_files": [],
+      "modifications": "reduced to Studio artifact and work-package contracts"
+    },
+    {
+      "source": "garrytan/gstack",
+      "repository": "https://github.com/garrytan/gstack",
+      "revision": "07b59e396c6be5a86619a43151cb9ed62a15ae69",
+      "license": "MIT",
+      "method": "focused review and fresh-context workflow ideas",
+      "copied_files": [],
+      "modifications": "reduced to typed findings and bounded repair"
+    },
+    {
+      "source": "DietrichGebert/ponytail",
+      "repository": "https://github.com/DietrichGebert/ponytail",
+      "revision": "2ed6c52c9d7e5e56942508591085fd45dea277d3",
+      "license": "MIT",
+      "method": "necessity, reuse, native, dependency, and minimum solution ladder",
+      "copied_files": [],
+      "modifications": "expressed as studio-scope-guard; no source text copied"
+    },
+    {
+      "source": "Fission-AI/OpenSpec",
+      "repository": "https://github.com/Fission-AI/OpenSpec",
+      "revision": "a0ddb60d040c61f4907436a9d91310934b1dda63",
+      "license": "MIT",
+      "method": "current truth versus active change and lightweight change folders",
+      "copied_files": [],
+      "modifications": "mapped to Studio change and supersession fields"
+    },
+    {
+      "source": "Mekawey0/Agent_Do",
+      "repository": "https://github.com/Mekawey0/Agent_Do",
+      "revision": "4c0ecbe4403520bb24c7c8ff64c8092bfc50db42",
+      "license": "MIT",
+      "method": "one command family, file-backed coordination, compact handoff, bounded repair",
+      "copied_files": [],
+      "modifications": "implemented only the required Studio mechanics"
+    },
+    {
+      "source": "WillowRyu/agent-handoff",
+      "repository": "https://github.com/WillowRyu/agent-handoff",
+      "revision": "6179248b0a644cc8695f9f9dedd883587c4d4378",
+      "license": "MIT",
+      "method": "plan, execute, verify separation and disk-backed handoff",
+      "copied_files": [],
+      "modifications": "reduced to fresh review and evidence fields"
+    },
+    {
+      "source": "TAKEOFF69/codex-skills-kit",
+      "repository": "https://github.com/TAKEOFF69/codex-skills-kit",
+      "revision": "51645ad29d63fbbb301e42d8497c4fe80e09bac9",
+      "license": "MIT (code), CC BY 4.0 (skill/example/fixture content)",
+      "method": "seeded proof, evidence-bounded verification, session close, retrospective distillation",
+      "copied_files": [],
+      "modifications": "clean-room reimplementation; no source content copied"
+    },
+    {
+      "source": "OthmanAdi/planning-with-files",
+      "repository": "https://github.com/OthmanAdi/planning-with-files",
+      "revision": "d5d35e6a2316459418e7381faa2682b2894d02c1",
+      "license": "MIT",
+      "method": "persistent plan, findings, progress, doctor, and completion gate",
+      "copied_files": [],
+      "modifications": "mapped into .project/session; no competing task system"
+    },
+    {
+      "source": "github/awesome-copilot",
+      "repository": "https://github.com/github/awesome-copilot",
+      "revision": "f11a4e441c5ff061b4f8ae37952be8c602e4034e",
+      "license": "MIT",
+      "method": "evidence-first codebase mapping and issue-ready planning",
+      "copied_files": [],
+      "modifications": "selected concepts only; no skill pack imported"
+    },
+    {
+      "source": "45ck/business-analysis-skills",
+      "repository": "https://github.com/45ck/business-analysis-skills",
+      "revision": "4eedd98f84c7546d56ea6aab077e3846767e758a",
+      "license": "MIT",
+      "method": "ambiguity, assumptions, constraints, requirement gaps, and acceptance",
+      "copied_files": [],
+      "modifications": "reimplemented as internal Plan lenses"
+    },
+    {
+      "source": "phuryn/pm-skills",
+      "repository": "https://github.com/phuryn/pm-skills",
+      "revision": "18468a95b427e70e258b51389796367c6f684e7d",
+      "license": "MIT",
+      "method": "risky assumptions, outcomes, pre-mortem, red team, and scenarios",
+      "copied_files": [],
+      "modifications": "reimplemented as proportional Studio lenses"
+    },
+    {
+      "source": "neurofoo/agent-skills",
+      "repository": "https://github.com/neurofoo/agent-skills",
+      "revision": "0e7ac2aa4d094352a082ebeedf1dbb4c52b77782",
+      "license": "MIT",
+      "method": "pre-mortem, red team, Five Whys, and decision lenses",
+      "copied_files": [],
+      "modifications": "selected reasoning prompts only"
+    },
+    {
+      "source": "Pablo-aps/prove-it",
+      "repository": "https://github.com/Pablo-aps/prove-it",
+      "revision": "4c5a6426a620019239b094f8cd0721ee25af59d4",
+      "license": "Apache-2.0",
+      "method": "adversarial completion verdict",
+      "copied_files": [],
+      "modifications": "reduced to E0-E5 evidence classification and explicit UNPROVEN state"
+    },
+    {
+      "source": "MrLesk/Backlog.md",
+      "repository": "https://github.com/MrLesk/Backlog.md",
+      "revision": "3d73793b96e3a200411e21675f9adc95338267de",
+      "license": "MIT",
+      "method": "portable task projection and one-task context ideas",
+      "copied_files": [],
+      "modifications": "not enabled; Studio Track remains the only default task projection"
+    },
+    {
+      "source": "gastownhall/beads",
+      "repository": "https://github.com/gastownhall/beads",
+      "revision": "cbfc505e39a60514c57dcdb5afe155c8659647ba",
+      "license": "MIT",
+      "method": "dependency graph adapter candidate",
+      "copied_files": [],
+      "modifications": "not enabled for Lite or Standard"
+    },
+    {
+      "source": "openai/symphony",
+      "repository": "https://github.com/openai/symphony",
+      "revision": "8001b52e3062495a16e520e4ceaf8f9de868c4d0",
+      "license": "Apache-2.0",
+      "method": "isolated autonomous execution adapter candidate",
+      "copied_files": [],
+      "modifications": "not enabled; merge remains owner-controlled"
+    },
+    {
+      "source": "github/github-mcp-server",
+      "repository": "https://github.com/github/github-mcp-server",
+      "revision": "febc3293a4feb70e62399f39a26b082f78b9b176",
+      "license": "MIT",
+      "method": "portable GitHub adapter candidate",
+      "copied_files": [],
+      "modifications": "not bundled when native GitHub tooling is available"
+    },
+    {
+      "source": "BlacklineCloud/agent-skills",
+      "repository": "https://github.com/BlacklineCloud/agent-skills",
+      "revision": "6a95391ad5f0a398c33f14d5aeb902bb1f9d13c0",
+      "license": "MIT",
+      "method": "canonical source tree, changed-only validation, generated marketplace",
+      "copied_files": [],
+      "modifications": "reimplemented as catalog generation and bounded validators"
+    },
+    {
+      "source": "addyosmani/agent-skills",
+      "repository": "https://github.com/addyosmani/agent-skills",
+      "revision": "d2c37ef6225dd8726cdd369a8030307f48592d26",
+      "license": "MIT",
+      "method": "source, incremental, context, debug, and review concepts",
+      "copied_files": [],
+      "modifications": "clean-room adaptation only"
+    }
   ]
 }

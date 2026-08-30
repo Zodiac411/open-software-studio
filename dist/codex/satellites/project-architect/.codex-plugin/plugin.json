@@ -13,8 +13,8 @@
     "category": "Productivity",
     "composerIcon": "./assets/plugin-icon.png",
     "defaultPrompt": [
-      "Use Studio Plan for this bounded software task.",
-      "Read the current Studio state before acting."
+      "Use Studio Plan for requirements and architecture decisions.",
+      "Do not implement or accept repository changes."
     ],
     "developerName": "Open Software Studio",
     "displayName": "Studio Plan",
