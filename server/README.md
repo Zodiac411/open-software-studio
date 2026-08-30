@@ -1,9 +1,10 @@
-# Open Software Studio MCP service
+# Studio V2 optional compatibility MCP service
 
-This service is the narrow integration layer for ChatGPT app connections. It
-does not replace the seven Skills or decide which specialist should answer a
-request; it exposes one read-only tool per plugin so a connected ChatGPT app
-can route work to the same contracts.
+This service is an optional compatibility adapter for the seven pre-V2
+specialist tools. It is not part of the default Studio V2 ChatGPT package,
+does not replace the Studio umbrella or focused Skills, and is not required
+for Codex, ChatGPT, localhost-free use, or mobile use. The default package is
+`dist/chatgpt/studio.zip`.
 
 Run it from the repository root:
 
@@ -15,15 +16,16 @@ bun run mcp -- --port 8791
 Endpoints:
 
 - `GET /healthz` and `GET /readyz` — service and plugin inventory.
-- `POST /mcp` — aggregate server with all seven tools.
+- `POST /mcp` — compatibility aggregate server with all seven legacy tools.
 - `POST /mcp/<plugin-slug>` — one-plugin server for local integrations.
 
-The default listener is loopback-only (`127.0.0.1:8791`). Put a trusted HTTPS
-tunnel in front of `/mcp` before connecting ChatGPT. The server has no built-in
-authentication because authentication belongs at the tunnel or deployment
-boundary; do not expose the loopback listener directly to the public internet.
+The default listener is loopback-only (`127.0.0.1:8791`). The server has no
+built-in authentication and must not be exposed directly to the public
+internet. Any separately approved remote deployment must add authentication
+at its deployment boundary.
 
 The tools accept a request and optional context and return a focused workflow
 brief. They are intentionally small: the durable specialist behavior remains
 in `plugins/*/skills/`, where it can be inspected, reviewed, and reused by
-Codex.
+Codex. Studio V2 package identity and workflow ownership remain in
+`catalog/studio.yaml`.

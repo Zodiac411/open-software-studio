@@ -10,12 +10,17 @@ permissions:
 
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ["3.12"]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: ${{ matrix.python }}
       - name: Check generated outputs
         run: python scripts/build_studio.py --check-only
       - name: Validate package suite
@@ -24,6 +29,18 @@ jobs:
         run: python scripts/run_evals.py
       - name: Run focused Studio regressions
         run: python -m unittest discover -s evals/studio -p "test_*.py"
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check tracked secrets and archive paths
+        run: python scripts/security_checks.py
 
   optional-mcp-smoke:
     runs-on: ubuntu-latest

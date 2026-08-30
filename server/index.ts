@@ -144,7 +144,7 @@ function registerPluginTool(server: McpServer, plugin: PluginDefinition): void {
 
 function createPluginServer(plugin: PluginDefinition): McpServer {
   const server = new McpServer(
-    { name: `open-software-studio-${plugin.slug}`, version: "0.1.0" },
+    { name: `open-software-studio-${plugin.slug}`, version: "2.0.0" },
     {
       instructions: `${plugin.displayName} is one bounded part of Open Software Studio. ${plugin.focus}. Keep the core workflow useful without proprietary SaaS or local filesystem assumptions; use the repository, user-provided context, and current primary evidence where available.`,
     },
@@ -155,9 +155,9 @@ function createPluginServer(plugin: PluginDefinition): McpServer {
 
 function createStudioServer(): McpServer {
   const server = new McpServer(
-    { name: "open-software-studio", version: "0.1.0" },
+    { name: "open-software-studio-compatibility", version: "2.0.0" },
     {
-      instructions: "Open Software Studio coordinates seven bounded plugins. Select the one tool whose responsibility matches the user's request; its bundled Skill remains the detailed workflow authority. Execution Guard governs Codex execution, while Web App Builder implements approved work. Keep context minimal and report unverified work honestly.",
+      instructions: "This optional Studio V2 compatibility server exposes the seven pre-V2 specialist tools. The skills-first Studio package remains the default workflow and does not require this server. Select one bounded compatibility tool, keep context minimal, require confirmation for writes, and report unverified work honestly.",
     },
   );
   for (const plugin of plugins) registerPluginTool(server, plugin);
