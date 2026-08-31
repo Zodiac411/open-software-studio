@@ -13,6 +13,11 @@ from PIL import Image, ImageDraw
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def write_text(path: Path, value: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(value, encoding="utf-8", newline="\n")
+
+
 def hex_rgb(value: str) -> tuple[int, int, int]:
     value = value.lstrip("#")
     return tuple(int(value[index : index + 2], 16) for index in (0, 2, 4))
@@ -141,7 +146,9 @@ def save_raster(image: Image.Image, path: Path) -> None:
     # mobile/plugin assets below the existing 10KB budget without changing the
     # authored geometry or introducing a runtime image dependency.
     compact = image.quantize(colors=16, dither=Image.Dither.NONE).convert("RGBA")
-    compact.save(path, format="PNG", optimize=True, compress_level=9)
+    # Disable adaptive filtering and use a fixed compression setting so the
+    # same pixels produce the same bytes on Windows and Linux Pillow builds.
+    compact.save(path, format="PNG", optimize=False, compress_level=6)
 
 
 def render_all(catalog: dict[str, Any], root: Path = ROOT) -> dict[str, Any]:
@@ -161,9 +168,9 @@ def render_all(catalog: dict[str, Any], root: Path = ROOT) -> dict[str, Any]:
         accent = roles[role]["accent"]
         master = svg_icon(role, glyph, accent, palette)
         mono = svg_icon(role, glyph, accent, palette, mono=True)
-        (masters / f"{role}.svg").write_text(master, encoding="utf-8")
-        (monochrome / f"{role}.svg").write_text(mono, encoding="utf-8")
-        (glyphs / f"{role}.svg").write_text(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">{svg_glyph(glyph, palette[accent], palette["graphite"])}</svg>\n', encoding="utf-8")
+        write_text(masters / f"{role}.svg", master)
+        write_text(monochrome / f"{role}.svg", mono)
+        write_text(glyphs / f"{role}.svg", f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">{svg_glyph(glyph, palette[accent], palette["graphite"])}</svg>\n')
         for size in [24, *catalog["icon_system"]["sizes"]]:
             save_raster(raster_icon(glyph, accent, palette, size), generated / f"{role}-{size}.png")
         for size in [24, *catalog["icon_system"]["sizes"]]:
@@ -179,7 +186,7 @@ def render_all(catalog: dict[str, Any], root: Path = ROOT) -> dict[str, Any]:
         y = (index // 3) * cell + 18
         sheet.paste(icon, (x, y))
     sheet.save(icon_root / "contact-sheet.png", format="PNG", optimize=False, compress_level=9)
-    (icon_root / "material-tokens.json").write_text(json.dumps(palette, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    write_text(icon_root / "material-tokens.json", json.dumps(palette, indent=2, sort_keys=True) + "\n")
 
     groups: list[str] = []
     for index, role in enumerate(role_ids):
@@ -187,7 +194,7 @@ def render_all(catalog: dict[str, Any], root: Path = ROOT) -> dict[str, Any]:
         inner = svg_icon(role, roles[role]["glyph"], roles[role]["accent"], palette).split(">", 1)[1].rsplit("</svg>", 1)[0]
         groups.append(f'<g transform="translate({col * 512},{row * 512})">{inner}</g>')
     grid = f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1536 1536">{"".join(groups)}</svg>\n'
-    (icon_root / "icon-grid.svg").write_text(grid, encoding="utf-8")
+    write_text(icon_root / "icon-grid.svg", grid)
     return {"roles": role_ids, "sizes": [24, *catalog["icon_system"]["sizes"]], "contact_sheet": "brand/icon-system/contact-sheet.png"}
 
 

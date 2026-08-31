@@ -70,7 +70,7 @@
     "schemas/v2/work_package.schema.json": "36a98fa1730102fa254ab6bf4cf728286df53ef46dcf227096d5dc049f0ad8e3",
     "scripts/build_studio.py": "a4e2f33905fe0a5bc9634df1186cedb046477d220f0fa6757a1651ed755e6849",
     "scripts/check_reproducibility.py": "f726d0719b94a12e1f2ff1af5ec705559a08007509935601836e9c1a93e94729",
-    "scripts/render_icons.py": "9d1a79b391a933023a76c2fde3dd4269c2bafe44017f51dd8410d5161af6a65f",
+    "scripts/render_icons.py": "0cdffcdb514bcbcc328cb8c8d5e415a69ba96fe6113cf367117ebf49774af888",
     "scripts/run_evals.py": "975446ee0e87da28b2864037ed23fa37283a78ba9c7852c4534072e0a998ea4a",
     "scripts/security_checks.py": "24d72d4580ac3c3d8349676be25c873a70d40e09c8b6dfad580cf45095d5f781",
     "scripts/studio.py": "6eac0326cd84477b321d9932a5d76b1d875b9d031cc779c5704434b82f826d65",

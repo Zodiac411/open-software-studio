@@ -1,0 +1,6 @@
+# Keep generated text byte-stable across Windows and Linux checkouts.
+* text=auto eol=lf
+
+# Binary artifacts must never be line-ending normalized.
+*.png binary
+*.zip binary
