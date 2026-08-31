@@ -842,16 +842,15 @@ def check_generated_outputs(catalog: dict[str, Any]) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check-only", action="store_true", help="validate the catalog and generated package shape without rewriting outputs")
-    parser.add_argument("--render-icons", action="store_true", help="regenerate the checked-in Opal Seed raster and vector source assets before packaging")
+    parser.add_argument("--render-icons", action="store_true", help="compatibility flag; icons are always rendered from the catalog")
     args = parser.parse_args()
     catalog = load_catalog()
     if args.check_only:
         check_generated_outputs(catalog)
         return 0
-    if args.render_icons:
-        from render_icons import render_all
+    from render_icons import render_all
 
-        render_all(catalog, ROOT)
+    render_all(catalog, ROOT)
     render_generated_skills(catalog)
     render_templates(catalog)
     render_schemas(catalog)
