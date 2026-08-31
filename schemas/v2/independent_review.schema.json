@@ -162,31 +162,15 @@
       "type": "string"
     },
     "reviewer_context": {
-      "minLength": 1,
-      "not": {
-        "anyOf": [
-          {
-            "pattern": "[Ss]ame [Ss]ession"
-          },
-          {
-            "pattern": "[Ii]mplementation [Ss]ession"
-          }
-        ]
-      },
+      "enum": [
+        "fresh review session"
+      ],
       "type": "string"
     },
     "reviewer_role": {
-      "minLength": 1,
-      "not": {
-        "anyOf": [
-          {
-            "pattern": "[Ee]xecutor"
-          },
-          {
-            "pattern": "[Ii]mplementer"
-          }
-        ]
-      },
+      "enum": [
+        "independent reviewer"
+      ],
       "type": "string"
     },
     "reviewer_session_id": {

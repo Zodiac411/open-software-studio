@@ -28,10 +28,12 @@
     "IMPLEMENTING": [
       "PROVING",
       "REPAIR",
-      "FROZEN"
+      "FROZEN",
+      "IN_REVIEW"
     ],
     "INTAKE": [
-      "SHAPED"
+      "SHAPED",
+      "PLANNED"
     ],
     "IN_REVIEW": [
       "ACCEPTED",

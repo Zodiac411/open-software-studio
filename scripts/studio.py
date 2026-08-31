@@ -23,6 +23,8 @@ TRANSITIONS = ROOT / "schemas" / "v2" / "state-transitions.json"
 RESULTS = ["PASS", "PASS_WITH_LIMITATIONS", "BLOCKED", "NOT_RUN", "UNPROVEN"]
 PHASES = ["INTAKE", "SHAPED", "PLANNED", "FROZEN", "IMPLEMENTING", "PROVING", "IN_REVIEW", "REPAIR", "ACCEPTED", "CLOSED", "RELEASED"]
 ID_PATTERN = re.compile(r"^[A-Z][A-Z0-9-]+$")
+CANONICAL_REVIEWER_ROLE = "independent reviewer"
+CANONICAL_REVIEWER_CONTEXT = "fresh review session"
 
 
 def fail(message: str, result: str = "BLOCKED") -> int:
@@ -106,6 +108,8 @@ def schema_errors(value: Any, schema: dict[str, Any], location: str = "$") -> li
             for index, item in enumerate(value):
                 errors.extend(schema_errors(item, item_schema, f"{location}[{index}]"))
     if isinstance(value, dict):
+        if isinstance(schema.get("minProperties"), int) and len(value) < schema["minProperties"]:
+            errors.append(f"{location}: object has fewer than {schema['minProperties']} properties")
         properties = schema.get("properties") if isinstance(schema.get("properties"), dict) else {}
         required = schema.get("required") if isinstance(schema.get("required"), list) else []
         errors.extend(f"{location}.{key}: required field is missing" for key in required if key not in value)
@@ -338,7 +342,10 @@ def transition(project: Path, state_path: Path, state: dict[str, Any], event_typ
         next_state["release_candidate_sha"] = live
     next_state["updated_at"] = utc_now()
     next_state.setdefault("source_checkpoint_sha", state.get("source_checkpoint_sha") or state.get("current_sha"))
+    source_phase = state.get("phase")
     target_phase = next_state.get("phase")
+    if source_phase != target_phase and not transition_allowed(source_phase, target_phase):
+        raise ValueError(f"illegal state transition: {source_phase} -> {target_phase}")
     already_applied = state.get("phase") == target_phase and all(state.get(key) == value for key, value in updates.items())
     if already_applied:
         return state, False
@@ -442,14 +449,17 @@ def init_project(args: argparse.Namespace) -> int:
         "authorities": {"repository": str(project), "machine_state": ".project", "human_task_view": "GitHub Issues/Milestones (confirmation-gated)"},
         "non_goals": metadata.get("non_goals", ["automatic merge", "automatic release", "unconfirmed external writes"]),
     })
-    write_json(project_metadata_path, metadata)
-    write_json(state_path, state)
     for directory in ("session", "snapshots", "work-packages", "evidence", "handoffs", "reviews", "repairs", "artifacts", "tracking"):
         (control / directory).mkdir(parents=True, exist_ok=True)
-    write_text(control / "session" / "active-plan.md", render_active_plan(project, state), overwrite=False)
-    write_text(control / "session" / "findings.md", "# Project findings\n\n<!-- STUDIO-RECOVERY: append typed findings; do not use this file as acceptance. -->\n", overwrite=False)
-    write_text(control / "session" / "progress.md", f"# Project progress\n\n<!-- STUDIO-RECOVERY: append observed progress and evidence only. -->\n\n<!-- STUDIO-EVENT: EVT-000001 -->\n- State projection: phase=INTAKE live_head={sha}\n- project.initialized: INTAKE at {sha}\n", overwrite=False)
-    write_text(control / "events.jsonl", json.dumps({"schema": "studio.event/v2", "event_id": "EVT-000001", "sequence": 1, "type": "project.initialized", "from_phase": None, "to_phase": "INTAKE", "project_id": project_id, "live_head_sha": sha, "timestamp": state["created_at"]}, sort_keys=True) + "\n", overwrite=False)
+    initial_event = {"schema": "studio.event/v2", "event_id": "EVT-000001", "sequence": 1, "type": "project.initialized", "from_phase": None, "to_phase": "INTAKE", "project_id": project_id, "live_head_sha": sha, "timestamp": state["created_at"]}
+    atomic_bundle({
+        project_metadata_path: json.dumps(metadata, indent=2, sort_keys=True, ensure_ascii=False) + "\n",
+        state_path: json.dumps(state, indent=2, sort_keys=True, ensure_ascii=False) + "\n",
+        control / "session" / "active-plan.md": render_active_plan(project, state),
+        control / "session" / "findings.md": "# Project findings\n\n<!-- STUDIO-RECOVERY: append typed findings; do not use this file as acceptance. -->\n",
+        control / "session" / "progress.md": f"# Project progress\n\n<!-- STUDIO-RECOVERY: append observed progress and evidence only. -->\n\n<!-- STUDIO-EVENT: EVT-000001 -->\n- State projection: phase=INTAKE live_head={sha}\n- project.initialized: INTAKE at {sha}\n",
+        control / "events.jsonl": json.dumps(initial_event, sort_keys=True) + "\n",
+    })
     return emit("PASS", "Studio project initialized", project=str(project), project_id=project_id, current_sha=sha, next_action=state["next_action"])
 
 
@@ -490,18 +500,47 @@ def projection_errors(project: Path, state: dict[str, Any]) -> list[str]:
         errors.append("event log is missing")
     else:
         parsed = []
-        for line in events.read_text(encoding="utf-8").splitlines():
+        seen_sequences: set[int] = set()
+        seen_event_ids: set[str] = set()
+        previous_sequence: int | None = None
+        previous_event: dict[str, Any] | None = None
+        for line_number, line in enumerate(events.read_text(encoding="utf-8").splitlines(), start=1):
             try:
                 item = json.loads(line)
             except json.JSONDecodeError:
-                errors.append("event log contains invalid JSON")
+                errors.append(f"event log line {line_number} contains invalid JSON")
                 continue
-            if isinstance(item, dict):
-                errors.extend(f"event schema: {issue}" for issue in document_schema_errors(item, "event"))
-            else:
-                errors.append("event log entries must be objects")
-            if isinstance(item, dict) and isinstance(item.get("sequence"), int):
-                parsed.append(item)
+            if not isinstance(item, dict):
+                errors.append(f"event log line {line_number} must be an object")
+                continue
+            parsed.append(item)
+            errors.extend(f"event schema: {issue}" for issue in document_schema_errors(item, "event"))
+            sequence = item.get("sequence")
+            event_id = item.get("event_id")
+            if not isinstance(sequence, int) or isinstance(sequence, bool):
+                continue
+            if sequence in seen_sequences:
+                errors.append(f"event sequence is duplicated: {sequence}")
+            seen_sequences.add(sequence)
+            if previous_sequence is not None and sequence <= previous_sequence:
+                errors.append(f"event sequence is not strictly increasing at line {line_number}")
+            previous_sequence = sequence
+            if isinstance(event_id, str):
+                if event_id in seen_event_ids:
+                    errors.append(f"event ID is duplicated: {event_id}")
+                seen_event_ids.add(event_id)
+                if event_id != f"EVT-{sequence:06d}":
+                    errors.append(f"event ID does not match sequence {sequence}: {event_id}")
+            source = item.get("from_phase")
+            target = item.get("to_phase")
+            if previous_event is None:
+                if source is not None or target != "INTAKE":
+                    errors.append("initial event must be null -> INTAKE")
+            elif source != previous_event.get("to_phase"):
+                errors.append("event sequence has a phase discontinuity")
+            elif not transition_allowed(source, target):
+                errors.append(f"event contains illegal state transition: {source} -> {target}")
+            previous_event = item
         if not parsed:
             errors.append("event log contains no typed events")
         elif parsed[-1].get("to_phase") != state.get("phase") or parsed[-1].get("live_head_sha") != expected_live:
@@ -626,13 +665,14 @@ def freeze_project(args: argparse.Namespace) -> int:
     if state.get("phase") == "FROZEN" and state.get("snapshot_id") == "SNAP-001":
         return emit("PASS", "snapshot already frozen", snapshot_id="SNAP-001", base_sha=sha, changed=False, next_action="compile a fresh context capsule")
     snapshot = {"schema": "studio.snapshot/v2", "snapshot_id": "SNAP-001", "project_id": state["project_id"], "base_sha": sha, "status": "FROZEN", "approved_by": args.approved_by, "created_at": utc_now()}
-    write_json(control_root(project) / "snapshots" / "SNAP-001.json", snapshot)
+    snapshot_path = control_root(project) / "snapshots" / "SNAP-001.json"
     wp_path = control_root(project) / "work-packages" / "WP-001.json"
+    extra_files = {snapshot_path: json.dumps(snapshot, indent=2, sort_keys=True, ensure_ascii=False) + "\n"}
     if wp_path.is_file():
         wp = read_json(wp_path)
         wp.update({"status": "FROZEN", "snapshot_id": "SNAP-001", "base_sha": sha})
-        write_json(wp_path, wp)
-    save_state(state_path, state, project, _event_type="snapshot.frozen", phase="FROZEN", status="PASS", snapshot_id="SNAP-001", next_action="compile a fresh context capsule")
+        extra_files[wp_path] = json.dumps(wp, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
+    save_state(state_path, state, project, _event_type="snapshot.frozen", _extra_files=extra_files, phase="FROZEN", status="PASS", snapshot_id="SNAP-001", next_action="compile a fresh context capsule")
     return emit("PASS", "snapshot frozen", snapshot_id="SNAP-001", base_sha=sha, approved_by=args.approved_by, next_action="studio context")
 
 
@@ -657,8 +697,13 @@ def context_project(args: argparse.Namespace) -> int:
         if contradictions:
             return fail("context capsule is stale: " + "; ".join(contradictions))
         return emit("PASS", "context capsule already current", path=str(control_root(project) / "session" / "context-capsule.md"), changed=False, next_action=state["next_action"])
-    save_state(state_path, state, project, _event_type="context.compiled", phase="IMPLEMENTING", status="PASS", next_action="implement only the active work package")
-    write_text(control_root(project) / "session" / "context-capsule.md", render_context(project, state))
+    context_state = deepcopy(state)
+    context_state.update({"phase": "IMPLEMENTING", "status": "PASS", "next_action": "implement only the active work package"})
+    live = live_head(project)
+    if live:
+        context_state.update({"live_head_sha": live, "current_sha": live, "release_candidate_sha": live})
+    context_path = control_root(project) / "session" / "context-capsule.md"
+    save_state(state_path, state, project, _event_type="context.compiled", _extra_files={context_path: render_context(project, context_state)}, phase="IMPLEMENTING", status="PASS", next_action="implement only the active work package")
     return emit("PASS", "fresh context capsule compiled", path=str(control_root(project) / "session" / "context-capsule.md"), next_action=state["next_action"])
 
 
@@ -819,9 +864,8 @@ def handoff_project(args: argparse.Namespace) -> int:
     if schema_issues:
         return fail("handoff schema validation failed: " + "; ".join(schema_issues))
     path = control_root(project) / "handoffs" / f"{review_id}.json"
-    write_json(path, value)
-    write_text(path.with_suffix(".md"), "# Studio implementation handoff\n\n" + "\n".join(f"- {key}: `{json.dumps(value[key], ensure_ascii=False)}`" for key in ("wp_id", "head_sha", "branch", "next_action", "reviewer_action")) + "\n")
-    save_state(state_path, state, project, _event_type="handoff.created", phase="IN_REVIEW", status="PASS_WITH_LIMITATIONS", release_candidate_sha=sha, next_action="independent fresh-context review")
+    handoff_markdown = "# Studio implementation handoff\n\n" + "\n".join(f"- {key}: `{json.dumps(value[key], ensure_ascii=False)}`" for key in ("wp_id", "head_sha", "branch", "next_action", "reviewer_action")) + "\n"
+    save_state(state_path, state, project, _event_type="handoff.created", _extra_files={path: json.dumps(value, indent=2, sort_keys=True, ensure_ascii=False) + "\n", path.with_suffix(".md"): handoff_markdown}, phase="IN_REVIEW", status="PASS_WITH_LIMITATIONS", release_candidate_sha=sha, next_action="independent fresh-context review")
     return emit("PASS_WITH_LIMITATIONS", "implementation handoff generated; acceptance remains independent", path=str(path), head_sha=sha, next_action=state["next_action"])
 
 
@@ -844,6 +888,56 @@ def transition_allowed(source: str, target: str) -> bool:
     return target in transitions.get(source, [])
 
 
+def artifact_bindings(project: Path, artifact_ids: list[Any]) -> tuple[list[dict[str, str]], list[str]]:
+    index: dict[str, list[Path]] = {}
+    root = control_root(project)
+    for path in sorted(root.rglob("*.json")) if root.is_dir() else []:
+        if "reviews" in path.relative_to(root).parts:
+            continue
+        try:
+            value = read_json(path)
+        except ValueError:
+            continue
+        identifiers = {path.stem}
+        for field in ("document_id", "artifact_id", "evidence_id", "review_id", "snapshot_id", "repair_id"):
+            identifier = value.get(field)
+            if isinstance(identifier, str) and identifier:
+                identifiers.add(identifier)
+        for identifier in identifiers:
+            index.setdefault(identifier, []).append(path)
+
+    errors: list[str] = []
+    bindings: list[dict[str, str]] = []
+    seen: set[str] = set()
+    for artifact_id in artifact_ids:
+        if not isinstance(artifact_id, str) or not artifact_id:
+            errors.append("artifact IDs must be non-empty strings")
+            continue
+        if artifact_id in seen:
+            errors.append(f"artifact ID is duplicated: {artifact_id}")
+            continue
+        seen.add(artifact_id)
+        matches = index.get(artifact_id, [])
+        if not matches:
+            errors.append(f"artifact ID does not resolve to a project file: {artifact_id}")
+        elif len(matches) > 1:
+            errors.append(f"artifact ID resolves to multiple project files: {artifact_id}")
+        else:
+            path = matches[0]
+            bindings.append({
+                "artifact_id": artifact_id,
+                "path": path.relative_to(project).as_posix(),
+                "content_digest": sha_digest(read_json(path)),
+            })
+    bindings.sort(key=lambda item: item["artifact_id"])
+    return bindings, errors
+
+
+def artifact_evidence_digest(project: Path, artifact_ids: list[Any]) -> tuple[str | None, list[str]]:
+    bindings, errors = artifact_bindings(project, artifact_ids)
+    return (sha_digest(bindings) if not errors else None), errors
+
+
 def review_errors(project: Path, value: dict[str, Any], state: dict[str, Any] | None = None, require_accept: bool = False) -> list[str]:
     required_strings = ["document_id", "review_id", "reviewer_role", "reviewer_context", "reviewer_actor_id", "reviewer_session_id", "implementer_actor_id", "implementer_session_id", "reviewed_base_sha", "reviewed_head_sha", "wp_id", "requirements_digest"]
     required_lists = ["requirements", "independent_checks", "findings", "conditions", "artifact_ids"]
@@ -852,6 +946,10 @@ def review_errors(project: Path, value: dict[str, Any], state: dict[str, Any] | 
     errors.extend(f"{key} must be a list" for key in required_lists if not isinstance(value.get(key), list))
     if value.get("schema") != "studio.review/v2":
         errors.append("review schema must be studio.review/v2")
+    if value.get("reviewer_role") != CANONICAL_REVIEWER_ROLE:
+        errors.append(f"reviewer_role must be {CANONICAL_REVIEWER_ROLE!r}")
+    if value.get("reviewer_context") != CANONICAL_REVIEWER_CONTEXT:
+        errors.append(f"reviewer_context must be {CANONICAL_REVIEWER_CONTEXT!r}")
     if value.get("disposition") not in {"ACCEPT", "REPAIR", "BLOCKED"}:
         errors.append("review disposition must be ACCEPT, REPAIR, or BLOCKED")
     if not value.get("requirements"):
@@ -864,12 +962,6 @@ def review_errors(project: Path, value: dict[str, Any], state: dict[str, Any] | 
         errors.append("reviewer and implementer actor must differ")
     if value.get("reviewer_session_id") == value.get("implementer_session_id"):
         errors.append("reviewer and implementer session must differ")
-    raw_role = value.get("reviewer_role")
-    raw_context = value.get("reviewer_context")
-    role = raw_role.lower() if isinstance(raw_role, str) else ""
-    context = raw_context.lower() if isinstance(raw_context, str) else ""
-    if any(token in role for token in ("executor", "implementer")) or any(token in context for token in ("same session", "implementation session", "executor session")):
-        errors.append("reviewer provenance identifies the implementation actor or session")
     live = live_head(project)
     candidate = candidate_head(project, state or {}) if state else live
     if live and value.get("reviewed_head_sha") != live:
@@ -894,6 +986,11 @@ def review_errors(project: Path, value: dict[str, Any], state: dict[str, Any] | 
             errors.append("artifact_ids must be a list")
     if not value.get("artifact_ids"):
         errors.append("review must name the artifact set that was reviewed")
+    if value.get("disposition") == "ACCEPT" and isinstance(value.get("artifact_ids"), list):
+        expected_evidence_digest, artifact_errors = artifact_evidence_digest(project, value["artifact_ids"])
+        errors.extend(artifact_errors)
+        if expected_evidence_digest and value.get("evidence_digest") != expected_evidence_digest:
+            errors.append("review evidence digest does not match bound artifact content")
     if value.get("disposition") == "ACCEPT" and any(isinstance(finding, dict) and finding.get("severity") == "BLOCKING" for finding in value.get("findings", [])):
         errors.append("review with a BLOCKING finding cannot ACCEPT")
     dirty = dirty_paths(project)
@@ -960,13 +1057,10 @@ def close_project(args: argparse.Namespace) -> int:
     if phase == "CLOSED":
         return emit("PASS_WITH_LIMITATIONS", "session is already closed", changed=False, next_action=state.get("next_action"))
     if phase == "IN_REVIEW":
-        if not transition_allowed("IN_REVIEW", "ACCEPTED") or not transition_allowed("ACCEPTED", "CLOSED"):
-            return fail("state transition matrix does not permit review acceptance and close")
-        phase = "ACCEPTED"
-    elif phase not in ("ACCEPTED", "CLOSED"):
+        save_state(state_path, state, project, _event_type="review.accepted", phase="ACCEPTED", status="PASS_WITH_LIMITATIONS", next_action="close the accepted implementation session")
+        phase = state.get("phase")
+    if phase != "ACCEPTED":
         return fail(f"close requires ACCEPTED or CLOSED state, found {phase}")
-    if phase == "ACCEPTED" and not transition_allowed("ACCEPTED", "CLOSED"):
-        return fail("state transition matrix does not permit close")
     save_state(state_path, state, project, _event_type="session.closed", phase="CLOSED", status="PASS_WITH_LIMITATIONS", next_action="validate independent review and obtain release approval")
     return emit("PASS_WITH_LIMITATIONS", "session closed with acceptance and release still gated", next_action=state["next_action"])
 
@@ -1038,10 +1132,21 @@ def track_plan(args: argparse.Namespace) -> int:
     if pair is None:
         return fail("run studio init before studio track")
     state = pair[1]
+    if state.get("phase") != "FROZEN":
+        return fail(f"tracking requires a frozen approved work package, found {state.get('phase')}")
+    snapshot_id = state.get("snapshot_id")
+    snapshot_path = control_root(project) / "snapshots" / f"{snapshot_id}.json" if snapshot_id else None
+    if not snapshot_id or snapshot_path is None or not snapshot_path.is_file():
+        return fail("tracking requires an approved frozen snapshot")
+    snapshot = read_json(snapshot_path)
+    if snapshot.get("status") != "FROZEN" or not isinstance(snapshot.get("approved_by"), str) or not snapshot["approved_by"].strip():
+        return fail("tracking requires an approved frozen snapshot")
     wp = control_root(project) / "work-packages" / f"{state.get('active_wp', 'WP-001')}.json"
     if not wp.is_file():
         return fail("tracking requires an active work package")
     value = read_json(wp)
+    if value.get("status") != "FROZEN" or value.get("snapshot_id") != snapshot_id or value.get("base_sha") != snapshot.get("base_sha"):
+        return fail("tracking requires the active work package to match the approved frozen snapshot")
     metadata_path = control_root(project) / "project.yaml"
     metadata = read_json(metadata_path) if metadata_path.is_file() else {}
     repository = metadata.get("repository") or metadata.get("repository_url") or value.get("repository") or git(project, "remote", "get-url", "origin") or str(project)

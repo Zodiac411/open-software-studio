@@ -13,6 +13,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 STUDIO = ROOT / "scripts" / "studio.py"
+sys.path.insert(0, str(ROOT / "scripts"))
+from studio import artifact_evidence_digest, schema_errors  # noqa: E402
 
 
 def digest(value: object) -> str:
@@ -86,8 +88,8 @@ class StudioV2RegressionTests(unittest.TestCase):
             "wp_id": wp["wp_id"],
             "requirements": wp["requirements"],
             "requirements_digest": digest(wp["requirements"]),
-            "artifact_ids": ["WP-001", "HANDOFF"],
-            "evidence_digest": digest(["reviewed the base-to-head diff", "ran the recorded verification command"]),
+            "artifact_ids": ["WP-001", f"HANDOFF-{reviewed_head[:12].upper()}"],
+            "evidence_digest": artifact_evidence_digest(self.project, ["WP-001", f"HANDOFF-{reviewed_head[:12].upper()}"])[0],
             "independent_checks": [
                 {"name": "base-to-head diff", "observed": "reviewed independently"},
                 {"name": "verification command", "observed": "ran independently"},
@@ -120,6 +122,9 @@ class StudioV2RegressionTests(unittest.TestCase):
         _, second = self.cli("close")
         self.assertFalse(second["changed"])
         self.assertEqual(before, (state_path.read_bytes(), progress_path.read_bytes(), events_path.read_bytes()))
+        events = [json.loads(line) for line in events_path.read_text(encoding="utf-8").splitlines()]
+        self.assertIn(("IN_REVIEW", "ACCEPTED"), [(event["from_phase"], event["to_phase"]) for event in events])
+        self.assertIn(("ACCEPTED", "CLOSED"), [(event["from_phase"], event["to_phase"]) for event in events])
         _, release = self.cli("release", "--approved-by", "owner")
         released = json.loads(state_path.read_text(encoding="utf-8"))
         self.assertEqual((released["phase"], released["status"], released["live_head_sha"]), ("RELEASED", "PASS", head))
@@ -133,6 +138,13 @@ class StudioV2RegressionTests(unittest.TestCase):
         _, result = self.cli("review", "validate", check=False)
         self.assertEqual(result["result"], "BLOCKED")
         self.assertIn("reviewer and implementer actor must differ", str(result["message"]))
+        malformed = json.loads(path.read_text(encoding="utf-8"))
+        malformed["reviewer_actor_id"] = "reviewer"
+        malformed["reviewer_context"] = "fresh implementation session"
+        path.write_text(json.dumps(malformed, indent=2) + "\n", encoding="utf-8")
+        _, provenance_result = self.cli("review", "validate", check=False)
+        self.assertEqual(provenance_result["result"], "BLOCKED")
+        self.assertIn("reviewer_context must be", str(provenance_result["message"]))
         malformed = json.loads(path.read_text(encoding="utf-8"))
         malformed["reviewer_role"] = []
         path.write_text(json.dumps(malformed, indent=2) + "\n", encoding="utf-8")
@@ -182,8 +194,42 @@ class StudioV2RegressionTests(unittest.TestCase):
         self.assertIn("uncommitted or untracked", str(dirty_result["message"]))
         self.assertEqual(before, state_path.read_bytes())
 
+    def test_release_rejects_post_review_artifact_mutation(self) -> None:
+        self.prepare_handoff()
+        self.review()
+        self.cli("close")
+        handoff_path = next((self.project / ".project" / "handoffs").glob("HANDOFF-*.json"))
+        handoff = json.loads(handoff_path.read_text(encoding="utf-8"))
+        handoff["claimed_outcomes"].append("mutated after review")
+        handoff_path.write_text(json.dumps(handoff, indent=2) + "\n", encoding="utf-8")
+        _, result = self.cli("release", "--approved-by", "owner", check=False)
+        self.assertEqual(result["result"], "BLOCKED")
+        self.assertIn("evidence digest", str(result["message"]))
+        state = json.loads((self.project / ".project" / "state.json").read_text(encoding="utf-8"))
+        self.assertEqual(state["phase"], "CLOSED")
+
+    def test_doctor_rejects_non_monotonic_or_illegal_events(self) -> None:
+        self.prepare_handoff()
+        self.review()
+        self.cli("close")
+        events_path = self.project / ".project" / "events.jsonl"
+        events = [json.loads(line) for line in events_path.read_text(encoding="utf-8").splitlines()]
+        events[-1]["sequence"] = events[-2]["sequence"]
+        events[-1]["event_id"] = events[-2]["event_id"]
+        events_path.write_text("\n".join(json.dumps(event) for event in events) + "\n", encoding="utf-8")
+        _, result = self.cli("doctor", check=False)
+        self.assertEqual(result["result"], "BLOCKED")
+        self.assertIn("event sequence", json.dumps(result["checks"]))
+
+    def test_schema_validator_enforces_min_properties(self) -> None:
+        self.assertTrue(schema_errors({}, {"type": "object", "minProperties": 1}))
+
     def test_generic_plan_track_and_evidence_round_trip(self) -> None:
         self.cli("plan")
+        _, blocked = self.cli("track", check=False)
+        self.assertEqual(blocked["result"], "BLOCKED")
+        self.assertIn("frozen approved work package", str(blocked["message"]))
+        self.cli("freeze", "--approved-by", "owner")
         work_package = json.loads((self.project / ".project" / "work-packages" / "WP-001.json").read_text(encoding="utf-8"))
         serialized = json.dumps(work_package)
         self.assertIn("Lantern", serialized)
