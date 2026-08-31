@@ -12,7 +12,7 @@ Reject stale SHA evidence and do not merge or release.
 ## Scope
 
 - Review baseline: `ce04df0f682d84bdf7818ae8a204162ce9567c86`
-- Local remediation code head: `7daff96cab5bb50a948196f0ba299131ada732cb`
+- Local remediation code head: `829ea918428007a68c7e69d3ebc9a8c0ab1b9218`
 - Final review candidate: resolve live Git HEAD after this handoff commit
 - Branch: `studio-v2-bootstrap`
 - External writes: `NOT_RUN`
@@ -28,6 +28,11 @@ Reject stale SHA evidence and do not merge or release.
 | `f300908` | Integration repair | Runtime/schema alignment, malformed artifact rejection, portable compiler targets, executable evaluation gates, and canonical source coverage. |
 | `2030f20` | State alignment repair | Runtime state, event, and release receipt projections aligned to the versioned schemas. |
 | `7daff96` | Review-candidate repair | Dirty candidate rejection, stale-context blocking, malformed reviewer provenance handling, and clean generated template endings. |
+| `2c02ad2` | Luna control repair | Legal lifecycle transitions, review/evidence binding, event validation, atomic recovery operations, and frozen tracking gates. |
+| `b88e546` | Luna packaging repair | Catalog-owned package recipes, behaviorally distinct lenses/templates, executable routing evaluations, and CI validation expansion. |
+| `24609cc` | Generator integration | Preserved strict review schemas and transitions in the canonical generator. |
+| `b78a5c9` | Luna integrity repair | Project/work-package identity binding, contiguous events, projection-safe release, evidence mutation checks, and atomic planning. |
+| `829ea91` | Luna icon repair | Canonical builds now derive icon bytes directly from catalog glyphs and detect stale icon outputs. |
 
 ## Direct local evidence
 
@@ -43,7 +48,7 @@ python scripts/run_evals.py
 PASS: 71 routing specialists x 3 cases; 10 execution scenarios; cross-plugin demo chain; 6 seeded Studio gates; 6 executable control-plane regressions
 
 python scripts/security_checks.py
-PASS: 1365 tracked paths scanned; packaged paths are traversal-safe
+PASS: 1366 tracked paths scanned; packaged paths are traversal-safe
 
 Plugin Creator and Skill Creator under PYTHONUTF8=1
 PASS: 9 generated plugins and 35 generated source skills

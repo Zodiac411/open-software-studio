@@ -2,7 +2,9 @@
 
 Overall result: `BLOCKED`
 
-Local remediation code head: `7daff96cab5bb50a948196f0ba299131ada732cb`
+Local remediation code head: `829ea918428007a68c7e69d3ebc9a8c0ab1b9218`
+
+Independent local Luna review: `LOCAL_ACCEPT`
 
 Branch: `studio-v2-bootstrap`
 
@@ -26,7 +28,7 @@ control-plane, schema, evaluation, and package repairs.
 | Write confirmation behavior | `PASS_WITH_LIMITATIONS` | Local tracking stays read-only and confirmation-gated; no approved external write was executed. |
 | Greenfield and brownfield local pilots | `PASS` | Both local pilot tests pass. |
 | Full cross-surface pilots at current SHA | `BLOCKED` | Must be replayed against the repaired package and current published SHA. |
-| Current-SHA independent Luna review | `UNPROVEN` | Requested after this handoff is committed. |
+| Current-SHA independent Luna review | `PASS` | Fresh non-implementing Luna review accepted code SHA `829ea918428007a68c7e69d3ebc9a8c0ab1b9218` after reproducing prior integrity attacks. |
 | Current-SHA fresh ChatGPT Review | `UNPROVEN` | Requires current package upload and published SHA. |
 | Rollback documentation | `PASS_WITH_LIMITATIONS` | Existing rollback remains scoped; remediation commit rollback has not been destructively exercised. |
 | Mobile/iPhone | **USER CHECK** | Personal device verification remains required. |
