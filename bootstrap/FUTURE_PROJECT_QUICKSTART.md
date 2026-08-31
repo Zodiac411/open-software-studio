@@ -4,9 +4,9 @@ Use this exact prompt when starting a new Studio project:
 
 > Use Studio for this bounded software task.
 >
-> Repository: [paste the canonical GitHub repository URL]
+> Repository: https://github.com/Zodiac411/open-software-studio
 >
-> Drive workspace: [paste the canonical Drive folder URL]
+> Drive workspace: https://drive.google.com/drive/folders/1GDlSRW9aJVOvCH-fiZcWPQYsQcUNYGXe
 >
 > Goal: [one measurable outcome]
 >

@@ -21,8 +21,8 @@ Recorded: 2026-08-30T16:29:15.8053770Z
 | Node | PASS | v24.14.0 |
 | Bun | PASS | 1.4.0 |
 | Codex | PASS | codex-cli 0.144.5 |
-| Browser use | PASS | Codex in-app browser backend available |
-| Chrome extension | UNPROVEN | No connected extension session was discovered; fallback browser is available |
+| Browser use | BLOCKED | No Chrome or Codex in-app browser surface is connected in the current session |
+| Chrome extension | BLOCKED | Browser enumeration returned no connected Chrome or in-app session |
 
 ### Repository evidence
 
@@ -56,7 +56,7 @@ PASS: 36 routing specialists x 3 cases; 10 execution scenarios; cross-plugin dem
 - GitHub profile read: account label `Zodiac411`; target repository metadata and README read successfully.
 - Google Drive profile read: `HellStar / badcrayfish11@gmail.com`; canonical folder list and governing Studio documents read successfully.
 - The four supplied governing documents were read from the attachments. The canonical Drive copies were also read: SD-DOC-043, SD-DOC-036, SD-DOC-044, SD-DOC-045, plus the relevant SD-DOC-013, SD-DOC-024, SD-DOC-025, SD-DOC-030, and SD-DOC-035 records.
-- ChatGPT browser surface: the in-app browser opened `https://chatgpt.com/` and visibly showed `chris folorunso` / `Pro`; no workspace label was visible. Account intent is not inferred. Browser-side mutation is blocked until the owner confirms this is the intended account/workspace.
+- ChatGPT account gate: the user confirmed the previously observed `chris folorunso` / `Pro` account as intended. The current session has no connected browser surface, so current account re-detection and browser-side mutation are blocked.
 
 ### Current repository layout
 
@@ -80,9 +80,12 @@ The approved V2 documents describe a canonical Studio family, V2 schemas, file-b
    `chris folorunso` / Pro as the intended account/workspace.
 2. Branch publication: PASS. The user approved publication of
    `studio-v2-bootstrap`; the repaired implementation checkpoint is published.
-3. External write smoke test, Drive authoritative update, and GitHub issue or
-   milestone reconciliation remain separately approval-gated and NOT_RUN.
-4. No ChatGPT custom-instruction diff was needed; the owner retains the
+3. Drive reconciliation: PASS. The user authorized the narrow append-only
+   reconciliation, and SD-DOC-000, SD-DOC-002, and SD-DOC-040 were written with
+   revision guards and read back successfully.
+4. External write smoke test and GitHub issue or milestone reconciliation
+   remain separately approval-gated and NOT_RUN.
+5. No ChatGPT custom-instruction diff was needed; the owner retains the
    merge/release decision.
 
 No credentials or secrets were requested, entered, or recorded.
@@ -94,7 +97,7 @@ No credentials or secrets were requested, entered, or recorded.
   schemas/v2; skills/studio; templates/studio-v2; brand/icon-system;
   .agents/plugins/marketplace.json; the preserved server; and
   evals/studio plus evals/pilots.
-- Current implementation source checkpoint: 468e231b55558052906aafc267e135608ddb94ff on
+- Current implementation source checkpoint: da5038327ce517b9bea4c4b6ee18c112ad82ce14 on
   studio-v2-bootstrap.
 - The branch is published at this checkpoint. Later bootstrap commits are
   evidence-only refreshes generated from this immutable source checkpoint.
@@ -107,19 +110,20 @@ No credentials or secrets were requested, entered, or recorded.
 - Brownfield review loop: PASS_WITH_LIMITATIONS. REV-001 found the seeded
   formatter defect, REPAIR-FINDING-001 repaired it, and the current source
   checkpoint adds a committed-HEAD reproducibility gate, canonical source
-  manifest validation, and fail-closed close transition. Current pilot
-  evidence is regenerated at `468e231`; Review 009 found stale machine-readable
-  review state, `REPAIR-REV-009-001` repaired it, and fresh Review 010 accepted
-  the repaired state with no local defect.
+  manifest validation, and fail-closed close transition. Current local pilot
+  evidence is recorded against `da50383`; the current cross-surface pilots
+  and ChatGPT review remain blocked by the unavailable browser surface.
 - Current pilot project state, snapshots, work packages, evidence, and
   handoffs match the current source checkpoint; fresh local REV-006 receipts
   validate and the guarded close command has moved both pilot states to CLOSED.
-- GitHub and Drive read probes: PASS. No external write was performed.
-- ChatGPT installation and fresh-chat verification: PASS_WITH_LIMITATIONS.
-  The confirmed chris folorunso / Pro account has the accepted Studio v2.0.0
-  Skill installed and explicit @Studio routing passes; a fresh independent
-  Review 010 accepted the source, archive repair, and evidence state with no
-  local defect; the remaining limitations are external or user-gated.
+- GitHub and Drive read probes: PASS_WITH_LIMITATIONS. GitHub branch publication
+  and readback pass; the three narrow Drive reconciliation appends pass with
+  immediate readback. No permissions, issue, milestone, PR, merge, or release
+  write was performed.
+- ChatGPT installation and fresh-chat verification: BLOCKED. The current
+  skills-first archive is ready locally, but upload, current invocation,
+  current write smoke, fresh review, and cross-surface pilots cannot be
+  observed without a connected Chrome or in-app browser.
 - Pilot session close: PASS_WITH_LIMITATIONS for both local pilot projects;
   release and merge remain owner-gated.
 - iPhone/mobile availability: USER CHECK.
@@ -282,3 +286,43 @@ was performed.
   stale `SETUP_STATE.json` review text. `REPAIR-REV-009-001` records the fix;
   fresh Review 010 at source `468e231` and remote tip `320ec6d` returned
   `PASS_WITH_LIMITATIONS` with no local defect.
+
+## Live recheck at current implementation checkpoint
+
+Recorded: 2026-08-31
+
+This section is authoritative for the current recheck. Earlier sections retain
+the chronological implementation and historical review record.
+
+- Source checkpoint: `da5038327ce517b9bea4c4b6ee18c112ad82ce14` on
+  `studio-v2-bootstrap`; the branch was read back from GitHub at this
+  checkpoint before the evidence-only receipt refresh.
+- Local Windows validation: PASS for the canonical build and check, package
+  validation, evaluations, security scan, focused regressions, and optional
+  MCP smoke. The ChatGPT archive is
+  `D004F894ACA624DC86DFF346D208820F0B76AE67D0B01862CCA15B84CD00E796`
+  (141,805 bytes).
+- Hosted CI: PASS_WITH_LIMITATIONS. Run `33419067013` passed Windows
+  validation, security, optional MCP smoke, and Windows MCP smoke. The
+  Ubuntu/native generated-output parity jobs failed. Linux investigation is
+  intentionally not pursued in this run.
+- Codex: PASS_WITH_LIMITATIONS. `studio-delivery@studio-v2` version `2.0.0`
+  is installed and enabled; source/cache trees match exactly across 77 files.
+  A fresh process loaded the package, a fresh `.project/` fixture resumed, and
+  an unrelated trivial task was not hijacked. The optional explicit runtime
+  route is UNPROVEN because Bun was absent from the isolated child PATH even
+  though the current-shell MCP smoke passes.
+- GitHub: PASS_WITH_LIMITATIONS. Repository reads and authorized branch
+  publication pass. No issue, milestone, PR, merge, release, or permission
+  write was performed.
+- Google Drive: PASS_WITH_LIMITATIONS. The canonical folder and governing
+  documents were read as `HellStar / badcrayfish11@gmail.com`. SD-DOC-000,
+  SD-DOC-002, and SD-DOC-040 received narrow append-only reconciliation
+  updates with required revision IDs and immediate readback; no permissions
+  changed.
+- ChatGPT: BLOCKED. The user-confirmed destination is `chris folorunso / Pro`,
+  but neither Chrome nor the Codex in-app browser is connected now. The
+  current archive upload, fresh-chat invocation, current write smoke, fresh
+  independent review, and both cross-surface pilots are therefore blocked.
+- iPhone/mobile: USER CHECK. No claim is made until the owner verifies it
+  personally.

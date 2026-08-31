@@ -1,14 +1,15 @@
 {
   "schema": "studio.bootstrap.state/v2",
   "project_id": "PRJ-SD-001",
-  "recorded_at": "2026-08-30T23:26:27Z",
+  "recorded_at": "2026-08-31T18:45:00Z",
   "source_repository": "https://github.com/Zodiac411/open-software-studio",
   "baseline": {
     "remote_default_branch": "master",
     "remote_head": "d697efc16d86835ff3941f54b05e560b91a4a125",
-    "worktree_branch": "studio-v2-bootstrap",
+    "implementation_branch": "studio-v2-bootstrap",
+    "implementation_sha": "da5038327ce517b9bea4c4b6ee18c112ad82ce14",
     "worktree_path": "C:/Users/badcr/Documents/Codex/2026-08-30/you-are-the-implementation-and-setup/studio-v2-bootstrap",
-    "reviewed_pre_remediation_head": "ce04df0f682d84bdf7818ae8a204162ce9567c86",
+    "worktree_status": "PASS",
     "clone_mode": "bare-source-plus-clean-worktree"
   },
   "host": {
@@ -16,88 +17,136 @@
     "shell": "PowerShell 7.6.4 Core",
     "git": "2.53.0.windows.1",
     "python": "3.14.3",
+    "python_compatibility": "3.12.8 available as py -3.12",
     "node": "v24.14.0",
     "bun": "1.4.0",
     "codex": "codex-cli 0.144.5",
     "codex_home": "C:/Users/badcr/.codex"
   },
+  "implementation": {
+    "result": "PASS_WITH_LIMITATIONS",
+    "studio_version": "2.0.0",
+    "catalog": "catalog/studio.yaml",
+    "generated_packages": 9,
+    "generated_skill_entries": 178,
+    "generated_templates": 22,
+    "chatgpt_archive": "dist/chatgpt/studio.zip",
+    "chatgpt_archive_sha256": "D004F894ACA624DC86DFF346D208820F0B76AE67D0B01862CCA15B84CD00E796",
+    "chatgpt_archive_bytes": 141805,
+    "local_validation": "PASS",
+    "local_evaluations": "PASS",
+    "local_security": "PASS",
+    "local_focused_tests": "PASS",
+    "local_mcp_smoke": "PASS",
+    "independent_luna_review": "PASS_WITH_LIMITATIONS",
+    "independent_luna_finding": "Explicit LF text writes and deterministic PNG encoding were applied; hosted cross-platform parity remains limited"
+  },
+  "hosted_ci": {
+    "result": "PASS_WITH_LIMITATIONS",
+    "run_id": "33419067013",
+    "run_url": "https://github.com/Zodiac411/open-software-studio/actions/runs/33419067013",
+    "head_sha": "da5038327ce517b9bea4c4b6ee18c112ad82ce14",
+    "windows_validation": "PASS",
+    "security": "PASS",
+    "optional_mcp_smoke": "PASS",
+    "windows_mcp_smoke": "PASS",
+    "ubuntu_native_generated_output": "BLOCKED",
+    "limitation": "Ubuntu/native generated-output parity jobs failed. Linux investigation is intentionally out of scope for this reconciliation."
+  },
   "connections": {
     "github": {
       "result": "PASS_WITH_LIMITATIONS",
       "account_label": "Zodiac411",
-      "read_probe": "PASS",
       "target": "Zodiac411/open-software-studio",
-      "remote_branch_head": "ce04df0f682d84bdf7818ae8a204162ce9567c86",
-      "local_remediation_head": "829ea918428007a68c7e69d3ebc9a8c0ab1b9218",
-      "limitation": "The remediation commits have not been pushed; no issue, milestone, PR, merge, or release write was authorized."
+      "read_probe": "PASS",
+      "remote_branch_head_at_source_checkpoint": "da5038327ce517b9bea4c4b6ee18c112ad82ce14",
+      "branch_publication": "PASS",
+      "permissions_observed": "admin/maintain/pull/push/triage",
+      "issue_milestone_pr_writes": "NOT_RUN",
+      "limitation": "No issue, milestone, comment, PR, merge, release, or repository permission write was performed"
     },
     "google_drive": {
       "result": "PASS_WITH_LIMITATIONS",
       "account_label": "HellStar / badcrayfish11@gmail.com",
-      "read_probe": "PASS",
       "target": "https://drive.google.com/drive/folders/1GDlSRW9aJVOvCH-fiZcWPQYsQcUNYGXe",
-      "limitation": "Current revisions for SD-DOC-013, SD-DOC-030, and SD-DOC-035 must be reconciled before release; no Drive write was authorized."
+      "read_probe": "PASS",
+      "reconciled_documents": [
+        {
+          "document_id": "SD-DOC-000",
+          "drive_id": "11pH1rZfxhLpeopNAYYCibPqjARbmkqOyosFU1sEg11Y",
+          "revision_id": "ANLCKQkhU4oqvhDrp8ulchguxbpYwZF2tm2V29gzI3gkUV8wJRvJF_lIVTwoj_LOtckoOEVXy4H4v3aikr2h5Gw5lu7JdYQr8nJ8tggA5CM",
+          "result": "PASS",
+          "change": "Appended current implementation state without replacing the approved plan"
+        },
+        {
+          "document_id": "SD-DOC-002",
+          "drive_id": "1yDHRuYCu5vyok6DJ_HyUpnvIVoNzYJSFLOzmxcC6TTc",
+          "revision_id": "ANLCKQmIIQL8IqeqyH0eCPYXbyCS9VubuiPPmHGLN7gfJbM-bAfnJlboF7MYubttr0OQbAKdIbxY6pR3wTow2TldKgTtT__dSXufZ61_tgY",
+          "result": "PASS",
+          "change": "Appended current implementation reconciliation without replacing the approved state record"
+        },
+        {
+          "document_id": "SD-DOC-040",
+          "drive_id": "1KLWeXmSfTpwSt7hPnx0SgBMPyxgUyTEIU2V9HzT93xg",
+          "revision_id": "ANLCKQkF2d7ZRdTdqpamUM84IbHOGm9pZ-XrYgyQ4oxWapPZ2noBL7pXFNvSc7dfscA5njDx1UOnZs5HDTzI4olt2L7Zep5aDi1zcchPQ9A",
+          "result": "PASS",
+          "change": "Appended current implementation reconciliation without replacing the approved handoff"
+        }
+      ],
+      "governing_revisions_read": {
+        "SD-DOC-043": "ANLCKQnAdaXU-qBD6cqTm2Vj-kWOzx9g5Kf6RZbz6YzrnLuDCWY8wyXerByOUM3U4Ar0MTYd2xtjWRXmpQcVqZqsSnmN9C9-mcbOghcaNzE",
+        "SD-DOC-036": "AIroW36FBXNi-chulF1PqsPn2lw3v0B5pLwCBJf5c-l5lHzwxCWjeYe-He93WtIlh1WF1x4YcNs3Zbow9OSo-tJ0PzitW88tcI_hh0mdYKU",
+        "SD-DOC-044": "AIroW35Y_4RQ_keEgXcOze2APcVWtRd2MZS-7ZD09fmYv4QVzmwhjgP9lnOLdbY32A3-ycfk-jonOqSIGwxz_y53dfoxEKO8Ddq6mEDoq1Y",
+        "SD-DOC-045": "ANLCKQljEwcxQ7Yc3dd3CuvW5BvGVNIfJTLjc85VNMnSYdUnWJGA0X98nZLncLmEvJgFRjaBayGLR9uanmm4bPBVeSSEfZDm_mgriQjScis"
+      },
+      "permissions_changed": "NOT_RUN",
+      "limitation": "The reconciliation appended state to three supporting documents; no issue or milestone projection was created"
     },
     "chatgpt": {
       "result": "BLOCKED",
-      "visible_account": "chris folorunso / Pro",
-      "route": "Plugins -> Skills -> Create -> Upload from your computer",
-      "previous_install": "PASS_WITH_LIMITATIONS",
-      "current_package_install": "UNPROVEN",
-      "current_fresh_chat": "UNPROVEN",
-      "current_fresh_review": "UNPROVEN",
-      "reason": "The installed receipt and Review 010 predate the remediation and reference a different Studio archive and source SHA. The current dist/chatgpt/studio.zip must be uploaded and reviewed in a new chat before acceptance."
+      "confirmed_account": "chris folorunso / Pro",
+      "account_confirmation": "PASS",
+      "best_supported_route": "Plugins -> Skills -> Create -> Upload",
+      "current_archive_upload": "BLOCKED",
+      "current_fresh_chat": "BLOCKED",
+      "current_fresh_review": "BLOCKED",
+      "browser_blocker": "No Chrome or in-app browser surface is connected in this session",
+      "historical_installation": "PASS_WITH_LIMITATIONS",
+      "limitation": "The earlier visible ChatGPT installation and chats refer to an older archive and source checkpoint; they are not reused as current-SHA proof"
     }
   },
-  "implementation": {
-    "phase": "local_accepted_external_verification_pending",
+  "codex": {
     "result": "PASS_WITH_LIMITATIONS",
-    "current_branch": "studio-v2-bootstrap",
-    "code_head": "829ea918428007a68c7e69d3ebc9a8c0ab1b9218",
-    "review_candidate": "live Git HEAD after the remediation handoff commit",
-    "commits": [
-      "8941070e383df2514ceaa0309035bceb2dd8615f",
-      "dcc6750943fd67d1915280fbd2aa97a6bd01686a",
-      "4ba6ddbc15a7dc1cc20c68edb3b3356031806a8f",
-      "417275c",
-      "f300908d5306085f72215ce09e95f5cf8f434033",
-      "2030f202bbeae5ee11bb68e7f6eadd6b52dd5910",
-      "7daff96cab5bb50a948196f0ba299131ada732cb",
-      "2c02ad23d7c1201a5010682f27a626d3cbbc6ba7",
-      "b88e546",
-      "24609cc67f789f5560a7312b9b97339462480433",
-      "b78a5c9518aea8c50afa788d08a190b748fe9371",
-      "829ea918428007a68c7e69d3ebc9a8c0ab1b9218"
-    ],
-    "local_evidence": [
-      "python scripts/build_studio.py --check-only -> PASS",
-      "python scripts/validate_suite.py -> PASS including two clean-checkout deterministic builds",
-      "python scripts/run_evals.py -> PASS including six executable control-plane regressions",
-      "python scripts/security_checks.py -> PASS for 1366 tracked paths and packaged path traversal",
-      "Plugin Creator -> PASS for all nine generated packages under UTF-8",
-      "Skill Creator -> PASS for all 35 generated source skills under UTF-8",
-      "greenfield and brownfield local pilot tests -> PASS",
-      "two consecutive optional MCP cold-start probes -> PASS",
-      "git diff --check -> PASS",
-      "worktree clean after commits -> PASS"
-    ],
-    "blocking_findings": [
-      "Current Studio archive is not yet re-uploaded or verified in fresh ChatGPT.",
-      "Fresh ChatGPT Review has not accepted the remediation SHA.",
-      "Remediation commits are not published to the GitHub branch.",
-      "Drive revision drift is not reconciled.",
-      "External GitHub write/reconciliation execution remains NOT_RUN by approval policy."
-    ],
-    "local_review_disposition": "PASS",
-    "fresh_chatgpt_review_disposition": "UNPROVEN",
-    "external_writes": "NOT_RUN"
+    "plugin_id": "studio-delivery@studio-v2",
+    "version": "2.0.0",
+    "installed": "PASS",
+    "enabled": "PASS",
+    "source_cache_tree_match": "PASS",
+    "source_cache_file_count": 77,
+    "source_cache_manifest_sha256": "9065E5D74183354D225774C5A37AFA3FBBD3BD0A86ED1688FA1A4DAC8F2CE906",
+    "fresh_package_session": "PASS_WITH_LIMITATIONS",
+    "fresh_package_session_evidence": "A fresh read-only Codex process loaded the Studio package and verified branch studio-v2-bootstrap and SHA da5038327ce517b9bea4c4b6ee18c112ad82ce14; its child PATH did not expose Bun for the optional runtime probe",
+    "fresh_project_resume": "PASS",
+    "fresh_project_resume_evidence": "PRJ-RESUME-001, phase INTAKE, no active work package, next action shape the request and record non-goals before implementation",
+    "unrelated_task_non_hijack": "PASS",
+    "explicit_studio_runtime_route": "UNPROVEN",
+    "runtime_limitation": "Direct current-shell bun run mcp:check passed; the isolated fresh child could not run that optional probe because Bun was absent from its child PATH"
+  },
+  "pilots": {
+    "greenfield_local_fixture": "PASS",
+    "brownfield_seeded_defect_and_repair": "PASS_WITH_LIMITATIONS",
+    "current_cross_surface_greenfield": "BLOCKED",
+    "current_cross_surface_brownfield": "BLOCKED",
+    "current_fresh_chatgpt_review": "BLOCKED",
+    "external_write_smoke": "NOT_RUN",
+    "no_self_acceptance": "PASS"
   },
   "human_gates": {
     "account_confirmation": "PASS",
     "oauth_or_account_selection": "NOT_RUN",
     "external_write_execution": "NOT_RUN",
     "global_chatgpt_instruction_change": "NOT_RUN",
-    "push_merge_or_release": "NOT_RUN",
+    "merge_or_release": "NOT_RUN",
     "iphone_mobile_check": "USER CHECK"
   },
   "overall_result": "BLOCKED",
