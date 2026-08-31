@@ -9,6 +9,8 @@ on branch `studio-v2-bootstrap`. The current branch may advance with
 evidence-only receipt commits; the generated implementation and archive are
 anchored to this checkpoint.
 
+Current published branch tip: `9b1ce2b8db3625f75127489c4e51c0644e156b1d`.
+
 ## Acceptance matrix
 
 | Requirement | Result | Evidence and limitation |
@@ -18,9 +20,9 @@ anchored to this checkpoint.
 | Versioned schemas, compiler, templates, and lifecycle commands | PASS | `validate_suite.py`, the CLI checks, 22 templates, and V2 schema/evaluation gates pass. |
 | Studio family, compatibility aliases, and Opal Seed assets | PASS | Nine generated packages, compatibility satellites, mobile-safe icon assets, and package validators pass. |
 | Recovery, evidence grading, seeded gates, and independent local review | PASS_WITH_LIMITATIONS | Local evaluations, security checks, focused regressions, seeded red/green gates, and Luna review pass; current ChatGPT review is not available. |
-| Hosted GitHub validation | PASS_WITH_LIMITATIONS | Run `33419067013`: Windows validation, security, optional MCP smoke, and Windows MCP smoke pass. Ubuntu/native generated-output parity failed; Linux follow-up is intentionally not pursued. |
-| Codex installation and fresh-session proof | PASS_WITH_LIMITATIONS | `studio-delivery@studio-v2` 2.0.0 is installed/enabled; source/cache match across 77 files; fresh package read, fresh `.project/` resume, and unrelated-task non-hijack pass. Explicit runtime route remains UNPROVEN because Bun was absent from the isolated child PATH. |
-| ChatGPT installation and fresh-chat proof | BLOCKED | Current `dist/chatgpt/studio.zip` is ready, but upload and scan cannot complete until Chrome’s file-URL permission is enabled and the browser surface can perform the upload. |
+| Hosted GitHub validation | PASS_WITH_LIMITATIONS | Run `33422178121`: Windows validation, security, optional MCP smoke, and Windows MCP smoke pass. Ubuntu/native generated-output parity failed; Linux follow-up is intentionally not pursued. |
+| Codex installation and fresh-session proof | PASS_WITH_LIMITATIONS | `studio-delivery@studio-v2` 2.0.0 is installed/enabled; source/cache match across 77 files; fresh package visibility at the current branch tip, fresh `.project/` resume, and unrelated-task non-hijack pass. Explicit runtime route remains UNPROVEN because Bun was absent from the isolated child PATH. |
+| ChatGPT installation and fresh-chat proof | BLOCKED | Chrome and the intended account are visible, but upload and scan cannot complete until the ChatGPT extension’s file-URL permission is enabled. |
 | GitHub and Google Drive connections | PASS_WITH_LIMITATIONS | GitHub read/publication pass. Drive folder/governing-document reads and three authorized append-only reconciliation updates pass with revision-guarded readback. No permissions changed. |
 | Confirmation-gated writes | PASS_WITH_LIMITATIONS | Local fail-closed write guards pass; current ChatGPT write smoke is UNPROVEN until a fresh current package session is available. |
 | Greenfield and brownfield cross-surface pilots | BLOCKED | Local greenfield and brownfield portions pass; current ChatGPT -> Codex -> fresh ChatGPT Review loops await current ChatGPT installation. |

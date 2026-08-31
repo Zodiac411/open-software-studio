@@ -23,14 +23,15 @@ Recorded: 2026-08-31
   observed during the setup flow.
 - Best supported route to use when a browser is connected:
   `Plugins -> Skills -> Create -> Upload`.
-- Current browser surface: BLOCKED. The Chrome extension and Codex in-app
-  browser both returned unavailable, and browser enumeration returned no
-  connected sessions.
+- Current browser surface: PASS_WITH_LIMITATIONS. Chrome is connected and the
+  visible account is `chris folorunso` / `Pro`; the Codex in-app browser is not
+  needed for this route.
 
 ## Current gates
 
-- Current archive upload: BLOCKED. No supported browser surface was available
-  to upload the current archive or inspect scanning/review results.
+- Current archive upload: BLOCKED. The supported browser is connected, but
+  Chrome rejected file selection because the ChatGPT extension’s “Allow access
+  to file URLs” permission is not enabled. No upload or scan result is claimed.
 - Fresh ChatGPT conversation: BLOCKED. The current package has not been
   installed or invoked in a fresh chat.
 - Explicit `@Studio` invocation: UNPROVEN. No current visible invocation

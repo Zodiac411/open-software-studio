@@ -295,23 +295,25 @@ This section is authoritative for the current recheck. Earlier sections retain
 the chronological implementation and historical review record.
 
 - Source checkpoint: `da5038327ce517b9bea4c4b6ee18c112ad82ce14` on
-  `studio-v2-bootstrap`; the branch was read back from GitHub at this
-  checkpoint before the evidence-only receipt refresh.
+  `studio-v2-bootstrap`; current published branch tip is
+  `9b1ce2b8db3625f75127489c4e51c0644e156b1d` after the evidence-only receipt
+  refresh.
 - Local Windows validation: PASS for the canonical build and check, package
   validation, evaluations, security scan, focused regressions, and optional
   MCP smoke. The ChatGPT archive is
   `D004F894ACA624DC86DFF346D208820F0B76AE67D0B01862CCA15B84CD00E796`
   (141,805 bytes).
-- Hosted CI: PASS_WITH_LIMITATIONS. Run `33419067013` passed Windows
+- Hosted CI: PASS_WITH_LIMITATIONS. Run `33422178121` passed Windows
   validation, security, optional MCP smoke, and Windows MCP smoke. The
   Ubuntu/native generated-output parity jobs failed. Linux investigation is
   intentionally not pursued in this run.
 - Codex: PASS_WITH_LIMITATIONS. `studio-delivery@studio-v2` version `2.0.0`
   is installed and enabled; source/cache trees match exactly across 77 files.
-  A fresh process loaded the package, a fresh `.project/` fixture resumed, and
-  an unrelated trivial task was not hijacked. The optional explicit runtime
-  route is UNPROVEN because Bun was absent from the isolated child PATH even
-  though the current-shell MCP smoke passes.
+  A fresh process proved package visibility at the current published tip, a
+  fresh `.project/` fixture resumed, and an unrelated trivial task was not
+  hijacked. The optional explicit runtime route is UNPROVEN because Bun was
+  absent from the isolated child PATH even though the current-shell MCP smoke
+  passes.
 - GitHub: PASS_WITH_LIMITATIONS. Repository reads and authorized branch
   publication pass. No issue, milestone, PR, merge, release, or permission
   write was performed.
@@ -320,9 +322,10 @@ the chronological implementation and historical review record.
   SD-DOC-002, and SD-DOC-040 received narrow append-only reconciliation
   updates with required revision IDs and immediate readback; no permissions
   changed.
-- ChatGPT: BLOCKED. The user-confirmed destination is `chris folorunso / Pro`,
-  but neither Chrome nor the Codex in-app browser is connected now. The
-  current archive upload, fresh-chat invocation, current write smoke, fresh
-  independent review, and both cross-surface pilots are therefore blocked.
+- ChatGPT: BLOCKED. Chrome is connected and the visible destination is
+  `chris folorunso / Pro`, but the extension’s file-URL permission is disabled
+  and the file chooser rejected the current archive. The current upload,
+  fresh-chat invocation, current write smoke, fresh independent review, and
+  both cross-surface pilots remain blocked.
 - iPhone/mobile: USER CHECK. No claim is made until the owner verifies it
   personally.

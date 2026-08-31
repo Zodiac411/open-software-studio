@@ -10,6 +10,8 @@ Recorded: 2026-08-31
 - Codex: `codex-cli 0.144.5`.
 - Implementation source checkpoint: `da5038327ce517b9bea4c4b6ee18c112ad82ce14` on
   `studio-v2-bootstrap`.
+- Current published branch tip: `9b1ce2b8db3625f75127489c4e51c0644e156b1d`
+  (evidence-only receipt refresh on top of the implementation checkpoint).
 - Current CLI syntax was read before use: `codex plugin marketplace add
   <SOURCE> [--ref REF] [--sparse PATH]`, `codex plugin list`, and
   `codex plugin add <PLUGIN[@MARKETPLACE]> [--json]`.
@@ -49,10 +51,10 @@ Recorded: 2026-08-31
 
 ## Fresh-session verification
 
-- Fresh package session: PASS_WITH_LIMITATIONS. A new read-only Codex process
-  loaded the Studio assets and reported branch `studio-v2-bootstrap` and the
-  implementation SHA above. Its isolated child PATH did not expose Bun, so the
-  optional runtime probe was not run in that process.
+- Fresh package session: PASS. A new read-only Codex process loaded the Studio
+  package and proved branch `studio-v2-bootstrap` at the current published tip.
+  Its isolated child PATH did not expose Bun, so the optional runtime probe was
+  not run in that process.
 - Direct current-shell MCP smoke: PASS. `bun run mcp:check` passed twice.
 - Fresh `.project/` resume: PASS. A disposable project resumed with project ID
   `PRJ-RESUME-001`, phase `INTAKE`, no active work package, and the next action

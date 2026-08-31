@@ -10,6 +10,7 @@ unrelated user work were not reset, cleaned, stashed, overwritten, or deleted.
 - Baseline `master`: `d697efc16d86835ff3941f54b05e560b91a4a125`.
 - Implementation branch: `studio-v2-bootstrap`.
 - Implementation source checkpoint: `da5038327ce517b9bea4c4b6ee18c112ad82ce14`.
+- Current published branch tip: `9b1ce2b8db3625f75127489c4e51c0644e156b1d`.
 - Worktree: `C:/Users/badcr/Documents/Codex/2026-08-30/you-are-the-implementation-and-setup/studio-v2-bootstrap`.
 - Codex AGENTS backup: `C:/Users/badcr/.codex/backups/studio-v2/AGENTS.md.before-studio-v2-20260831-182256`.
 - AGENTS backup SHA-256:

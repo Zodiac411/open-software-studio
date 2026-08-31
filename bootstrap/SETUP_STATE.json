@@ -1,13 +1,14 @@
 {
   "schema": "studio.bootstrap.state/v2",
   "project_id": "PRJ-SD-001",
-  "recorded_at": "2026-08-31T18:45:00Z",
+  "recorded_at": "2026-08-31T18:00:00Z",
   "source_repository": "https://github.com/Zodiac411/open-software-studio",
   "baseline": {
     "remote_default_branch": "master",
     "remote_head": "d697efc16d86835ff3941f54b05e560b91a4a125",
     "implementation_branch": "studio-v2-bootstrap",
     "implementation_sha": "da5038327ce517b9bea4c4b6ee18c112ad82ce14",
+    "current_branch_tip": "9b1ce2b8db3625f75127489c4e51c0644e156b1d",
     "worktree_path": "C:/Users/badcr/Documents/Codex/2026-08-30/you-are-the-implementation-and-setup/studio-v2-bootstrap",
     "worktree_status": "PASS",
     "clone_mode": "bare-source-plus-clean-worktree"
@@ -43,9 +44,9 @@
   },
   "hosted_ci": {
     "result": "PASS_WITH_LIMITATIONS",
-    "run_id": "33419067013",
-    "run_url": "https://github.com/Zodiac411/open-software-studio/actions/runs/33419067013",
-    "head_sha": "da5038327ce517b9bea4c4b6ee18c112ad82ce14",
+    "run_id": "33422178121",
+    "run_url": "https://github.com/Zodiac411/open-software-studio/actions/runs/33422178121",
+    "head_sha": "9b1ce2b8db3625f75127489c4e51c0644e156b1d",
     "windows_validation": "PASS",
     "security": "PASS",
     "optional_mcp_smoke": "PASS",
@@ -60,6 +61,7 @@
       "target": "Zodiac411/open-software-studio",
       "read_probe": "PASS",
       "remote_branch_head_at_source_checkpoint": "da5038327ce517b9bea4c4b6ee18c112ad82ce14",
+      "current_branch_tip": "9b1ce2b8db3625f75127489c4e51c0644e156b1d",
       "branch_publication": "PASS",
       "permissions_observed": "admin/maintain/pull/push/triage",
       "issue_milestone_pr_writes": "NOT_RUN",
@@ -110,7 +112,7 @@
       "current_archive_upload": "BLOCKED",
       "current_fresh_chat": "BLOCKED",
       "current_fresh_review": "BLOCKED",
-      "browser_blocker": "No Chrome or in-app browser surface is connected in this session",
+      "browser_blocker": "Chrome is connected and the intended account is visible, but file upload is blocked because the extension file-URL permission is not enabled",
       "historical_installation": "PASS_WITH_LIMITATIONS",
       "limitation": "The earlier visible ChatGPT installation and chats refer to an older archive and source checkpoint; they are not reused as current-SHA proof"
     }
@@ -125,7 +127,7 @@
     "source_cache_file_count": 77,
     "source_cache_manifest_sha256": "9065E5D74183354D225774C5A37AFA3FBBD3BD0A86ED1688FA1A4DAC8F2CE906",
     "fresh_package_session": "PASS_WITH_LIMITATIONS",
-    "fresh_package_session_evidence": "A fresh read-only Codex process loaded the Studio package and verified branch studio-v2-bootstrap and SHA da5038327ce517b9bea4c4b6ee18c112ad82ce14; its child PATH did not expose Bun for the optional runtime probe",
+    "fresh_package_session_evidence": "A fresh read-only Codex process loaded the Studio package and proved branch studio-v2-bootstrap at current tip 9b1ce2b8db3625f75127489c4e51c0644e156b1d; its isolated child PATH did not expose Bun for the optional runtime probe",
     "fresh_project_resume": "PASS",
     "fresh_project_resume_evidence": "PRJ-RESUME-001, phase INTAKE, no active work package, next action shape the request and record non-goals before implementation",
     "unrelated_task_non_hijack": "PASS",

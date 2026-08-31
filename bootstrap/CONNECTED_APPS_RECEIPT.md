@@ -17,6 +17,8 @@ Implementation source checkpoint: `da5038327ce517b9bea4c4b6ee18c112ad82ce14` on
 - Remote baseline HEAD: `d697efc16d86835ff3941f54b05e560b91a4a125`.
 - Authorized branch publication: PASS. `studio-v2-bootstrap` was pushed and
   read back at the implementation checkpoint above.
+- Current published branch tip: `9b1ce2b8db3625f75127489c4e51c0644e156b1d`
+  (evidence-only receipt refresh).
 - Permissions observed: `admin/maintain/pull/push/triage`.
 - Issue, milestone, comment, PR, merge, release, and permission writes:
   NOT_RUN.
@@ -44,10 +46,12 @@ Implementation source checkpoint: `da5038327ce517b9bea4c4b6ee18c112ad82ce14` on
 ## ChatGPT
 
 - Intended account: `chris folorunso / Pro`; user confirmation: PASS.
-- Current browser-side connection: BLOCKED. No Chrome extension or Codex
-  in-app browser surface is connected in the current session.
+- Current browser-side connection: PASS_WITH_LIMITATIONS. Chrome is connected
+  and the visible account is `chris folorunso` / `Pro`.
 - Current archive upload, fresh-chat invocation, write smoke, cross-surface
-  pilots, and current-SHA independent review: BLOCKED.
+  pilots, and current-SHA independent review: BLOCKED because Chrome rejected
+  the file chooser while the ChatGPT extension’s file-URL access permission
+  is disabled.
 - Earlier ChatGPT chats are historical evidence only because they refer to an
   older archive and source checkpoint.
 
