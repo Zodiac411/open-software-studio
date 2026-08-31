@@ -68,7 +68,7 @@
     "schemas/v2/state.schema.json": "d50eb49a69a13fa96826b988de52e407ea34d3dfea90a17cc1f8e688512843bf",
     "schemas/v2/verification_contract.schema.json": "ba31eb4785568e4ec8e690c0d6ea6fb6bb5935c06dfa5a7dcbca24799d2666d4",
     "schemas/v2/work_package.schema.json": "36a98fa1730102fa254ab6bf4cf728286df53ef46dcf227096d5dc049f0ad8e3",
-    "scripts/build_studio.py": "a4e2f33905fe0a5bc9634df1186cedb046477d220f0fa6757a1651ed755e6849",
+    "scripts/build_studio.py": "4eee5b42655440c3ecb04f3543cd4a827afe0984005ff5996430be5ff2c70015",
     "scripts/check_reproducibility.py": "f726d0719b94a12e1f2ff1af5ec705559a08007509935601836e9c1a93e94729",
     "scripts/render_icons.py": "0cdffcdb514bcbcc328cb8c8d5e415a69ba96fe6113cf367117ebf49774af888",
     "scripts/run_evals.py": "975446ee0e87da28b2864037ed23fa37283a78ba9c7852c4534072e0a998ea4a",
