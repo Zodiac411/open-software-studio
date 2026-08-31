@@ -4,16 +4,19 @@ from __future__ import annotations
 
 import hashlib
 import json
+import argparse
 import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
 STUDIO = ROOT / "scripts" / "studio.py"
 sys.path.insert(0, str(ROOT / "scripts"))
+import studio  # noqa: E402
 from studio import artifact_evidence_digest, schema_errors  # noqa: E402
 
 
@@ -76,6 +79,7 @@ class StudioV2RegressionTests(unittest.TestCase):
             "schema": "studio.review/v2",
             "document_id": "REV-001",
             "review_id": "REV-001",
+            "project_id": state["project_id"],
             "sequence": 1,
             "reviewer_role": "independent reviewer",
             "reviewer_context": "fresh review session",
@@ -172,6 +176,46 @@ class StudioV2RegressionTests(unittest.TestCase):
         self.assertEqual(result["result"], "BLOCKED")
         self.assertIn("review is stale", str(result["message"]))
 
+    def test_review_binds_active_implementer_and_project(self) -> None:
+        self.prepare_handoff()
+        path = self.review()
+        original = json.loads(path.read_text(encoding="utf-8"))
+        for field, expected_message in (
+            ("implementer_actor_id", "review implementer actor does not match the active work package"),
+            ("implementer_session_id", "review implementer session does not match the active work package"),
+            ("project_id", "review project_id does not match the active project state"),
+        ):
+            malformed = dict(original)
+            malformed[field] = "mismatched-value"
+            path.write_text(json.dumps(malformed, indent=2) + "\n", encoding="utf-8")
+            _, result = self.cli("review", "validate", check=False)
+            self.assertEqual(result["result"], "BLOCKED")
+            self.assertIn(expected_message, str(result["message"]))
+
+    def test_plan_bundle_rolls_back_on_injected_replace_failure(self) -> None:
+        state_path = self.project / ".project" / "state.json"
+        active_plan_path = self.project / ".project" / "session" / "active-plan.md"
+        progress_path = self.project / ".project" / "session" / "progress.md"
+        events_path = self.project / ".project" / "events.jsonl"
+        wp_path = self.project / ".project" / "work-packages" / "WP-001.json"
+        before = {path: path.read_bytes() for path in (state_path, active_plan_path, progress_path, events_path)}
+        real_replace = studio.os.replace
+        calls = 0
+
+        def replace_with_one_injected_failure(source: str, destination: str) -> None:
+            nonlocal calls
+            calls += 1
+            if calls == 2:
+                raise OSError("injected atomic bundle failure")
+            real_replace(source, destination)
+
+        with mock.patch.object(studio.os, "replace", side_effect=replace_with_one_injected_failure):
+            with self.assertRaises(OSError):
+                studio.plan_project(argparse.Namespace(project=str(self.project)))
+        self.assertGreaterEqual(calls, 2)
+        self.assertFalse(wp_path.exists())
+        self.assertEqual(before, {path: path.read_bytes() for path in before})
+
     def test_release_failure_is_atomic(self) -> None:
         self.prepare_handoff()
         self.review()
@@ -208,6 +252,22 @@ class StudioV2RegressionTests(unittest.TestCase):
         state = json.loads((self.project / ".project" / "state.json").read_text(encoding="utf-8"))
         self.assertEqual(state["phase"], "CLOSED")
 
+    def test_release_rejects_corrupt_projection_before_mutation(self) -> None:
+        self.prepare_handoff()
+        self.review()
+        self.cli("close")
+        state_path = self.project / ".project" / "state.json"
+        receipt_root = self.project / ".project" / "artifacts"
+        before = state_path.read_bytes()
+        progress_path = self.project / ".project" / "session" / "progress.md"
+        progress = progress_path.read_text(encoding="utf-8")
+        progress_path.write_text(progress.replace("- State projection: phase=CLOSED", "- State projection: phase=INTAKE", 1), encoding="utf-8")
+        _, result = self.cli("release", "--approved-by", "owner", check=False)
+        self.assertEqual(result["result"], "BLOCKED")
+        self.assertIn("coherent state, projections, and event history", str(result["message"]))
+        self.assertEqual(before, state_path.read_bytes())
+        self.assertFalse(any(receipt_root.glob("RELEASE-*.json")))
+
     def test_doctor_rejects_non_monotonic_or_illegal_events(self) -> None:
         self.prepare_handoff()
         self.review()
@@ -220,6 +280,50 @@ class StudioV2RegressionTests(unittest.TestCase):
         _, result = self.cli("doctor", check=False)
         self.assertEqual(result["result"], "BLOCKED")
         self.assertIn("event sequence", json.dumps(result["checks"]))
+        events = [json.loads(line) for line in events_path.read_text(encoding="utf-8").splitlines()]
+        events[-1]["sequence"] = events[-2]["sequence"] + 1
+        events[-1]["event_id"] = f"EVT-{events[-1]['sequence']:06d}"
+        events[-1]["to_phase"] = "INTAKE"
+        events_path.write_text("\n".join(json.dumps(event) for event in events) + "\n", encoding="utf-8")
+        _, illegal_result = self.cli("doctor", check=False)
+        self.assertEqual(illegal_result["result"], "BLOCKED")
+        self.assertIn("illegal state transition", json.dumps(illegal_result["checks"]))
+
+    def test_doctor_rejects_event_sequence_starting_after_one(self) -> None:
+        self.prepare_handoff()
+        self.review()
+        self.cli("close")
+        events_path = self.project / ".project" / "events.jsonl"
+        events = [json.loads(line) for line in events_path.read_text(encoding="utf-8").splitlines()]
+        events[0]["sequence"] = 2
+        events[0]["event_id"] = "EVT-000002"
+        events_path.write_text("\n".join(json.dumps(event) for event in events) + "\n", encoding="utf-8")
+        _, result = self.cli("doctor", check=False)
+        self.assertEqual(result["result"], "BLOCKED")
+        self.assertIn("event sequence must start at 1", json.dumps(result["checks"]))
+
+    def test_doctor_rejects_noncontiguous_event_sequences(self) -> None:
+        self.prepare_handoff()
+        self.review()
+        self.cli("close")
+        events_path = self.project / ".project" / "events.jsonl"
+        events = [json.loads(line) for line in events_path.read_text(encoding="utf-8").splitlines()]
+        events[1]["sequence"] = 3
+        events[1]["event_id"] = "EVT-000003"
+        events_path.write_text("\n".join(json.dumps(event) for event in events) + "\n", encoding="utf-8")
+        _, result = self.cli("doctor", check=False)
+        self.assertEqual(result["result"], "BLOCKED")
+        self.assertIn("event sequence is not contiguous", json.dumps(result["checks"]))
+
+    def test_evidence_validation_rejects_observed_payload_mutation(self) -> None:
+        self.cli("evidence", "add", "--evidence-id", "EVID-DIGEST", "--requirement", "REQ-001", "--level", "E2", "--command-or-probe", "git status --short", "--observed", "original output")
+        path = self.project / ".project" / "evidence" / "EVID-DIGEST.json"
+        value = json.loads(path.read_text(encoding="utf-8"))
+        value["observed"] = "mutated output"
+        path.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
+        _, result = self.cli("evidence", "validate", check=False)
+        self.assertEqual(result["result"], "BLOCKED")
+        self.assertIn("observed output digest", str(result["message"]))
 
     def test_schema_validator_enforces_min_properties(self) -> None:
         self.assertTrue(schema_errors({}, {"type": "object", "minProperties": 1}))

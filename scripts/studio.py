@@ -251,6 +251,11 @@ def sha_digest(values: Any) -> str:
     return hashlib.sha256(json.dumps(values, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()
 
 
+def evidence_observed_digest(observed: Any) -> str:
+    """Use the canonical observed payload digest for creation and validation."""
+    return sha_digest(observed)
+
+
 def parse_timestamp(value: Any) -> float:
     if not isinstance(value, str):
         return 0.0
@@ -287,10 +292,10 @@ def next_event_sequence(project: Path) -> int:
     return highest + 1
 
 
-def render_active_plan(project: Path, state: dict[str, Any]) -> str:
+def render_active_plan(project: Path, state: dict[str, Any], work_package: dict[str, Any] | None = None) -> str:
     wp_id = state.get("active_wp") or "none"
     wp_path = control_root(project) / "work-packages" / f"{wp_id}.json"
-    wp = read_json(wp_path) if wp_path.is_file() else {}
+    wp = work_package if work_package is not None else read_json(wp_path) if wp_path.is_file() else {}
     requirements = wp.get("requirements", [])
     return "\n".join([
         "# Active project plan",
@@ -369,9 +374,15 @@ def transition(project: Path, state_path: Path, state: dict[str, Any], event_typ
     progress_marker = f"<!-- STUDIO-EVENT: {event['event_id']} -->"
     if progress_marker not in existing_progress:
         existing_progress = existing_progress.rstrip() + f"\n\n{progress_marker}\n- State projection: phase={next_state.get('phase')} live_head={next_state.get('live_head_sha')}\n- {event_type}: {next_state.get('phase')} at {next_state.get('live_head_sha')}\n"
+    bundled_wp: dict[str, Any] | None = None
+    if extra_files:
+        wp_path = control_root(project) / "work-packages" / f"{next_state.get('active_wp')}.json"
+        wp_contents = extra_files.get(wp_path)
+        if isinstance(wp_contents, str):
+            bundled_wp = json.loads(wp_contents)
     files = {
         state_path: json.dumps(next_state, indent=2, sort_keys=True, ensure_ascii=False) + "\n",
-        control_root(project) / "session" / "active-plan.md": render_active_plan(project, next_state),
+        control_root(project) / "session" / "active-plan.md": render_active_plan(project, next_state, bundled_wp),
         progress_path: existing_progress,
         events_path: existing_events + json.dumps(event, sort_keys=True, ensure_ascii=False) + "\n",
     }
@@ -515,10 +526,18 @@ def projection_errors(project: Path, state: dict[str, Any]) -> list[str]:
                 continue
             parsed.append(item)
             errors.extend(f"event schema: {issue}" for issue in document_schema_errors(item, "event"))
+            if item.get("project_id") != state.get("project_id"):
+                errors.append(f"event project_id does not match project state at line {line_number}")
             sequence = item.get("sequence")
             event_id = item.get("event_id")
             if not isinstance(sequence, int) or isinstance(sequence, bool):
                 continue
+            expected_sequence = len(parsed)
+            if sequence != expected_sequence:
+                if expected_sequence == 1:
+                    errors.append(f"event sequence must start at 1, found {sequence}")
+                else:
+                    errors.append(f"event sequence is not contiguous at line {line_number}: expected {expected_sequence}, found {sequence}")
             if sequence in seen_sequences:
                 errors.append(f"event sequence is duplicated: {sequence}")
             seen_sequences.add(sequence)
@@ -618,9 +637,10 @@ def plan_project(args: argparse.Namespace) -> int:
         verification = [verification]
     repository = metadata.get("repository") or metadata.get("repository_url") or git(project, "remote", "get-url", "origin") or str(project)
     wp_path = control_root(project) / "work-packages" / "WP-001.json"
+    extra_files: dict[Path, str] = {}
     if not wp_path.exists():
         sha = current_sha(project)
-        write_json(wp_path, {
+        work_package = {
             "schema": "studio.artifact/v2",
             "document_id": "WP-001",
             "project_id": state["project_id"],
@@ -644,8 +664,9 @@ def plan_project(args: argparse.Namespace) -> int:
             "implementer_actor_id": metadata.get("implementer_actor_id", "project-executor"),
             "implementer_session_id": state.get("session_id"),
             "requirement_digest": sha_digest(requirements),
-        })
-    save_state(state_path, state, project, _event_type="plan.created", phase="PLANNED", status="PASS", active_wp="WP-001", next_action="review and freeze WP-001")
+        }
+        extra_files[wp_path] = json.dumps(work_package, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
+    save_state(state_path, state, project, _event_type="plan.created", _extra_files=extra_files, phase="PLANNED", status="PASS", active_wp="WP-001", next_action="review and freeze WP-001")
     return emit("PASS", "bounded work package is planned", work_package=str(wp_path), next_action="studio freeze --approved-by <owner>")
 
 
@@ -740,7 +761,7 @@ def add_evidence(args: argparse.Namespace) -> int:
     if not re.fullmatch(r"EVID-[A-Z0-9-]+", evidence_id):
         return fail("evidence id must match EVID-...")
     head = live_head(project)
-    value = {"schema": "studio.evidence/v2", "document_id": evidence_id, "evidence_id": evidence_id, "project_id": pair[1]["project_id"], "requirement": args.requirement, "level": args.level, "command_or_probe": args.command_or_probe, "observed": args.observed, "timestamp": utc_now(), "limitations": args.limitations or "No additional limitations recorded.", "sequence": record_sequence(control_root(project) / "evidence") + 1, "head_sha": head, "exit_code": args.exit_code, "environment": args.environment, "observed_output_digest": sha_digest(args.observed)}
+    value = {"schema": "studio.evidence/v2", "document_id": evidence_id, "evidence_id": evidence_id, "project_id": pair[1]["project_id"], "requirement": args.requirement, "level": args.level, "command_or_probe": args.command_or_probe, "observed": args.observed, "timestamp": utc_now(), "limitations": args.limitations or "No additional limitations recorded.", "sequence": record_sequence(control_root(project) / "evidence") + 1, "head_sha": head, "exit_code": args.exit_code, "environment": args.environment, "observed_output_digest": evidence_observed_digest(args.observed)}
     path = control_root(project) / "evidence" / f"{evidence_id}.json"
     if path.exists() and not args.replace:
         return fail(f"evidence already exists; use --replace only for this named local receipt")
@@ -773,6 +794,9 @@ def validate_evidence(args: argparse.Namespace) -> int:
         live = live_head(project)
         if live and value.get("head_sha") != live:
             errors.append(f"{path.name}: evidence is stale for live HEAD {live}")
+        expected_digest = evidence_observed_digest(value.get("observed"))
+        if value.get("observed_output_digest") != expected_digest:
+            errors.append(f"{path.name}: observed output digest does not match the canonical observed payload")
     if errors:
         return fail("; ".join(errors))
     return emit("PASS", "evidence receipts are mechanically valid", count=len(files), levels=sorted({read_json(path)["level"] for path in files}))
@@ -939,7 +963,8 @@ def artifact_evidence_digest(project: Path, artifact_ids: list[Any]) -> tuple[st
 
 
 def review_errors(project: Path, value: dict[str, Any], state: dict[str, Any] | None = None, require_accept: bool = False) -> list[str]:
-    required_strings = ["document_id", "review_id", "reviewer_role", "reviewer_context", "reviewer_actor_id", "reviewer_session_id", "implementer_actor_id", "implementer_session_id", "reviewed_base_sha", "reviewed_head_sha", "wp_id", "requirements_digest"]
+    """Validate a review; reviewer identity is an assertion, not an authority lookup."""
+    required_strings = ["document_id", "review_id", "project_id", "reviewer_role", "reviewer_context", "reviewer_actor_id", "reviewer_session_id", "implementer_actor_id", "implementer_session_id", "reviewed_base_sha", "reviewed_head_sha", "wp_id", "requirements_digest"]
     required_lists = ["requirements", "independent_checks", "findings", "conditions", "artifact_ids"]
     errors = document_schema_errors(value, "independent_review")
     errors.extend(f"missing {key}" for key in required_strings if not isinstance(value.get(key), str) or not value[key].strip())
@@ -962,6 +987,13 @@ def review_errors(project: Path, value: dict[str, Any], state: dict[str, Any] | 
         errors.append("reviewer and implementer actor must differ")
     if value.get("reviewer_session_id") == value.get("implementer_session_id"):
         errors.append("reviewer and implementer session must differ")
+    metadata_path = control_root(project) / "project.yaml"
+    metadata = read_json(metadata_path) if metadata_path.is_file() else {}
+    expected_project_id = state.get("project_id") if state else metadata.get("project_id")
+    if expected_project_id and value.get("project_id") != expected_project_id:
+        errors.append("review project_id does not match the active project state")
+    if metadata.get("project_id") and value.get("project_id") != metadata.get("project_id"):
+        errors.append("review project_id does not match project metadata")
     live = live_head(project)
     candidate = candidate_head(project, state or {}) if state else live
     if live and value.get("reviewed_head_sha") != live:
@@ -973,6 +1005,14 @@ def review_errors(project: Path, value: dict[str, Any], state: dict[str, Any] | 
     wp = control_root(project) / "work-packages" / f"{value.get('wp_id', '')}.json"
     if wp.is_file():
         work_package = read_json(wp)
+        if work_package.get("project_id") and value.get("project_id") != work_package.get("project_id"):
+            errors.append("review project_id does not match the active work package")
+        if value.get("implementer_actor_id") != work_package.get("implementer_actor_id"):
+            errors.append("review implementer actor does not match the active work package")
+        if value.get("implementer_session_id") != work_package.get("implementer_session_id"):
+            errors.append("review implementer session does not match the active work package")
+        if state and state.get("session_id") and value.get("implementer_session_id") != state.get("session_id"):
+            errors.append("review implementer session does not match the active project state")
         expected_digest = sha_digest(work_package.get("requirements", []))
         if value.get("requirements_digest") != expected_digest:
             errors.append("review requirements digest does not match the active work package")
@@ -984,6 +1024,8 @@ def review_errors(project: Path, value: dict[str, Any], state: dict[str, Any] | 
         expected_artifacts = value.get("artifact_ids")
         if expected_artifacts is not None and not isinstance(expected_artifacts, list):
             errors.append("artifact_ids must be a list")
+    else:
+        errors.append("review active work package is missing")
     if not value.get("artifact_ids"):
         errors.append("review must name the artifact set that was reviewed")
     if value.get("disposition") == "ACCEPT" and isinstance(value.get("artifact_ids"), list):
@@ -1072,7 +1114,10 @@ def release_project(args: argparse.Namespace) -> int:
         return fail("run studio init before studio release")
     if not args.approved_by:
         return fail("release requires explicit owner approval")
-    state = pair[1]
+    state_path, state = pair
+    integrity_errors = projection_errors(project, state)
+    if integrity_errors:
+        return fail("release requires coherent state, projections, and event history: " + "; ".join(integrity_errors))
     review = latest_json(control_root(project) / "reviews", "REV-")
     if not review:
         return fail("release requires an independent review")
@@ -1087,7 +1132,6 @@ def release_project(args: argparse.Namespace) -> int:
         return emit("PASS", "release is already recorded; no publish or merge was performed", approved_by=args.approved_by, revision=live_head(project), changed=False)
     if state.get("phase") != "CLOSED":
         return fail(f"release requires CLOSED state, found {state.get('phase')}")
-    state_path = pair[0]
     revision = live_head(project)
     if not revision:
         return fail("release requires a live Git HEAD")
