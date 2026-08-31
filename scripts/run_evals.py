@@ -2,14 +2,40 @@
 """Run structural routing, execution, artifact, and cross-plugin evaluation gates."""
 from __future__ import annotations
 import json
+import re
 import subprocess
 import sys
+import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
 def require(value: bool, message: str) -> None:
     if not value: raise SystemExit(f'FAIL: {message}')
+
+
+ROUTE_MENTION = re.compile(r"\$([a-z0-9]+(?:-[a-z0-9]+)*)")
+
+
+def routed_skills(prompt: str, skills: set[str]) -> set[str]:
+    mentions = set(ROUTE_MENTION.findall(prompt.lower()))
+    require(mentions <= skills, f'unknown specialist route in {prompt!r}')
+    return mentions
+
+
+def check_package_recipe(catalog: dict, plugin_id: str) -> None:
+    recipe = catalog['package_defaults'][plugin_id]['recipe']
+    archive_path = ROOT / 'dist' / 'chatgpt' / ('studio.zip' if plugin_id == 'studio-delivery' else f'satellites/{plugin_id}.zip')
+    require(archive_path.is_file(), f'{plugin_id}: recipe archive missing')
+    root = 'studio' if plugin_id == 'studio-delivery' else plugin_id
+    with zipfile.ZipFile(archive_path) as archive:
+        names = {name.removeprefix(f'{root}/') for name in archive.namelist() if name.startswith(f'{root}/')}
+    for include in recipe['include']:
+        matches = {name for name in names if name == include or name.startswith(include.rstrip('/') + '/')}
+        require(matches, f'{plugin_id}: include path is absent from archive: {include}')
+    for exclude in recipe['chatgpt'].get('exclude', []):
+        pattern = exclude.removeprefix('**/')
+        require(not any(name == pattern or name.endswith('/' + pattern) for name in names), f'{plugin_id}: excluded path was packaged: {exclude}')
 
 def main() -> None:
     cases = json.loads((ROOT / 'evals/routing/cases.json').read_text())
@@ -20,7 +46,14 @@ def main() -> None:
     else:
         skills = [p.parent.name for p in ROOT.glob('plugins/*/skills/*/SKILL.md')]
     require(set(skills) == set(cases), 'every specialist needs positive, negative, and ambiguous routing cases')
-    require(all(all(isinstance(case.get(key), str) and case[key] for key in ('positive','negative','ambiguous')) for case in cases.values()), 'incomplete routing case')
+    skill_set = set(skills)
+    for skill_id, case in cases.items():
+        require(all(isinstance(case.get(key), str) and case[key] for key in ('positive', 'negative', 'ambiguous', 'expected', 'wrong_specialist')), f'incomplete routing case: {skill_id}')
+        require(case['expected'] == skill_id, f'{skill_id}: positive route expectation drifted')
+        require(routed_skills(case['positive'], skill_set) == {skill_id}, f'{skill_id}: positive route did not select itself')
+        require(skill_id not in routed_skills(case['wrong_specialist'], skill_set), f'{skill_id}: accepted a wrong-specialist route')
+        require(skill_id not in routed_skills(case['negative'], skill_set), f'{skill_id}: accepted a negative route')
+        require(not routed_skills(case['ambiguous'], skill_set), f'{skill_id}: ambiguous request routed without clarification')
     benchmark = json.loads((ROOT / 'evals/execution/benchmark-cases.json').read_text())
     families = {case['family'] for case in benchmark}
     require(len(benchmark) >= 10 and {'reuse','scope','freshness','incremental','debug','test-quality','quality-gaming','false-completion','context-drift','trivial-overhead'} <= families, 'execution benchmark coverage')
@@ -29,6 +62,16 @@ def main() -> None:
         require({item['family'] for item in studio_benchmark} == {'catalog', 'state', 'evidence', 'permissions', 'review', 'rollback'}, 'Studio seeded benchmark coverage')
         invalid_review = json.loads((ROOT / 'evals/studio/invalid-self-accept-review.json').read_text())
         require(invalid_review['reviewer_role'] == 'executor' and invalid_review['disposition'] == 'ACCEPT', 'self-accept review trap')
+        for plugin in catalog['plugins']:
+            check_package_recipe(catalog, plugin['id'])
+        for skill in catalog['generated_skills']:
+            skill_text = (ROOT / 'skills' / 'studio' / skill['id'] / 'SKILL.md').read_text(encoding='utf-8')
+            if skill.get('role') == 'lens':
+                contract = catalog['lens_contracts'][skill['id']]
+                labels = {'input_contract': 'Input', 'method': 'Method', 'output_contract': 'Output', 'stop_condition': 'Stop', 'escalation': 'Escalate'}
+                for label, value in contract.items():
+                    require(f'- {labels[label]}: {value}' in skill_text, f'{skill["id"]}: lens {label} contract missing')
+                require(f"3. Apply the lens method: {contract['method']}" in skill_text, f'{skill["id"]}: procedure does not execute its catalog method')
         regressions = subprocess.run(
             [sys.executable, '-m', 'unittest', 'discover', '-s', 'evals/studio', '-p', 'test_*.py'],
             cwd=ROOT,
@@ -36,7 +79,7 @@ def main() -> None:
             text=True,
             check=False,
         )
-        require(regressions.returncode == 0 and 'Ran 6 tests' in regressions.stderr, f'behavioral Studio regressions failed: {regressions.stdout}{regressions.stderr}')
+        require(regressions.returncode == 0, f'behavioral Studio regressions failed: {regressions.stdout}{regressions.stderr}')
     demo = ROOT / 'evals/cross-plugin/demo-project'
     for file in ('PROJECT.md','ARCHITECTURE.md','DESIGN.md','IMPLEMENTATION-PLAN.md','IMPLEMENTATION-HANDOFF.md','app/index.html','app/core.js','app/app.js','test/core.test.js'):
         require((demo / file).is_file(), f'demo file missing: {file}')

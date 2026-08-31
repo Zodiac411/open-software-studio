@@ -25,10 +25,13 @@ Use this lens only when the request needs issue-ready scope, labels, dependencie
 ## Procedure
 
 1. Identify the active profile, archetype, phase, work package, authority map, and next valid transition.
-2. Read only the inputs named by the lens contract and apply its method to the smallest adequate scope.
-3. Make requirements, acceptance, scope, proof, and the contract stop condition observable.
-4. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
-5. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
+2. Gather the lens inputs: frozen work package, dependencies, repository identity, and proof plan
+3. Apply the lens method: Project one bounded package into create/update/no-op/stale/conflict actions while preserving Studio authority.
+4. Produce the lens output: typed issue or milestone reconciliation plan with idempotency keys and drift notes
+5. Enforce the stop condition: Do not apply when repository identity, base revision, or action conflict is unresolved.
+6. Follow the escalation path: Escalate connector permission or unsupported-operation differences without fabricating success.
+7. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
+8. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
 
 ## Human gates
 

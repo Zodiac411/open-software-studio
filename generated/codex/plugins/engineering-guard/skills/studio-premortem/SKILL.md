@@ -25,10 +25,13 @@ Use this lens only when the request needs early failure signals and recovery.
 ## Procedure
 
 1. Identify the active profile, archetype, phase, work package, authority map, and next valid transition.
-2. Read only the inputs named by the lens contract and apply its method to the smallest adequate scope.
-3. Make requirements, acceptance, scope, proof, and the contract stop condition observable.
-4. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
-5. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
+2. Gather the lens inputs: high-risk plan, dependencies, assumptions, and fallback options
+3. Apply the lens method: Imagine a bounded failure, trace its earliest signal, prevention, owner, and fallback.
+4. Produce the lens output: short failure register tied to plan decisions and monitoring signals
+5. Enforce the stop condition: Stop plan approval when a likely failure has neither prevention nor fallback.
+6. Follow the escalation path: Escalate risks that exceed the approved budget or cannot be observed early.
+7. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
+8. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
 
 ## Human gates
 

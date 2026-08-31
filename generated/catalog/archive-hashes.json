@@ -1,14 +1,14 @@
 {
   "archives": {
-    "dist/chatgpt/satellites/engineering-guard.zip": "8126840078246350df9a77a9f9dbd082abafbdf15611a8200d3ee4eca0bfd031",
-    "dist/chatgpt/satellites/execution-guard.zip": "ae93bf629e5f67a9871928ba41e587ad2aaa040a572009f9e11a7cbd39fe3193",
-    "dist/chatgpt/satellites/interface-studio.zip": "6aa2985544c0339760c7e55b59c7a9e502ec3c9fa2070e1202096f3562776d29",
-    "dist/chatgpt/satellites/project-architect.zip": "3472e11aba43284fad81b50b1e247deee64b1fc3f1d0623cd170e368dc72616f",
-    "dist/chatgpt/satellites/project-docs.zip": "409463d9e1eb9400bf2c1139dc7e239ed5075ca81fcf85133bc72886e1331e83",
-    "dist/chatgpt/satellites/research-engineer.zip": "338afa20c46795bceb403e963eab436e7d16e022324dc6da1a182d7c6bffc03c",
-    "dist/chatgpt/satellites/studio-track.zip": "cec6c7972edbeb022c2b59a4f0b53536eeece4aec19cbf7d6a6785a4eb7a704e",
-    "dist/chatgpt/satellites/web-app-builder.zip": "4aab9abc650ee11dd5d917ada32cf56657e7a2ddeae0964dbc5fc0ae7cca00a7",
-    "dist/chatgpt/studio.zip": "ff18a803e7a1c50b727e9e5e085156ed918e6432476ee6bcd8df388765c45c8e"
+    "dist/chatgpt/satellites/engineering-guard.zip": "be8e471b2a16fec76f5cd63afdc66555f89e5f9dedf4ac6a2e4b6cfd0762b311",
+    "dist/chatgpt/satellites/execution-guard.zip": "551872b0941c7660bbcc56420eb6f1046b5360c09c41210e3592599d40529c8f",
+    "dist/chatgpt/satellites/interface-studio.zip": "20da4b38e36736940e658da94ed67e113cbab151c4701ec368a207b565261b2a",
+    "dist/chatgpt/satellites/project-architect.zip": "4897779abe042763ee5a755d9802540dba581bf249efb4170755cf857ba02bad",
+    "dist/chatgpt/satellites/project-docs.zip": "5b2297162704220079cf475b731355b7129986c331fa89e5bbcaa5fef2199327",
+    "dist/chatgpt/satellites/research-engineer.zip": "f0b5db7fa5e2ceb92393c8be31fda083783296fa12a6371e5ac9f03846dde681",
+    "dist/chatgpt/satellites/studio-track.zip": "75eb96dbec75fc8163b385d9f0cf95f31da53e2128c942d909b983c63cb4a2a8",
+    "dist/chatgpt/satellites/web-app-builder.zip": "7051866af38fde6d91748f6f699e09a36a9f8d4f3b98104d58fbd6df7b6525d3",
+    "dist/chatgpt/studio.zip": "602c69aa833192d822e602ec567f7dd8665519a2b8503ab395591c9c78af92a7"
   },
   "schema": "studio.archive-hashes/v2",
   "version": "2.0.0"

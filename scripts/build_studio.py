@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+from fnmatch import fnmatchcase
 import hashlib
 import json
 import re
@@ -12,7 +13,7 @@ import subprocess
 import sys
 import tempfile
 import zipfile
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any, Iterable
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -143,9 +144,6 @@ def validate_catalog(catalog: dict[str, Any]) -> None:
     roles = catalog.get("icon_system", {}).get("roles", {})
     if set(roles) != set(plugin_ids):
         fail("icon roles must cover every generated plugin")
-    icon_assets = catalog["icon_system"].get("source_assets", [])
-    if not icon_assets or any(not (ROOT / item).exists() for item in icon_assets):
-        fail("icon source assets must exist")
     defaults = catalog.get("package_defaults", {})
     if set(defaults) != set(plugin_ids):
         fail("package defaults must cover every generated plugin")
@@ -157,6 +155,16 @@ def validate_catalog(catalog: dict[str, Any]) -> None:
         recipe = config.get("recipe", {})
         if not recipe.get("id") or not recipe.get("version") or not recipe.get("chatgpt"):
             fail(f"{plugin_id}: incomplete package recipe")
+        include = recipe.get("include")
+        exclude = recipe["chatgpt"].get("exclude")
+        if not isinstance(include, list) or not include or not all(isinstance(item, str) and item for item in include):
+            fail(f"{plugin_id}: package recipe include paths must be non-empty strings")
+        if not isinstance(exclude, list) or not all(isinstance(item, str) and item for item in exclude):
+            fail(f"{plugin_id}: package recipe exclude paths must be strings")
+        for item in [*include, *exclude]:
+            relative = PurePosixPath(item.replace("\\", "/"))
+            if relative.is_absolute() or ".." in relative.parts:
+                fail(f"{plugin_id}: package recipe path escapes the package: {item}")
     lens_contracts = catalog.get("lens_contracts", {})
     for skill in generated:
         if skill.get("role") == "lens" and skill.get("id") not in lens_contracts:
@@ -192,7 +200,10 @@ def package_metadata(catalog: dict[str, Any], plugin: dict[str, Any]) -> dict[st
         "recipe_version": config["recipe"]["version"],
         "recipe_digest": value_digest(config["recipe"]),
         "app_references": config["app_references"],
-        "icon_sources": catalog["icon_system"]["roles"][plugin["id"]]["sources"],
+        "icon": {
+            "glyph": catalog["icon_system"]["roles"][plugin["id"]]["glyph"],
+            "accent": catalog["icon_system"]["roles"][plugin["id"]]["accent"],
+        },
     }
 
 
@@ -239,10 +250,13 @@ def render_generated_skills(catalog: dict[str, Any]) -> None:
                 "## Procedure",
                 "",
                 "1. Identify the active profile, archetype, phase, work package, authority map, and next valid transition.",
-                "2. Read only the inputs named by the lens contract and apply its method to the smallest adequate scope.",
-                "3. Make requirements, acceptance, scope, proof, and the contract stop condition observable.",
-                "4. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.",
-                "5. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.",
+                f"2. Gather the lens inputs: {contract['input_contract']}",
+                f"3. Apply the lens method: {contract['method']}",
+                f"4. Produce the lens output: {contract['output_contract']}",
+                f"5. Enforce the stop condition: {contract['stop_condition']}",
+                f"6. Follow the escalation path: {contract['escalation']}",
+                "7. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.",
+                "8. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.",
                 "",
                 "## Human gates",
                 "",
@@ -542,9 +556,6 @@ def assemble_packages(catalog: dict[str, Any]) -> dict[str, dict[str, Any]]:
         write_json(package / ".codex-plugin" / "plugin.json", manifest)
         (package / "assets").mkdir(parents=True, exist_ok=True)
         role = role_map[plugin_id]
-        for source in role.get("sources", {}).values():
-            if not (ROOT / source).is_file():
-                fail(f"{plugin_id}: missing icon source {source}")
         icon_root = ROOT / "brand" / "icon-system" / "generated"
         for filename, source in (("plugin-icon.png", f"{plugin_id}-128.png"), ("chatgpt-icon.png", f"{plugin_id}-64.png"), ("logo.png", f"{plugin_id}-256.png"), ("logo-dark.png", f"{plugin_id}-mono-256.png")):
             shutil.copy2(icon_root / source, package / "assets" / filename)
@@ -606,10 +617,43 @@ def archive_sort_key(path: Path, source: Path) -> tuple[str, bytes]:
     return archive_name_sort_key(path.relative_to(source).as_posix())
 
 
-def zip_package(source: Path, plugin: dict[str, Any], output: Path) -> None:
+def recipe_matches(relative: str, pattern: str) -> bool:
+    normalized = pattern.replace("\\", "/").rstrip("/")
+    candidates = [normalized]
+    if normalized.startswith("**/"):
+        candidates.append(normalized[3:])
+    return any(
+        relative == candidate
+        or relative.startswith(candidate + "/")
+        or fnmatchcase(relative, candidate)
+        or fnmatchcase(PurePosixPath(relative).name, candidate)
+        for candidate in candidates
+    )
+
+
+def recipe_files(source: Path, recipe: dict[str, Any]) -> list[Path]:
+    actual = {
+        path.relative_to(source).as_posix(): path
+        for path in source.rglob("*")
+        if path.is_file()
+    }
+    selected: set[str] = set()
+    for include in recipe["include"]:
+        matches = {relative for relative in actual if recipe_matches(relative, include)}
+        if not matches:
+            fail(f"package recipe include does not match a real path: {include}")
+        selected.update(matches)
+    if not selected:
+        fail("package recipe selected no files")
+    for exclude in recipe["chatgpt"].get("exclude", []):
+        selected = {relative for relative in selected if not recipe_matches(relative, exclude)}
+    return [actual[relative] for relative in sorted(selected, key=lambda item: archive_name_sort_key(item))]
+
+
+def zip_package(source: Path, plugin: dict[str, Any], output: Path, catalog: dict[str, Any]) -> None:
     package_id = plugin["id"]
     display_name = plugin["display_name"]
-    config = package_config(load_catalog(), package_id)
+    config = package_config(catalog, package_id)
     output.parent.mkdir(parents=True, exist_ok=True)
     root_name = "studio" if package_id == "studio-delivery" else package_id
     manifest = json.loads((source / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
@@ -618,8 +662,7 @@ def zip_package(source: Path, plugin: dict[str, Any], output: Path) -> None:
     chatgpt_recipe = config["recipe"]["chatgpt"]
     if chatgpt_recipe.get("app_references") != [] or chatgpt_recipe.get("mcp_servers") != []:
         fail(f"{package_id}: skills-first ChatGPT recipe must declare no apps or MCP servers")
-    excluded = set(chatgpt_recipe.get("exclude", [])) | {".studio-generated"}
-    paths = [path for path in source.rglob("*") if path.is_file() and ".studio-generated" not in path.parts and path.name not in excluded]
+    paths = recipe_files(source, config["recipe"])
     wrapper = "\n".join([
         FRONTMATTER,
         f"name: studio-chatgpt-{package_id}",
@@ -664,7 +707,7 @@ def package_chatgpt(catalog: dict[str, Any], package_info: dict[str, dict[str, A
     hashes: dict[str, str] = {}
     for plugin_id, info in package_info.items():
         output = root / "studio.zip" if plugin_id == "studio-delivery" else root / "satellites" / f"{plugin_id}.zip"
-        zip_package(ROOT / "generated" / "codex" / "plugins" / plugin_id, next(plugin for plugin in catalog["plugins"] if plugin["id"] == plugin_id), output)
+        zip_package(ROOT / "generated" / "codex" / "plugins" / plugin_id, next(plugin for plugin in catalog["plugins"] if plugin["id"] == plugin_id), output, catalog)
         hashes[str(output.relative_to(ROOT)).replace("\\", "/")] = sha256(output)
     write_json(root / "package-source.json", {"schema": "studio.chatgpt-packages/v2", "version": catalog["suite"]["version"], "default": "dist/chatgpt/studio.zip", "mcp_declared": False, "packages": hashes, "metadata": {plugin_id: info["metadata"] for plugin_id, info in package_info.items()}})
     return hashes
@@ -694,7 +737,6 @@ def render_catalog_outputs(catalog: dict[str, Any], package_info: dict[str, dict
     for relative in (
         catalog["generation"]["manifest_roots"]
         + catalog["generation"]["validation_inputs"]
-        + catalog["icon_system"]["source_assets"]
     ):
         add_manifest_path(relative)
     add_manifest_path("skills/studio")
@@ -714,12 +756,22 @@ def render_catalog_outputs(catalog: dict[str, Any], package_info: dict[str, dict
 def generate_routing_cases(catalog: dict[str, Any]) -> None:
     path = ROOT / "evals" / "routing" / "cases.json"
     existing = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
+    skill_ids = [skill["id"] for skill in catalog["generated_skills"] + catalog["legacy_skills"]]
     for skill in catalog["generated_skills"]:
         existing[skill["id"]] = {
             "positive": f"Use ${skill['id']} to {skill['focus']}.",
             "negative": "Rename an unrelated file and do not plan or review a software workflow.",
             "ambiguous": "I have a software idea; help me figure out the next step.",
         }
+    for index, skill_id in enumerate(skill_ids):
+        case = existing.get(skill_id)
+        if not isinstance(case, dict):
+            fail(f"missing routing case for {skill_id}")
+        positive = str(case.get("positive", "")).rstrip(".")
+        if f"${skill_id}" not in positive:
+            case["positive"] = f"Use ${skill_id} to {positive}."
+        case["expected"] = skill_id
+        case["wrong_specialist"] = f"Use ${skill_ids[(index + 1) % len(skill_ids)]} for this request."
     write_json(path, dict(sorted(existing.items())))
 
 

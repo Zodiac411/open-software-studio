@@ -34,14 +34,6 @@
     "holder": "Open Software Studio"
   },
   "icon_system": {
-    "source": "brand/icon-system/icon-grid.svg",
-    "source_assets": [
-      "brand/icon-system/icon-grid.svg",
-      "brand/icon-system/material-tokens.json",
-      "brand/icon-system/glyphs",
-      "brand/icon-system/masters",
-      "brand/icon-system/monochrome"
-    ],
     "motif": "opal-seed",
     "sizes": [
       32,
@@ -68,84 +60,39 @@
     "roles": {
       "studio-delivery": {
         "glyph": "orbit",
-        "accent": "opal",
-        "sources": {
-          "glyph": "brand/icon-system/glyphs/studio-delivery.svg",
-          "master": "brand/icon-system/masters/studio-delivery.svg",
-          "monochrome": "brand/icon-system/monochrome/studio-delivery.svg"
-        }
+        "accent": "opal"
       },
       "project-architect": {
         "glyph": "compass",
-        "accent": "gold",
-        "sources": {
-          "glyph": "brand/icon-system/glyphs/project-architect.svg",
-          "master": "brand/icon-system/masters/project-architect.svg",
-          "monochrome": "brand/icon-system/monochrome/project-architect.svg"
-        }
+        "accent": "gold"
       },
       "interface-studio": {
         "glyph": "planes",
-        "accent": "rose",
-        "sources": {
-          "glyph": "brand/icon-system/glyphs/interface-studio.svg",
-          "master": "brand/icon-system/masters/interface-studio.svg",
-          "monochrome": "brand/icon-system/monochrome/interface-studio.svg"
-        }
+        "accent": "rose"
       },
       "research-engineer": {
         "glyph": "lens",
-        "accent": "cyan",
-        "sources": {
-          "glyph": "brand/icon-system/glyphs/research-engineer.svg",
-          "master": "brand/icon-system/masters/research-engineer.svg",
-          "monochrome": "brand/icon-system/monochrome/research-engineer.svg"
-        }
+        "accent": "cyan"
       },
       "project-docs": {
         "glyph": "leaf",
-        "accent": "amber",
-        "sources": {
-          "glyph": "brand/icon-system/glyphs/project-docs.svg",
-          "master": "brand/icon-system/masters/project-docs.svg",
-          "monochrome": "brand/icon-system/monochrome/project-docs.svg"
-        }
+        "accent": "amber"
       },
       "engineering-guard": {
         "glyph": "aperture",
-        "accent": "sage",
-        "sources": {
-          "glyph": "brand/icon-system/glyphs/engineering-guard.svg",
-          "master": "brand/icon-system/masters/engineering-guard.svg",
-          "monochrome": "brand/icon-system/monochrome/engineering-guard.svg"
-        }
+        "accent": "sage"
       },
       "web-app-builder": {
         "glyph": "blocks",
-        "accent": "sky",
-        "sources": {
-          "glyph": "brand/icon-system/glyphs/web-app-builder.svg",
-          "master": "brand/icon-system/masters/web-app-builder.svg",
-          "monochrome": "brand/icon-system/monochrome/web-app-builder.svg"
-        }
+        "accent": "sky"
       },
       "execution-guard": {
         "glyph": "halo",
-        "accent": "teal",
-        "sources": {
-          "glyph": "brand/icon-system/glyphs/execution-guard.svg",
-          "master": "brand/icon-system/masters/execution-guard.svg",
-          "monochrome": "brand/icon-system/monochrome/execution-guard.svg"
-        }
+        "accent": "teal"
       },
       "studio-track": {
         "glyph": "path",
-        "accent": "gold",
-        "sources": {
-          "glyph": "brand/icon-system/glyphs/studio-track.svg",
-          "master": "brand/icon-system/masters/studio-track.svg",
-          "monochrome": "brand/icon-system/monochrome/studio-track.svg"
-        }
+        "accent": "gold"
       }
     }
   },
@@ -1424,18 +1371,19 @@
         "id": "skills-first",
         "version": "2.0",
         "include": [
-          "manifest",
+          ".codex-plugin/plugin.json",
           "assets",
           "skills",
-          "readme"
+          "README.md"
         ],
         "chatgpt": {
           "wrapper": true,
           "app_references": [],
           "mcp_servers": [],
           "exclude": [
-            ".mcp.json",
-            ".app.json"
+            ".studio-generated",
+            "**/.mcp.json",
+            "**/.app.json"
           ]
         }
       }
@@ -1454,18 +1402,19 @@
         "id": "skills-first",
         "version": "2.0",
         "include": [
-          "manifest",
+          ".codex-plugin/plugin.json",
           "assets",
           "skills",
-          "readme"
+          "README.md"
         ],
         "chatgpt": {
           "wrapper": true,
           "app_references": [],
           "mcp_servers": [],
           "exclude": [
-            ".mcp.json",
-            ".app.json"
+            ".studio-generated",
+            "**/.mcp.json",
+            "**/.app.json"
           ]
         }
       }
@@ -1484,18 +1433,19 @@
         "id": "skills-first",
         "version": "2.0",
         "include": [
-          "manifest",
+          ".codex-plugin/plugin.json",
           "assets",
           "skills",
-          "readme"
+          "README.md"
         ],
         "chatgpt": {
           "wrapper": true,
           "app_references": [],
           "mcp_servers": [],
           "exclude": [
-            ".mcp.json",
-            ".app.json"
+            ".studio-generated",
+            "**/.mcp.json",
+            "**/.app.json"
           ]
         }
       }
@@ -1514,18 +1464,19 @@
         "id": "skills-first",
         "version": "2.0",
         "include": [
-          "manifest",
+          ".codex-plugin/plugin.json",
           "assets",
           "skills",
-          "readme"
+          "README.md"
         ],
         "chatgpt": {
           "wrapper": true,
           "app_references": [],
           "mcp_servers": [],
           "exclude": [
-            ".mcp.json",
-            ".app.json"
+            ".studio-generated",
+            "**/.mcp.json",
+            "**/.app.json"
           ]
         }
       }
@@ -1544,18 +1495,19 @@
         "id": "skills-first",
         "version": "2.0",
         "include": [
-          "manifest",
+          ".codex-plugin/plugin.json",
           "assets",
           "skills",
-          "readme"
+          "README.md"
         ],
         "chatgpt": {
           "wrapper": true,
           "app_references": [],
           "mcp_servers": [],
           "exclude": [
-            ".mcp.json",
-            ".app.json"
+            ".studio-generated",
+            "**/.mcp.json",
+            "**/.app.json"
           ]
         }
       }
@@ -1574,18 +1526,19 @@
         "id": "skills-first",
         "version": "2.0",
         "include": [
-          "manifest",
+          ".codex-plugin/plugin.json",
           "assets",
           "skills",
-          "readme"
+          "README.md"
         ],
         "chatgpt": {
           "wrapper": true,
           "app_references": [],
           "mcp_servers": [],
           "exclude": [
-            ".mcp.json",
-            ".app.json"
+            ".studio-generated",
+            "**/.mcp.json",
+            "**/.app.json"
           ]
         }
       }
@@ -1604,18 +1557,19 @@
         "id": "skills-first",
         "version": "2.0",
         "include": [
-          "manifest",
+          ".codex-plugin/plugin.json",
           "assets",
           "skills",
-          "readme"
+          "README.md"
         ],
         "chatgpt": {
           "wrapper": true,
           "app_references": [],
           "mcp_servers": [],
           "exclude": [
-            ".mcp.json",
-            ".app.json"
+            ".studio-generated",
+            "**/.mcp.json",
+            "**/.app.json"
           ]
         }
       }
@@ -1634,18 +1588,19 @@
         "id": "skills-first",
         "version": "2.0",
         "include": [
-          "manifest",
+          ".codex-plugin/plugin.json",
           "assets",
           "skills",
-          "readme"
+          "README.md"
         ],
         "chatgpt": {
           "wrapper": true,
           "app_references": [],
           "mcp_servers": [],
           "exclude": [
-            ".mcp.json",
-            ".app.json"
+            ".studio-generated",
+            "**/.mcp.json",
+            "**/.app.json"
           ]
         }
       }
@@ -1664,18 +1619,19 @@
         "id": "skills-first",
         "version": "2.0",
         "include": [
-          "manifest",
+          ".codex-plugin/plugin.json",
           "assets",
           "skills",
-          "readme"
+          "README.md"
         ],
         "chatgpt": {
           "wrapper": true,
           "app_references": [],
           "mcp_servers": [],
           "exclude": [
-            ".mcp.json",
-            ".app.json"
+            ".studio-generated",
+            "**/.mcp.json",
+            "**/.app.json"
           ]
         }
       }

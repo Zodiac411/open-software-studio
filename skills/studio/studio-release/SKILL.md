@@ -25,10 +25,13 @@ Use this front-door only when the request needs release gates, version alignment
 ## Procedure
 
 1. Identify the active profile, archetype, phase, work package, authority map, and next valid transition.
-2. Read only the inputs named by the lens contract and apply its method to the smallest adequate scope.
-3. Make requirements, acceptance, scope, proof, and the contract stop condition observable.
-4. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
-5. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
+2. Gather the lens inputs: current project state and the request for release gates, version alignment, migration, target-host evidence, and rollback
+3. Apply the lens method: Apply a bounded review of release gates, version alignment, migration, target-host evidence, and rollback and preserve the evidence trail.
+4. Produce the lens output: named RELEASE_RECEIPT outputs with evidence and one next action
+5. Enforce the stop condition: Stop when required context or direct proof is missing.
+6. Follow the escalation path: Escalate unresolved authority, safety, or scope conflicts instead of guessing.
+7. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
+8. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
 
 ## Human gates
 

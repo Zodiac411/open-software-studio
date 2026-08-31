@@ -25,10 +25,13 @@ Use this lens only when the request needs deterministic artifact and template in
 ## Procedure
 
 1. Identify the active profile, archetype, phase, work package, authority map, and next valid transition.
-2. Read only the inputs named by the lens contract and apply its method to the smallest adequate scope.
-3. Make requirements, acceptance, scope, proof, and the contract stop condition observable.
-4. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
-5. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
+2. Gather the lens inputs: artifact data, schema, references, current revision, and evidence receipts
+3. Apply the lens method: Validate IDs, types, links, required fields, scope, proof, freshness, and unsupported claims deterministically.
+4. Produce the lens output: lint result with typed errors, source field, evidence gap, and next action
+5. Enforce the stop condition: Reject the artifact on schema, broken-reference, stale-proof, or overclaim errors.
+6. Follow the escalation path: Escalate missing authority or unverifiable external evidence as UNPROVEN.
+7. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
+8. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
 
 ## Human gates
 

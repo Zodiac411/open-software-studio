@@ -25,10 +25,13 @@ Use this lens only when the request needs observable acceptance and proof contra
 ## Procedure
 
 1. Identify the active profile, archetype, phase, work package, authority map, and next valid transition.
-2. Read only the inputs named by the lens contract and apply its method to the smallest adequate scope.
-3. Make requirements, acceptance, scope, proof, and the contract stop condition observable.
-4. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
-5. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
+2. Gather the lens inputs: approved outcomes, requirements, and verification capabilities
+3. Apply the lens method: Translate outcomes into observable criteria with command/probe, expected result, evidence level, and failure handling.
+4. Produce the lens output: acceptance table that maps every required outcome to direct proof
+5. Enforce the stop condition: Stop when a criterion cannot name an observation or acceptable limitation.
+6. Follow the escalation path: Escalate proof gaps instead of lowering the acceptance bar silently.
+7. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
+8. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
 
 ## Human gates
 

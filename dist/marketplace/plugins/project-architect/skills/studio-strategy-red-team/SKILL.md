@@ -25,10 +25,13 @@ Use this lens only when the request needs adversarial plan and review critique.
 ## Procedure
 
 1. Identify the active profile, archetype, phase, work package, authority map, and next valid transition.
-2. Read only the inputs named by the lens contract and apply its method to the smallest adequate scope.
-3. Make requirements, acceptance, scope, proof, and the contract stop condition observable.
-4. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
-5. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
+2. Gather the lens inputs: approved plan, evidence, authority map, and scope delta
+3. Apply the lens method: Adversarially test load-bearing assumptions, hidden coupling, false proof, scope gaming, and authority conflicts.
+4. Produce the lens output: independent findings with severity, evidence, repair acceptance, and disposition
+5. Enforce the stop condition: Reject acceptance when a blocking claim is unsupported or the reviewed scope is stale.
+6. Follow the escalation path: Escalate blocking findings to a fresh independent reviewer; never repair silently.
+7. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
+8. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
 
 ## Human gates
 

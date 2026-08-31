@@ -25,10 +25,13 @@ Use this lens only when the request needs domain boundaries and durable vocabula
 ## Procedure
 
 1. Identify the active profile, archetype, phase, work package, authority map, and next valid transition.
-2. Read only the inputs named by the lens contract and apply its method to the smallest adequate scope.
-3. Make requirements, acceptance, scope, proof, and the contract stop condition observable.
-4. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
-5. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
+2. Gather the lens inputs: approved outcome, vocabulary, actors, data, and ownership
+3. Apply the lens method: Model only the minimum entities, relationships, invariants, ownership, and unknowns needed for the next decision.
+4. Produce the lens output: domain model with stable IDs, relationship direction, invariants, and open questions
+5. Enforce the stop condition: Stop when an invariant or ownership boundary is unknown for a required behavior.
+6. Follow the escalation path: Escalate cross-boundary ownership conflicts before architecture selection.
+7. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
+8. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
 
 ## Human gates
 

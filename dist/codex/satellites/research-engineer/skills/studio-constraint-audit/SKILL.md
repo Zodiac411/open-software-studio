@@ -25,10 +25,13 @@ Use this lens only when the request needs hard constraints, soft preferences, co
 ## Procedure
 
 1. Identify the active profile, archetype, phase, work package, authority map, and next valid transition.
-2. Read only the inputs named by the lens contract and apply its method to the smallest adequate scope.
-3. Make requirements, acceptance, scope, proof, and the contract stop condition observable.
-4. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
-5. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
+2. Gather the lens inputs: brief, authorities, platform context, and proposed solution
+3. Apply the lens method: Separate hard constraints from preferences, identify conflicts, and attach evidence or authority to each.
+4. Produce the lens output: constraint ledger with source, severity, conflict, and enforcement point
+5. Enforce the stop condition: Stop when a hard constraint is missing authority or conflicts with the proposed outcome.
+6. Follow the escalation path: Escalate legal, security, accessibility, or platform conflicts to the named authority.
+7. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
+8. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
 
 ## Human gates
 

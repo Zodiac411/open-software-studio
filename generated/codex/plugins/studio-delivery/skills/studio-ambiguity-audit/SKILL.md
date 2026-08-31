@@ -25,10 +25,13 @@ Use this lens only when the request needs observable language, missing decisions
 ## Procedure
 
 1. Identify the active profile, archetype, phase, work package, authority map, and next valid transition.
-2. Read only the inputs named by the lens contract and apply its method to the smallest adequate scope.
-3. Make requirements, acceptance, scope, proof, and the contract stop condition observable.
-4. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
-5. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
+2. Gather the lens inputs: brief, requirements, actor, boundary, and success language
+3. Apply the lens method: Mark ambiguous nouns, verbs, actors, boundaries, and measures; convert each into a decision question.
+4. Produce the lens output: ambiguity register with clarified wording or an owner for each open decision
+5. Enforce the stop condition: Stop before planning when an ambiguity changes the actor, boundary, or success measure.
+6. Follow the escalation path: Escalate unanswered clarify-or-stop questions to the authority owner.
+7. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
+8. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
 
 ## Human gates
 

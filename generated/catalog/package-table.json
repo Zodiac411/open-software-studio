@@ -12,14 +12,13 @@
           "CODEX": []
         },
         "generator": "scripts/build_studio.py",
-        "generator_digest": "43297e0f0418b5e06de9517ee4b63499c45bd9a28cfd1ef1edb8096334edb2c6",
+        "generator_digest": "7170ae8221083df4fc5c119bbbf5397f76d42d5b22a06b5cbd57312b992bbb8f",
         "generator_version": "2.0.1",
-        "icon_sources": {
-          "glyph": "brand/icon-system/glyphs/engineering-guard.svg",
-          "master": "brand/icon-system/masters/engineering-guard.svg",
-          "monochrome": "brand/icon-system/monochrome/engineering-guard.svg"
+        "icon": {
+          "accent": "sage",
+          "glyph": "aperture"
         },
-        "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+        "recipe_digest": "d9701df8463a4cfc80b0bb6866161278f5091ddd353508c52a90f7f7368b3c19",
         "recipe_id": "skills-first",
         "recipe_version": "2.0",
         "suite_version": "2.0.0"
@@ -53,14 +52,13 @@
           "CODEX": []
         },
         "generator": "scripts/build_studio.py",
-        "generator_digest": "43297e0f0418b5e06de9517ee4b63499c45bd9a28cfd1ef1edb8096334edb2c6",
+        "generator_digest": "7170ae8221083df4fc5c119bbbf5397f76d42d5b22a06b5cbd57312b992bbb8f",
         "generator_version": "2.0.1",
-        "icon_sources": {
-          "glyph": "brand/icon-system/glyphs/execution-guard.svg",
-          "master": "brand/icon-system/masters/execution-guard.svg",
-          "monochrome": "brand/icon-system/monochrome/execution-guard.svg"
+        "icon": {
+          "accent": "teal",
+          "glyph": "halo"
         },
-        "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+        "recipe_digest": "d9701df8463a4cfc80b0bb6866161278f5091ddd353508c52a90f7f7368b3c19",
         "recipe_id": "skills-first",
         "recipe_version": "2.0",
         "suite_version": "2.0.0"
@@ -100,14 +98,13 @@
           "CODEX": []
         },
         "generator": "scripts/build_studio.py",
-        "generator_digest": "43297e0f0418b5e06de9517ee4b63499c45bd9a28cfd1ef1edb8096334edb2c6",
+        "generator_digest": "7170ae8221083df4fc5c119bbbf5397f76d42d5b22a06b5cbd57312b992bbb8f",
         "generator_version": "2.0.1",
-        "icon_sources": {
-          "glyph": "brand/icon-system/glyphs/interface-studio.svg",
-          "master": "brand/icon-system/masters/interface-studio.svg",
-          "monochrome": "brand/icon-system/monochrome/interface-studio.svg"
+        "icon": {
+          "accent": "rose",
+          "glyph": "planes"
         },
-        "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+        "recipe_digest": "d9701df8463a4cfc80b0bb6866161278f5091ddd353508c52a90f7f7368b3c19",
         "recipe_id": "skills-first",
         "recipe_version": "2.0",
         "suite_version": "2.0.0"
@@ -140,14 +137,13 @@
           "CODEX": []
         },
         "generator": "scripts/build_studio.py",
-        "generator_digest": "43297e0f0418b5e06de9517ee4b63499c45bd9a28cfd1ef1edb8096334edb2c6",
+        "generator_digest": "7170ae8221083df4fc5c119bbbf5397f76d42d5b22a06b5cbd57312b992bbb8f",
         "generator_version": "2.0.1",
-        "icon_sources": {
-          "glyph": "brand/icon-system/glyphs/project-architect.svg",
-          "master": "brand/icon-system/masters/project-architect.svg",
-          "monochrome": "brand/icon-system/monochrome/project-architect.svg"
+        "icon": {
+          "accent": "gold",
+          "glyph": "compass"
         },
-        "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+        "recipe_digest": "d9701df8463a4cfc80b0bb6866161278f5091ddd353508c52a90f7f7368b3c19",
         "recipe_id": "skills-first",
         "recipe_version": "2.0",
         "suite_version": "2.0.0"
@@ -192,14 +188,13 @@
           "CODEX": []
         },
         "generator": "scripts/build_studio.py",
-        "generator_digest": "43297e0f0418b5e06de9517ee4b63499c45bd9a28cfd1ef1edb8096334edb2c6",
+        "generator_digest": "7170ae8221083df4fc5c119bbbf5397f76d42d5b22a06b5cbd57312b992bbb8f",
         "generator_version": "2.0.1",
-        "icon_sources": {
-          "glyph": "brand/icon-system/glyphs/project-docs.svg",
-          "master": "brand/icon-system/masters/project-docs.svg",
-          "monochrome": "brand/icon-system/monochrome/project-docs.svg"
+        "icon": {
+          "accent": "amber",
+          "glyph": "leaf"
         },
-        "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+        "recipe_digest": "d9701df8463a4cfc80b0bb6866161278f5091ddd353508c52a90f7f7368b3c19",
         "recipe_id": "skills-first",
         "recipe_version": "2.0",
         "suite_version": "2.0.0"
@@ -232,14 +227,13 @@
           "CODEX": []
         },
         "generator": "scripts/build_studio.py",
-        "generator_digest": "43297e0f0418b5e06de9517ee4b63499c45bd9a28cfd1ef1edb8096334edb2c6",
+        "generator_digest": "7170ae8221083df4fc5c119bbbf5397f76d42d5b22a06b5cbd57312b992bbb8f",
         "generator_version": "2.0.1",
-        "icon_sources": {
-          "glyph": "brand/icon-system/glyphs/research-engineer.svg",
-          "master": "brand/icon-system/masters/research-engineer.svg",
-          "monochrome": "brand/icon-system/monochrome/research-engineer.svg"
+        "icon": {
+          "accent": "cyan",
+          "glyph": "lens"
         },
-        "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+        "recipe_digest": "d9701df8463a4cfc80b0bb6866161278f5091ddd353508c52a90f7f7368b3c19",
         "recipe_id": "skills-first",
         "recipe_version": "2.0",
         "suite_version": "2.0.0"
@@ -273,14 +267,13 @@
           "CODEX": []
         },
         "generator": "scripts/build_studio.py",
-        "generator_digest": "43297e0f0418b5e06de9517ee4b63499c45bd9a28cfd1ef1edb8096334edb2c6",
+        "generator_digest": "7170ae8221083df4fc5c119bbbf5397f76d42d5b22a06b5cbd57312b992bbb8f",
         "generator_version": "2.0.1",
-        "icon_sources": {
-          "glyph": "brand/icon-system/glyphs/studio-delivery.svg",
-          "master": "brand/icon-system/masters/studio-delivery.svg",
-          "monochrome": "brand/icon-system/monochrome/studio-delivery.svg"
+        "icon": {
+          "accent": "opal",
+          "glyph": "orbit"
         },
-        "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+        "recipe_digest": "d9701df8463a4cfc80b0bb6866161278f5091ddd353508c52a90f7f7368b3c19",
         "recipe_id": "skills-first",
         "recipe_version": "2.0",
         "suite_version": "2.0.0"
@@ -372,14 +365,13 @@
           "CODEX": []
         },
         "generator": "scripts/build_studio.py",
-        "generator_digest": "43297e0f0418b5e06de9517ee4b63499c45bd9a28cfd1ef1edb8096334edb2c6",
+        "generator_digest": "7170ae8221083df4fc5c119bbbf5397f76d42d5b22a06b5cbd57312b992bbb8f",
         "generator_version": "2.0.1",
-        "icon_sources": {
-          "glyph": "brand/icon-system/glyphs/studio-track.svg",
-          "master": "brand/icon-system/masters/studio-track.svg",
-          "monochrome": "brand/icon-system/monochrome/studio-track.svg"
+        "icon": {
+          "accent": "gold",
+          "glyph": "path"
         },
-        "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+        "recipe_digest": "d9701df8463a4cfc80b0bb6866161278f5091ddd353508c52a90f7f7368b3c19",
         "recipe_id": "skills-first",
         "recipe_version": "2.0",
         "suite_version": "2.0.0"
@@ -409,14 +401,13 @@
           "CODEX": []
         },
         "generator": "scripts/build_studio.py",
-        "generator_digest": "43297e0f0418b5e06de9517ee4b63499c45bd9a28cfd1ef1edb8096334edb2c6",
+        "generator_digest": "7170ae8221083df4fc5c119bbbf5397f76d42d5b22a06b5cbd57312b992bbb8f",
         "generator_version": "2.0.1",
-        "icon_sources": {
-          "glyph": "brand/icon-system/glyphs/web-app-builder.svg",
-          "master": "brand/icon-system/masters/web-app-builder.svg",
-          "monochrome": "brand/icon-system/monochrome/web-app-builder.svg"
+        "icon": {
+          "accent": "sky",
+          "glyph": "blocks"
         },
-        "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+        "recipe_digest": "d9701df8463a4cfc80b0bb6866161278f5091ddd353508c52a90f7f7368b3c19",
         "recipe_id": "skills-first",
         "recipe_version": "2.0",
         "suite_version": "2.0.0"

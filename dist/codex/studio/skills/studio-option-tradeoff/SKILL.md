@@ -25,10 +25,13 @@ Use this lens only when the request needs decision trace and explicit trade-offs
 ## Procedure
 
 1. Identify the active profile, archetype, phase, work package, authority map, and next valid transition.
-2. Read only the inputs named by the lens contract and apply its method to the smallest adequate scope.
-3. Make requirements, acceptance, scope, proof, and the contract stop condition observable.
-4. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
-5. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
+2. Gather the lens inputs: decision question, bounded options, evidence, cost, and reversibility
+3. Apply the lens method: Compare only viable options across outcome fit, evidence, risk, cost, reversibility, and maintenance burden.
+4. Produce the lens output: decision memo with scored trade-offs, selected option, and revisit trigger
+5. Enforce the stop condition: Stop when options are not comparable or the decision authority is missing.
+6. Follow the escalation path: Escalate an unresolved trade-off to the decision owner with the smallest useful experiment.
+7. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
+8. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
 
 ## Human gates
 

@@ -8,14 +8,13 @@
         "CODEX": []
       },
       "generator": "scripts/build_studio.py",
-      "generator_digest": "43297e0f0418b5e06de9517ee4b63499c45bd9a28cfd1ef1edb8096334edb2c6",
+      "generator_digest": "7170ae8221083df4fc5c119bbbf5397f76d42d5b22a06b5cbd57312b992bbb8f",
       "generator_version": "2.0.1",
-      "icon_sources": {
-        "glyph": "brand/icon-system/glyphs/engineering-guard.svg",
-        "master": "brand/icon-system/masters/engineering-guard.svg",
-        "monochrome": "brand/icon-system/monochrome/engineering-guard.svg"
+      "icon": {
+        "accent": "sage",
+        "glyph": "aperture"
       },
-      "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+      "recipe_digest": "d9701df8463a4cfc80b0bb6866161278f5091ddd353508c52a90f7f7368b3c19",
       "recipe_id": "skills-first",
       "recipe_version": "2.0",
       "suite_version": "2.0.0"
@@ -26,14 +25,13 @@
         "CODEX": []
       },
       "generator": "scripts/build_studio.py",
-      "generator_digest": "43297e0f0418b5e06de9517ee4b63499c45bd9a28cfd1ef1edb8096334edb2c6",
+      "generator_digest": "7170ae8221083df4fc5c119bbbf5397f76d42d5b22a06b5cbd57312b992bbb8f",
       "generator_version": "2.0.1",
-      "icon_sources": {
-        "glyph": "brand/icon-system/glyphs/execution-guard.svg",
-        "master": "brand/icon-system/masters/execution-guard.svg",
-        "monochrome": "brand/icon-system/monochrome/execution-guard.svg"
+      "icon": {
+        "accent": "teal",
+        "glyph": "halo"
       },
-      "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+      "recipe_digest": "d9701df8463a4cfc80b0bb6866161278f5091ddd353508c52a90f7f7368b3c19",
       "recipe_id": "skills-first",
       "recipe_version": "2.0",
       "suite_version": "2.0.0"
@@ -44,14 +42,13 @@
         "CODEX": []
       },
       "generator": "scripts/build_studio.py",
-      "generator_digest": "43297e0f0418b5e06de9517ee4b63499c45bd9a28cfd1ef1edb8096334edb2c6",
+      "generator_digest": "7170ae8221083df4fc5c119bbbf5397f76d42d5b22a06b5cbd57312b992bbb8f",
       "generator_version": "2.0.1",
-      "icon_sources": {
-        "glyph": "brand/icon-system/glyphs/interface-studio.svg",
-        "master": "brand/icon-system/masters/interface-studio.svg",
-        "monochrome": "brand/icon-system/monochrome/interface-studio.svg"
+      "icon": {
+        "accent": "rose",
+        "glyph": "planes"
       },
-      "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+      "recipe_digest": "d9701df8463a4cfc80b0bb6866161278f5091ddd353508c52a90f7f7368b3c19",
       "recipe_id": "skills-first",
       "recipe_version": "2.0",
       "suite_version": "2.0.0"
@@ -62,14 +59,13 @@
         "CODEX": []
       },
       "generator": "scripts/build_studio.py",
-      "generator_digest": "43297e0f0418b5e06de9517ee4b63499c45bd9a28cfd1ef1edb8096334edb2c6",
+      "generator_digest": "7170ae8221083df4fc5c119bbbf5397f76d42d5b22a06b5cbd57312b992bbb8f",
       "generator_version": "2.0.1",
-      "icon_sources": {
-        "glyph": "brand/icon-system/glyphs/project-architect.svg",
-        "master": "brand/icon-system/masters/project-architect.svg",
-        "monochrome": "brand/icon-system/monochrome/project-architect.svg"
+      "icon": {
+        "accent": "gold",
+        "glyph": "compass"
       },
-      "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+      "recipe_digest": "d9701df8463a4cfc80b0bb6866161278f5091ddd353508c52a90f7f7368b3c19",
       "recipe_id": "skills-first",
       "recipe_version": "2.0",
       "suite_version": "2.0.0"
@@ -80,14 +76,13 @@
         "CODEX": []
       },
       "generator": "scripts/build_studio.py",
-      "generator_digest": "43297e0f0418b5e06de9517ee4b63499c45bd9a28cfd1ef1edb8096334edb2c6",
+      "generator_digest": "7170ae8221083df4fc5c119bbbf5397f76d42d5b22a06b5cbd57312b992bbb8f",
       "generator_version": "2.0.1",
-      "icon_sources": {
-        "glyph": "brand/icon-system/glyphs/project-docs.svg",
-        "master": "brand/icon-system/masters/project-docs.svg",
-        "monochrome": "brand/icon-system/monochrome/project-docs.svg"
+      "icon": {
+        "accent": "amber",
+        "glyph": "leaf"
       },
-      "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+      "recipe_digest": "d9701df8463a4cfc80b0bb6866161278f5091ddd353508c52a90f7f7368b3c19",
       "recipe_id": "skills-first",
       "recipe_version": "2.0",
       "suite_version": "2.0.0"
@@ -98,14 +93,13 @@
         "CODEX": []
       },
       "generator": "scripts/build_studio.py",
-      "generator_digest": "43297e0f0418b5e06de9517ee4b63499c45bd9a28cfd1ef1edb8096334edb2c6",
+      "generator_digest": "7170ae8221083df4fc5c119bbbf5397f76d42d5b22a06b5cbd57312b992bbb8f",
       "generator_version": "2.0.1",
-      "icon_sources": {
-        "glyph": "brand/icon-system/glyphs/research-engineer.svg",
-        "master": "brand/icon-system/masters/research-engineer.svg",
-        "monochrome": "brand/icon-system/monochrome/research-engineer.svg"
+      "icon": {
+        "accent": "cyan",
+        "glyph": "lens"
       },
-      "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+      "recipe_digest": "d9701df8463a4cfc80b0bb6866161278f5091ddd353508c52a90f7f7368b3c19",
       "recipe_id": "skills-first",
       "recipe_version": "2.0",
       "suite_version": "2.0.0"
@@ -116,14 +110,13 @@
         "CODEX": []
       },
       "generator": "scripts/build_studio.py",
-      "generator_digest": "43297e0f0418b5e06de9517ee4b63499c45bd9a28cfd1ef1edb8096334edb2c6",
+      "generator_digest": "7170ae8221083df4fc5c119bbbf5397f76d42d5b22a06b5cbd57312b992bbb8f",
       "generator_version": "2.0.1",
-      "icon_sources": {
-        "glyph": "brand/icon-system/glyphs/studio-delivery.svg",
-        "master": "brand/icon-system/masters/studio-delivery.svg",
-        "monochrome": "brand/icon-system/monochrome/studio-delivery.svg"
+      "icon": {
+        "accent": "opal",
+        "glyph": "orbit"
       },
-      "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+      "recipe_digest": "d9701df8463a4cfc80b0bb6866161278f5091ddd353508c52a90f7f7368b3c19",
       "recipe_id": "skills-first",
       "recipe_version": "2.0",
       "suite_version": "2.0.0"
@@ -134,14 +127,13 @@
         "CODEX": []
       },
       "generator": "scripts/build_studio.py",
-      "generator_digest": "43297e0f0418b5e06de9517ee4b63499c45bd9a28cfd1ef1edb8096334edb2c6",
+      "generator_digest": "7170ae8221083df4fc5c119bbbf5397f76d42d5b22a06b5cbd57312b992bbb8f",
       "generator_version": "2.0.1",
-      "icon_sources": {
-        "glyph": "brand/icon-system/glyphs/studio-track.svg",
-        "master": "brand/icon-system/masters/studio-track.svg",
-        "monochrome": "brand/icon-system/monochrome/studio-track.svg"
+      "icon": {
+        "accent": "gold",
+        "glyph": "path"
       },
-      "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+      "recipe_digest": "d9701df8463a4cfc80b0bb6866161278f5091ddd353508c52a90f7f7368b3c19",
       "recipe_id": "skills-first",
       "recipe_version": "2.0",
       "suite_version": "2.0.0"
@@ -152,29 +144,28 @@
         "CODEX": []
       },
       "generator": "scripts/build_studio.py",
-      "generator_digest": "43297e0f0418b5e06de9517ee4b63499c45bd9a28cfd1ef1edb8096334edb2c6",
+      "generator_digest": "7170ae8221083df4fc5c119bbbf5397f76d42d5b22a06b5cbd57312b992bbb8f",
       "generator_version": "2.0.1",
-      "icon_sources": {
-        "glyph": "brand/icon-system/glyphs/web-app-builder.svg",
-        "master": "brand/icon-system/masters/web-app-builder.svg",
-        "monochrome": "brand/icon-system/monochrome/web-app-builder.svg"
+      "icon": {
+        "accent": "sky",
+        "glyph": "blocks"
       },
-      "recipe_digest": "be2f6b7490a838e5a70d4903d9677a4447f297dd1fa29309572dee2b9b0d7a1c",
+      "recipe_digest": "d9701df8463a4cfc80b0bb6866161278f5091ddd353508c52a90f7f7368b3c19",
       "recipe_id": "skills-first",
       "recipe_version": "2.0",
       "suite_version": "2.0.0"
     }
   },
   "packages": {
-    "dist/chatgpt/satellites/engineering-guard.zip": "8126840078246350df9a77a9f9dbd082abafbdf15611a8200d3ee4eca0bfd031",
-    "dist/chatgpt/satellites/execution-guard.zip": "ae93bf629e5f67a9871928ba41e587ad2aaa040a572009f9e11a7cbd39fe3193",
-    "dist/chatgpt/satellites/interface-studio.zip": "6aa2985544c0339760c7e55b59c7a9e502ec3c9fa2070e1202096f3562776d29",
-    "dist/chatgpt/satellites/project-architect.zip": "3472e11aba43284fad81b50b1e247deee64b1fc3f1d0623cd170e368dc72616f",
-    "dist/chatgpt/satellites/project-docs.zip": "409463d9e1eb9400bf2c1139dc7e239ed5075ca81fcf85133bc72886e1331e83",
-    "dist/chatgpt/satellites/research-engineer.zip": "338afa20c46795bceb403e963eab436e7d16e022324dc6da1a182d7c6bffc03c",
-    "dist/chatgpt/satellites/studio-track.zip": "cec6c7972edbeb022c2b59a4f0b53536eeece4aec19cbf7d6a6785a4eb7a704e",
-    "dist/chatgpt/satellites/web-app-builder.zip": "4aab9abc650ee11dd5d917ada32cf56657e7a2ddeae0964dbc5fc0ae7cca00a7",
-    "dist/chatgpt/studio.zip": "ff18a803e7a1c50b727e9e5e085156ed918e6432476ee6bcd8df388765c45c8e"
+    "dist/chatgpt/satellites/engineering-guard.zip": "be8e471b2a16fec76f5cd63afdc66555f89e5f9dedf4ac6a2e4b6cfd0762b311",
+    "dist/chatgpt/satellites/execution-guard.zip": "551872b0941c7660bbcc56420eb6f1046b5360c09c41210e3592599d40529c8f",
+    "dist/chatgpt/satellites/interface-studio.zip": "20da4b38e36736940e658da94ed67e113cbab151c4701ec368a207b565261b2a",
+    "dist/chatgpt/satellites/project-architect.zip": "4897779abe042763ee5a755d9802540dba581bf249efb4170755cf857ba02bad",
+    "dist/chatgpt/satellites/project-docs.zip": "5b2297162704220079cf475b731355b7129986c331fa89e5bbcaa5fef2199327",
+    "dist/chatgpt/satellites/research-engineer.zip": "f0b5db7fa5e2ceb92393c8be31fda083783296fa12a6371e5ac9f03846dde681",
+    "dist/chatgpt/satellites/studio-track.zip": "75eb96dbec75fc8163b385d9f0cf95f31da53e2128c942d909b983c63cb4a2a8",
+    "dist/chatgpt/satellites/web-app-builder.zip": "7051866af38fde6d91748f6f699e09a36a9f8d4f3b98104d58fbd6df7b6525d3",
+    "dist/chatgpt/studio.zip": "602c69aa833192d822e602ec567f7dd8665519a2b8503ab395591c9c78af92a7"
   },
   "schema": "studio.chatgpt-packages/v2",
   "version": "2.0.0"

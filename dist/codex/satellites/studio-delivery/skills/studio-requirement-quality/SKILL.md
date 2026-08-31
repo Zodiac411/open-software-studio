@@ -25,10 +25,13 @@ Use this lens only when the request needs testable requirement wording and confl
 ## Procedure
 
 1. Identify the active profile, archetype, phase, work package, authority map, and next valid transition.
-2. Read only the inputs named by the lens contract and apply its method to the smallest adequate scope.
-3. Make requirements, acceptance, scope, proof, and the contract stop condition observable.
-4. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
-5. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
+2. Gather the lens inputs: requirements, scenarios, owners, acceptance, and proof plan
+3. Apply the lens method: Check each requirement for actor, behavior, priority, observable acceptance, proof, and traceability.
+4. Produce the lens output: requirement quality findings linked to IDs and repair wording
+5. Enforce the stop condition: Stop approval when a must-have requirement is not observable or lacks proof.
+6. Follow the escalation path: Escalate conflicting or ownerless requirements before freezing the plan.
+7. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
+8. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
 
 ## Human gates
 

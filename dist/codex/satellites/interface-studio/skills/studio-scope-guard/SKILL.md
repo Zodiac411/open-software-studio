@@ -25,10 +25,13 @@ Use this lens only when the request needs scope budget, reuse ledger, overshoot 
 ## Procedure
 
 1. Identify the active profile, archetype, phase, work package, authority map, and next valid transition.
-2. Read only the inputs named by the lens contract and apply its method to the smallest adequate scope.
-3. Make requirements, acceptance, scope, proof, and the contract stop condition observable.
-4. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
-5. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
+2. Gather the lens inputs: approved outcome, scope budget, reuse candidates, and safety requirements
+3. Apply the lens method: Apply necessity, reuse, native, dependency, and minimum-solution checks; record the rejected overshoot.
+4. Produce the lens output: bounded scope decision with budget, reuse ledger, and explicit safety exceptions
+5. Enforce the stop condition: Stop and replan when the budget is exceeded or a required safeguard would be removed.
+6. Follow the escalation path: Escalate unresolved scope or safety conflicts to the project owner.
+7. Preserve security, accessibility, correctness, validation, error handling, and data-loss protection.
+8. Return one of `PASS`, `PASS_WITH_LIMITATIONS`, `BLOCKED`, `NOT_RUN`, or `UNPROVEN`, with named evidence and one next action.
 
 ## Human gates
 

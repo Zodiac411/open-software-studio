@@ -1,357 +1,499 @@
 {
   "architecture-design": {
     "ambiguous": "Review our current architecture",
+    "expected": "architecture-design",
     "negative": "Find current ORM options",
-    "positive": "Design module and API boundaries for this requirement"
+    "positive": "Use $architecture-design to Design module and API boundaries for this requirement.",
+    "wrong_specialist": "Use $implementation-planning for this request."
   },
   "architecture-risk-review": {
     "ambiguous": "Is this system design risky?",
+    "expected": "architecture-risk-review",
     "negative": "Choose the exact UI spacing",
-    "positive": "Review the database/API architecture for risks"
+    "positive": "Use $architecture-risk-review to Review the database/API architecture for risks.",
+    "wrong_specialist": "Use $implementation-readiness for this request."
   },
   "artifact-selector": {
     "ambiguous": "Do we need an ADR?",
+    "expected": "artifact-selector",
     "negative": "Generate every document type",
-    "positive": "Choose the smallest doc set for this project"
+    "positive": "Use $artifact-selector to Choose the smallest doc set for this project.",
+    "wrong_specialist": "Use $project-doc-pack for this request."
   },
   "context-grounding": {
     "ambiguous": "Fix a bug in an unfamiliar repo",
+    "expected": "context-grounding",
     "negative": "Change one known string",
-    "positive": "Resume this stale cross-module task"
+    "positive": "Use $context-grounding to Resume this stale cross-module task.",
+    "wrong_specialist": "Use $source-and-reuse for this request."
   },
   "debug-root-cause": {
     "ambiguous": "Why does this build fail?",
+    "expected": "debug-root-cause",
     "negative": "Keep trying speculative patches",
-    "positive": "A test unexpectedly fails after the change"
+    "positive": "Use $debug-root-cause to A test unexpectedly fails after the change.",
+    "wrong_specialist": "Use $final-review for this request."
   },
   "debugging-and-verification": {
     "ambiguous": "The page still fails",
+    "expected": "debugging-and-verification",
     "negative": "Invent a test framework",
-    "positive": "Run browser checks and hand off this implementation"
+    "positive": "Use $debugging-and-verification to Run browser checks and hand off this implementation.",
+    "wrong_specialist": "Use $execution-guard for this request."
   },
   "deep-web-research": {
     "ambiguous": "Compare these libraries",
+    "expected": "deep-web-research",
     "negative": "Write a PRD",
-    "positive": "Find current official evidence for web frameworks"
+    "positive": "Use $deep-web-research to Find current official evidence for web frameworks.",
+    "wrong_specialist": "Use $github-deep-dive for this request."
   },
   "design-system-planner": {
     "ambiguous": "Improve the look of this product",
+    "expected": "design-system-planner",
     "negative": "Debug a failed deploy",
-    "positive": "Create a component map and token plan"
+    "positive": "Use $design-system-planner to Create a component map and token plan.",
+    "wrong_specialist": "Use $visual-qa for this request."
   },
   "engineering-guard-router": {
     "ambiguous": "Is this change safe?",
+    "expected": "engineering-guard-router",
     "negative": "Turn this idea into requirements",
-    "positive": "Independently review this implementation plan"
+    "positive": "Use $engineering-guard-router to Independently review this implementation plan.",
+    "wrong_specialist": "Use $architecture-risk-review for this request."
   },
   "execution-guard": {
     "ambiguous": "Fix this bug",
+    "expected": "execution-guard",
     "negative": "Explain a one-line concept",
-    "positive": "Start a substantive repository task"
+    "positive": "Use $execution-guard to Start a substantive repository task.",
+    "wrong_specialist": "Use $pragmatic-core for this request."
   },
   "extension-discovery": {
     "ambiguous": "What agent skills exist for UX?",
+    "expected": "extension-discovery",
     "negative": "Install the first result",
-    "positive": "Find open-source MCP servers for browser testing"
+    "positive": "Use $extension-discovery to Find open-source MCP servers for browser testing.",
+    "wrong_specialist": "Use $project-docs-router for this request."
   },
   "final-review": {
     "ambiguous": "Is this ready to ship?",
+    "expected": "final-review",
     "negative": "Do a broad cleanup",
-    "positive": "Review this completed substantive diff"
+    "positive": "Use $final-review to Review this completed substantive diff.",
+    "wrong_specialist": "Use $quality-contract for this request."
   },
   "flow-and-interaction": {
     "ambiguous": "Map the settings screen",
+    "expected": "flow-and-interaction",
     "negative": "Pick a color palette",
-    "positive": "Specify empty and error states for checkout"
+    "positive": "Use $flow-and-interaction to Specify empty and error states for checkout.",
+    "wrong_specialist": "Use $design-system-planner for this request."
   },
   "github-deep-dive": {
     "ambiguous": "Is this project healthy?",
+    "expected": "github-deep-dive",
     "negative": "Search Reddit sentiment only",
-    "positive": "Assess this GitHub repo's maintenance and releases"
+    "positive": "Use $github-deep-dive to Assess this GitHub repo's maintenance and releases.",
+    "wrong_specialist": "Use $extension-discovery for this request."
   },
   "handoff": {
     "ambiguous": "I need to resume later",
+    "expected": "handoff",
     "negative": "Paste the entire conversation",
-    "positive": "Prepare this interrupted task for another agent"
+    "positive": "Use $handoff to Prepare this interrupted task for another agent.",
+    "wrong_specialist": "Use $studio-start for this request."
   },
   "implementation-and-integration": {
     "ambiguous": "Implement this feature",
+    "expected": "implementation-and-integration",
     "negative": "Redesign the information architecture",
-    "positive": "Build the approved API and UI slices"
+    "positive": "Use $implementation-and-integration to Build the approved API and UI slices.",
+    "wrong_specialist": "Use $debugging-and-verification for this request."
   },
   "implementation-planning": {
     "ambiguous": "Which pieces can run in parallel?",
+    "expected": "implementation-planning",
     "negative": "Write the task implementation",
-    "positive": "Break this approved spec into executable tasks"
+    "positive": "Use $implementation-planning to Break this approved spec into executable tasks.",
+    "wrong_specialist": "Use $interface-studio-router for this request."
   },
   "implementation-readiness": {
     "ambiguous": "Review this specification",
+    "expected": "implementation-readiness",
     "negative": "Implement the feature now",
-    "positive": "Are these docs sufficient to start coding?"
+    "positive": "Use $implementation-readiness to Are these docs sufficient to start coding?.",
+    "wrong_specialist": "Use $implementation-review for this request."
   },
   "implementation-review": {
     "ambiguous": "Is this PR ready?",
+    "expected": "implementation-review",
     "negative": "Fix all lint failures",
-    "positive": "Review this diff and test evidence"
+    "positive": "Use $implementation-review to Review this diff and test evidence.",
+    "wrong_specialist": "Use $research-router for this request."
   },
   "incremental-build": {
     "ambiguous": "Add a small new endpoint",
+    "expected": "incremental-build",
     "negative": "Fix a typo",
-    "positive": "Implement this risky multi-file feature"
+    "positive": "Use $incremental-build to Implement this risky multi-file feature.",
+    "wrong_specialist": "Use $test-for-behavior for this request."
   },
   "interface-studio-router": {
     "ambiguous": "Review this UI plan",
+    "expected": "interface-studio-router",
     "negative": "Implement the settings route",
-    "positive": "Design the UX for settings"
+    "positive": "Use $interface-studio-router to Design the UX for settings.",
+    "wrong_specialist": "Use $flow-and-interaction for this request."
   },
   "pragmatic-core": {
     "ambiguous": "Add a helper",
+    "expected": "pragmatic-core",
     "negative": "Run a full methodology workshop",
-    "positive": "Make a bounded code change"
+    "positive": "Use $pragmatic-core to Make a bounded code change.",
+    "wrong_specialist": "Use $context-grounding for this request."
   },
   "project-architect-router": {
     "ambiguous": "Which React state library should we use?",
+    "expected": "project-architect-router",
     "negative": "Implement the approved settings feature",
-    "positive": "Turn this idea into a software plan"
+    "positive": "Use $project-architect-router to Turn this idea into a software plan.",
+    "wrong_specialist": "Use $project-discovery for this request."
   },
   "project-discovery": {
     "ambiguous": "Plan a new onboarding flow",
+    "expected": "project-discovery",
     "negative": "Choose the page typography",
-    "positive": "Clarify goals and acceptance criteria for this product idea"
+    "positive": "Use $project-discovery to Clarify goals and acceptance criteria for this product idea.",
+    "wrong_specialist": "Use $architecture-design for this request."
   },
   "project-doc-pack": {
     "ambiguous": "Create a technical spec",
+    "expected": "project-doc-pack",
     "negative": "Implement the tasks",
-    "positive": "Write the linked architecture and task docs"
+    "positive": "Use $project-doc-pack to Write the linked architecture and task docs.",
+    "wrong_specialist": "Use $traceability-and-handoff for this request."
   },
   "project-docs-router": {
     "ambiguous": "What docs do we need?",
+    "expected": "project-docs-router",
     "negative": "Make the product decision",
-    "positive": "Turn these decisions into implementation docs"
+    "positive": "Use $project-docs-router to Turn these decisions into implementation docs.",
+    "wrong_specialist": "Use $artifact-selector for this request."
   },
   "prove-it": {
     "ambiguous": "Can we call this done?",
+    "expected": "prove-it",
     "negative": "Declare success because lint passed",
-    "positive": "Before claiming this task complete"
+    "positive": "Use $prove-it to Before claiming this task complete.",
+    "wrong_specialist": "Use $handoff for this request."
   },
   "quality-contract": {
     "ambiguous": "This work will run for days",
+    "expected": "quality-contract",
     "negative": "Add policy to a one-line edit",
-    "positive": "Set quality floors for a long autonomous task"
+    "positive": "Use $quality-contract to Set quality floors for a long autonomous task.",
+    "wrong_specialist": "Use $prove-it for this request."
   },
   "repo-intake": {
     "ambiguous": "Start work on this issue",
+    "expected": "repo-intake",
     "negative": "Pick a product audience",
-    "positive": "Inspect this repo before implementing the feature"
+    "positive": "Use $repo-intake to Inspect this repo before implementing the feature.",
+    "wrong_specialist": "Use $implementation-and-integration for this request."
   },
   "research-brief": {
     "ambiguous": "Summarize this research",
+    "expected": "research-brief",
     "negative": "Make the architecture decision",
-    "positive": "Turn these sources into a recommendation brief"
+    "positive": "Use $research-brief to Turn these sources into a recommendation brief.",
+    "wrong_specialist": "Use $deep-web-research for this request."
   },
   "research-router": {
     "ambiguous": "Which tool should we use?",
+    "expected": "research-router",
     "negative": "Decide our architecture",
-    "positive": "Research current options for this engineering decision"
+    "positive": "Use $research-router to Research current options for this engineering decision.",
+    "wrong_specialist": "Use $research-brief for this request."
   },
   "source-and-reuse": {
     "ambiguous": "Add a utility",
+    "expected": "source-and-reuse",
     "negative": "Repeat behavior established in local code",
-    "positive": "Use the correct API for the installed framework version"
+    "positive": "Use $source-and-reuse to Use the correct API for the installed framework version.",
+    "wrong_specialist": "Use $incremental-build for this request."
   },
   "studio-acceptance-writer": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-acceptance-writer",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-acceptance-writer to observable acceptance and proof contract."
+    "positive": "Use $studio-acceptance-writer to observable acceptance and proof contract.",
+    "wrong_specialist": "Use $studio-edge-case-audit for this request."
   },
   "studio-ambiguity-audit": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-ambiguity-audit",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-ambiguity-audit to observable language, missing decisions, and clarify-or-stop questions."
+    "positive": "Use $studio-ambiguity-audit to observable language, missing decisions, and clarify-or-stop questions.",
+    "wrong_specialist": "Use $studio-assumption-map for this request."
   },
   "studio-architecture-review": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-architecture-review",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-architecture-review to evidence-led architecture fitness and risk."
+    "positive": "Use $studio-architecture-review to evidence-led architecture fitness and risk.",
+    "wrong_specialist": "Use $studio-issue-plan for this request."
   },
   "studio-artifact-lint": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-artifact-lint",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-artifact-lint to deterministic artifact and template integrity."
+    "positive": "Use $studio-artifact-lint to deterministic artifact and template integrity.",
+    "wrong_specialist": "Use $project-architect-router for this request."
   },
   "studio-assumption-map": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-assumption-map",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-assumption-map to load-bearing assumptions and validation order."
+    "positive": "Use $studio-assumption-map to load-bearing assumptions and validation order.",
+    "wrong_specialist": "Use $studio-constraint-audit for this request."
   },
   "studio-build": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-build",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-build to repository evidence, allowed paths, smallest safe change, tests, and handoff."
+    "positive": "Use $studio-build to repository evidence, allowed paths, smallest safe change, tests, and handoff.",
+    "wrong_specialist": "Use $studio-verify for this request."
   },
   "studio-close": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-close",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-close to file-backed recovery, clean closeout, and no self-acceptance."
+    "positive": "Use $studio-close to file-backed recovery, clean closeout, and no self-acceptance.",
+    "wrong_specialist": "Use $studio-scope-guard for this request."
   },
   "studio-constraint-audit": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-constraint-audit",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-constraint-audit to hard constraints, soft preferences, conflicts, and missing authority."
+    "positive": "Use $studio-constraint-audit to hard constraints, soft preferences, conflicts, and missing authority.",
+    "wrong_specialist": "Use $studio-requirement-quality for this request."
   },
   "studio-context": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-context",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-context to selective context, authority boundaries, and fresh-session recovery."
+    "positive": "Use $studio-context to selective context, authority boundaries, and fresh-session recovery.",
+    "wrong_specialist": "Use $studio-evidence for this request."
   },
   "studio-design": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-design",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-design to UX, interaction, accessibility, responsive composition, and visual evidence."
+    "positive": "Use $studio-design to UX, interaction, accessibility, responsive composition, and visual evidence.",
+    "wrong_specialist": "Use $studio-research for this request."
   },
   "studio-docs": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-docs",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-docs to template selection, traceability, authority, supersession, and durable document output."
+    "positive": "Use $studio-docs to template selection, traceability, authority, supersession, and durable document output.",
+    "wrong_specialist": "Use $studio-work for this request."
   },
   "studio-doctor": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-doctor",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-doctor to read-only health checks, actionable blockers, and fail-open behavior."
+    "positive": "Use $studio-doctor to read-only health checks, actionable blockers, and fail-open behavior.",
+    "wrong_specialist": "Use $studio-init for this request."
   },
   "studio-domain-model": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-domain-model",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-domain-model to domain boundaries and durable vocabulary."
+    "positive": "Use $studio-domain-model to domain boundaries and durable vocabulary.",
+    "wrong_specialist": "Use $studio-architecture-review for this request."
   },
   "studio-edge-case-audit": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-edge-case-audit",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-edge-case-audit to critical edge cases proportional to risk."
+    "positive": "Use $studio-edge-case-audit to critical edge cases proportional to risk.",
+    "wrong_specialist": "Use $studio-premortem for this request."
   },
   "studio-evidence": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-evidence",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-evidence to E0 through E5 evidence receipts, direct observations, and unproven boundaries."
+    "positive": "Use $studio-evidence to E0 through E5 evidence receipts, direct observations, and unproven boundaries.",
+    "wrong_specialist": "Use $studio-handoff for this request."
   },
   "studio-handoff": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-handoff",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-handoff to handoff claim package and reviewer action."
+    "positive": "Use $studio-handoff to handoff claim package and reviewer action.",
+    "wrong_specialist": "Use $studio-repair for this request."
   },
   "studio-improve": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-improve",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-improve to retro evidence, friction, decisions, and separately scoped improvements."
+    "positive": "Use $studio-improve to retro evidence, friction, decisions, and separately scoped improvements.",
+    "wrong_specialist": "Use $studio-doctor for this request."
   },
   "studio-init": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-init",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-init to safe project initialization and recovery files."
+    "positive": "Use $studio-init to safe project initialization and recovery files.",
+    "wrong_specialist": "Use $studio-context for this request."
   },
   "studio-issue-plan": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-issue-plan",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-issue-plan to issue-ready scope, labels, dependencies, and drift detection."
+    "positive": "Use $studio-issue-plan to issue-ready scope, labels, dependencies, and drift detection.",
+    "wrong_specialist": "Use $studio-artifact-lint for this request."
   },
   "studio-option-tradeoff": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-option-tradeoff",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-option-tradeoff to decision trace and explicit trade-offs."
+    "positive": "Use $studio-option-tradeoff to decision trace and explicit trade-offs.",
+    "wrong_specialist": "Use $studio-domain-model for this request."
   },
   "studio-plan": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-plan",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-plan to requirements, architecture, UX, verification, plan critique, and snapshot readiness."
+    "positive": "Use $studio-plan to requirements, architecture, UX, verification, plan critique, and snapshot readiness.",
+    "wrong_specialist": "Use $studio-design for this request."
   },
   "studio-premortem": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-premortem",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-premortem to early failure signals and recovery."
+    "positive": "Use $studio-premortem to early failure signals and recovery.",
+    "wrong_specialist": "Use $studio-strategy-red-team for this request."
   },
   "studio-release": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-release",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-release to release gates, version alignment, migration, target-host evidence, and rollback."
+    "positive": "Use $studio-release to release gates, version alignment, migration, target-host evidence, and rollback.",
+    "wrong_specialist": "Use $studio-improve for this request."
   },
   "studio-repair": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-repair",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-repair to accepted findings, allowed paths, regression proof, and stop conditions."
+    "positive": "Use $studio-repair to accepted findings, allowed paths, regression proof, and stop conditions.",
+    "wrong_specialist": "Use $studio-close for this request."
   },
   "studio-requirement-quality": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-requirement-quality",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-requirement-quality to testable requirement wording and conflict/gap detection."
+    "positive": "Use $studio-requirement-quality to testable requirement wording and conflict/gap detection.",
+    "wrong_specialist": "Use $studio-acceptance-writer for this request."
   },
   "studio-research": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-research",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-research to primary sources, repository health, current APIs, trade-offs, and refresh triggers."
+    "positive": "Use $studio-research to primary sources, repository health, current APIs, trade-offs, and refresh triggers.",
+    "wrong_specialist": "Use $studio-docs for this request."
   },
   "studio-review": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-review",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-review to independent findings, review disposition, repair acceptance, and stale-state detection."
+    "positive": "Use $studio-review to independent findings, review disposition, repair acceptance, and stale-state detection.",
+    "wrong_specialist": "Use $studio-status for this request."
   },
   "studio-scope-guard": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-scope-guard",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-scope-guard to scope budget, reuse ledger, overshoot audit, safety exemptions, and replan triggers."
+    "positive": "Use $studio-scope-guard to scope budget, reuse ledger, overshoot audit, safety exemptions, and replan triggers.",
+    "wrong_specialist": "Use $studio-ambiguity-audit for this request."
   },
   "studio-shape": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-shape",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-shape to problem framing, assumptions, constraints, solution ladder, scope budget, and disposition."
+    "positive": "Use $studio-shape to problem framing, assumptions, constraints, solution ladder, scope budget, and disposition.",
+    "wrong_specialist": "Use $studio-plan for this request."
   },
   "studio-start": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-start",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-start to project intake, profile selection, repository and Drive identity, and next-action routing."
+    "positive": "Use $studio-start to project intake, profile selection, repository and Drive identity, and next-action routing.",
+    "wrong_specialist": "Use $studio-shape for this request."
   },
   "studio-status": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-status",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-status to reconcile .project state, GitHub projections, Drive authorities, and current SHA."
+    "positive": "Use $studio-status to reconcile .project state, GitHub projections, Drive authorities, and current SHA.",
+    "wrong_specialist": "Use $studio-track for this request."
   },
   "studio-strategy-red-team": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-strategy-red-team",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-strategy-red-team to adversarial plan and review critique."
+    "positive": "Use $studio-strategy-red-team to adversarial plan and review critique.",
+    "wrong_specialist": "Use $studio-option-tradeoff for this request."
   },
   "studio-track": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-track",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-track to idempotent issue and milestone projection, dependencies, stale reviews, and drift."
+    "positive": "Use $studio-track to idempotent issue and milestone projection, dependencies, stale reviews, and drift.",
+    "wrong_specialist": "Use $studio-release for this request."
   },
   "studio-verify": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-verify",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-verify to deterministic validators, evidence grading, seeded gates, and honest limitations."
+    "positive": "Use $studio-verify to deterministic validators, evidence grading, seeded gates, and honest limitations.",
+    "wrong_specialist": "Use $studio-review for this request."
   },
   "studio-work": {
     "ambiguous": "I have a software idea; help me figure out the next step.",
+    "expected": "studio-work",
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
-    "positive": "Use $studio-work to active work package, context capsule, bounded execution, proof, and closeout."
+    "positive": "Use $studio-work to active work package, context capsule, bounded execution, proof, and closeout.",
+    "wrong_specialist": "Use $studio-build for this request."
   },
   "test-for-behavior": {
     "ambiguous": "Should this need a test?",
+    "expected": "test-for-behavior",
     "negative": "Test private helper layout",
-    "positive": "Add a regression test for this observable bug"
+    "positive": "Use $test-for-behavior to Add a regression test for this observable bug.",
+    "wrong_specialist": "Use $debug-root-cause for this request."
   },
   "traceability-and-handoff": {
     "ambiguous": "Audit these docs",
+    "expected": "traceability-and-handoff",
     "negative": "Write a marketing summary",
-    "positive": "Create a resumable implementation handoff"
+    "positive": "Use $traceability-and-handoff to Create a resumable implementation handoff.",
+    "wrong_specialist": "Use $web-app-builder-router for this request."
   },
   "visual-qa": {
     "ambiguous": "Review our landing page",
+    "expected": "visual-qa",
     "negative": "Write a database migration",
-    "positive": "Critique this design for generic AI dashboard patterns"
+    "positive": "Use $visual-qa to Critique this design for generic AI dashboard patterns.",
+    "wrong_specialist": "Use $engineering-guard-router for this request."
   },
   "web-app-builder-router": {
     "ambiguous": "Add a settings page",
+    "expected": "web-app-builder-router",
     "negative": "Research React libraries",
-    "positive": "Implement this approved web feature"
+    "positive": "Use $web-app-builder-router to Implement this approved web feature.",
+    "wrong_specialist": "Use $repo-intake for this request."
   }
 }
