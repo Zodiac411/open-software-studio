@@ -824,6 +824,16 @@ def output_snapshot(path: Path) -> dict[str, bytes]:
     }
 
 
+def snapshot_difference(actual: dict[str, bytes], expected: dict[str, bytes]) -> str:
+    differences = sorted(set(actual) | set(expected))
+    differing = [name for name in differences if actual.get(name) != expected.get(name)]
+    if not differing:
+        return ""
+    shown = ", ".join(differing[:5])
+    suffix = "" if len(differing) <= 5 else f" (+{len(differing) - 5} more)"
+    return f"; differing files: {shown}{suffix}"
+
+
 def check_generated_outputs(catalog: dict[str, Any]) -> None:
     with tempfile.TemporaryDirectory(prefix="studio-v2-check-") as temp_name:
         temp_root = Path(temp_name)
@@ -834,8 +844,10 @@ def check_generated_outputs(catalog: dict[str, Any]) -> None:
         for relative in CHECK_OUTPUTS:
             actual = ROOT / relative
             expected = temp_root / relative
-            if output_snapshot(actual) != output_snapshot(expected):
-                fail(f"generated output differs from canonical build: {relative}")
+            actual_snapshot = output_snapshot(actual)
+            expected_snapshot = output_snapshot(expected)
+            if actual_snapshot != expected_snapshot:
+                fail(f"generated output differs from canonical build: {relative}{snapshot_difference(actual_snapshot, expected_snapshot)}")
     print("PASS: catalog and all canonical generated outputs match a clean temporary rebuild")
 
 
