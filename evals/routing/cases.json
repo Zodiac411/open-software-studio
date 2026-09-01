@@ -102,7 +102,7 @@
     "expected": "handoff",
     "negative": "Paste the entire conversation",
     "positive": "Use $handoff to Prepare this interrupted task for another agent.",
-    "wrong_specialist": "Use $studio-start for this request."
+    "wrong_specialist": "Use $studio-session-intelligence for this request."
   },
   "implementation-and-integration": {
     "ambiguous": "Implement this feature",
@@ -418,6 +418,13 @@
     "negative": "Rename an unrelated file and do not plan or review a software workflow.",
     "positive": "Use $studio-scope-guard to scope budget, reuse ledger, overshoot audit, safety exemptions, and replan triggers.",
     "wrong_specialist": "Use $studio-ambiguity-audit for this request."
+  },
+  "studio-session-intelligence": {
+    "ambiguous": "What friction repeats in this project?",
+    "expected": "studio-session-intelligence",
+    "negative": "Summarize unrelated sessions from another project.",
+    "positive": "Use $studio-session-intelligence to create a redacted local session summary and handoff.",
+    "wrong_specialist": "Use $studio-start for this request."
   },
   "studio-shape": {
     "ambiguous": "I have a software idea; help me figure out the next step.",

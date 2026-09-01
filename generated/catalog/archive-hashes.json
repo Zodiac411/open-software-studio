@@ -8,7 +8,7 @@
     "dist/chatgpt/satellites/research-engineer.zip": "483079f3d301ef9704efe0cca333d628fb51a98ace8754f08b92afcaebc153fb",
     "dist/chatgpt/satellites/studio-track.zip": "28b600890baec08d765ed858b4cd0b57e9fa1f62e2b8d528c5c2e8abffb54d7f",
     "dist/chatgpt/satellites/web-app-builder.zip": "1c568b01fa85f3aeef01164a18e4b384189eae722beeca7d50b64ef4657892ad",
-    "dist/chatgpt/studio.zip": "d004f894aca624dc86dff346d208820f0b76ae67d0b01862cca15b84cd00e796"
+    "dist/chatgpt/studio.zip": "5e3d1e620d92da244c035f6339f31f019e3af5868a0d42b1351cbefe7f0a00f2"
   },
   "schema": "studio.archive-hashes/v2",
   "version": "2.0.0"

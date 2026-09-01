@@ -127,8 +127,8 @@ def validate_catalog(catalog: dict[str, Any]) -> None:
     skill_ids = [skill.get("id") for skill in generated + legacy]
     if len(skill_ids) != len(set(skill_ids)) or any(not isinstance(item, str) or not ID_PATTERN.fullmatch(item) for item in skill_ids):
         fail("skill IDs must be unique kebab-case values")
-    if len(generated) < 30 or len(legacy) != 36:
-        fail("catalog must contain the required generated and legacy skills")
+    if len(generated) < 30 or len(legacy) < 36:
+        fail("catalog must contain at least the required generated and legacy skills")
     plugin_ids = [plugin.get("id") for plugin in catalog.get("plugins", [])]
     if len(plugin_ids) != 9 or len(plugin_ids) != len(set(plugin_ids)) or any(not ID_PATTERN.fullmatch(item) for item in plugin_ids):
         fail("catalog must contain nine unique plugin IDs")

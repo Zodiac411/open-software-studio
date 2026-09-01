@@ -1,7 +1,7 @@
 {
   "copied_files": [],
   "files": {
-    "catalog/studio.yaml": "0258c069deac9b0dcfb52d75c8bbe5058c73b5a74c141f1a8ce470f67c77127c",
+    "catalog/studio.yaml": "545cbbfd4f9225a8a98adc4d53dc668b05fb2167eb7929a26828ccaa732cf83a",
     "evals/studio/test_studio_v2.py": "5ca809704daa24c7e2614a9b5698949469c83035d5a2a5f89b1bcf0eb03d2471",
     "plugins/engineering-guard/skills/architecture-risk-review/SKILL.md": "37d46c4bccc70f4fdbd3f0761b95b377f4d3d059d5413130ddc77d86c25e7776",
     "plugins/engineering-guard/skills/engineering-guard-router/SKILL.md": "c8e9af36d54776b5896e5047dae96f752daee2f1b69dcce83c3ee3d1cc84d258",
@@ -35,6 +35,8 @@
     "plugins/research-engineer/skills/github-deep-dive/SKILL.md": "8346599174b23dbae1ec7ebd6513ef31706aad752bbf962c614bf1a5c5517336",
     "plugins/research-engineer/skills/research-brief/SKILL.md": "4b9fc8f5b05c2a98b621ed2482aefd50fc5657aa5798556264d49f920c71b88c",
     "plugins/research-engineer/skills/research-router/SKILL.md": "f1fde230637ff39d3966968377f1e525a9a0ce2a8e0dbe6092237d1796024915",
+    "plugins/studio-delivery/skills/studio-session-intelligence/SKILL.md": "b9e039fbb2f75ed8501dd3ac2af9b6d963f3143e9fdc8f0eb7f118f0491858dc",
+    "plugins/studio-delivery/skills/studio-session-intelligence/session_intelligence.py": "45df909453d4c1aeaf8cc85864631fa3739d28e074cb750a74c534c8f0fa3ce9",
     "plugins/web-app-builder/skills/debugging-and-verification/SKILL.md": "4c3112127157415f1b831568e9a2a01aa79b30d6687d97a3b94c0fdf47ae26b6",
     "plugins/web-app-builder/skills/implementation-and-integration/SKILL.md": "f41615d8f948701297bfb61222a890c65c4fdb655610f41ae5ce07cbaa6fdd64",
     "plugins/web-app-builder/skills/repo-intake/SKILL.md": "a5d9f277754ec21c5100eae488559a727cd3690f9a919db4a4f938b158359aa3",
@@ -68,7 +70,7 @@
     "schemas/v2/state.schema.json": "d50eb49a69a13fa96826b988de52e407ea34d3dfea90a17cc1f8e688512843bf",
     "schemas/v2/verification_contract.schema.json": "ba31eb4785568e4ec8e690c0d6ea6fb6bb5935c06dfa5a7dcbca24799d2666d4",
     "schemas/v2/work_package.schema.json": "36a98fa1730102fa254ab6bf4cf728286df53ef46dcf227096d5dc049f0ad8e3",
-    "scripts/build_studio.py": "4eee5b42655440c3ecb04f3543cd4a827afe0984005ff5996430be5ff2c70015",
+    "scripts/build_studio.py": "a89a680024c9b518d647c5fcfeb97c4c8c03afe506bb5718af765704e122e654",
     "scripts/check_reproducibility.py": "f726d0719b94a12e1f2ff1af5ec705559a08007509935601836e9c1a93e94729",
     "scripts/render_icons.py": "0cdffcdb514bcbcc328cb8c8d5e415a69ba96fe6113cf367117ebf49774af888",
     "scripts/run_evals.py": "975446ee0e87da28b2864037ed23fa37283a78ba9c7852c4534072e0a998ea4a",

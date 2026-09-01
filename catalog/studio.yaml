@@ -1324,6 +1324,10 @@
     {
       "id": "handoff",
       "source": "plugins/execution-guard/skills/handoff"
+    },
+    {
+      "id": "studio-session-intelligence",
+      "source": "plugins/studio-delivery/skills/studio-session-intelligence"
     }
   ],
   "legacy_plugins": [
